@@ -1,1 +1,1 @@
-export * from './Bean';
+export * from "./Bean";

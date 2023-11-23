@@ -2,7 +2,6 @@
  * Extra options that apply to each controller action.
  */
 export interface ApplicationOptions {
-
   environment?: string;
   port?: number;
 
@@ -43,4 +42,4 @@ export type ApiOptions = {
      */
     required?: boolean;
   };
-}
+};

@@ -1,6 +1,5 @@
-import type {NodeBootAdapter} from "./NodeBootAdapter";
+import type { NodeBootAdapter } from "./NodeBootAdapter";
 
 export interface OpenApiAdapter extends NodeBootAdapter {
-
-    bind(controllers: Function[]): void
+  bind(controllers: Function[]): void;
 }

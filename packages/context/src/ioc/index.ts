@@ -1,1 +1,1 @@
-export * from './IocContainer';
+export * from "./IocContainer";
