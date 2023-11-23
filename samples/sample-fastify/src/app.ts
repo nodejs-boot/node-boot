@@ -4,7 +4,7 @@ import {
   Configurations,
   Controllers,
   EnableDI,
-  GlobalMiddlewares,
+  GlobalMiddlewares, NodeBoot,
   NodeBootApplication
 } from "@node-boot/core";
 import { BackendConfigProperties } from "./config/BackendConfigProperties";
@@ -43,7 +43,7 @@ import { FastifyApplication } from "@node-boot/fastify-server";
 })
 export class FactsServiceApp {
   static start() {
-    FastifyApplication.run()
+    NodeBoot.run(FastifyApplication)
       .then((app) => {
         app.listen();
         console.info("Node-Boot application started successfully");

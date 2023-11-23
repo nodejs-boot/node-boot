@@ -4,7 +4,7 @@ import {
   Configurations,
   Controllers,
   EnableDI,
-  GlobalMiddlewares,
+  GlobalMiddlewares, NodeBoot,
   NodeBootApplication
 } from "@node-boot/core";
 import { EnableOpenApi } from "@node-boot/openapi";
@@ -47,7 +47,7 @@ import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolve
 })
 export class FactsServiceApp {
   static start() {
-    ExpressApplication.run()
+    NodeBoot.run(ExpressApplication)
       .then((app) => {
         app.listen();
         console.info("Node-Boot application started successfully");
