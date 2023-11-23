@@ -34,7 +34,7 @@
     "test": "turbo run --parallel test",
     "typecheck": "turbo run --parallel typecheck",
     "prepare": "husky install",
-    "format": "prettier --check '{packages,plugins}/**/{package.json,*.tsx,*.ts}'",
+    "format:check": "prettier --check '{packages,plugins}/**/{package.json,*.tsx,*.ts}'",
     "format:fix": "prettier --write '{packages,plugins}/**/{package.json,*.tsx,*.ts}'"
   },
   "devDependencies": {
