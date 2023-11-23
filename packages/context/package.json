@@ -34,16 +34,6 @@
   },
   "devDependencies": {},
   "peerDependencies": {
-    "routing-controllers": ">=0.10.4",
-    "typedi": ">=0.10.0",
-    "inversify": ">=6.0.1"
-  },
-  "peerDependenciesMeta": {
-    "typedi": {
-      "optional": true
-    },
-    "inversify": {
-      "optional": true
-    }
+    "routing-controllers": ">=0.10.4"
   }
 }

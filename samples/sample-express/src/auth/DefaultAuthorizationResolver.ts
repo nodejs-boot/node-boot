@@ -1,5 +1,6 @@
 import { AuthorizationResolver } from "@node-boot/authorization";
-import { Component, RequestContext } from "@node-boot/context";
+import { RequestContext } from "@node-boot/context";
+import { Component } from "@node-boot/core";
 
 @Component()
 export class DefaultAuthorizationResolver implements AuthorizationResolver {

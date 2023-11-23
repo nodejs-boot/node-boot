@@ -1,4 +1,5 @@
 export * from "./ComponentScanOptions";
+export * from "./ComponentOptions";
 export * from "./ApplicationOptions";
-export * from "./DependencyInjectionOptions";
 export * from "./TransformerOptions";
+export * from "./DependencyInjectionOptions";

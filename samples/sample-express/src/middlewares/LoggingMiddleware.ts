@@ -1,6 +1,7 @@
 import { ExpressMiddlewareInterface } from "routing-controllers";
 import { Logger } from "winston";
-import { Inject, Middleware } from "@node-boot/context";
+import { Middleware } from "@node-boot/core";
+import { Inject } from "@node-boot/di";
 
 @Middleware({ type: "before" })
 export class LoggingMiddleware implements ExpressMiddlewareInterface {

@@ -1,7 +1,7 @@
-import { Configuration } from "@node-boot/core";
+import { Bean, Configuration } from "@node-boot/core";
 import hpp from "hpp";
 import helmet from "helmet";
-import { Bean, BeansContext } from "@node-boot/context";
+import { BeansContext } from "@node-boot/context";
 import { Application } from "express";
 
 @Configuration()

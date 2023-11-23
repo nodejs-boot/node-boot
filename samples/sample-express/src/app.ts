@@ -37,6 +37,9 @@ import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolve
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @NodeBootApplication({
   environment: "development",
+  defaultErrorHandler: true,
+  appName: "facts-service",
+  platformName: "tech-insights",
   port: 3000
 })
 export class FactsServiceApp {

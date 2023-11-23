@@ -32,6 +32,15 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
     context.applicationAdapter = new (class implements ApplicationAdapter {
       bind(): RoutingControllersOptions {
         const context = ApplicationContext.get();
+
+        if (
+          context.applicationOptions.customErrorHandler &&
+          context.applicationOptions.defaultErrorHandler
+        ) {
+          throw new Error(
+            `Invalid configurations: 'defaultErrorHandler' cannot be enabled if an @ErrorHandler is provided. Please disable defaultErrorHandler or delete the custom @ErrorHandler.`
+          );
+        }
         return {
           /* cors: {
                                  origin: ORIGIN,

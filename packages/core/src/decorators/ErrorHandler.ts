@@ -1,0 +1,16 @@
+import { Middleware } from "./Middleware";
+import { ExpressErrorMiddlewareInterface } from "routing-controllers";
+import { ApplicationContext } from "@node-boot/context";
+
+/**
+ * Marks given class as an ErrorHandler Middleware.
+ * Allows to create global Error handler.
+ */
+export function ErrorHandler<
+  T extends new (...args: any[]) => ExpressErrorMiddlewareInterface
+>() {
+  return (target: T) => {
+    ApplicationContext.get().applicationOptions.customErrorHandler = true;
+    Middleware({ type: "after" })(target);
+  };
+}

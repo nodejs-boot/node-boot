@@ -1,10 +1,9 @@
 import {
-  BEAN_METADATA_KEY,
-  BEAN_NAME_METADATA_KEY,
   BeansContext,
   ConfigurationAdapter,
   IocContainer
 } from "@node-boot/context";
+import { BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY } from "../decorators";
 
 export class BeansConfigurationAdapter implements ConfigurationAdapter {
   constructor(private readonly target: Function) {}

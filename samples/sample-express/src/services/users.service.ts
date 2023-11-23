@@ -4,7 +4,7 @@ import { HttpException } from "../exceptions/httpException";
 import { CreateUserDto } from "../dtos/users.dto";
 import { Logger } from "winston";
 import { ConfigService } from "@node-boot/config";
-import { Service } from "@node-boot/context";
+import { Service } from "@node-boot/core";
 import { NotFoundError } from "routing-controllers";
 
 @Service()

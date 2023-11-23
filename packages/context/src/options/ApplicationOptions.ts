@@ -14,6 +14,12 @@ export interface ApplicationOptions {
   defaultErrorHandler?: boolean;
 
   /**
+   * Indicates if a custom error handler was implemented by the application.
+   * Disabled by default.
+   */
+  customErrorHandler?: boolean;
+
+  /**
    * Global Options for exposed REST endpoints
    * */
   apiOptions?: ApiOptions;

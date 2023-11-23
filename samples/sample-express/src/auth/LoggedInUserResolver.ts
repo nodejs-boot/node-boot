@@ -1,4 +1,5 @@
-import { Component, RequestContext } from "@node-boot/context";
+import { RequestContext } from "@node-boot/context";
+import { Component } from "@node-boot/core";
 import { CurrentUserResolver } from "@node-boot/authorization";
 
 @Component()

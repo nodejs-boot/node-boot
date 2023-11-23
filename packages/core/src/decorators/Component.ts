@@ -1,5 +1,5 @@
-import { decorateDi, DiOptions, Token } from "../ioc";
-import { ComponentOptions } from "../options/ComponentOptions";
+import { ComponentOptions } from "@node-boot/context";
+import { decorateDi, DiOptions, Token } from "@node-boot/di";
 
 /**
  * Marks class as a Component that can be injected using the DI Container.

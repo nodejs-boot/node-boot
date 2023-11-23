@@ -14,7 +14,8 @@ import { ValidationMiddleware } from "../middlewares/validation.middleware";
 import { CreateUserDto, UpdateUserDto } from "../dtos/users.dto";
 import { BackendConfigProperties } from "../config/BackendConfigProperties";
 import { Logger } from "winston";
-import { Controller, Inject } from "@node-boot/context";
+import { Controller } from "@node-boot/core";
+import { Inject } from "@node-boot/di";
 import { OpenAPI } from "@node-boot/openapi";
 import { Authorized } from "@node-boot/authorization";
 

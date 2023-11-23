@@ -1,6 +1,5 @@
 import { Logger } from "winston";
-import { Configuration } from "../decorators";
-import { Bean } from "@node-boot/context";
+import { Bean, Configuration } from "../decorators";
 import { createLogger } from "../logger";
 
 @Configuration()

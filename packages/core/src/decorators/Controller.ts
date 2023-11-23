@@ -1,5 +1,5 @@
 import { Controller as InnerController } from "routing-controllers";
-import { decorateDi } from "../ioc";
+import { decorateDi } from "@node-boot/di";
 
 /**
  * Defines a class as a controller.

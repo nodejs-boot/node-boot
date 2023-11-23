@@ -1,5 +1,5 @@
 import { Middleware as InnerMiddleware } from "routing-controllers";
-import { decorateDi } from "../ioc";
+import { decorateDi } from "@node-boot/di";
 
 /**
  * Marks given class as a middleware.

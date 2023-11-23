@@ -102,18 +102,12 @@ importers:
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
-      inversify:
-        specifier: '>=6.0.1'
-        version: 6.0.1
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
       routing-controllers:
         specifier: '>=0.10.4'
         version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      typedi:
-        specifier: '>=0.10.0'
-        version: 0.10.0
 
   packages/core:
     dependencies:
@@ -123,6 +117,9 @@ importers:
       '@node-boot/context':
         specifier: 1.0.0
         version: link:../context
+      '@node-boot/di':
+        specifier: 1.0.0
+        version: link:../di
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -144,6 +141,18 @@ importers:
       winston:
         specifier: '>=3.10.0'
         version: 3.10.0
+
+  packages/di:
+    dependencies:
+      '@node-boot/context':
+        specifier: 1.0.0
+        version: link:../context
+      inversify:
+        specifier: '>=6.0.1'
+        version: 6.0.1
+      typedi:
+        specifier: '>=0.10.0'
+        version: 0.10.0
 
   packages/openapi:
     dependencies:
@@ -187,6 +196,9 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/di':
+        specifier: 1.0.0
+        version: link:../../packages/di
       '@node-boot/express-starter':
         specifier: 1.0.0
         version: link:../../starters/express-starter

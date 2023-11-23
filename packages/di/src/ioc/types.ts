@@ -1,5 +1,5 @@
 import { Constructable } from "./Constructable";
-import { ComponentOptions } from "../options/ComponentOptions";
+import { ComponentOptions } from "@node-boot/context";
 
 /**
  * Used to create unique typed component identifier.

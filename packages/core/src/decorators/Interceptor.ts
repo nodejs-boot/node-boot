@@ -1,5 +1,5 @@
 import { Interceptor as InnerInterceptor } from "routing-controllers";
-import { decorateDi } from "../ioc";
+import { decorateDi } from "@node-boot/di";
 
 /**
  * Registers a global interceptor..
