@@ -8,7 +8,7 @@ import {
   NodeBootApplication
 } from "@node-boot/core";
 import { EnableOpenApi } from "@node-boot/openapi";
-import { ExpressApplication } from "@node-boot/express-starter";
+import { ExpressApplication } from "@node-boot/express-server";
 import { BackendConfigProperties } from "./config/BackendConfigProperties";
 import { UserController } from "./controllers/users.controller";
 import { LoggingMiddleware } from "./middlewares/LoggingMiddleware";
@@ -40,7 +40,10 @@ import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolve
   appName: "facts-service",
   platformName: "tech-insights",
   defaultErrorHandler: false,
-  port: 3000
+  port: 3000,
+  apiOptions: {
+    routePrefix: "/api"
+  }
 })
 export class FactsServiceApp {
   static start() {

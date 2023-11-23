@@ -14,7 +14,7 @@ import { MultipleConfigurations } from "./config/MultipleConfigurations";
 import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
-import { KoaApplication } from "@node-boot/koa-starter";
+import { KoaApplication } from "@node-boot/koa-server";
 import { EnableOpenApi } from "@node-boot/openapi";
 
 @EnableDI(Container)

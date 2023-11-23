@@ -1,11 +1,11 @@
-import { OpenApiAdapter } from "@node-boot/context";
+import { OpenApiAdapter, OpenApiOptions } from "@node-boot/context";
 import { koaSwagger } from "koa2-swagger-ui";
 import { OpenApiSpecAdapter } from "./OpenApiSpecAdapter";
 
 export class KoaOpenApi implements OpenApiAdapter {
-  bind(controllers: Function[], server: any, router: any): void {
+  bind(openApiOptions: OpenApiOptions, server: any, router: any): void {
     if (koaSwagger) {
-      const { spec, options } = OpenApiSpecAdapter.adapt(controllers);
+      const { spec, options } = OpenApiSpecAdapter.adapt(openApiOptions);
 
       router.get("/api-docs/swagger.json", async (ctx) => {
         ctx.body = spec;

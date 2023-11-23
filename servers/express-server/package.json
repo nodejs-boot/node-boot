@@ -1,5 +1,5 @@
 {
-  "name": "@node-boot/express-starter",
+  "name": "@node-boot/express-server",
   "version": "1.0.0",
   "description": "The first typescript example for the Monorepo example",
   "author": "Manuel Santos <ney.br.santos@gmail.com>",

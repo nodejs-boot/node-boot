@@ -50,7 +50,14 @@ export abstract class BaseApplication<TServer, TRouter> {
     if (context.openApi) {
       this.logger.info(`Binding OpenAPI adapter`);
       const openApiAdapter = context.openApi.bind(this.serverType);
-      openApiAdapter.bind(context.controllerClasses, server, router);
+      openApiAdapter.bind(
+        {
+          basePath: context.applicationOptions.apiOptions?.routePrefix,
+          controllers: context.controllerClasses
+        },
+        server,
+        router
+      );
     }
   }
 

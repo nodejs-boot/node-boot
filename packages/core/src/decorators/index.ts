@@ -15,3 +15,4 @@ export * from "./Service";
 export * from "./Middleware";
 export * from "./Middleware";
 export * from "./ErrorHandler";
+export * from "./ApiVersion";

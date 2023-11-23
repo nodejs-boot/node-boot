@@ -1,10 +1,9 @@
 import {
   ApplicationAdapter,
   ApplicationContext,
-  ApplicationOptions,
-  IocContainer
+  ApplicationOptions
 } from "@node-boot/context";
-import { RoutingControllersOptions } from "routing-controllers/types/RoutingControllersOptions";
+import { RoutingControllersOptions } from "routing-controllers";
 import { BeansConfigurationAdapter } from "../adapters";
 
 /**
@@ -44,9 +43,17 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
         }
         return {
           /* cors: {
-                                 origin: ORIGIN,
-                                 credentials: CREDENTIALS
-                               },*/
+                                           origin: ORIGIN,
+                                           credentials: CREDENTIALS
+                                         },*/
+          routePrefix: context.applicationOptions.apiOptions?.routePrefix,
+          defaults: {
+            nullResultCode:
+              context.applicationOptions.apiOptions?.nullResultCode,
+            paramOptions: context.applicationOptions.apiOptions?.paramOptions,
+            undefinedResultCode:
+              context.applicationOptions.apiOptions?.undefinedResultCode
+          },
           classTransformer: context.classTransformer,
           classToPlainTransformOptions: context.classToPlainTransformOptions,
           plainToClassTransformOptions: context.plainToClassTransformOptions,
