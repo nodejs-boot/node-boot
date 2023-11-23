@@ -1,6 +1,2 @@
-/**
- * World
- */
-export function world(override?: string) {
-  return override || "From Config";
-}
+export {loadNodeBootConfig} from './config';
+export {ConfigService} from './ConfigService';

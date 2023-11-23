@@ -6,6 +6,7 @@
     "declaration": true,
     "allowJs": true,
     "noEmit": true,
+    "strict": true,
 
     /* Strict Type-Checking Options */
     "noImplicitAny": true,
@@ -16,6 +17,9 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    "skipLibCheck": true,
 
     /* Experimental Options */
     "experimentalDecorators": true,

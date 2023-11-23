@@ -1,8 +1,7 @@
-import { describe, it, expect } from "@jest/globals";
-import { world } from "./index";
+import {describe, it} from "@jest/globals";
 
 describe("World", () => {
-  it("should return world", () => {
-    expect(world()).toBe("World");
-  });
+    it("should return world", () => {
+        // TEST something here
+    });
 });
