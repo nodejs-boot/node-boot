@@ -3,11 +3,14 @@ import express from "express";
 import { useExpressServer } from "routing-controllers";
 import { BaseApplication } from "@node-boot/core";
 
-export class ExpressApplication extends BaseApplication<express.Application> {
+export class ExpressApplication extends BaseApplication<
+  express.Application,
+  express.Application
+> {
   public expressServer: express.Application;
 
   constructor() {
-    super();
+    super("express");
     this.expressServer = express();
     this.expressServer.use(express.json());
     this.expressServer.use(express.urlencoded({ extended: true }));
@@ -17,7 +20,10 @@ export class ExpressApplication extends BaseApplication<express.Application> {
     const context = ApplicationContext.get();
 
     const application = new ExpressApplication();
-    await application.configure(application.getServer());
+    await application.configure(
+      application.getServer(),
+      application.getRouter()
+    );
 
     // Bind application container through adapter
     if (context.applicationAdapter) {
@@ -50,6 +56,10 @@ export class ExpressApplication extends BaseApplication<express.Application> {
   }
 
   getServer(): express.Application {
+    return this.expressServer;
+  }
+
+  getRouter(): express.Application {
     return this.expressServer;
   }
 }

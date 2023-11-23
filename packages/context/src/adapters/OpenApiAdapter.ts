@@ -1,5 +1,5 @@
 import type { NodeBootAdapter } from "./NodeBootAdapter";
 
 export interface OpenApiAdapter extends NodeBootAdapter {
-  bind(router: any, controllers: Function[]): void;
+  bind(controllers: Function[], server: any, router: any): void;
 }

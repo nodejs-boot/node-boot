@@ -4,9 +4,11 @@ import { createLogger } from "../logger";
 import { ConfigService, loadNodeBootConfig } from "@node-boot/config";
 import { useContainer } from "routing-controllers";
 
-export abstract class BaseApplication<TServer> {
+export abstract class BaseApplication<TServer, TRouter> {
   protected logger: Logger;
   protected config: ConfigService;
+
+  protected constructor(private readonly serverType: string) {}
 
   protected async init() {
     const context = ApplicationContext.get();
@@ -18,7 +20,9 @@ export abstract class BaseApplication<TServer> {
 
   abstract getServer(): TServer;
 
-  protected async configure(server: TServer) {
+  abstract getRouter(): TRouter;
+
+  protected async configure(server: TServer, router: TRouter) {
     // Initialize configuration and logging
     await this.init();
 
@@ -38,7 +42,8 @@ export abstract class BaseApplication<TServer> {
     }
 
     if (context.openApi) {
-      context.openApi.bind(server, context.controllerClasses);
+      const openApiAdapter = context.openApi.bind(this.serverType);
+      openApiAdapter.bind(context.controllerClasses, server, router);
     }
   }
 

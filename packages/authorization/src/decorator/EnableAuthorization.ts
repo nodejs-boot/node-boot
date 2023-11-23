@@ -1,4 +1,4 @@
-import { ApplicationContext } from "@node-boot/context";
+import { ApplicationContext, RequestContext } from "@node-boot/context";
 import { AuthorizationResolver, CurrentUserResolver } from "../resolver";
 import { Action } from "routing-controllers/types/Action";
 
@@ -14,8 +14,13 @@ export function EnableAuthorization(
 ): Function {
   return function (object: Function) {
     if (AuthorizationResolverClass) {
-      ApplicationContext.get().authorizationChecker =
-        new AuthorizationResolverClass();
+      const authResolver = new AuthorizationResolverClass();
+      ApplicationContext.get().authorizationChecker = async (
+        context: RequestContext,
+        roles: any[]
+      ) => {
+        return authResolver.authorize(context, roles);
+      };
     }
 
     if (CurrentUserResolverClass) {

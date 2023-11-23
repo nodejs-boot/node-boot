@@ -8,13 +8,14 @@ import type {
   ConfigurationPropertiesAdapter,
   OpenApiAdapter
 } from "./adapters";
+import { OpenApiBridgeAdapter } from "./adapters/OpenApiBridgeAdapter";
 
 export class ApplicationContext {
   private static context: ApplicationContext;
 
   applicationOptions: ApplicationOptions = {};
   diOptions?: DependencyInjectionOptions;
-  openApi?: OpenApiAdapter;
+  openApi?: OpenApiBridgeAdapter;
   applicationAdapter?: ApplicationAdapter;
   configurationAdapters: ConfigurationAdapter[] = [];
   configurationPropertiesAdapters: ConfigurationPropertiesAdapter[] = [];
