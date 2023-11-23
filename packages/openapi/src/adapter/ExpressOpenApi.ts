@@ -7,7 +7,7 @@ export class ExpressOpenApi implements OpenApiAdapter {
     if (swaggerUi?.serve) {
       const { spec, options } = OpenApiSpecAdapter.adapt(openApiOptions);
 
-      router.get("/api-docs/swagger.json", (req, res) => res.json(spec));
+      router.get(options.swaggerOptions.url, (req, res) => res.json(spec));
       server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec, options));
     } else {
       throw new Error(

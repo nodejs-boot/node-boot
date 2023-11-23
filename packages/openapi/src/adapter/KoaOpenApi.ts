@@ -7,7 +7,7 @@ export class KoaOpenApi implements OpenApiAdapter {
     if (koaSwagger) {
       const { spec, options } = OpenApiSpecAdapter.adapt(openApiOptions);
 
-      router.get("/api-docs/swagger.json", async (ctx) => {
+      router.get(options.swaggerOptions.url, async (ctx) => {
         ctx.body = spec;
       });
       server.use(

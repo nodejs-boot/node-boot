@@ -29,6 +29,7 @@ export class OpenApiSpecAdapter {
     const openApiSpec = routingControllersToSpec(
       storage,
       routingControllersOptions,
+      // FIXME - Move to configuration
       {
         info: {
           description: "Generated with `Node-Boot`",
@@ -37,6 +38,7 @@ export class OpenApiSpecAdapter {
         },
         components: {
           schemas,
+          // FIXME - Move to configuration
           securitySchemes: {
             basicAuth: {
               scheme: "basic",

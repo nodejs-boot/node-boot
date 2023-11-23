@@ -17,9 +17,10 @@ import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
 import { FastifyServer } from "@node-boot/fastify-server";
+import { EnableOpenApi } from "@node-boot/openapi";
 
 @EnableDI(Container)
-//@EnableOpenApi()
+@EnableOpenApi()
 @Configurations([BackendConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
 @GlobalMiddlewares([LoggingMiddleware, CustomErrorHandler])
