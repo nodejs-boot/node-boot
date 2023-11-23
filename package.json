@@ -31,11 +31,11 @@
     "lint-format:fix": "turbo run --parallel lint:fix format:fix",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
     "test": "turbo run --parallel test",
     "typecheck": "turbo run --parallel typecheck",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format": "prettier --check '{packages,plugins}/**/{package.json,*.tsx,*.ts}'",
+    "format:fix": "prettier --write '{packages,plugins}/**/{package.json,*.tsx,*.ts}'"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
@@ -51,6 +51,7 @@
     "jest": "^29.5.0",
     "lint-staged": "^13.1.2",
     "nodemon": "^2.0.21",
+    "prettier-plugin-organize-imports": "^3.2.3",
     "prettier": "^2.8.3",
     "rimraf": "^4.3.1",
     "turbo": "^1.8.3",
