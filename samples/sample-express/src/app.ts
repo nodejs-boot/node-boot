@@ -4,7 +4,8 @@ import {
   Configurations,
   Controllers,
   EnableDI,
-  GlobalMiddlewares, NodeBoot,
+  GlobalMiddlewares,
+  NodeBoot,
   NodeBootApplication
 } from "@node-boot/core";
 import { EnableOpenApi } from "@node-boot/openapi";
