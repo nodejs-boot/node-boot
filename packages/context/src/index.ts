@@ -5,3 +5,4 @@ export * from "./ioc";
 export * from "./options";
 export * from "./ApplicationContext";
 export * from "./types";
+export * from "./metadata";

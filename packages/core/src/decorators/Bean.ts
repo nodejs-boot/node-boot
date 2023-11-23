@@ -1,5 +1,4 @@
-export const BEAN_METADATA_KEY = Symbol("Bean");
-export const BEAN_NAME_METADATA_KEY = Symbol("Bean-Name");
+import { BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY } from "@node-boot/context";
 
 export function Bean(beanName?: string): Function {
   return function (target: any, propertyKey: string) {

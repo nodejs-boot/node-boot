@@ -14,13 +14,12 @@ import { ValidationMiddleware } from "../middlewares/validation.middleware";
 import { CreateUserDto, UpdateUserDto } from "../dtos/users.dto";
 import { BackendConfigProperties } from "../config/BackendConfigProperties";
 import { Logger } from "winston";
-import { ApiVersion, Controller } from "@node-boot/core";
+import { Controller } from "@node-boot/core";
 import { Inject } from "@node-boot/di";
 import { OpenAPI } from "@node-boot/openapi";
 import { Authorized } from "@node-boot/authorization";
 
-@ApiVersion(1)
-@Controller("/users")
+@Controller("/users", "v1")
 export class UserController {
   constructor(
     private readonly user: UserService,

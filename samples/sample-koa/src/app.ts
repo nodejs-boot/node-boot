@@ -17,6 +17,7 @@ import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
 import { KoaServer } from "@node-boot/koa-server";
 import { EnableOpenApi } from "@node-boot/openapi";
+import { EnableActuator } from "@node-boot/starter-actuator";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -34,6 +35,7 @@ import { EnableOpenApi } from "@node-boot/openapi";
   ]
 })
 * */
+@EnableActuator()
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @NodeBootApplication({
   environment: "development",

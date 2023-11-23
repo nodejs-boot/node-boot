@@ -18,6 +18,7 @@ import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
 import { ExpressServer } from "@node-boot/express-server";
+import { EnableActuator } from "@node-boot/starter-actuator";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -36,6 +37,7 @@ import { ExpressServer } from "@node-boot/express-server";
 })
 * */
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
+@EnableActuator()
 @NodeBootApplication({
   environment: "development",
   appName: "facts-service",

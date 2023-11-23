@@ -8,7 +8,7 @@ import type {
   ConfigurationPropertiesAdapter,
   OpenApiAdapter
 } from "./adapters";
-import { OpenApiBridgeAdapter } from "./adapters/OpenApiBridgeAdapter";
+import { ActuatorAdapter, OpenApiBridgeAdapter } from "./adapters";
 
 export class ApplicationContext {
   private static context: ApplicationContext;
@@ -17,6 +17,7 @@ export class ApplicationContext {
   diOptions?: DependencyInjectionOptions;
   openApi?: OpenApiBridgeAdapter;
   applicationAdapter?: ApplicationAdapter;
+  actuatorAdapter?: ActuatorAdapter;
   configurationAdapters: ConfigurationAdapter[] = [];
   configurationPropertiesAdapters: ConfigurationPropertiesAdapter[] = [];
   controllerClasses: Function[] = [];

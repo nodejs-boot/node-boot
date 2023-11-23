@@ -13,6 +13,7 @@ export class FastifyServer extends BaseServer<
   constructor() {
     super("fastify");
     this.framework = Fastify({ logger: true });
+    this.framework.decorateRequest("locals", {});
   }
 
   async run(): Promise<FastifyServer> {

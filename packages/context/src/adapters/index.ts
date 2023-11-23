@@ -4,3 +4,4 @@ export * from "./ConfigurationPropertiesAdapter";
 export * from "./ApplicationAdapter";
 export * from "./OpenApiAdapter";
 export * from "./OpenApiBridgeAdapter";
+export * from "./ActuatorAdapter";

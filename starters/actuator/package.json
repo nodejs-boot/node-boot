@@ -1,0 +1,51 @@
+{
+  "name": "@node-boot/starter-actuator",
+  "version": "1.0.0",
+  "description": "The first typescript example for the Monorepo example",
+  "author": "Manuel Santos <ney.br.santos@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "monorepo",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejs-boot/node-boot.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean:build": "rimraf ./dist",
+    "dev": "nodemon",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "pnpm lint --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test": "jest",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@node-boot/context": "1.0.0",
+    "@node-boot/config": "1.0.0",
+    "prom-client": "^14.2.0",
+    "properties-reader": "^2.3.0",
+    "dayjs": "^1.11.9"
+  },
+  "peerDependencies": {
+    "routing-controllers": ">=0.10.4"
+  },
+  "optionalDependencies": {
+    "koa": ">=2.14.2",
+    "@koa/router": ">=12.0.0",
+    "express": ">=4.18.2",
+    "fastify": ">=4.21.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.11",
+    "@types/koa__router": "^12.0.4"
+  }
+}

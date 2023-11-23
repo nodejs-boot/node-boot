@@ -52,6 +52,18 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
       useContainer(context.diOptions.iocContainer, context.diOptions.options);
     }
 
+    if (context.actuatorAdapter) {
+      this.logger.info(`Binding Actuator endpoints`);
+      context.actuatorAdapter.bind(
+        {
+          serverType: this.serverType,
+          appName: context.applicationOptions.appName!
+        },
+        this.getFramework(),
+        this.getRouter()
+      );
+    }
+
     if (context.openApi) {
       this.logger.info(`Binding OpenAPI adapter`);
       const openApiAdapter = context.openApi.bind(this.serverType);
