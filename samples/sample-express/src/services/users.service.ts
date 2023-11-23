@@ -5,6 +5,7 @@ import { CreateUserDto } from "../dtos/users.dto";
 import { Logger } from "winston";
 import { ConfigService } from "@node-boot/config";
 import { Service } from "@node-boot/context";
+import { NotFoundError } from "routing-controllers";
 
 @Service()
 export class UserService {
@@ -24,7 +25,7 @@ export class UserService {
 
   public async findUserById(userId: number): Promise<User> {
     const findUser = UserModel.find((user) => user.id === userId);
-    if (!findUser) throw new HttpException(409, "User doesn't exist");
+    if (!findUser) throw new NotFoundError("User doesn't exist");
     return findUser;
   }
 
