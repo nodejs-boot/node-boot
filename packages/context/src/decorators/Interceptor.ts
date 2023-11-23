@@ -1,5 +1,5 @@
 import { Interceptor as InnerInterceptor } from "routing-controllers";
-import { decorateDi } from "./makeDiDecoration";
+import { decorateDi } from "../di/makeDiDecoration";
 
 /**
  * Registers a global interceptor..

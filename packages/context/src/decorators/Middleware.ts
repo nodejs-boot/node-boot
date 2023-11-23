@@ -1,5 +1,5 @@
 import { Middleware as InnerMiddleware } from "routing-controllers";
-import { decorateDi } from "./makeDiDecoration";
+import { decorateDi } from "../di/makeDiDecoration";
 
 /**
  * Marks given class as a middleware.

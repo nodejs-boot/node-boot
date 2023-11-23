@@ -1,4 +1,4 @@
-import { decorateDi, DiOptions } from "./makeDiDecoration";
+import { decorateDi, DiOptions } from "../di/makeDiDecoration";
 import { Token } from "../di/Token";
 import { ComponentOptions } from "../options/ComponentOptions";
 

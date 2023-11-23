@@ -1,5 +1,5 @@
 import { Controller as InnerController } from "routing-controllers";
-import { decorateDi } from "./makeDiDecoration";
+import { decorateDi } from "../di/makeDiDecoration";
 
 /**
  * Defines a class as a controller.

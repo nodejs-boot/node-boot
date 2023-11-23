@@ -1,6 +1,5 @@
-import { Service } from "typedi";
 import { ComponentOptions } from "../options/ComponentOptions";
-import { Token } from "../di/Token";
+import { Token } from "./Token";
 
 export type DiOptions = ComponentOptions | string | Token<unknown>;
 
