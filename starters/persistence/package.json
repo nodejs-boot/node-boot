@@ -1,5 +1,5 @@
 {
-  "name": "@node-boot/context",
+  "name": "@node-boot/starter-persistence",
   "version": "1.0.0",
   "description": "The first typescript example for the Monorepo example",
   "author": "Manuel Santos <ney.br.santos@gmail.com>",
@@ -29,12 +29,17 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "class-transformer": "^0.5.1"
+    "@node-boot/config": "1.0.0",
+    "@node-boot/context": "1.0.0",
+    "@node-boot/core": "1.0.0",
+    "winston": "^3.10.0"
   },
-  "devDependencies": {},
   "peerDependencies": {
-    "routing-controllers": ">=0.10.4",
+    "reflect-metadata": ">=0.1.13",
+    "typeorm": ">=0.3.17",
     "winston": ">=3.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0"
   }
 }

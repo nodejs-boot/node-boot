@@ -2,8 +2,7 @@ import {
   BEAN_METADATA_KEY,
   BEAN_NAME_METADATA_KEY,
   BeansContext,
-  ConfigurationAdapter,
-  IocContainer
+  ConfigurationAdapter
 } from "@node-boot/context";
 
 export class BeansConfigurationAdapter implements ConfigurationAdapter {
@@ -20,9 +19,9 @@ export class BeansConfigurationAdapter implements ConfigurationAdapter {
   }
 
   async bind<TApplication>(
-    application: TApplication,
-    iocContainer: IocContainer
+    beansContext: BeansContext<TApplication>
   ): Promise<void> {
+    const { iocContainer } = beansContext;
     const prototype = this.target.prototype;
     const propertyNames = Object.getOwnPropertyNames(prototype);
 
@@ -43,12 +42,7 @@ export class BeansConfigurationAdapter implements ConfigurationAdapter {
       );
 
       if (descriptor && descriptor.value && isBean) {
-        const beansContext: BeansContext<TApplication> = {
-          iocContainer,
-          application
-        };
-
-        let beanInstance;
+        let beanInstance: any;
         // Deal with Beans async factory functions
         if (descriptor.value.constructor.name === "AsyncFunction") {
           beanInstance = await descriptor.value.bind(this.target)(beansContext);

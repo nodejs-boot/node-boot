@@ -1,4 +1,4 @@
-import { ApplicationContext } from "@node-boot/context";
+import { ApplicationContext, Config } from "@node-boot/context";
 import { Logger } from "winston";
 import { createLogger } from "../logger";
 import { ConfigService, loadNodeBootConfig } from "@node-boot/config";
@@ -6,7 +6,7 @@ import { useContainer } from "routing-controllers";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
   protected logger: Logger;
-  protected config: ConfigService;
+  protected config: Config;
 
   protected constructor(private readonly serverType: string) {}
 
@@ -35,10 +35,12 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     if (context.diOptions) {
       this.logger.info(`Binding Node-Boot @Configuration classes`);
       for (const configurationAdapter of context.configurationAdapters) {
-        await configurationAdapter.bind(
-          framework,
-          context.diOptions.iocContainer
-        );
+        await configurationAdapter.bind({
+          application: framework,
+          iocContainer: context.diOptions.iocContainer,
+          logger: this.logger,
+          config: this.config
+        });
       }
 
       this.logger.info(`Binding Node-Boot @ConfigurationProperties classes`);
@@ -51,6 +53,11 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
       this.logger.info(`Setting DI container`);
       useContainer(context.diOptions.iocContainer, context.diOptions.options);
     }
+
+    /* if (context.repositoriesAdapter && context.diOptions) {
+            this.logger.info(`Binding persistence repositories`);
+            context.repositoriesAdapter.bind(context.diOptions.iocContainer);
+        }*/
 
     if (context.actuatorAdapter) {
       this.logger.info(`Binding Actuator endpoints`);

@@ -1,9 +1,6 @@
 import type { NodeBootAdapter } from "./NodeBootAdapter";
-import type { IocContainer } from "../ioc";
+import { BeansContext } from "../types";
 
 export interface ConfigurationAdapter extends NodeBootAdapter {
-  bind<TApplication>(
-    application: TApplication,
-    iocContainer: IocContainer
-  ): Promise<void>;
+  bind<TApplication>(context: BeansContext<TApplication>): Promise<void>;
 }

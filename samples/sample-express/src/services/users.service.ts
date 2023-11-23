@@ -6,12 +6,14 @@ import { Logger } from "winston";
 import { ConfigService } from "@node-boot/config";
 import { Service } from "@node-boot/core";
 import { NotFoundError } from "routing-controllers";
+import { UserRepository } from "../persistence/UserRepository";
 
 @Service()
 export class UserService {
   constructor(
     private readonly logger: Logger,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly userRepository: UserRepository
   ) {}
 
   public async findAllUser(): Promise<User[]> {
