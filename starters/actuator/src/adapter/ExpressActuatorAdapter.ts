@@ -22,7 +22,7 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
       // Start a timer for every request made
       res.locals.startEpoch = Date.now();
 
-      res.on("finish", () => {
+      res.once("finish", () => {
         const responseTimeInMilliseconds = Date.now() - res.locals.startEpoch;
 
         this.context.http_request_duration_milliseconds
