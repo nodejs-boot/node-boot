@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@node-boot/context": "1.0.0",
-    "class-transformer": "^0.5.1"
+    "class-transformer": "^0.5.1",
+    "routing-controllers": "^0.10.4"
   }
 }

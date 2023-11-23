@@ -1,8 +1,10 @@
-import {ApplicationOptions} from "./ApplicationOptions";
-import {ApplicationContext} from "../ApplicationContext";
-import {ApplicationAdapter} from "../adapters/ApplicationAdapter";
-import {RoutingControllersOptions} from "routing-controllers/types/RoutingControllersOptions";
-import {BeansConfigurationAdapter} from "../adapters/BeansConfigurationAdapter";
+import {
+  ApplicationOptions,
+  ApplicationContext,
+  ApplicationAdapter
+} from "@node-boot/context";
+import { RoutingControllersOptions } from "routing-controllers/types/RoutingControllersOptions";
+import { BeansConfigurationAdapter } from "./adapters/BeansConfigurationAdapter";
 
 /**
  * Defines a class as an entry-point for a NodeJs application
@@ -11,16 +13,18 @@ import {BeansConfigurationAdapter} from "../adapters/BeansConfigurationAdapter";
  */
 export function NodeBootApplication(options?: ApplicationOptions): Function {
   return function (target: any) {
-    Reflect.defineMetadata('custom:nodeBootApp', true, target);
+    Reflect.defineMetadata("custom:nodeBootApp", true, target);
 
     // Bind Configurations adapters to search from @Beans under the Application class
-    ApplicationContext.get()
-      .configurationAdapters.push(new BeansConfigurationAdapter(target));
+    ApplicationContext.get().configurationAdapters.push(
+      new BeansConfigurationAdapter(target)
+    );
 
     // Bind Application Adapter
-    ApplicationContext.get().applicationAdapter = new class implements ApplicationAdapter {
+    ApplicationContext.get().applicationAdapter = new (class
+      implements ApplicationAdapter
+    {
       bind(): RoutingControllersOptions {
-
         const context = ApplicationContext.get();
         return {
           /* cors: {
@@ -37,6 +41,6 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
           authorizationChecker: context.authorizationChecker
         };
       }
-    }
+    })();
   };
 }

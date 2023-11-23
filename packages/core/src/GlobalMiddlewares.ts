@@ -1,4 +1,4 @@
-import {ApplicationContext} from "../ApplicationContext";
+import { ApplicationContext } from "@node-boot/context";
 
 export function GlobalMiddlewares(middlewares: Function[]): Function {
   return function (target: any) {

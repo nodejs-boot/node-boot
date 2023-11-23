@@ -1,13 +1,14 @@
-import {ApplicationContext, BeansConfigurationAdapter} from "@node-boot/context";
+import { ApplicationContext } from "@node-boot/context";
+import { BeansConfigurationAdapter } from "./adapters/BeansConfigurationAdapter";
 
 export const IS_CONFIGURATION_KEY = Symbol("isConfiguration");
 
 export function Configuration(): Function {
+  return function (target: Function) {
+    Reflect.defineMetadata(IS_CONFIGURATION_KEY, true, target);
 
-    return function (target: Function) {
-        Reflect.defineMetadata(IS_CONFIGURATION_KEY, true, target);
-
-        ApplicationContext.get()
-            .configurationAdapters.push(new BeansConfigurationAdapter(target));
-    };
+    ApplicationContext.get().configurationAdapters.push(
+      new BeansConfigurationAdapter(target)
+    );
+  };
 }

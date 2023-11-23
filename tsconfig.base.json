@@ -9,7 +9,7 @@
     "strict": true,
 
     /* Strict Type-Checking Options */
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
@@ -20,6 +20,9 @@
     "preserveValueImports": false,
     "importsNotUsedAsValues": "remove",
     "skipLibCheck": true,
+    "exactOptionalPropertyTypes": false,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
 
     /* Experimental Options */
     "experimentalDecorators": true,
