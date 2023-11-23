@@ -12,8 +12,8 @@ export abstract class BaseApplication<TServer, TRouter> {
 
   protected async init() {
     const context = ApplicationContext.get();
-    await this.loadConfig(context);
     await this.initLogger(context);
+    await this.loadConfig(context);
   }
 
   abstract listen();
@@ -26,28 +26,36 @@ export abstract class BaseApplication<TServer, TRouter> {
     // Initialize configuration and logging
     await this.init();
 
+    this.logger.info(
+      `Running Node-Boot application with '${this.serverType.toUpperCase()}'`
+    );
     const context = ApplicationContext.get();
     if (context.diOptions) {
+      this.logger.info(`Binding Node-Boot @Configuration classes`);
       for (const configurationAdapter of context.configurationAdapters) {
         await configurationAdapter.bind(server, context.diOptions.iocContainer);
       }
 
+      this.logger.info(`Binding Node-Boot @ConfigurationProperties classes`);
       for (const configurationPropertiesAdapter of context.configurationPropertiesAdapters) {
         configurationPropertiesAdapter.bind(context.diOptions.iocContainer);
       }
 
       // it's important to set container before any operation you do with routing-controllers,
       // including importing controllers
+      this.logger.info(`Setting DI container`);
       useContainer(context.diOptions.iocContainer, context.diOptions.options);
     }
 
     if (context.openApi) {
+      this.logger.info(`Binding OpenAPI adapter`);
       const openApiAdapter = context.openApi.bind(this.serverType);
       openApiAdapter.bind(context.controllerClasses, server, router);
     }
   }
 
   private async loadConfig(context: ApplicationContext) {
+    this.logger.info(`Loading Node-Boot configurations`);
     this.config = (
       await loadNodeBootConfig({
         argv: process.argv
@@ -62,6 +70,7 @@ export abstract class BaseApplication<TServer, TRouter> {
       context.applicationOptions.appName!,
       context.applicationOptions.platformName!
     );
+    this.logger.info(`Initializing Node-Boot logger`);
     context.diOptions?.iocContainer.set(Logger, this.logger);
     context.diOptions?.iocContainer.set("logger", this.logger);
   }

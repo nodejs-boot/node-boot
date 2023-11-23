@@ -29,7 +29,7 @@ export class OpenApiSpecAdapter {
       routingControllersOptions,
       {
         info: {
-          description: "Generated with `routing-controllers-openapi`",
+          description: "Generated with `Node-Boot`",
           title: "A sample API",
           version: "1.0.0"
         },
