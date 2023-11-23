@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { Container } from "typedi";
 import {
-  BaseApplication,
   Configurations,
   Controllers,
   EnableDI,
@@ -14,12 +13,13 @@ import { BackendConfigProperties } from "./config/BackendConfigProperties";
 import { UserController } from "./controllers/users.controller";
 import { LoggingMiddleware } from "./middlewares/LoggingMiddleware";
 import { MultipleConfigurations } from "./config/MultipleConfigurations";
+import { ErrorMiddleware } from "./middlewares/error.middleware";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @Configurations([BackendConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
-@GlobalMiddlewares([LoggingMiddleware])
+@GlobalMiddlewares([LoggingMiddleware, ErrorMiddleware])
 //@EnableComponentScan()
 /*
 * @EnableComponentScan({
