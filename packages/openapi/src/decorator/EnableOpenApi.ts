@@ -1,6 +1,7 @@
-import { ApplicationContext } from "@node-boot/context";
+import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@node-boot/context";
 import * as oa from "openapi3-ts";
-import { ExpressOpenApi } from "../adapter";
+import {ExpressOpenApi} from "../adapter";
+import {KoaOpenApi} from "../adapter/KoaOpenApi";
 
 /**
  * Defines the configurations to enable Swagger Open API
@@ -8,9 +9,21 @@ import { ExpressOpenApi } from "../adapter";
  * @param openApi The OpenAPI definitions and base config
  */
 export function EnableOpenApi(
-  openApi: Partial<oa.OpenAPIObject> = {}
+    openApi: Partial<oa.OpenAPIObject> = {}
 ): Function {
-  return function (object: Function) {
-    ApplicationContext.get().openApi = new ExpressOpenApi();
-  };
+    return function (object: Function) {
+        ApplicationContext.get().openApi = new class implements OpenApiBridgeAdapter {
+            bind(serverType: string): OpenApiAdapter {
+                switch (serverType) {
+                    case 'express':
+                        return new ExpressOpenApi();
+                    case 'koa':
+                        return new KoaOpenApi();
+                    default:
+                        throw new Error("OpenAPI feature is only allowed for express and koa servers. " +
+                            "Please remove @EnableOpenApi from your application");
+                }
+            }
+        }
+    };
 }
