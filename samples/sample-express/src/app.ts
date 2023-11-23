@@ -9,7 +9,6 @@ import {
   NodeBootApplication
 } from "@node-boot/core";
 import { EnableOpenApi } from "@node-boot/openapi";
-import { ExpressApplication } from "@node-boot/express-server";
 import { BackendConfigProperties } from "./config/BackendConfigProperties";
 import { UserController } from "./controllers/users.controller";
 import { LoggingMiddleware } from "./middlewares/LoggingMiddleware";
@@ -18,6 +17,7 @@ import { ErrorMiddleware } from "./middlewares/error.middleware";
 import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
+import { ExpressServer } from "@node-boot/express-server";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -48,7 +48,7 @@ import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolve
 })
 export class FactsServiceApp {
   static start() {
-    NodeBoot.run(ExpressApplication)
+    NodeBoot.run(ExpressServer)
       .then((app) => {
         app.listen();
         console.info("Node-Boot application started successfully");

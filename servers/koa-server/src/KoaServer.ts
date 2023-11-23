@@ -2,22 +2,22 @@ import { ApplicationContext } from "@node-boot/context";
 import Koa from "koa";
 import Router from "@koa/router";
 import { createServer, KoaDriver } from "routing-controllers";
-import { BaseApplication } from "@node-boot/core";
+import { BaseServer } from "@node-boot/core";
 
-export class KoaApplication extends BaseApplication<Koa, Router> {
-  private readonly server: Koa;
+export class KoaServer extends BaseServer<Koa, Router> {
+  private readonly framework: Koa;
   private readonly router: Router;
 
   constructor() {
     super("koa");
-    this.server = new Koa();
+    this.framework = new Koa();
     this.router = new Router();
   }
 
-  async run(): Promise<KoaApplication> {
+  async run(): Promise<KoaServer> {
     const context = ApplicationContext.get();
 
-    await this.configure(this.server, this.router);
+    await this.configure(this.framework, this.router);
 
     // Bind application container through adapter
     if (context.applicationAdapter) {
@@ -25,7 +25,7 @@ export class KoaApplication extends BaseApplication<Koa, Router> {
         context.diOptions?.iocContainer
       );
 
-      const driver = new KoaDriver(this.server, this.router);
+      const driver = new KoaDriver(this.framework, this.router);
       createServer(driver, configs);
     } else {
       throw new Error(
@@ -39,7 +39,7 @@ export class KoaApplication extends BaseApplication<Koa, Router> {
   public listen() {
     const context = ApplicationContext.get();
 
-    this.server.listen(context.applicationOptions.port, () => {
+    this.framework.listen(context.applicationOptions.port, () => {
       this.logger.info(`=================================`);
       this.logger.info(
         `======= ENV: ${context.applicationOptions.environment} =======`
@@ -51,8 +51,8 @@ export class KoaApplication extends BaseApplication<Koa, Router> {
     });
   }
 
-  getServer(): Koa {
-    return this.server;
+  getFramework(): Koa {
+    return this.framework;
   }
 
   getRouter(): Router {

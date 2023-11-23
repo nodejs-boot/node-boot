@@ -16,7 +16,7 @@ import { CustomErrorHandler } from "./middlewares/customErrorHandler";
 import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
-import { FastifyApplication } from "@node-boot/fastify-server";
+import { FastifyServer } from "@node-boot/fastify-server";
 
 @EnableDI(Container)
 //@EnableOpenApi()
@@ -44,7 +44,7 @@ import { FastifyApplication } from "@node-boot/fastify-server";
 })
 export class FactsServiceApp {
   static start() {
-    NodeBoot.run(FastifyApplication)
+    NodeBoot.run(FastifyServer)
       .then((app) => {
         app.listen();
         console.info("Node-Boot application started successfully");

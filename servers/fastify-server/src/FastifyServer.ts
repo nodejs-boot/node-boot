@@ -1,24 +1,24 @@
 import { ApplicationContext } from "@node-boot/context";
 import { createServer } from "routing-controllers";
-import { BaseApplication } from "@node-boot/core";
+import { BaseServer } from "@node-boot/core";
 import Fastify, { FastifyInstance } from "fastify";
 import { FastifyDriver } from "./driver/FastifyDriver";
 
-export class FastifyApplication extends BaseApplication<
+export class FastifyServer extends BaseServer<
   FastifyInstance,
   FastifyInstance
 > {
-  private readonly server: FastifyInstance;
+  private readonly framework: FastifyInstance;
 
   constructor() {
     super("fastify");
-    this.server = Fastify({ logger: true });
+    this.framework = Fastify({ logger: true });
   }
 
-  async run(): Promise<FastifyApplication> {
+  async run(): Promise<FastifyServer> {
     const context = ApplicationContext.get();
 
-    await this.configure(this.server, this.server);
+    await super.configure(this.framework, this.framework);
 
     // Bind application container through adapter
     if (context.applicationAdapter) {
@@ -43,7 +43,7 @@ export class FastifyApplication extends BaseApplication<
           },
           fileOptions: {}
         },
-        this.server
+        this.framework
       );
       createServer(driver, configs);
     } else {
@@ -58,7 +58,7 @@ export class FastifyApplication extends BaseApplication<
   public listen() {
     const context = ApplicationContext.get();
 
-    this.server.listen(
+    this.framework.listen(
       { port: context.applicationOptions.port },
       (err: Error | null, address: string) => {
         if (err) {
@@ -75,11 +75,11 @@ export class FastifyApplication extends BaseApplication<
     );
   }
 
-  getServer(): FastifyInstance {
-    return this.server;
+  getFramework(): FastifyInstance {
+    return this.framework;
   }
 
   getRouter(): FastifyInstance {
-    return this.server;
+    return this.framework;
   }
 }

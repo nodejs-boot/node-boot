@@ -4,7 +4,7 @@ import { createLogger } from "../logger";
 import { ConfigService, loadNodeBootConfig } from "@node-boot/config";
 import { useContainer } from "routing-controllers";
 
-export abstract class BaseApplication<TServer = any, TRouter = any> {
+export abstract class BaseServer<TFramework = any, TRouter = any> {
   protected logger: Logger;
   protected config: ConfigService;
 
@@ -18,13 +18,13 @@ export abstract class BaseApplication<TServer = any, TRouter = any> {
 
   abstract listen();
 
-  abstract getServer(): TServer;
+  abstract getFramework(): TFramework;
 
   abstract getRouter(): TRouter;
 
-  abstract run(): Promise<BaseApplication>;
+  abstract run(): Promise<BaseServer>;
 
-  protected async configure(server: TServer, router: TRouter) {
+  protected async configure(framework: TFramework, router: TRouter) {
     // Initialize configuration and logging
     await this.init();
 
@@ -35,7 +35,10 @@ export abstract class BaseApplication<TServer = any, TRouter = any> {
     if (context.diOptions) {
       this.logger.info(`Binding Node-Boot @Configuration classes`);
       for (const configurationAdapter of context.configurationAdapters) {
-        await configurationAdapter.bind(server, context.diOptions.iocContainer);
+        await configurationAdapter.bind(
+          framework,
+          context.diOptions.iocContainer
+        );
       }
 
       this.logger.info(`Binding Node-Boot @ConfigurationProperties classes`);
@@ -57,7 +60,7 @@ export abstract class BaseApplication<TServer = any, TRouter = any> {
           basePath: context.applicationOptions.apiOptions?.routePrefix,
           controllers: context.controllerClasses
         },
-        server,
+        framework,
         router
       );
     }

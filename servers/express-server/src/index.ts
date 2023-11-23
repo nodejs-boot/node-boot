@@ -1,1 +1,1 @@
-export { ExpressApplication } from "./ExpressApplication";
+export { ExpressServer } from "./ExpressServer";

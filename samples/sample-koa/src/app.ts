@@ -15,7 +15,7 @@ import { MultipleConfigurations } from "./config/MultipleConfigurations";
 import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
-import { KoaApplication } from "@node-boot/koa-server";
+import { KoaServer } from "@node-boot/koa-server";
 import { EnableOpenApi } from "@node-boot/openapi";
 
 @EnableDI(Container)
@@ -44,7 +44,7 @@ import { EnableOpenApi } from "@node-boot/openapi";
 })
 export class FactsServiceApp {
   static start() {
-    NodeBoot.run(KoaApplication)
+    NodeBoot.run(KoaServer)
       .then((app) => {
         app.listen();
         console.info("Node-Boot application started successfully");
