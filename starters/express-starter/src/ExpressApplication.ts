@@ -17,7 +17,6 @@ export class ExpressApplication extends BaseApplication<express.Application> {
     const context = ApplicationContext.get();
 
     const application = new ExpressApplication();
-    await application.init();
     await application.configure(application.getServer());
 
     // Bind application container through adapter

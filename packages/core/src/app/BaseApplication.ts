@@ -19,6 +19,9 @@ export abstract class BaseApplication<TServer> {
   abstract getServer(): TServer;
 
   protected async configure(server: TServer) {
+    // Initialize configuration and logging
+    await this.init();
+
     const context = ApplicationContext.get();
     if (context.diOptions) {
       for (const configurationAdapter of context.configurationAdapters) {
