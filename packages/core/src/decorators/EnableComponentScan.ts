@@ -65,7 +65,6 @@ export function importClassesFromDirectories(
 
   const allFiles = directories.reduce((allDirs, dir) => {
     // Replace \ with / for glob
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     return allDirs.concat(
       require("glob").sync(path.normalize(dir).replace(/\\/g, "/"))
     );
