@@ -1,0 +1,45 @@
+{
+  "name": "@node-boot/fastify-server",
+  "version": "1.0.0",
+  "description": "The first typescript example for the Monorepo example",
+  "author": "Manuel Santos <ney.br.santos@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "monorepo",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejs-boot/node-boot.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean:build": "rimraf ./dist",
+    "dev": "nodemon",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "pnpm lint --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test": "jest",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@node-boot/context": "1.0.0",
+    "@node-boot/core": "1.0.0",
+    "@fastify/cookie": "^9.0.4",
+    "@fastify/session": "^10.4.0",
+    "@fastify/multipart": "^7.7.3",
+    "@fastify/view": "^8.0.0",
+    "template-url": "^1.0.0",
+    "handlebars": "^4.7.8"
+  },
+  "peerDependencies": {
+    "routing-controllers": ">=0.10.4",
+    "fastify": ">=4.21.0"
+  }
+}
