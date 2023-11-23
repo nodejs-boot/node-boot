@@ -4,7 +4,7 @@ import {
   ApplicationOptions
 } from "@node-boot/context";
 import { RoutingControllersOptions } from "routing-controllers/types/RoutingControllersOptions";
-import { BeansConfigurationAdapter } from "./adapters";
+import { BeansConfigurationAdapter } from "../adapters";
 
 /**
  * Defines a class as an entry-point for a NodeJs application
@@ -15,22 +15,28 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
   return function (target: any) {
     Reflect.defineMetadata("custom:nodeBootApp", true, target);
 
+    const context = ApplicationContext.get();
+
+    context.applicationOptions = {
+      ...options,
+      environment: options?.environment ?? "development",
+      port: options?.port ?? 3000,
+      platformName: options?.platformName ?? "node-boot",
+      appName: options?.appName ?? "node-boot-app"
+    };
+
     // Bind Configurations adapters to search from @Beans under the Application class
-    ApplicationContext.get().configurationAdapters.push(
-      new BeansConfigurationAdapter(target)
-    );
+    context.configurationAdapters.push(new BeansConfigurationAdapter(target));
 
     // Bind Application Adapter
-    ApplicationContext.get().applicationAdapter = new (class
-      implements ApplicationAdapter
-    {
+    context.applicationAdapter = new (class implements ApplicationAdapter {
       bind(): RoutingControllersOptions {
         const context = ApplicationContext.get();
         return {
           /* cors: {
-                       origin: ORIGIN,
-                       credentials: CREDENTIALS
-                     },*/
+                                 origin: ORIGIN,
+                                 credentials: CREDENTIALS
+                               },*/
           classTransformer: context.classTransformer,
           classToPlainTransformOptions: context.classToPlainTransformOptions,
           plainToClassTransformOptions: context.plainToClassTransformOptions,

@@ -6,3 +6,5 @@ export * from "./EnableClassTransformer";
 export * from "./EnableComponentScan";
 export * from "./GlobalMiddlewares";
 export * from "./Interceptors";
+export * from "./NodeBootApplication";
+export * from "./EnableDI";

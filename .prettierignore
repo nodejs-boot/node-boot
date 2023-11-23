@@ -3,6 +3,3 @@
 pnpm-lock.yaml
 node_modules
 dist
-
-# Packages
-/packages

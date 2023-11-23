@@ -1,4 +1,5 @@
 import "reflect-metadata";
 
 export * from "./decorators";
-export * from "./NodeBootApplication";
+export * from "./logger";
+export * from "./app";

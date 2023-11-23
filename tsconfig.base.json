@@ -23,9 +23,10 @@
     "exactOptionalPropertyTypes": false,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
+    "esModuleInterop": true,
 
     /* Experimental Options */
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": false
+    "emitDecoratorMetadata": true
   }
 }

@@ -28,7 +28,7 @@ export function isValidUrl(url: string): boolean {
  * @public
  */
 export async function loadNodeBootConfig(options: {
-  remote: LoadConfigOptionsRemote;
+  remote?: LoadConfigOptionsRemote;
   argv: string[];
   additionalConfigs?: AppConfig[];
 }): Promise<{ config: ConfigService }> {

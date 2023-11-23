@@ -3,6 +3,8 @@
  */
 export interface ApplicationOptions {
   environment?: string;
+  platformName?: string;
+  appName?: string;
   port?: number;
 
   /**

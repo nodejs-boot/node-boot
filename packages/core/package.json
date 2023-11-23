@@ -30,12 +30,14 @@
   },
   "dependencies": {
     "@node-boot/context": "1.0.0",
+    "@node-boot/config": "1.0.0",
     "class-transformer": "^0.5.1",
-    "winston": "^3.10.0",
+    "reflect-metadata": "^0.1.13",
     "lodash": "^4.17.21",
     "logform": "^2.5.1"
   },
   "peerDependencies": {
-    "routing-controllers": ">=0.10.4"
+    "routing-controllers": ">=0.10.4",
+    "winston": ">=3.10.0"
   }
 }

@@ -1,10 +1,10 @@
-import type { ConfigurationAdapter, IocContainer } from "@node-boot/context";
-import { BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY } from "@node-boot/context";
-
-export type BeansContext<TApplication> = {
-  iocContainer: IocContainer;
-  application: TApplication;
-};
+import {
+  BEAN_METADATA_KEY,
+  BEAN_NAME_METADATA_KEY,
+  BeansContext,
+  ConfigurationAdapter,
+  IocContainer
+} from "@node-boot/context";
 
 export class BeansConfigurationAdapter implements ConfigurationAdapter {
   constructor(private readonly target: Function) {}
