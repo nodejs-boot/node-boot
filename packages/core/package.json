@@ -31,6 +31,11 @@
   "dependencies": {
     "@node-boot/context": "1.0.0",
     "class-transformer": "^0.5.1",
-    "routing-controllers": "^0.10.4"
+    "winston": "^3.10.0",
+    "lodash": "^4.17.21",
+    "logform": "^2.5.1"
+  },
+  "peerDependencies": {
+    "routing-controllers": ">=0.10.4"
   }
 }

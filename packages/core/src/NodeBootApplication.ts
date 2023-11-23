@@ -1,10 +1,10 @@
 import {
-  ApplicationOptions,
+  ApplicationAdapter,
   ApplicationContext,
-  ApplicationAdapter
+  ApplicationOptions
 } from "@node-boot/context";
 import { RoutingControllersOptions } from "routing-controllers/types/RoutingControllersOptions";
-import { BeansConfigurationAdapter } from "./adapters/BeansConfigurationAdapter";
+import { BeansConfigurationAdapter } from "./adapters";
 
 /**
  * Defines a class as an entry-point for a NodeJs application
@@ -28,9 +28,9 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
         const context = ApplicationContext.get();
         return {
           /* cors: {
-             origin: ORIGIN,
-             credentials: CREDENTIALS
-           },*/
+                       origin: ORIGIN,
+                       credentials: CREDENTIALS
+                     },*/
           classTransformer: context.classTransformer,
           classToPlainTransformOptions: context.classToPlainTransformOptions,
           plainToClassTransformOptions: context.plainToClassTransformOptions,

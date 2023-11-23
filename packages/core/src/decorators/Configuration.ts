@@ -1,5 +1,5 @@
 import { ApplicationContext } from "@node-boot/context";
-import { BeansConfigurationAdapter } from "./adapters/BeansConfigurationAdapter";
+import { BeansConfigurationAdapter } from "../adapters";
 
 export const IS_CONFIGURATION_KEY = Symbol("isConfiguration");
 

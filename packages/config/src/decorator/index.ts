@@ -1,0 +1,1 @@
+export { ConfigurationProperties } from "./ConfigurationProperties";

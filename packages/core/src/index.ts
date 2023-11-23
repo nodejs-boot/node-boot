@@ -1,6 +1,4 @@
-/**
- * Hello World
- */
-export function helloWorld() {
-    return `Hello`;
-}
+import "reflect-metadata";
+
+export * from "./decorators";
+export * from "./NodeBootApplication";
