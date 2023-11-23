@@ -63,6 +63,15 @@ importers:
         specifier: ^5.1.6
         version: 5.1.6
 
+  packages/authorization:
+    dependencies:
+      '@node-boot/context':
+        specifier: 1.0.0
+        version: link:../context
+      routing-controllers:
+        specifier: '>=0.10.4'
+        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
+
   packages/config:
     dependencies:
       '@backstage/cli-common':
@@ -93,12 +102,18 @@ importers:
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
+      inversify:
+        specifier: '>=6.0.1'
+        version: 6.0.1
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
       routing-controllers:
         specifier: '>=0.10.4'
         version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
+      typedi:
+        specifier: '>=0.10.0'
+        version: 0.10.0
 
   packages/core:
     dependencies:
@@ -157,6 +172,9 @@ importers:
 
   samples/sample-express:
     dependencies:
+      '@node-boot/authorization':
+        specifier: 1.0.0
+        version: link:../../packages/authorization
       '@node-boot/config':
         specifier: 1.0.0
         version: link:../../packages/config
@@ -3150,6 +3168,10 @@ packages:
 
   /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+
+  /inversify@6.0.1:
+    resolution: {integrity: sha512-B3ex30927698TJENHR++8FfEaJGqoWOgI6ZY5Ht/nLUsFCwHn6akbwtnUAPCgUepAnTpe2qHxhDNjoKLyz6rgQ==}
+    dev: false
 
   /ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}

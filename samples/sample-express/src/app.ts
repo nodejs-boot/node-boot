@@ -14,6 +14,8 @@ import { UserController } from "./controllers/users.controller";
 import { LoggingMiddleware } from "./middlewares/LoggingMiddleware";
 import { MultipleConfigurations } from "./config/MultipleConfigurations";
 import { ErrorMiddleware } from "./middlewares/error.middleware";
+import { EnableAuthorization } from "@node-boot/authorization";
+import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -31,10 +33,7 @@ import { ErrorMiddleware } from "./middlewares/error.middleware";
   ]
 })
 * */
-/*
-@GlobalMiddlewares([
-  LoggingMiddleware
-])*/
+@EnableAuthorization(LoggedInUserResolver)
 @NodeBootApplication({
   environment: "development",
   port: 3000

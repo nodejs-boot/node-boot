@@ -1,9 +1,9 @@
-import { ExpressMiddlewareInterface, Middleware } from "routing-controllers";
-import { Inject, Service } from "typedi";
+import { ExpressMiddlewareInterface } from "routing-controllers";
+import { Inject } from "typedi";
 import { Logger } from "winston";
+import { Middleware } from "@node-boot/context";
 
 @Middleware({ type: "before" })
-@Service()
 export class LoggingMiddleware implements ExpressMiddlewareInterface {
   @Inject()
   private logger: Logger;

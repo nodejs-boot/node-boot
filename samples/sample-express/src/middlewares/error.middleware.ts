@@ -1,24 +1,22 @@
-import {
-  ExpressErrorMiddlewareInterface,
-  Middleware
-} from "routing-controllers";
-import { Service } from "typedi";
+import { ExpressErrorMiddlewareInterface } from "routing-controllers";
+import { Inject } from "typedi";
+import { Logger } from "winston";
+import { Middleware } from "@node-boot/context";
 
 @Middleware({ type: "after" })
-@Service()
 export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
-  error(
-    error: any,
-    request: any,
-    response: any,
-    next: (err?: any) => any
-  ): void {
+  @Inject()
+  private logger: Logger;
+
+  error(error: any, req: any, res: any, next: (err?: any) => any): void {
     try {
       const status: number = error.status || 500;
       const message: string = error.message || "Something went wrong";
 
-      // logger.error(`[${req.method}] ${req.path} >> StatusCode:: ${status}, Message:: ${message}`);
-      response.status(status).json({ message });
+      this.logger.error(
+        `[${req.method}] ${req.path} >> StatusCode:: ${status}, Message:: ${message}`
+      );
+      res.status(status).json({ message });
     } catch (error) {
       next(error);
     }

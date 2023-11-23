@@ -1,6 +1,5 @@
 import {
   Body,
-  Controller,
   Delete,
   Get,
   HttpCode,
@@ -9,17 +8,18 @@ import {
   Put,
   UseBefore
 } from "routing-controllers";
-import { OpenAPI } from "routing-controllers-openapi";
 import { UserService } from "../services/users.service";
 import { User } from "../interfaces/users.interface";
-import { Inject, Service } from "typedi";
+import { Inject } from "typedi";
 import { ValidationMiddleware } from "../middlewares/validation.middleware";
 import { CreateUserDto, UpdateUserDto } from "../dtos/users.dto";
 import { BackendConfigProperties } from "../config/BackendConfigProperties";
 import { Logger } from "winston";
+import { Controller } from "@node-boot/context";
+import { OpenAPI } from "@node-boot/openapi";
+import { Authorized } from "@node-boot/authorization";
 
 @Controller()
-@Service()
 export class UserController {
   constructor(
     private readonly user: UserService,
@@ -30,6 +30,7 @@ export class UserController {
 
   @Get("/users")
   @OpenAPI({ summary: "Return a list of users" })
+  @Authorized()
   async getUsers() {
     this.logger.info(
       `Injected backend configuration properties: ${JSON.stringify(

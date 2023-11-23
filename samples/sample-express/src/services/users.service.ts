@@ -1,16 +1,16 @@
-import { Inject, Service } from "typedi";
 import { User } from "../interfaces/users.interface";
 import { UserModel } from "../models/users.model";
 import { HttpException } from "../exceptions/httpException";
 import { CreateUserDto } from "../dtos/users.dto";
 import { Logger } from "winston";
 import { ConfigService } from "@node-boot/config";
+import { Service } from "@node-boot/context";
 
 @Service()
 export class UserService {
   constructor(
     private readonly logger: Logger,
-    @Inject() private readonly configService: ConfigService
+    private readonly configService: ConfigService
   ) {}
 
   public async findAllUser(): Promise<User[]> {

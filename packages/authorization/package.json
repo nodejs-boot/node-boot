@@ -1,5 +1,5 @@
 {
-  "name": "@node-boot/context",
+  "name": "@node-boot/authorization",
   "version": "1.0.0",
   "description": "The first typescript example for the Monorepo example",
   "author": "Manuel Santos <ney.br.santos@gmail.com>",
@@ -29,21 +29,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "reflect-metadata": "^0.1.13",
-    "class-transformer": "^0.5.1"
+    "@node-boot/context": "1.0.0"
   },
-  "devDependencies": {},
   "peerDependencies": {
-    "routing-controllers": ">=0.10.4",
-    "typedi": ">=0.10.0",
-    "inversify": ">=6.0.1"
-  },
-  "peerDependenciesMeta": {
-    "typedi": {
-      "optional": true
-    },
-    "inversify": {
-      "optional": true
-    }
+    "routing-controllers": ">=0.10.4"
   }
 }
