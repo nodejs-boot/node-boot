@@ -1,9 +1,9 @@
 import { ApplicationContext } from "@node-boot/context";
 import express from "express";
-import { useContainer, useExpressServer } from "routing-controllers";
+import { useExpressServer } from "routing-controllers";
 import { BaseApplication } from "@node-boot/core";
 
-export class ExpressApplication extends BaseApplication {
+export class ExpressApplication extends BaseApplication<express.Application> {
   public expressServer: express.Application;
 
   constructor() {
@@ -18,23 +18,7 @@ export class ExpressApplication extends BaseApplication {
 
     const application = new ExpressApplication();
     await application.init();
-
-    if (context.diOptions) {
-      for (const configurationAdapter of context.configurationAdapters) {
-        await configurationAdapter.bind(
-          application.expressServer,
-          context.diOptions.iocContainer
-        );
-      }
-
-      for (const configurationPropertiesAdapter of context.configurationPropertiesAdapters) {
-        configurationPropertiesAdapter.bind(context.diOptions.iocContainer);
-      }
-
-      // it's important to set container before any operation you do with routing-controllers,
-      // including importing controllers
-      useContainer(context.diOptions.iocContainer, context.diOptions.options);
-    }
+    await application.configure(application.getServer());
 
     // Bind application container through adapter
     if (ApplicationContext.get().applicationAdapter) {
@@ -42,14 +26,7 @@ export class ExpressApplication extends BaseApplication {
       useExpressServer(application.expressServer, configs);
     } else {
       throw new Error(
-        "Error stating Application. Please enable NodeBoot application using @NodeBootExpressApplication or @NodeBootKoaApplication"
-      );
-    }
-
-    if (context.openApi) {
-      context.openApi.bind(
-        application.expressServer,
-        context.controllerClasses
+        "Error stating Application. Please enable NodeBoot application using @NodeBootApplication"
       );
     }
 
@@ -71,7 +48,7 @@ export class ExpressApplication extends BaseApplication {
     });
   }
 
-  public getServer() {
+  getServer(): express.Application {
     return this.expressServer;
   }
 }
