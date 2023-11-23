@@ -7,11 +7,7 @@ import { CurrentUser as InnerCurrentUser } from "routing-controllers";
  * @param args Arguments for routing-controllers @CurrentUser decorator
  */
 export function CurrentUser(...args: Parameters<typeof InnerCurrentUser>) {
-  return <TFunction extends Function>(
-    target: TFunction,
-    methodName: string,
-    index: number
-  ) => {
+  return (target: Object, methodName: string, index: number) => {
     InnerCurrentUser(...args)(target, methodName, index);
   };
 }

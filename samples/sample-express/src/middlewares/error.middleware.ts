@@ -1,7 +1,6 @@
 import { ExpressErrorMiddlewareInterface } from "routing-controllers";
-import { Inject } from "typedi";
 import { Logger } from "winston";
-import { Middleware } from "@node-boot/context";
+import { Inject, Middleware } from "@node-boot/context";
 
 @Middleware({ type: "after" })
 export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {

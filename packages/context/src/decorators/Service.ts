@@ -1,5 +1,4 @@
-import { decorateDi, DiOptions } from "../di/makeDiDecoration";
-import { Token } from "../di/Token";
+import { decorateDi, DiOptions, Token } from "../ioc";
 import { ComponentOptions } from "../options/ComponentOptions";
 
 /**

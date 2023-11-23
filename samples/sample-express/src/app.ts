@@ -16,6 +16,7 @@ import { MultipleConfigurations } from "./config/MultipleConfigurations";
 import { ErrorMiddleware } from "./middlewares/error.middleware";
 import { EnableAuthorization } from "@node-boot/authorization";
 import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
+import { DefaultAuthorizationResolver } from "./auth/DefaultAuthorizationResolver";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -33,7 +34,7 @@ import { LoggedInUserResolver } from "./auth/LoggedInUserResolver";
   ]
 })
 * */
-@EnableAuthorization(LoggedInUserResolver)
+@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @NodeBootApplication({
   environment: "development",
   port: 3000

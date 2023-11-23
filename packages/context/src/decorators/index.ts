@@ -4,3 +4,4 @@ export * from "./Component";
 export * from "./Service";
 export * from "./Middleware";
 export * from "./Middleware";
+export * from "./Inject";

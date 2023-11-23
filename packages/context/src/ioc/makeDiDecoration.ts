@@ -1,7 +1,4 @@
-import { ComponentOptions } from "../options/ComponentOptions";
-import { Token } from "./Token";
-
-export type DiOptions = ComponentOptions | string | Token<unknown>;
+import { DiOptions } from "./types";
 
 /**
  * Apply dependency injection decorator if dependency injection framework is available

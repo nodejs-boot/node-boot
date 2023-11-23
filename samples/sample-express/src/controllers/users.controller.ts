@@ -10,12 +10,11 @@ import {
 } from "routing-controllers";
 import { UserService } from "../services/users.service";
 import { User } from "../interfaces/users.interface";
-import { Inject } from "typedi";
 import { ValidationMiddleware } from "../middlewares/validation.middleware";
 import { CreateUserDto, UpdateUserDto } from "../dtos/users.dto";
 import { BackendConfigProperties } from "../config/BackendConfigProperties";
 import { Logger } from "winston";
-import { Controller } from "@node-boot/context";
+import { Controller, Inject } from "@node-boot/context";
 import { OpenAPI } from "@node-boot/openapi";
 import { Authorized } from "@node-boot/authorization";
 
@@ -30,7 +29,6 @@ export class UserController {
 
   @Get("/users")
   @OpenAPI({ summary: "Return a list of users" })
-  @Authorized()
   async getUsers() {
     this.logger.info(
       `Injected backend configuration properties: ${JSON.stringify(
@@ -52,6 +50,7 @@ export class UserController {
   @HttpCode(201)
   @UseBefore(ValidationMiddleware(CreateUserDto))
   @OpenAPI({ summary: "Create a new user" })
+  @Authorized()
   async createUser(@Body() userData: User) {
     const createUserData: User = await this.user.createUser(userData);
     return { data: createUserData, message: "created" };
