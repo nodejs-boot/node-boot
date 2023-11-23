@@ -20,8 +20,10 @@ export class ExpressApplication extends BaseApplication<express.Application> {
     await application.configure(application.getServer());
 
     // Bind application container through adapter
-    if (ApplicationContext.get().applicationAdapter) {
-      const configs = ApplicationContext.get().applicationAdapter!.bind();
+    if (context.applicationAdapter) {
+      const configs = context.applicationAdapter.bind(
+        context.diOptions?.iocContainer
+      );
       useExpressServer(application.expressServer, configs);
     } else {
       throw new Error(

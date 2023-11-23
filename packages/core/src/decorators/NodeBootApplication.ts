@@ -1,7 +1,8 @@
 import {
   ApplicationAdapter,
   ApplicationContext,
-  ApplicationOptions
+  ApplicationOptions,
+  IocContainer
 } from "@node-boot/context";
 import { RoutingControllersOptions } from "routing-controllers/types/RoutingControllersOptions";
 import { BeansConfigurationAdapter } from "../adapters";

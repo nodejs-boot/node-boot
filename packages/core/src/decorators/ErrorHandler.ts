@@ -1,5 +1,5 @@
-import { Middleware } from "./Middleware";
 import { ExpressErrorMiddlewareInterface } from "routing-controllers";
+import { Middleware } from "./Middleware";
 import { ApplicationContext } from "@node-boot/context";
 
 /**
