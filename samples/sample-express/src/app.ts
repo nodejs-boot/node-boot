@@ -39,7 +39,7 @@ import { MultipleConfigurations } from "./config/MultipleConfigurations";
   environment: "development",
   port: 3000
 })
-export class FactsServiceApp extends BaseApplication {
+export class FactsServiceApp {
   static start() {
     ExpressApplication.run()
       .then((app) => {
