@@ -3,3 +3,4 @@
 
 # Ensure files are linted before commit
 pnpm lint-staged
+pnpm lint-format:fix
