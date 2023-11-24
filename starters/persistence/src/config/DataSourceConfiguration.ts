@@ -8,7 +8,7 @@ export class DataSourceConfiguration {
   public dataSourceConfig({ config }: BeansContext): DataSourceOptions {
     return {
       type: "better-sqlite3",
-      database: "express-sample.sql"
+      database: "express-sample.db"
     };
   }
 }
