@@ -7,10 +7,10 @@
  * Notice: unlike the other hooks, pass an error to the done function is not supported.
  */
 export interface FastifyErrorMiddlewareInterface<TRequest = any, TReply = any> {
-  useError<TError extends Error>(
-    request: TRequest,
-    reply: TReply,
-    error: TError,
-    done: () => void
-  ): any;
+    useError<TError extends Error>(
+        request: TRequest,
+        reply: TReply,
+        error: TError,
+        done: () => void,
+    ): any;
 }

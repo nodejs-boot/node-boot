@@ -1,1 +1,1 @@
-export { ConfigurationPropertiesMetadata } from "./ConfigurationPropertiesMetadata";
+export {ConfigurationPropertiesMetadata} from "./ConfigurationPropertiesMetadata";

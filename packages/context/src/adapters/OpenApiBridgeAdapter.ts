@@ -1,6 +1,6 @@
-import type { NodeBootAdapter } from "./NodeBootAdapter";
-import { OpenApiAdapter } from "./OpenApiAdapter";
+import type {NodeBootAdapter} from "./NodeBootAdapter";
+import {OpenApiAdapter} from "./OpenApiAdapter";
 
 export interface OpenApiBridgeAdapter extends NodeBootAdapter {
-  bind(serverType: string): OpenApiAdapter;
+    bind(serverType: string): OpenApiAdapter;
 }

@@ -1,5 +1,5 @@
-import { Configuration, Configurations } from "@node-boot/core";
-import { ClassTransformConfiguration } from "./ClassTransformConfiguration";
+import {Configuration, Configurations} from "@node-boot/core";
+import {ClassTransformConfiguration} from "./ClassTransformConfiguration";
 
 @Configuration()
 @Configurations([ClassTransformConfiguration])

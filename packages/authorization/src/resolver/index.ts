@@ -1,2 +1,2 @@
-export { AuthorizationResolver } from "./AuthorizationResolver";
-export { CurrentUserResolver } from "./CurrentUserResolver";
+export {AuthorizationResolver} from "./AuthorizationResolver";
+export {CurrentUserResolver} from "./CurrentUserResolver";

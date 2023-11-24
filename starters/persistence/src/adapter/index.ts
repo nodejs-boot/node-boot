@@ -1,1 +1,1 @@
-export { DefaultRepositoriesAdapter } from "./DefaultRepositoriesAdapter";
+export {DefaultRepositoriesAdapter} from "./DefaultRepositoriesAdapter";

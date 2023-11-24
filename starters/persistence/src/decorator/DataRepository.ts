@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { ApplicationContext, RepositoryType } from "@node-boot/context";
+import {ApplicationContext, RepositoryType} from "@node-boot/context";
 
 function getRepositoryType(prototype: any): RepositoryType | undefined {
     while (prototype) {
@@ -22,7 +22,7 @@ export const DataRepository = (entity: Function): ClassDecorator => {
         const repoType = getRepositoryType(target.prototype);
         if (!repoType) {
             throw new Error(
-                `Invalid repository type for repository ${target.prototype.name}. Please extend from Repository, MongoRepository or TreeRepository`
+                `Invalid repository type for repository ${target.prototype.name}. Please extend from Repository, MongoRepository or TreeRepository`,
             );
         }
 
@@ -31,7 +31,7 @@ export const DataRepository = (entity: Function): ClassDecorator => {
         ApplicationContext.get().repositories.push({
             target,
             entity,
-            type: repoType
+            type: repoType,
         });
     };
 };

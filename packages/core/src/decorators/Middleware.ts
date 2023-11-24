@@ -1,5 +1,5 @@
-import { Middleware as InnerMiddleware } from "routing-controllers";
-import { decorateDi } from "@node-boot/di";
+import {Middleware as InnerMiddleware} from "routing-controllers";
+import {decorateDi} from "@node-boot/di";
 
 /**
  * Marks given class as a middleware.
@@ -10,9 +10,9 @@ import { decorateDi } from "@node-boot/di";
  *  <br/>- <b>priority</b> Middleware priority in the chain
  */
 export function Middleware(...args: Parameters<typeof InnerMiddleware>) {
-  return <TFunction extends Function>(target: TFunction) => {
-    // DI is optional and the decorator will only be applied if the DI container dependency is available.
-    decorateDi(target);
-    InnerMiddleware(...args)(target);
-  };
+    return <TFunction extends Function>(target: TFunction) => {
+        // DI is optional and the decorator will only be applied if the DI container dependency is available.
+        decorateDi(target);
+        InnerMiddleware(...args)(target);
+    };
 }

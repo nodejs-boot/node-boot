@@ -1,4 +1,4 @@
-import { Authorized as InnerAuthorized } from "routing-controllers";
+import {Authorized as InnerAuthorized} from "routing-controllers";
 
 /**
  * Marks controller action to have a special access.
@@ -31,11 +31,11 @@ export function Authorized(role: Function): Function;
  * @param roleOrRoles Arguments for routing-controllers @Authorized decorator
  */
 export function Authorized(roleOrRoles?: string | string[] | Function) {
-  return <TFunction extends Function>(
-    clsOrObject: Function | Object,
-    method?: string
-  ) => {
-    // DI is optional and the decorator will only be applied if the DI container dependency is available.
-    InnerAuthorized(roleOrRoles)(clsOrObject, method);
-  };
+    return <TFunction extends Function>(
+        clsOrObject: Function | Object,
+        method?: string,
+    ) => {
+        // DI is optional and the decorator will only be applied if the DI container dependency is available.
+        InnerAuthorized(roleOrRoles)(clsOrObject, method);
+    };
 }

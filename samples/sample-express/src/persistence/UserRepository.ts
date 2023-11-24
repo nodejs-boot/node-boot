@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn, Repository } from "typeorm";
-import { DataRepository } from "@node-boot/starter-persistence";
+import {Column, Entity, PrimaryGeneratedColumn, Repository} from "typeorm";
+import {DataRepository} from "@node-boot/starter-persistence";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  firstName: string;
+    @Column()
+    firstName: string;
 
-  @Column()
-  lastName: string;
+    @Column()
+    lastName: string;
 }
 
 @DataRepository(User)

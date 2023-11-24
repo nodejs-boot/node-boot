@@ -1,9 +1,9 @@
-import { Controller as InnerController } from "routing-controllers";
-import { decorateDi } from "@node-boot/di";
-import { ControllerOptions } from "routing-controllers/types/decorator-options/ControllerOptions";
+import {Controller as InnerController} from "routing-controllers";
+import {decorateDi} from "@node-boot/di";
+import {ControllerOptions} from "routing-controllers/types/decorator-options/ControllerOptions";
 import {
-  CONTROLLER_PATH_METADATA_KEY,
-  CONTROLLER_VERSION_METADATA_KEY
+    CONTROLLER_PATH_METADATA_KEY,
+    CONTROLLER_VERSION_METADATA_KEY,
 } from "@node-boot/context";
 
 /**
@@ -16,20 +16,24 @@ import {
  *  @param options Extra options that apply to all controller actions
  */
 export function Controller(
-  baseRoute?: string,
-  version?: string,
-  options?: ControllerOptions
+    baseRoute?: string,
+    version?: string,
+    options?: ControllerOptions,
 ) {
-  return <TFunction extends Function>(target: TFunction) => {
-    if (version !== undefined) {
-      baseRoute = baseRoute ? `/${version}${baseRoute}` : `/${version}`;
-      Reflect.defineMetadata(CONTROLLER_VERSION_METADATA_KEY, version, target);
-    }
+    return <TFunction extends Function>(target: TFunction) => {
+        if (version !== undefined) {
+            baseRoute = baseRoute ? `/${version}${baseRoute}` : `/${version}`;
+            Reflect.defineMetadata(
+                CONTROLLER_VERSION_METADATA_KEY,
+                version,
+                target,
+            );
+        }
 
-    Reflect.defineMetadata(CONTROLLER_PATH_METADATA_KEY, baseRoute, target);
+        Reflect.defineMetadata(CONTROLLER_PATH_METADATA_KEY, baseRoute, target);
 
-    // DI is optional and the decorator will only be applied if the DI container dependency is available.
-    decorateDi(target);
-    InnerController(baseRoute, options)(target);
-  };
+        // DI is optional and the decorator will only be applied if the DI container dependency is available.
+        decorateDi(target);
+        InnerController(baseRoute, options)(target);
+    };
 }

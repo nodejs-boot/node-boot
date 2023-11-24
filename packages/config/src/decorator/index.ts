@@ -1,1 +1,1 @@
-export { ConfigurationProperties } from "./ConfigurationProperties";
+export {ConfigurationProperties} from "./ConfigurationProperties";

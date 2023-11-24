@@ -1,2 +1,2 @@
-export { loadNodeBootConfig } from "./config";
-export { ConfigService } from "./ConfigService";
+export {loadNodeBootConfig} from "./config";
+export {ConfigService} from "./ConfigService";

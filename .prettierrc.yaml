@@ -1,3 +1,6 @@
 tabWidth: 4
-trailingComma: "none"
 useTabs: false
+singleQuote: false
+trailingComma: "all"
+arrowParens: "avoid"
+bracketSpacing: false

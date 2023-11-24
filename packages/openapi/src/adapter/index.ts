@@ -1,1 +1,1 @@
-export { ExpressOpenApi } from "./ExpressOpenApi";
+export {ExpressOpenApi} from "./ExpressOpenApi";

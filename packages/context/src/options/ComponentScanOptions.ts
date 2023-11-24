@@ -1,5 +1,5 @@
 export type ComponentScanOptions = {
-  controllerPaths?: string[];
-  middlewarePaths?: string[];
-  interceptorPaths?: string[];
+    controllerPaths?: string[];
+    middlewarePaths?: string[];
+    interceptorPaths?: string[];
 };

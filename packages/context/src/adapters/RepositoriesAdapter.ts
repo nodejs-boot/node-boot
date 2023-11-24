@@ -1,6 +1,6 @@
-import type { NodeBootAdapter } from "./NodeBootAdapter";
-import { IocContainer } from "../ioc";
+import type {NodeBootAdapter} from "./NodeBootAdapter";
+import {IocContainer} from "../ioc";
 
 export interface RepositoriesAdapter extends NodeBootAdapter {
-  bind(iocContainer: IocContainer): void;
+    bind(iocContainer: IocContainer): void;
 }

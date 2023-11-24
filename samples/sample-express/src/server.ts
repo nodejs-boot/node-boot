@@ -1,3 +1,3 @@
-import { FactsServiceApp } from "./app";
+import {FactsServiceApp} from "./app";
 
 FactsServiceApp.start();

@@ -1,61 +1,61 @@
-import { ApplicationContext } from "@node-boot/context";
+import {ApplicationContext} from "@node-boot/context";
 import Koa from "koa";
 import Router from "@koa/router";
-import { createServer, KoaDriver } from "routing-controllers";
-import { BaseServer } from "@node-boot/core";
+import {createServer, KoaDriver} from "routing-controllers";
+import {BaseServer} from "@node-boot/core";
 
 export class KoaServer extends BaseServer<Koa, Router> {
-  private readonly framework: Koa;
-  private readonly router: Router;
+    private readonly framework: Koa;
+    private readonly router: Router;
 
-  constructor() {
-    super("koa");
-    this.framework = new Koa();
-    this.router = new Router();
-  }
-
-  async run(): Promise<KoaServer> {
-    const context = ApplicationContext.get();
-
-    await this.configure(this.framework, this.router);
-
-    // Bind application container through adapter
-    if (context.applicationAdapter) {
-      const configs = context.applicationAdapter.bind(
-        context.diOptions?.iocContainer
-      );
-
-      const driver = new KoaDriver(this.framework, this.router);
-      createServer(driver, configs);
-    } else {
-      throw new Error(
-        "Error stating Application. Please enable NodeBoot application using @NodeBootApplication"
-      );
+    constructor() {
+        super("koa");
+        this.framework = new Koa();
+        this.router = new Router();
     }
 
-    return this;
-  }
+    async run(): Promise<KoaServer> {
+        const context = ApplicationContext.get();
 
-  public listen() {
-    const context = ApplicationContext.get();
+        await this.configure(this.framework, this.router);
 
-    this.framework.listen(context.applicationOptions.port, () => {
-      this.logger.info(`=================================`);
-      this.logger.info(
-        `======= ENV: ${context.applicationOptions.environment} =======`
-      );
-      this.logger.info(
-        `🚀 App listening on the port ${context.applicationOptions.port}`
-      );
-      this.logger.info(`=================================`);
-    });
-  }
+        // Bind application container through adapter
+        if (context.applicationAdapter) {
+            const configs = context.applicationAdapter.bind(
+                context.diOptions?.iocContainer,
+            );
 
-  getFramework(): Koa {
-    return this.framework;
-  }
+            const driver = new KoaDriver(this.framework, this.router);
+            createServer(driver, configs);
+        } else {
+            throw new Error(
+                "Error stating Application. Please enable NodeBoot application using @NodeBootApplication",
+            );
+        }
 
-  getRouter(): Router {
-    return this.router;
-  }
+        return this;
+    }
+
+    public listen() {
+        const context = ApplicationContext.get();
+
+        this.framework.listen(context.applicationOptions.port, () => {
+            this.logger.info(`=================================`);
+            this.logger.info(
+                `======= ENV: ${context.applicationOptions.environment} =======`,
+            );
+            this.logger.info(
+                `🚀 App listening on the port ${context.applicationOptions.port}`,
+            );
+            this.logger.info(`=================================`);
+        });
+    }
+
+    getFramework(): Koa {
+        return this.framework;
+    }
+
+    getRouter(): Router {
+        return this.router;
+    }
 }

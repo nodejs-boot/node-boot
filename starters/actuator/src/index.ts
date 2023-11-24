@@ -1,1 +1,1 @@
-export { EnableActuator } from "./decorator";
+export {EnableActuator} from "./decorator";

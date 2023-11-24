@@ -1,2 +1,2 @@
-export { DataSourceConfiguration } from "./DataSourceConfiguration";
-export { PersistenceConfiguration } from "./PersistenceConfiguration";
+export {DataSourceConfiguration} from "./DataSourceConfiguration";
+export {PersistenceConfiguration} from "./PersistenceConfiguration";

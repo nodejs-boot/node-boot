@@ -1,7 +1,7 @@
-import { Bean, Configuration } from "@node-boot/core";
-import { DataSource, EntityManager } from "typeorm";
-import { ApplicationContext, BeansContext } from "@node-boot/context";
-import { DataSourceOptions } from "typeorm/data-source/DataSourceOptions";
+import {Bean, Configuration} from "@node-boot/core";
+import {DataSource, EntityManager} from "typeorm";
+import {ApplicationContext, BeansContext} from "@node-boot/context";
+import {DataSourceOptions} from "typeorm/data-source/DataSourceOptions";
 
 /**
  * The PersistenceConfiguration class is a configuration class that is responsible for configuring and providing the
@@ -10,18 +10,18 @@ import { DataSourceOptions } from "typeorm/data-source/DataSourceOptions";
 @Configuration()
 export class PersistenceConfiguration {
     @Bean()
-    public dataSource({ iocContainer, logger }: BeansContext): DataSource {
+    public dataSource({iocContainer, logger}: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
         const config = iocContainer.get(
-            "datasource-config"
+            "datasource-config",
         ) as DataSourceOptions;
 
         const entities = ApplicationContext.get().repositories.map(
-            (repository) => repository.entity
+            repository => repository.entity,
         );
         const dataSource = new DataSource({
             ...config,
-            entities
+            entities,
         });
 
         dataSource
@@ -32,18 +32,18 @@ export class PersistenceConfiguration {
                 if (context.diOptions) {
                     logger.info(`Binding persistence repositories`);
                     context.repositoriesAdapter?.bind(
-                        context.diOptions.iocContainer
+                        context.diOptions.iocContainer,
                     );
                 } else {
                     throw new Error(
-                        "diOptions with an IOC Container is required for Data Repositories"
+                        "diOptions with an IOC Container is required for Data Repositories",
                     );
                 }
             })
-            .catch((err) => {
+            .catch(err => {
                 logger.error(
                     "Error during Persistence DataSource initialization",
-                    err
+                    err,
                 );
                 process.exit(1);
             });
@@ -52,10 +52,7 @@ export class PersistenceConfiguration {
     }
 
     @Bean()
-    public entityManager({
-        iocContainer,
-        logger
-    }: BeansContext): EntityManager {
+    public entityManager({iocContainer, logger}: BeansContext): EntityManager {
         logger.info("Providing EntityManager");
         const dataSource = iocContainer.get(DataSource);
         logger.info("EntityManager bean provided successfully");

@@ -1,9 +1,9 @@
 import {
-  Abstract,
-  decorateInjection,
-  InjectionOptions,
-  Newable,
-  Token
+    Abstract,
+    decorateInjection,
+    InjectionOptions,
+    Newable,
+    Token,
 } from "../ioc";
 
 /**
@@ -16,7 +16,7 @@ export function Inject(serviceName?: string): Function;
 export function Inject(symbolValue?: symbol): Function;
 export function Inject(token: Token<unknown>): Function;
 export function Inject(options?: InjectionOptions): Function {
-  return (target: Object, propertyName: string | Symbol, index?: number) => {
-    decorateInjection(target, propertyName, index, options);
-  };
+    return (target: Object, propertyName: string | Symbol, index?: number) => {
+        decorateInjection(target, propertyName, index, options);
+    };
 }

@@ -1,3 +1,3 @@
 export interface NodeBootAdapter {
-  bind(...bindings: any[]): void;
+    bind(...bindings: any[]): void;
 }

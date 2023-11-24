@@ -1,1 +1,1 @@
-export { DefaultActuatorAdapter } from "./DefaultActuatorAdapter";
+export {DefaultActuatorAdapter} from "./DefaultActuatorAdapter";

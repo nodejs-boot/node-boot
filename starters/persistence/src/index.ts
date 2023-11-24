@@ -1,1 +1,1 @@
-export { DataRepository, EnableRepositories } from "./decorator";
+export {DataRepository, EnableRepositories} from "./decorator";

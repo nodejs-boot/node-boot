@@ -1,68 +1,68 @@
 {
-  "name": "@node-boot/koa-sample",
-  "version": "1.0.0",
-  "description": "The first typescript example for the Monorepo example",
-  "author": "Manuel Santos <ney.br.santos@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "monorepo",
-    "typescript"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nodejs-boot/node-boot.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "start": "pnpm run build && node dist/server.js",
-    "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
-    "dev": "NODE_ENV=development nodemon",
-    "build": "tsc -p tsconfig.build.json",
-    "clean:build": "rimraf ./dist",
-    "lint": "eslint . --ext .js,.ts",
-    "lint:fix": "pnpm lint --fix",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
-    "test": "jest",
-    "typecheck": "tsc"
-  },
-  "dependencies": {
-    "@node-boot/config": "1.0.0",
-    "@node-boot/context": "1.0.0",
-    "@node-boot/core": "1.0.0",
-    "@node-boot/openapi": "1.0.0",
-    "@node-boot/koa-server": "1.0.0",
-    "@node-boot/authorization": "1.0.0",
-    "@node-boot/di": "1.0.0",
-    "@node-boot/starter-actuator": "1.0.0",
-    "routing-controllers": "^0.10.4",
-    "reflect-metadata": "^0.1.13",
-    "koa": ">=2.14.2",
-    "@koa/router": "^12.0.0",
-    "koa-bodyparser": "^4.4.1",
-    "@koa/multer": "^3.0.2",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.0",
-    "@koa/cors": "^4.0.0",
-    "koa-helmet": "^7.0.2",
-    "koa2-swagger-ui": "^5.8.0",
-    "hpp": "^0.2.3",
-    "minimist": "^1.2.8",
-    "typedi": "^0.10.0",
-    "winston": "^3.10.0"
-  },
-  "devDependencies": {
-    "@types/body-parser": "^1.19.2",
-    "@types/koa-cors": "^0.0.2",
-    "@types/koa": "^2.13.8",
-    "@types/koa-bodyparser": "^4.3.10",
-    "@types/koa-helmet": "^6.0.4",
-    "@types/jest": "^28.1.6",
-    "@types/node": "^20.4.2",
-    "@types/supertest": "^2.0.12"
-  }
+    "name": "@node-boot/koa-sample",
+    "version": "1.0.0",
+    "description": "The first typescript example for the Monorepo example",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "monorepo",
+        "typescript"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "start": "pnpm run build && node dist/server.js",
+        "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
+        "dev": "NODE_ENV=development nodemon",
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@node-boot/config": "1.0.0",
+        "@node-boot/context": "1.0.0",
+        "@node-boot/core": "1.0.0",
+        "@node-boot/openapi": "1.0.0",
+        "@node-boot/koa-server": "1.0.0",
+        "@node-boot/authorization": "1.0.0",
+        "@node-boot/di": "1.0.0",
+        "@node-boot/starter-actuator": "1.0.0",
+        "routing-controllers": "^0.10.4",
+        "reflect-metadata": "^0.1.13",
+        "koa": ">=2.14.2",
+        "@koa/router": "^12.0.0",
+        "koa-bodyparser": "^4.4.1",
+        "@koa/multer": "^3.0.2",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "@koa/cors": "^4.0.0",
+        "koa-helmet": "^7.0.2",
+        "koa2-swagger-ui": "^5.8.0",
+        "hpp": "^0.2.3",
+        "minimist": "^1.2.8",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.19.2",
+        "@types/koa-cors": "^0.0.2",
+        "@types/koa": "^2.13.8",
+        "@types/koa-bodyparser": "^4.3.10",
+        "@types/koa-helmet": "^6.0.4",
+        "@types/jest": "^28.1.6",
+        "@types/node": "^20.4.2",
+        "@types/supertest": "^2.0.12"
+    }
 }

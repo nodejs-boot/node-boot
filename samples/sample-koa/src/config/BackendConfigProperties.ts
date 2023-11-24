@@ -1,10 +1,10 @@
-import { ConfigurationProperties } from "@node-boot/config";
+import {ConfigurationProperties} from "@node-boot/config";
 
 @ConfigurationProperties({
-  configPath: "backend",
-  configName: "backend-config"
+    configPath: "backend",
+    configName: "backend-config",
 })
 export class BackendConfigProperties {
-  baseUrl: string;
-  allowInsecureCookie: boolean;
+    baseUrl: string;
+    allowInsecureCookie: boolean;
 }

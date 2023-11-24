@@ -1,4 +1,4 @@
-import { OpenAPI as InnerOpenAPI } from "routing-controllers-openapi";
+import {OpenAPI as InnerOpenAPI} from "routing-controllers-openapi";
 
 /**
  * Supplement action with additional OpenAPI Operation keywords.
@@ -11,9 +11,9 @@ import { OpenAPI as InnerOpenAPI } from "routing-controllers-openapi";
  * returning an updated Operation.
  */
 export function OpenAPI(...args: Parameters<typeof InnerOpenAPI>) {
-  return <TFunction extends Function>(
-    ...innerArgs: [Function] | [object, string, PropertyDescriptor]
-  ) => {
-    InnerOpenAPI(...args)(...innerArgs);
-  };
+    return <TFunction extends Function>(
+        ...innerArgs: [Function] | [object, string, PropertyDescriptor]
+    ) => {
+        InnerOpenAPI(...args)(...innerArgs);
+    };
 }
