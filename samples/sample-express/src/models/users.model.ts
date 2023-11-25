@@ -1,5 +1,4 @@
-// password: password
-import {User} from "../interfaces/users.interface";
+import {User} from "../persistence";
 
 export const UserModel: User[] = [
     {

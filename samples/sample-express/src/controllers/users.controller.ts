@@ -9,7 +9,6 @@ import {
     UseBefore,
 } from "routing-controllers";
 import {UserService} from "../services/users.service";
-import {User} from "../interfaces/users.interface";
 import {ValidationMiddleware} from "../middlewares/validation.middleware";
 import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {BackendConfigProperties} from "../config/BackendConfigProperties";
@@ -18,6 +17,7 @@ import {Controller} from "@node-boot/core";
 import {Inject} from "@node-boot/di";
 import {OpenAPI} from "@node-boot/openapi";
 import {Authorized} from "@node-boot/authorization";
+import {User} from "../persistence";
 
 @Controller("/users", "v1")
 export class UserController {
@@ -61,7 +61,7 @@ export class UserController {
     @UseBefore(ValidationMiddleware(UpdateUserDto))
     @OpenAPI({summary: "Update a user"})
     async updateUser(@Param("id") userId: number, @Body() userData: User) {
-        const updateUserData: User[] = await this.user.updateUser(
+        const updateUserData: User = await this.user.updateUser(
             userId,
             userData,
         );
@@ -71,7 +71,7 @@ export class UserController {
     @Delete("/:id")
     @OpenAPI({summary: "Delete a user"})
     async deleteUser(@Param("id") userId: number) {
-        const deleteUserData: User[] = await this.user.deleteUser(userId);
-        return {data: deleteUserData, message: "deleted"};
+        await this.user.deleteUser(userId);
+        return {message: `User ${userId} successfully deleted`};
     }
 }

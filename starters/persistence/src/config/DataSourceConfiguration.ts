@@ -9,6 +9,7 @@ export class DataSourceConfiguration {
         return {
             type: "better-sqlite3",
             database: "express-sample.db",
+            synchronize: true, // FIXME create tables automatically through migrations instead of synchronize
         };
     }
 }

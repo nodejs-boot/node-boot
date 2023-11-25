@@ -1,12 +1,12 @@
-import {User} from "../interfaces/users.interface";
-import {UserModel} from "../models/users.model";
 import {HttpException} from "../exceptions/httpException";
-import {CreateUserDto} from "../dtos/users.dto";
+import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {Logger} from "winston";
 import {ConfigService} from "@node-boot/config";
 import {Service} from "@node-boot/core";
 import {NotFoundError} from "routing-controllers";
-import {UserRepository} from "../persistence/UserRepository";
+import {User, UserRepository} from "../persistence";
+import {UserModel} from "../models/users.model";
+import {Optional} from "@node-boot/hammer";
 
 @Service()
 export class UserService {
@@ -14,53 +14,72 @@ export class UserService {
         private readonly logger: Logger,
         private readonly configService: ConfigService,
         private readonly userRepository: UserRepository,
-    ) {}
+    ) {
+        UserModel.forEach(user => this.userRepository.save(user));
+    }
 
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
-        const users: User[] = UserModel;
-
         const baseUrl = this.configService.getString("backend.baseUrl");
         this.logger.info(
             `Reading backend.baseUrl from app-config.yam: ${baseUrl}`,
         );
-        return users;
+        return await this.userRepository.find();
     }
 
     public async findUserById(userId: number): Promise<User> {
-        const findUser = UserModel.find(user => user.id === userId);
-        if (!findUser) throw new NotFoundError("User doesn't exist");
-        return findUser;
+        const user = await this.userRepository.findOneBy({
+            id: userId,
+        });
+        return Optional.of(user)
+            .orElseThrow(() => new NotFoundError("User doesn't exist"))
+            .get();
     }
 
     public async createUser(userData: CreateUserDto): Promise<User> {
-        const findUser = UserModel.find(user => user.email === userData.email);
-        if (findUser)
-            throw new HttpException(
-                409,
-                `This email ${userData.email} already exists`,
-            );
+        const existingUser = await this.userRepository.findOneBy({
+            email: userData.email,
+        });
 
-        return {id: UserModel.length + 1, ...userData};
+        return await Optional.of(existingUser)
+            .ifPresentThrow(
+                () =>
+                    new HttpException(
+                        409,
+                        `This email ${userData.email} already exists`,
+                    ),
+            )
+            .elseAsync(async () => await this.userRepository.save(userData));
     }
 
     public async updateUser(
         userId: number,
-        userData: CreateUserDto,
-    ): Promise<User[]> {
-        const findUser = UserModel.find(user => user.id === userId);
-        if (!findUser) throw new HttpException(409, "User doesn't exist");
-
-        return UserModel.map((user: User) => {
-            if (user.id === findUser.id) user = {id: userId, ...userData};
-            return user;
+        userData: UpdateUserDto,
+    ): Promise<User> {
+        const user = await this.userRepository.findOneBy({
+            id: userId,
         });
+
+        return await Optional.of(user)
+            .orElseThrow(() => new HttpException(409, "User doesn't exist"))
+            .map(user => {
+                return {
+                    ...user,
+                    userData,
+                };
+            })
+            .runAsync(async user => await this.userRepository.save(user));
     }
 
-    public async deleteUser(userId: number): Promise<User[]> {
-        const findUser = UserModel.find(user => user.id === userId);
-        if (!findUser) throw new HttpException(409, "User doesn't exist");
+    public async deleteUser(userId: number): Promise<void> {
+        const user = await this.userRepository.findOneBy({
+            id: userId,
+        });
 
-        return UserModel.filter(user => user.id !== findUser.id);
+        await Optional.of(user)
+            .orElseThrow(() => new HttpException(409, "User doesn't exist"))
+            .runAsync(
+                async user => await this.userRepository.delete({id: userId}),
+            );
     }
 }

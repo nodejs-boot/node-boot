@@ -158,6 +158,8 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
 
+  packages/hammer: {}
+
   packages/openapi:
     dependencies:
       '@node-boot/context':
@@ -218,6 +220,9 @@ importers:
       '@node-boot/express-server':
         specifier: 1.0.0
         version: link:../../servers/express-server
+      '@node-boot/hammer':
+        specifier: 1.0.0
+        version: link:../../packages/hammer
       '@node-boot/openapi':
         specifier: 1.0.0
         version: link:../../packages/openapi

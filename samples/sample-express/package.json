@@ -40,6 +40,7 @@
         "@node-boot/di": "1.0.0",
         "@node-boot/starter-actuator": "1.0.0",
         "@node-boot/starter-persistence": "1.0.0",
+        "@node-boot/hammer": "1.0.0",
         "routing-controllers": "^0.10.4",
         "routing-controllers-openapi": "^4.0.0",
         "reflect-metadata": "^0.1.13",
