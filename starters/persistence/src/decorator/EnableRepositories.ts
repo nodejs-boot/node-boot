@@ -1,6 +1,7 @@
 import {ApplicationContext} from "@node-boot/context";
 import {DefaultRepositoriesAdapter} from "../adapter";
 import {DataSourceConfiguration, PersistenceConfiguration} from "../config";
+import {TransactionConfiguration} from "../config/TransactionConfiguration";
 
 export const EnableRepositories = (): ClassDecorator => {
     return (target: Function) => {
@@ -13,5 +14,8 @@ export const EnableRepositories = (): ClassDecorator => {
 
         // Trigger persistence configuration
         new PersistenceConfiguration();
+
+        // Trigger Transactions configuration
+        new TransactionConfiguration();
     };
 };

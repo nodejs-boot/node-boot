@@ -1,1 +1,2 @@
-export {DataRepository, EnableRepositories} from "./decorator";
+export * from "./decorator";
+export * from "./hooks";

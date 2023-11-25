@@ -7,6 +7,11 @@ import {NotFoundError} from "routing-controllers";
 import {User, UserRepository} from "../persistence";
 import {UserModel} from "../models/users.model";
 import {Optional} from "@node-boot/extension";
+import {
+    runOnTransactionCommit,
+    runOnTransactionRollback,
+    Transactional,
+} from "@node-boot/starter-persistence";
 
 @Service()
 export class UserService {
@@ -36,9 +41,14 @@ export class UserService {
             .get();
     }
 
+    @Transactional()
     public async createUser(userData: CreateUserDto): Promise<User> {
         const existingUser = await this.userRepository.findOneBy({
             email: userData.email,
+        });
+
+        runOnTransactionCommit(() => {
+            this.logger.info("Transaction was successfully committed");
         });
 
         return await Optional.of(existingUser)
@@ -52,6 +62,7 @@ export class UserService {
             .elseAsync(async () => await this.userRepository.save(userData));
     }
 
+    @Transactional()
     public async updateUser(
         userId: number,
         userData: UpdateUserDto,
@@ -71,9 +82,17 @@ export class UserService {
             .runAsync(async user => await this.userRepository.save(user));
     }
 
+    @Transactional()
     public async deleteUser(userId: number): Promise<void> {
         const user = await this.userRepository.findOneBy({
             id: userId,
+        });
+
+        runOnTransactionRollback(error => {
+            this.logger.warn(
+                "Transactions was rolled back due to error:",
+                error,
+            );
         });
 
         await Optional.of(user)
@@ -81,5 +100,9 @@ export class UserService {
             .runAsync(
                 async user => await this.userRepository.delete({id: userId}),
             );
+
+        throw new Error(
+            "Error after deleting that should rollback transaction",
+        );
     }
 }
