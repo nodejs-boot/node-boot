@@ -1,6 +1,6 @@
-# Typescript example #2
+# Node-Boot Extension package
 
-The second typescript example for the Monorepo example
+Package dedicated to utilities as extensions to the framework for better user experience and code quality.
 
 ## License
 

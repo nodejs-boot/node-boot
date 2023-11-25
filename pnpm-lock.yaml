@@ -158,7 +158,7 @@ importers:
         specifier: ^0.10.0
         version: 0.10.0
 
-  packages/hammer: {}
+  packages/extension: {}
 
   packages/openapi:
     dependencies:
@@ -220,9 +220,9 @@ importers:
       '@node-boot/express-server':
         specifier: 1.0.0
         version: link:../../servers/express-server
-      '@node-boot/hammer':
+      '@node-boot/extension':
         specifier: 1.0.0
-        version: link:../../packages/hammer
+        version: link:../../packages/extension
       '@node-boot/openapi':
         specifier: 1.0.0
         version: link:../../packages/openapi

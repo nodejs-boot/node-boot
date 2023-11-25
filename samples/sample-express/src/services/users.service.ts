@@ -6,7 +6,7 @@ import {Service} from "@node-boot/core";
 import {NotFoundError} from "routing-controllers";
 import {User, UserRepository} from "../persistence";
 import {UserModel} from "../models/users.model";
-import {Optional} from "@node-boot/hammer";
+import {Optional} from "@node-boot/extension";
 
 @Service()
 export class UserService {

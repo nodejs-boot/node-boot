@@ -1,5 +1,5 @@
 {
-    "name": "@node-boot/hammer",
+    "name": "@node-boot/extension",
     "version": "1.0.0",
     "description": "Utility components for developer experience",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
