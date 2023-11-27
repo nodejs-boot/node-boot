@@ -166,7 +166,7 @@ export class Optional<T> {
      * @return Returns a new Optional object containing the filtered value if the original Optional object is present.
      * Returns an empty Optional object if the original Optional object is not present.
      * */
-    filter(predicate: (value: T) => boolean): Optional<T | undefined> {
+    filter<V>(predicate: (value: V) => boolean): Optional<T | undefined> {
         if (this.isEmpty()) {
             return this; // Return itself if it's empty
         }
@@ -188,7 +188,7 @@ export class Optional<T> {
             }
         } else {
             // Filter single value
-            return predicate(this.value!) ? this : Optional.empty();
+            return predicate(this.value as V) ? this : Optional.empty();
         }
     }
 
@@ -270,10 +270,10 @@ export class Optional<T> {
     /**
      * The contains method  checks if the value inside the Optional object contains a given search value.
      *
-     * @param searchValue (generic type): The value to search for in the Optional object.
+     * @param searchValue (generic type) - The value to search for in the Optional object.
      * @return boolean: Returns true if the value inside the Optional object contains the search value, otherwise returns false.
      * */
-    contains(searchValue: T): boolean {
+    contains<S>(searchValue: S): boolean {
         if (this.isEmpty()) {
             return false;
         }
@@ -331,9 +331,9 @@ export class Optional<T> {
      * This function represents the asynchronous operation to be performed on the value.
      * @return A Promise that resolves to the result of the asynchronous operation performed by the callback function.
      * */
-    async runAsync<R>(callback: (value: T) => Promise<R>): Promise<R> {
+    runAsync<R>(callback: (value: T) => Promise<R>): Promise<R> {
         if (this.isPresent()) {
-            return await callback(this.value as T);
+            return callback(this.value as T);
         }
         throw new Error("Running operations in empty optional is not possible");
     }
@@ -359,9 +359,9 @@ export class Optional<T> {
      * @param callback - A function that returns a promise. This function will be executed if the optional value is empty.
      * @return A promise that resolves to the result of the callback function if the optional value is empty.
      * */
-    async elseAsync<R>(callback: () => Promise<R>): Promise<R> {
+    elseAsync<R>(callback: () => Promise<R>): Promise<R> {
         if (!this.isPresent()) {
-            return await callback();
+            return callback();
         }
         throw new Error("Else operation is only supported on empty optional");
     }
