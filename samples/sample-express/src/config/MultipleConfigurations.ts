@@ -1,7 +1,11 @@
-import {Configuration, Configurations} from "@node-boot/core";
+import {Configurations} from "@node-boot/core";
 import {SecurityConfiguration} from "./SecurityConfiguration";
 import {ClassTransformConfiguration} from "./ClassTransformConfiguration";
+import {CustomNamingStrategy} from "../persistence";
 
-@Configuration()
-@Configurations([SecurityConfiguration, ClassTransformConfiguration])
+@Configurations([
+    SecurityConfiguration,
+    ClassTransformConfiguration,
+    CustomNamingStrategy,
+])
 export class MultipleConfigurations {}

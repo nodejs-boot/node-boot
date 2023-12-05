@@ -19,10 +19,6 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
 
         context.applicationOptions = {
             ...options,
-            environment: options?.environment ?? "development",
-            port: options?.port ?? 3000,
-            platformName: options?.platformName ?? "node-boot",
-            appName: options?.appName ?? "node-boot-app",
         };
 
         // Bind Configurations adapters to search from @Beans under the Application class

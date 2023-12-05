@@ -1,0 +1,1 @@
+export {CorsProperties} from "./CorsProperties";

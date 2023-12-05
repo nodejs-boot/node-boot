@@ -124,15 +124,21 @@ export class Optional<T> {
     }
 
     /**
-     * The map method is used to transform the value inside the Optional object using a provided mapper function.
+     * The map method is used to transform the value inside the Optional object using a provided mapper function,
+     * or return a default value if the Optional is empty.
      *
      * @param mapper - A function that takes the current value of type T and returns a new value of type U.
+     * @param defaultValue - default value when the optional is empty
      * @return Returns a new Optional object with the mapped value.
+     * returns a new Optional object with the mapped value or the default Optional value.
      * Throws an error if the original Optional object is empty.
      * */
-    map<U>(mapper: (value: T) => U): Optional<U> {
+    map<U>(mapper: (value: T) => U, defaultValue?: U): Optional<U> {
         if (this.isPresent()) {
             return Optional.of(mapper(this.value!));
+        }
+        if (defaultValue) {
+            return Optional.of(defaultValue);
         }
         throw new Error("Map operation cannot be called on an empty Optional");
     }

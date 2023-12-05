@@ -2,25 +2,39 @@ import {Bean, Configuration} from "@node-boot/core";
 import {DataSource, EntityManager} from "typeorm";
 import {ApplicationContext, BeansContext} from "@node-boot/context";
 import {DataSourceOptions} from "typeorm/data-source/DataSourceOptions";
+import {PersistenceContext} from "../PersistenceContext";
+import {PERSISTENCE_CONFIG_PATH} from "../types";
+import {REQUIRES_FIELD_INJECTION_KEY} from "@node-boot/di";
 
 /**
- * The PersistenceConfiguration class is a configuration class that is responsible for configuring and providing the
- * necessary persistence components, such as the data source and entity manager.
+ * The PersistenceConfiguration class is responsible for configuring the persistence layer of the application.
+ * It defines two beans: dataSource and entityManager, which are used to manage the database connection and perform database operations.
+ *
+ * <i>Main functionalities</i>:
+ * * Configuring the DataSource bean for the persistence layer.
+ * * Initializing the DataSource and running migrations if enabled.
+ * * Binding data repositories to the DI container.
+ *
+ *  @author manusant (ney.br.santos@gmail.com)
  * */
 @Configuration()
 export class PersistenceConfiguration {
     @Bean()
-    public dataSource({iocContainer, logger}: BeansContext): DataSource {
+    public dataSource({
+        iocContainer,
+        logger,
+        config,
+    }: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
-        const config = iocContainer.get(
+        const datasourceConfig = iocContainer.get(
             "datasource-config",
         ) as DataSourceOptions;
 
-        const entities = ApplicationContext.get().repositories.map(
+        const entities = PersistenceContext.get().repositories.map(
             repository => repository.entity,
         );
         const dataSource = new DataSource({
-            ...config,
+            ...datasourceConfig,
             entities,
         });
 
@@ -28,6 +42,42 @@ export class PersistenceConfiguration {
             .initialize()
             .then(() => {
                 logger.info("Persistence DataSource successfully initialized");
+
+                // Run migrations if enabled
+                const runMigrations = config.getOptionalBoolean(
+                    `${PERSISTENCE_CONFIG_PATH}.runMigrations`,
+                );
+                if (runMigrations) {
+                    logger.info("Running migrations");
+                    dataSource
+                        .runMigrations()
+                        .then(migrations => {
+                            logger.info(
+                                `${migrations.length} migration was successfully executed`,
+                            );
+                        })
+                        .catch(reason => {
+                            logger.info(`Migrations failed due to:`, reason);
+                        });
+                }
+
+                for (const subscriber of dataSource.subscribers) {
+                    for (const fieldToInject of Reflect.getMetadata(
+                        REQUIRES_FIELD_INJECTION_KEY,
+                        subscriber,
+                    ) || []) {
+                        // Extract type metadata for field injection. This is useful for custom injection in some modules
+                        const propertyType = Reflect.getMetadata(
+                            "design:type",
+                            subscriber,
+                            fieldToInject,
+                        );
+                        subscriber[fieldToInject] =
+                            iocContainer.get(propertyType);
+                    }
+                }
+
+                // Bind Data Repositories if DI container is configured
                 const context = ApplicationContext.get();
                 if (context.diOptions) {
                     logger.info(`Binding persistence repositories`);

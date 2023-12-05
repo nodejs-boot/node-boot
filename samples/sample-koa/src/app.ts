@@ -37,13 +37,7 @@ import {EnableActuator} from "@node-boot/starter-actuator";
 * */
 @EnableActuator()
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
-@NodeBootApplication({
-    environment: "development",
-    appName: "facts-service",
-    platformName: "tech-insights",
-    defaultErrorHandler: false,
-    port: 3000,
-})
+@NodeBootApplication()
 export class FactsServiceApp {
     static start() {
         NodeBoot.run(KoaServer)

@@ -16,7 +16,9 @@ export class ErrorMiddleware implements ExpressErrorMiddlewareInterface {
             this.logger.error(
                 `[${req.method}] ${req.path} >> StatusCode:: ${status}, Message:: ${message}`,
             );
-            res.status(status).json({message});
+            // FIXME Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+            // FIXME Fix this after refactoring routing-controllers library
+            // res.status(status).json({message});
         } catch (error) {
             next(error);
         }

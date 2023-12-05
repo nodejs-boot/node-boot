@@ -7,9 +7,11 @@ import type {
     ConfigurationAdapter,
     ConfigurationPropertiesAdapter,
 } from "./adapters";
-import {ActuatorAdapter, OpenApiBridgeAdapter} from "./adapters";
-import {RepositoriesAdapter} from "./adapters";
-import {RepositoryMetadata} from "./metadata";
+import {
+    ActuatorAdapter,
+    OpenApiBridgeAdapter,
+    RepositoriesAdapter,
+} from "./adapters";
 
 export class ApplicationContext {
     private static context: ApplicationContext;
@@ -25,7 +27,6 @@ export class ApplicationContext {
     controllerClasses: Function[] = [];
     interceptorClasses: Function[] = [];
     globalMiddlewares: Function[] = [];
-    repositories: RepositoryMetadata[] = [];
 
     /**
      * Indicates if class-transformer should be used to perform serialization / deserialization.

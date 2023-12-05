@@ -1,8 +1,4 @@
-export enum RepositoryType {
-    SQL = "sql",
-    MONGO = "mongo",
-    TREE = "tree",
-}
+import {RepositoryType} from "../types";
 
 /**
  * Arguments for EntityRepositoryMetadata class, helps to construct an EntityRepositoryMetadata object.

@@ -25,11 +25,16 @@ export class UserService {
 
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
-        const baseUrl = this.configService.getString("backend.baseUrl");
+        const appName = this.configService.getString("node-boot.app.name");
         this.logger.info(
-            `Reading backend.baseUrl from app-config.yam: ${baseUrl}`,
+            `Reading node-boot.app.name from app-config.yam: ${appName}`,
         );
-        return await this.userRepository.find();
+        return this.userRepository.find();
+    }
+
+    public async findWithCustomQuery(): Promise<User[]> {
+        this.logger.info("Getting all users with a custom query");
+        return this.userRepository.findByQueryIn();
     }
 
     public async findUserById(userId: number): Promise<User> {
@@ -51,7 +56,7 @@ export class UserService {
             this.logger.info("Transaction was successfully committed");
         });
 
-        return await Optional.of(existingUser)
+        return Optional.of(existingUser)
             .ifPresentThrow(
                 () =>
                     new HttpException(
@@ -59,7 +64,7 @@ export class UserService {
                         `This email ${userData.email} already exists`,
                     ),
             )
-            .elseAsync(async () => await this.userRepository.save(userData));
+            .elseAsync(() => this.userRepository.save(userData));
     }
 
     @Transactional()
@@ -71,7 +76,7 @@ export class UserService {
             id: userId,
         });
 
-        return await Optional.of(user)
+        return Optional.of(user)
             .orElseThrow(() => new HttpException(409, "User doesn't exist"))
             .map(user => {
                 return {
@@ -97,9 +102,7 @@ export class UserService {
 
         await Optional.of(user)
             .orElseThrow(() => new HttpException(409, "User doesn't exist"))
-            .runAsync(
-                async user => await this.userRepository.delete({id: userId}),
-            );
+            .runAsync(user => this.userRepository.delete({id: userId}));
 
         throw new Error(
             "Error after deleting that should rollback transaction",

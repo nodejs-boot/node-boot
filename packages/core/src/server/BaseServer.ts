@@ -1,8 +1,9 @@
-import {ApplicationContext, Config} from "@node-boot/context";
+import {ApiOptions, ApplicationContext, Config} from "@node-boot/context";
 import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
 import {useContainer} from "routing-controllers";
+import {ApplicationOptions} from "@node-boot/context/src";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
@@ -12,8 +13,9 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
 
     protected async init() {
         const context = ApplicationContext.get();
-        await this.initLogger(context);
         await this.loadConfig(context);
+        this.setupAppConfigs(context);
+        await this.initLogger(context);
     }
 
     abstract listen();
@@ -61,17 +63,12 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             );
         }
 
-        /* if (context.repositoriesAdapter && context.diOptions) {
-            this.logger.info(`Binding persistence repositories`);
-            context.repositoriesAdapter.bind(context.diOptions.iocContainer);
-        }*/
-
         if (context.actuatorAdapter) {
             this.logger.info(`Binding Actuator endpoints`);
             context.actuatorAdapter.bind(
                 {
                     serverType: this.serverType,
-                    appName: context.applicationOptions.appName!,
+                    appName: context.applicationOptions.name!,
                 },
                 this.getFramework(),
                 this.getRouter(),
@@ -93,8 +90,38 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         }
     }
 
+    private setupAppConfigs(context: ApplicationContext) {
+        const appConfigs =
+            this.config.getOptional<ApplicationOptions>("node-boot.app");
+        const apiConfigs = this.config.getOptional<ApiOptions>("node-boot.api");
+
+        context.applicationOptions = {
+            environment:
+                context.applicationOptions?.environment ??
+                appConfigs?.environment ??
+                "development",
+            port: context.applicationOptions?.port ?? appConfigs?.port ?? 3000,
+            platform:
+                context.applicationOptions?.platform ??
+                appConfigs?.platform ??
+                "node-boot",
+            name:
+                context.applicationOptions?.name ??
+                appConfigs?.name ??
+                "node-boot-app",
+            defaultErrorHandler:
+                context.applicationOptions?.defaultErrorHandler ??
+                appConfigs?.defaultErrorHandler ??
+                false,
+            customErrorHandler:
+                context.applicationOptions?.customErrorHandler ??
+                appConfigs?.customErrorHandler ??
+                false,
+            apiOptions: context.applicationOptions.apiOptions ?? apiConfigs,
+        };
+    }
+
     private async loadConfig(context: ApplicationContext) {
-        this.logger.info(`Loading Node-Boot configurations`);
         this.config = (
             await loadNodeBootConfig({
                 argv: process.argv,
@@ -106,8 +133,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
 
     private async initLogger(context: ApplicationContext) {
         this.logger = createLogger(
-            context.applicationOptions.appName!,
-            context.applicationOptions.platformName!,
+            context.applicationOptions.name!,
+            context.applicationOptions.platform!,
         );
         this.logger.info(`Initializing Node-Boot logger`);
         context.diOptions?.iocContainer.set(Logger, this.logger);

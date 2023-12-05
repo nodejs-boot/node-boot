@@ -9,7 +9,7 @@ import {
     NodeBootApplication,
 } from "@node-boot/core";
 import {EnableOpenApi} from "@node-boot/openapi";
-import {BackendConfigProperties} from "./config/BackendConfigProperties";
+import {AppConfigProperties} from "./config/AppConfigProperties";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
 import {MultipleConfigurations} from "./config/MultipleConfigurations";
@@ -23,7 +23,7 @@ import {EnableRepositories} from "@node-boot/starter-persistence";
 
 @EnableDI(Container)
 @EnableOpenApi()
-@Configurations([BackendConfigProperties, MultipleConfigurations])
+@Configurations([AppConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
 @GlobalMiddlewares([LoggingMiddleware, ErrorMiddleware])
 //@EnableComponentScan()
@@ -40,16 +40,7 @@ import {EnableRepositories} from "@node-boot/starter-persistence";
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableActuator()
 @EnableRepositories()
-@NodeBootApplication({
-    environment: "development",
-    appName: "facts-service",
-    platformName: "tech-insights",
-    defaultErrorHandler: false,
-    port: 3000,
-    apiOptions: {
-        routePrefix: "/api",
-    },
-})
+@NodeBootApplication()
 export class FactsServiceApp {
     static start() {
         NodeBoot.run(ExpressServer)
@@ -59,6 +50,8 @@ export class FactsServiceApp {
             })
             .catch(error => {
                 console.error("Error starting Node-Boot application.", error);
+                // Terminate the process with a non-zero exit code (1).
+                process.exit(1);
             });
     }
 }

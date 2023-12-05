@@ -42,7 +42,7 @@ export class FastifyServer extends BaseServer<
                             handlebars: require("handlebars"),
                         },
                     },
-                    fileOptions: {},
+                    multipartOptions: {},
                 },
                 this.framework,
             );

@@ -34,6 +34,7 @@ import {FastifySessionOptions} from "@fastify/session";
 import {FastifyMultipartOptions} from "@fastify/multipart";
 import {FastifyViewOptions} from "@fastify/view";
 import templateUrl from "template-url";
+import {FastifyCorsOptions} from "@fastify/cors";
 
 const actionToHttpMethodMap = {
     delete: "DELETE",
@@ -46,8 +47,9 @@ const actionToHttpMethodMap = {
 
 export type ServerOptions = {
     cookieOptions?: FastifyCookieOptions;
+    corsOptions?: FastifyCorsOptions;
     sessionOptions?: FastifySessionOptions;
-    fileOptions: FastifyMultipartOptions;
+    multipartOptions?: FastifyMultipartOptions;
     templateOptions?: FastifyViewOptions;
 };
 
@@ -66,23 +68,42 @@ export class FastifyDriver extends BaseDriver {
     }
 
     initialize() {
-        const fastifyCookie = this.loadCookie();
-        this.useApp().register(fastifyCookie, this.serverOptions.cookieOptions);
+        if (this.serverOptions.cookieOptions) {
+            const fastifyCookie = this.loadCookie();
+            this.useApp().register(
+                fastifyCookie,
+                this.serverOptions.cookieOptions,
+            );
+        }
 
-        const fastifySession = this.loadSession();
-        this.useApp().register(
-            fastifySession,
-            this.serverOptions.sessionOptions,
-        );
+        if (this.serverOptions.corsOptions) {
+            const fastifyCors = this.loadCors();
+            this.useApp().register(fastifyCors, this.serverOptions.corsOptions);
+        }
 
-        const fastifyMultipart = this.loadMultipart();
-        this.useApp().register(
-            fastifyMultipart,
-            this.serverOptions.fileOptions,
-        );
+        if (this.serverOptions.sessionOptions) {
+            const fastifySession = this.loadSession();
+            this.useApp().register(
+                fastifySession,
+                this.serverOptions.sessionOptions,
+            );
+        }
 
-        const fastifyView = this.loadView();
-        this.useApp().register(fastifyView, this.serverOptions.templateOptions);
+        if (this.serverOptions.multipartOptions) {
+            const fastifyMultipart = this.loadMultipart();
+            this.useApp().register(
+                fastifyMultipart,
+                this.serverOptions.multipartOptions,
+            );
+        }
+
+        if (this.serverOptions.templateOptions) {
+            const fastifyView = this.loadView();
+            this.useApp().register(
+                fastifyView,
+                this.serverOptions.templateOptions,
+            );
+        }
     }
 
     /**
@@ -664,6 +685,19 @@ export class FastifyDriver extends BaseDriver {
         } catch (e) {
             throw new Error(
                 "@fastify/multipart package was not found installed. Try to install it: npm install @fastify/multipart --save",
+            );
+        }
+    }
+
+    /**
+     * Dynamically loads @fastify/cors module.
+     */
+    protected loadCors() {
+        try {
+            return require("@fastify/cors");
+        } catch (e) {
+            throw new Error(
+                "@fastify/cors package was not found installed. Try to install it: npm install @fastify/cors --save",
             );
         }
     }
