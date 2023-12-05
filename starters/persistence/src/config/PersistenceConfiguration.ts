@@ -61,6 +61,7 @@ export class PersistenceConfiguration {
                         });
                 }
 
+                // Inject dependencies into Subscriber instances
                 for (const subscriber of dataSource.subscribers) {
                     for (const fieldToInject of Reflect.getMetadata(
                         REQUIRES_FIELD_INJECTION_KEY,
