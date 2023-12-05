@@ -4,10 +4,6 @@
  *
  * Given that it is not possible to process all uncaught errors sensibly, the best way to deal with them is to crash.
  */
-export interface FastifyErrorHandlerInterface<
-    TRequest = any,
-    TReply = any,
-    TError = any,
-> {
+export interface FastifyErrorHandlerInterface<TRequest = any, TReply = any, TError = any> {
     error(request: TRequest, reply: TReply, error: TError): any;
 }

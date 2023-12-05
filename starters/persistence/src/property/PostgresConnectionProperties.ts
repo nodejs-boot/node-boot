@@ -3,8 +3,7 @@ import {PostgresConnectionCredentialsOptions} from "typeorm/driver/postgres/Post
 /**
  * Postgres-specific connection options.
  */
-export interface PostgresConnectionProperties
-    extends PostgresConnectionCredentialsOptions {
+export interface PostgresConnectionProperties extends PostgresConnectionCredentialsOptions {
     /**
      * Schema name.
      */

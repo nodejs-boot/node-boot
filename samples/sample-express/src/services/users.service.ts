@@ -26,9 +26,7 @@ export class UserService {
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
         const appName = this.configService.getString("node-boot.app.name");
-        this.logger.info(
-            `Reading node-boot.app.name from app-config.yam: ${appName}`,
-        );
+        this.logger.info(`Reading node-boot.app.name from app-config.yam: ${appName}`);
         return this.userRepository.find();
     }
 
@@ -58,20 +56,13 @@ export class UserService {
 
         return Optional.of(existingUser)
             .ifPresentThrow(
-                () =>
-                    new HttpException(
-                        409,
-                        `This email ${userData.email} already exists`,
-                    ),
+                () => new HttpException(409, `This email ${userData.email} already exists`),
             )
             .elseAsync(() => this.userRepository.save(userData));
     }
 
     @Transactional()
-    public async updateUser(
-        userId: number,
-        userData: UpdateUserDto,
-    ): Promise<User> {
+    public async updateUser(userId: number, userData: UpdateUserDto): Promise<User> {
         const user = await this.userRepository.findOneBy({
             id: userId,
         });
@@ -94,18 +85,13 @@ export class UserService {
         });
 
         runOnTransactionRollback(error => {
-            this.logger.warn(
-                "Transactions was rolled back due to error:",
-                error,
-            );
+            this.logger.warn("Transactions was rolled back due to error:", error);
         });
 
         await Optional.of(user)
             .orElseThrow(() => new HttpException(409, "User doesn't exist"))
             .runAsync(user => this.userRepository.delete({id: userId}));
 
-        throw new Error(
-            "Error after deleting that should rollback transaction",
-        );
+        throw new Error("Error after deleting that should rollback transaction");
     }
 }

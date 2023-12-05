@@ -3,8 +3,7 @@ import {OracleConnectionCredentialsOptions} from "typeorm/driver/oracle/OracleCo
 /**
  * Oracle-specific connection options.
  */
-export interface OracleConnectionProperties
-    extends OracleConnectionCredentialsOptions {
+export interface OracleConnectionProperties extends OracleConnectionCredentialsOptions {
     /**
      * Schema name. By default is "public".
      */

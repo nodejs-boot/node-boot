@@ -1,7 +1,4 @@
-import {
-    Transactional as InnerTransactional,
-    WrapInTransactionOptions,
-} from "typeorm-transactional";
+import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typeorm-transactional";
 
 /**
  * The Transactional function is a decorator that can be applied to methods in TypeScript classes. It wraps the decorated
@@ -25,9 +22,7 @@ import {
  *      isolationLevel: The isolation level of the transaction.
  *      name: The name or symbol of the method being decorated.
  * */
-export const Transactional = (
-    options?: WrapInTransactionOptions,
-): MethodDecorator => {
+export const Transactional = (options?: WrapInTransactionOptions): MethodDecorator => {
     return (
         target: Object,
         propertyKey: string | symbol,

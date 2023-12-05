@@ -5,8 +5,7 @@ import {AuroraMysqlConnectionCredentialsOptions} from "typeorm/driver/aurora-mys
  *
  * @see https://github.com/mysqljs/mysql#connection-options
  */
-export interface AuroraMysqlConnectionProperties
-    extends AuroraMysqlConnectionCredentialsOptions {
+export interface AuroraMysqlConnectionProperties extends AuroraMysqlConnectionCredentialsOptions {
     readonly region: string;
 
     readonly secretArn: string;

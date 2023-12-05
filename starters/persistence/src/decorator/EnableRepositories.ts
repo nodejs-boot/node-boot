@@ -7,8 +7,7 @@ import {QueryCacheConfiguration} from "../config/QueryCacheConfiguration";
 export const EnableRepositories = (): ClassDecorator => {
     return (target: Function) => {
         // Register repositories adapter
-        ApplicationContext.get().repositoriesAdapter =
-            new DefaultRepositoriesAdapter();
+        ApplicationContext.get().repositoriesAdapter = new DefaultRepositoriesAdapter();
 
         // Resolve query cache configurations
         new QueryCacheConfiguration();

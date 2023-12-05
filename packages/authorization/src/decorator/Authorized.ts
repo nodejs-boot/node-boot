@@ -31,10 +31,7 @@ export function Authorized(role: Function): Function;
  * @param roleOrRoles Arguments for routing-controllers @Authorized decorator
  */
 export function Authorized(roleOrRoles?: string | string[] | Function) {
-    return <TFunction extends Function>(
-        clsOrObject: Function | Object,
-        method?: string,
-    ) => {
+    return <TFunction extends Function>(clsOrObject: Function | Object, method?: string) => {
         // DI is optional and the decorator will only be applied if the DI container dependency is available.
         InnerAuthorized(roleOrRoles)(clsOrObject, method);
     };

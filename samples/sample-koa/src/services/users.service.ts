@@ -9,19 +9,14 @@ import {NotFoundError} from "routing-controllers";
 
 @Service()
 export class UserService {
-    constructor(
-        private readonly logger: Logger,
-        private readonly configService: ConfigService,
-    ) {}
+    constructor(private readonly logger: Logger, private readonly configService: ConfigService) {}
 
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
         const users: User[] = UserModel;
 
         const baseUrl = this.configService.getString("backend.baseUrl");
-        this.logger.info(
-            `Reading backend.baseUrl from app-config.yam: ${baseUrl}`,
-        );
+        this.logger.info(`Reading backend.baseUrl from app-config.yam: ${baseUrl}`);
         return users;
     }
 
@@ -33,19 +28,12 @@ export class UserService {
 
     public async createUser(userData: CreateUserDto): Promise<User> {
         const findUser = UserModel.find(user => user.email === userData.email);
-        if (findUser)
-            throw new HttpException(
-                409,
-                `This email ${userData.email} already exists`,
-            );
+        if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
 
         return {id: UserModel.length + 1, ...userData};
     }
 
-    public async updateUser(
-        userId: number,
-        userData: CreateUserDto,
-    ): Promise<User[]> {
+    public async updateUser(userId: number, userData: CreateUserDto): Promise<User[]> {
         const findUser = UserModel.find(user => user.id === userId);
         if (!findUser) throw new HttpException(409, "User doesn't exist");
 

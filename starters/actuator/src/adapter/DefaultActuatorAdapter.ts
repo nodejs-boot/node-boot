@@ -1,8 +1,4 @@
-import {
-    ActuatorAdapter,
-    ActuatorOptions,
-    ApplicationContext,
-} from "@node-boot/context";
+import {ActuatorAdapter, ActuatorOptions, ApplicationContext} from "@node-boot/context";
 import Prometheus from "prom-client";
 import {ExpressActuatorAdapter} from "./ExpressActuatorAdapter";
 import {InfoService} from "../service/InfoService";
@@ -55,8 +51,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
         const context = this.setupMetrics(options);
         const metadataService = new MetadataService();
 
-        const configService =
-            ApplicationContext.get().diOptions?.iocContainer.get(ConfigService);
+        const configService = ApplicationContext.get().diOptions?.iocContainer.get(ConfigService);
 
         let frameworkAdapter: ActuatorAdapter;
         switch (options.serverType) {

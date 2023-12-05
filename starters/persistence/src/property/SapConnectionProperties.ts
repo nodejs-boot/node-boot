@@ -3,8 +3,7 @@ import {SapConnectionCredentialsOptions} from "typeorm/driver/sap/SapConnectionC
 /**
  * SAP Hana specific connection options.
  */
-export interface SapConnectionProperties
-    extends SapConnectionCredentialsOptions {
+export interface SapConnectionProperties extends SapConnectionCredentialsOptions {
     /**
      * Database schema.
      */

@@ -57,60 +57,42 @@ export class GlobalEntityEventListener implements EntitySubscriberInterface {
      * Called before entity removal.
      */
     beforeRemove(event: RemoveEvent<any>) {
-        this.logger.info(
-            `BEFORE ENTITY WITH ID ${event.entityId} REMOVED: `,
-            event.entity,
-        );
+        this.logger.info(`BEFORE ENTITY WITH ID ${event.entityId} REMOVED: `, event.entity);
     }
 
     /**
      * Called after entity removal.
      */
     afterRemove(event: RemoveEvent<any>) {
-        this.logger.info(
-            `AFTER ENTITY WITH ID ${event.entityId} REMOVED: `,
-            event.entity,
-        );
+        this.logger.info(`AFTER ENTITY WITH ID ${event.entityId} REMOVED: `, event.entity);
     }
 
     /**
      * Called before entity removal.
      */
     beforeSoftRemove(event: SoftRemoveEvent<any>) {
-        this.logger.info(
-            `BEFORE ENTITY WITH ID ${event.entityId} SOFT REMOVED: `,
-            event.entity,
-        );
+        this.logger.info(`BEFORE ENTITY WITH ID ${event.entityId} SOFT REMOVED: `, event.entity);
     }
 
     /**
      * Called after entity removal.
      */
     afterSoftRemove(event: SoftRemoveEvent<any>) {
-        this.logger.info(
-            `AFTER ENTITY WITH ID ${event.entityId} SOFT REMOVED: `,
-            event.entity,
-        );
+        this.logger.info(`AFTER ENTITY WITH ID ${event.entityId} SOFT REMOVED: `, event.entity);
     }
 
     /**
      * Called before entity recovery.
      */
     beforeRecover(event: RecoverEvent<any>) {
-        this.logger.info(
-            `BEFORE ENTITY WITH ID ${event.entityId} RECOVERED: `,
-            event.entity,
-        );
+        this.logger.info(`BEFORE ENTITY WITH ID ${event.entityId} RECOVERED: `, event.entity);
     }
 
     /**
      * Called after entity recovery.
      */
     afterRecover(event: RecoverEvent<any>) {
-        this.logger.info(
-            `AFTER ENTITY WITH ID ${event.entityId} RECOVERED: `,
-            event.entity,
-        );
+        this.logger.info(`AFTER ENTITY WITH ID ${event.entityId} RECOVERED: `, event.entity);
     }
 
     /**

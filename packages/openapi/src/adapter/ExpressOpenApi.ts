@@ -7,14 +7,8 @@ export class ExpressOpenApi implements OpenApiAdapter {
         if (swaggerUi?.serve) {
             const {spec, options} = OpenApiSpecAdapter.adapt(openApiOptions);
 
-            router.get(options.swaggerOptions.url, (req, res) =>
-                res.json(spec),
-            );
-            server.use(
-                "/api-docs",
-                swaggerUi.serve,
-                swaggerUi.setup(spec, options),
-            );
+            router.get(options.swaggerOptions.url, (req, res) => res.json(spec));
+            server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec, options));
         } else {
             throw new Error(
                 "Unable to initialize Swagger UI. 'swagger-ui-express' dependency is missing. " +

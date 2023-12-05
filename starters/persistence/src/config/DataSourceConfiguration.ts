@@ -10,14 +10,8 @@ import {QUERY_CACHE_CONFIG} from "./QueryCacheConfiguration";
 @Configuration()
 export class DataSourceConfiguration {
     @Bean("datasource-config")
-    public dataSourceConfig({
-        config,
-        iocContainer,
-        logger,
-    }: BeansContext): DataSourceOptions {
-        const persistenceProperties = config.get<PersistenceProperties>(
-            PERSISTENCE_CONFIG_PATH,
-        );
+    public dataSourceConfig({config, iocContainer, logger}: BeansContext): DataSourceOptions {
+        const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);
         if (!persistenceProperties) {
             throw new Error(`'${PERSISTENCE_CONFIG_PATH}' configuration node is required when persistence is enabled. 
             Please add the persistence configuration depending on the data source you are using or remove 
@@ -40,8 +34,7 @@ export class DataSourceConfiguration {
             );
         }
 
-        const databaseConfigs =
-            persistenceProperties[persistenceProperties.type];
+        const databaseConfigs = persistenceProperties[persistenceProperties.type];
         if (!databaseConfigs) {
             throw new Error(
                 `Invalid persistence configuration. No database specific configuration found for ${persistenceProperties.type} database under ${PERSISTENCE_CONFIG_PATH}' configuration node.`,

@@ -18,40 +18,23 @@ export class BeansConfigurationAdapter implements ConfigurationAdapter {
         );
     }
 
-    async bind<TApplication>(
-        beansContext: BeansContext<TApplication>,
-    ): Promise<void> {
+    async bind<TApplication>(beansContext: BeansContext<TApplication>): Promise<void> {
         const {iocContainer} = beansContext;
         const prototype = this.target.prototype;
         const propertyNames = Object.getOwnPropertyNames(prototype);
 
         for (const propertyName of propertyNames) {
-            const descriptor = Object.getOwnPropertyDescriptor(
-                prototype,
-                propertyName,
-            );
-            const isBean = Reflect.getMetadata(
-                BEAN_METADATA_KEY,
-                prototype,
-                propertyName,
-            );
-            const beanName = Reflect.getMetadata(
-                BEAN_NAME_METADATA_KEY,
-                prototype,
-                propertyName,
-            );
+            const descriptor = Object.getOwnPropertyDescriptor(prototype, propertyName);
+            const isBean = Reflect.getMetadata(BEAN_METADATA_KEY, prototype, propertyName);
+            const beanName = Reflect.getMetadata(BEAN_NAME_METADATA_KEY, prototype, propertyName);
 
             if (descriptor && descriptor.value && isBean) {
                 let beanInstance: any;
                 // Deal with Beans async factory functions
                 if (descriptor.value.constructor.name === "AsyncFunction") {
-                    beanInstance = await descriptor.value.bind(this.target)(
-                        beansContext,
-                    );
+                    beanInstance = await descriptor.value.bind(this.target)(beansContext);
                 } else {
-                    beanInstance = descriptor.value.bind(this.target)(
-                        beansContext,
-                    );
+                    beanInstance = descriptor.value.bind(this.target)(beansContext);
                 }
 
                 if (beanName) {

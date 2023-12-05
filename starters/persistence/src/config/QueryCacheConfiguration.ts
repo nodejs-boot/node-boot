@@ -23,26 +23,19 @@ export class QueryCacheConfiguration {
     public queryCacheConfig({iocContainer, logger, config}: BeansContext) {
         logger.info("Preparing cache configurations");
 
-        const persistenceProperties = config.getOptionalConfig(
-            PERSISTENCE_CONFIG_PATH,
-        );
+        const persistenceProperties = config.getOptionalConfig(PERSISTENCE_CONFIG_PATH);
 
         if (persistenceProperties) {
             // Cache config can be a boolean or a complex config object
-            const cacheConfig =
-                persistenceProperties.getOptional<QueryCacheProperties>(
-                    "cache",
-                );
-            const cacheEnabled =
-                persistenceProperties.getOptionalBoolean("cache");
+            const cacheConfig = persistenceProperties.getOptional<QueryCacheProperties>("cache");
+            const cacheEnabled = persistenceProperties.getOptionalBoolean("cache");
 
             if (cacheConfig || cacheEnabled !== undefined) {
                 let cacheProvider: any;
                 // Setup cache provider if a custom provider is configured through @PersistenceCache decorator
                 const QueryCache = PersistenceContext.get().queryCache;
                 if (QueryCache) {
-                    cacheProvider = (connection: DataSource) =>
-                        new QueryCache(connection);
+                    cacheProvider = (connection: DataSource) => new QueryCache(connection);
                 }
 
                 if (cacheConfig) {
@@ -56,9 +49,7 @@ export class QueryCacheConfiguration {
                         provider: cacheProvider,
                     });
                 } else if (cacheProvider) {
-                    logger.info(
-                        `Configuring query cache with custom cache provider`,
-                    );
+                    logger.info(`Configuring query cache with custom cache provider`);
                     iocContainer.set(QUERY_CACHE_CONFIG, {
                         provider: cacheProvider,
                     });

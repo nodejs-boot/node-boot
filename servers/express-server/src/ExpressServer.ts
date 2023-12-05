@@ -3,10 +3,7 @@ import express from "express";
 import {useExpressServer} from "routing-controllers";
 import {BaseServer} from "@node-boot/core";
 
-export class ExpressServer extends BaseServer<
-    express.Application,
-    express.Application
-> {
+export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
 
     constructor() {
@@ -23,9 +20,7 @@ export class ExpressServer extends BaseServer<
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
-            const configs = context.applicationAdapter.bind(
-                context.diOptions?.iocContainer,
-            );
+            const configs = context.applicationAdapter.bind(context.diOptions?.iocContainer);
             useExpressServer(this.framework, configs);
         } else {
             throw new Error(
@@ -41,12 +36,8 @@ export class ExpressServer extends BaseServer<
 
         this.framework.listen(context.applicationOptions.port, () => {
             this.logger.info(`=================================`);
-            this.logger.info(
-                `======= ENV: ${context.applicationOptions.environment} =======`,
-            );
-            this.logger.info(
-                `🚀 App listening on the port ${context.applicationOptions.port}`,
-            );
+            this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+            this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
             this.logger.info(`=================================`);
         });
     }

@@ -12,30 +12,19 @@ function getProjectRootDirectory(): string {
 
 async function instantiateClasses(rootDir, classes) {
     for (const classData of classes) {
-        const {
-            class: className,
-            path: classPath,
-            arguments: classArguments,
-        } = classData;
+        const {class: className, path: classPath, arguments: classArguments} = classData;
 
         // Use dynamic import to handle the class asynchronously.
         const module = require(path.join(rootDir, classPath));
         const Class = module[className];
 
-        const argumentsMetadata = Reflect.getMetadata(
-            "design:paramtypes",
-            Class,
-        );
+        const argumentsMetadata = Reflect.getMetadata("design:paramtypes", Class);
 
         // Check if the class has any constructor arguments (dependencies).
         if (argumentsMetadata && argumentsMetadata.length > 0) {
             const dependencies = argumentsMetadata.map((argType, index) => {
-                const argValue = classArguments
-                    ? classArguments[index]
-                    : undefined;
-                return typeof argValue !== "undefined"
-                    ? argValue
-                    : new argType();
+                const argValue = classArguments ? classArguments[index] : undefined;
+                return typeof argValue !== "undefined" ? argValue : new argType();
             });
 
             const instance = new Class(...dependencies);
@@ -70,24 +59,15 @@ export function EnableAutoConfiguration(): Function {
                 await instantiateClasses(rootDir, config.Configurations);
             }
 
-            if (
-                config.ConfigurationProperties &&
-                Array.isArray(config.ConfigurationProperties)
-            ) {
-                await instantiateClasses(
-                    rootDir,
-                    config.ConfigurationProperties,
-                );
+            if (config.ConfigurationProperties && Array.isArray(config.ConfigurationProperties)) {
+                await instantiateClasses(rootDir, config.ConfigurationProperties);
             }
 
             if (config.Controllers && Array.isArray(config.Controllers)) {
                 await instantiateClasses(rootDir, config.Controllers);
             }
 
-            if (
-                config.JsonControllers &&
-                Array.isArray(config.JsonControllers)
-            ) {
+            if (config.JsonControllers && Array.isArray(config.JsonControllers)) {
                 await instantiateClasses(rootDir, config.JsonControllers);
             }
 
@@ -95,9 +75,7 @@ export function EnableAutoConfiguration(): Function {
                 await instantiateClasses(rootDir, config.Services);
             }
         } else {
-            console.error(
-                "nodeBoot-info.json not found in the root directory.",
-            );
+            console.error("nodeBoot-info.json not found in the root directory.");
         }
     };
 }

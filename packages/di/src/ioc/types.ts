@@ -8,9 +8,4 @@ export interface Abstract<T> {
 
 export type DiOptions = ComponentOptions | string | Token<unknown>;
 
-export type InjectionOptions<T = unknown> =
-    | string
-    | symbol
-    | Token<T>
-    | Abstract<T>
-    | Newable<T>;
+export type InjectionOptions<T = unknown> = string | symbol | Token<T> | Abstract<T> | Newable<T>;

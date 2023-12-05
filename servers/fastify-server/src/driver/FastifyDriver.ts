@@ -10,17 +10,9 @@ import {
     RoutingControllersOptions,
     UseMetadata,
 } from "routing-controllers";
-import {
-    FastifyError,
-    FastifyInstance,
-    FastifyReply,
-    FastifyRequest,
-} from "fastify";
+import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {HTTPMethods} from "fastify/types/utils";
-import {
-    DoneFuncWithErrOrRes,
-    HookHandlerDoneFunction,
-} from "fastify/types/hooks";
+import {DoneFuncWithErrOrRes, HookHandlerDoneFunction} from "fastify/types/hooks";
 import {
     AccessDeniedError,
     AuthorizationCheckerNotDefinedError,
@@ -54,10 +46,7 @@ export type ServerOptions = {
 };
 
 export class FastifyDriver extends BaseDriver {
-    constructor(
-        private readonly serverOptions: ServerOptions,
-        private fastify?: FastifyInstance,
-    ) {
+    constructor(private readonly serverOptions: ServerOptions, private fastify?: FastifyInstance) {
         super();
         this.loadFastify();
         this.app = this.fastify;
@@ -70,10 +59,7 @@ export class FastifyDriver extends BaseDriver {
     initialize() {
         if (this.serverOptions.cookieOptions) {
             const fastifyCookie = this.loadCookie();
-            this.useApp().register(
-                fastifyCookie,
-                this.serverOptions.cookieOptions,
-            );
+            this.useApp().register(fastifyCookie, this.serverOptions.cookieOptions);
         }
 
         if (this.serverOptions.corsOptions) {
@@ -83,36 +69,24 @@ export class FastifyDriver extends BaseDriver {
 
         if (this.serverOptions.sessionOptions) {
             const fastifySession = this.loadSession();
-            this.useApp().register(
-                fastifySession,
-                this.serverOptions.sessionOptions,
-            );
+            this.useApp().register(fastifySession, this.serverOptions.sessionOptions);
         }
 
         if (this.serverOptions.multipartOptions) {
             const fastifyMultipart = this.loadMultipart();
-            this.useApp().register(
-                fastifyMultipart,
-                this.serverOptions.multipartOptions,
-            );
+            this.useApp().register(fastifyMultipart, this.serverOptions.multipartOptions);
         }
 
         if (this.serverOptions.templateOptions) {
             const fastifyView = this.loadView();
-            this.useApp().register(
-                fastifyView,
-                this.serverOptions.templateOptions,
-            );
+            this.useApp().register(fastifyView, this.serverOptions.templateOptions);
         }
     }
 
     /**
      * Registers middleware that run before controller actions.
      */
-    registerMiddleware(
-        middleware: MiddlewareMetadata,
-        options: RoutingControllersOptions,
-    ): void {
+    registerMiddleware(middleware: MiddlewareMetadata, options: RoutingControllersOptions): void {
         // Register a custom error Handler
         if ((middleware.instance as FastifyErrorHandlerInterface).error) {
             const errorHandler = (
@@ -120,11 +94,7 @@ export class FastifyDriver extends BaseDriver {
                 request: FastifyRequest,
                 reply: FastifyReply,
             ) => {
-                (middleware.instance as FastifyErrorHandlerInterface).error(
-                    request,
-                    reply,
-                    error,
-                );
+                (middleware.instance as FastifyErrorHandlerInterface).error(request, reply, error);
             };
 
             // Name the function for better debugging
@@ -140,14 +110,7 @@ export class FastifyDriver extends BaseDriver {
                     reply: FastifyReply,
                     done: HookHandlerDoneFunction,
                 ) => {
-                    this.callGlobalMiddleware(
-                        request,
-                        options,
-                        middleware,
-                        reply,
-                        done,
-                        undefined,
-                    );
+                    this.callGlobalMiddleware(request, options, middleware, reply, done, undefined);
                 };
 
                 // Name the function for better debugging
@@ -160,14 +123,7 @@ export class FastifyDriver extends BaseDriver {
                     payload: any,
                     done: DoneFuncWithErrOrRes,
                 ) => {
-                    this.callGlobalMiddleware(
-                        request,
-                        options,
-                        middleware,
-                        reply,
-                        done,
-                        payload,
-                    );
+                    this.callGlobalMiddleware(request, options, middleware, reply, done, payload);
                 };
 
                 // Name the function for better debugging
@@ -187,9 +143,12 @@ export class FastifyDriver extends BaseDriver {
     ) {
         if (request.url.startsWith(options.routePrefix || "/")) {
             try {
-                const useResult = (
-                    middleware.instance as FastifyMiddlewareInterface
-                ).use(request, reply, done, payload);
+                const useResult = (middleware.instance as FastifyMiddlewareInterface).use(
+                    request,
+                    reply,
+                    done,
+                    payload,
+                );
                 if (this.isPromiseLike(useResult)) {
                     useResult
                         .then(useResult => done())
@@ -225,10 +184,7 @@ export class FastifyDriver extends BaseDriver {
         });
     }
 
-    registerAction(
-        actionMetadata: ActionMetadata,
-        executeAction: (options: Action) => any,
-    ) {
+    registerAction(actionMetadata: ActionMetadata, executeAction: (options: Action) => any) {
         const defaultMiddlewares: any[] = [];
 
         if (actionMetadata.isAuthorizedUsed) {
@@ -238,12 +194,7 @@ export class FastifyDriver extends BaseDriver {
                     reply: FastifyReply,
                     done: HookHandlerDoneFunction,
                 ) => {
-                    await this.checkAuthorization(
-                        request,
-                        reply,
-                        done,
-                        actionMetadata,
-                    );
+                    await this.checkAuthorization(request, reply, done, actionMetadata);
                 },
             );
         }
@@ -254,16 +205,9 @@ export class FastifyDriver extends BaseDriver {
             // ...
         }*/
 
-        const uses = [
-            ...actionMetadata.controllerMetadata.uses,
-            ...actionMetadata.uses,
-        ];
-        const beforeMiddlewares = this.prepareUseMiddlewares(
-            uses.filter(use => !use.afterAction),
-        );
-        const afterMiddlewares = this.prepareUseMiddlewares(
-            uses.filter(use => use.afterAction),
-        );
+        const uses = [...actionMetadata.controllerMetadata.uses, ...actionMetadata.uses];
+        const beforeMiddlewares = this.prepareUseMiddlewares(uses.filter(use => !use.afterAction));
+        const afterMiddlewares = this.prepareUseMiddlewares(uses.filter(use => use.afterAction));
         const errorMiddlewares = this.prepareUseErrorMiddlewares(uses);
 
         const routeHandler = async (request, reply) => {
@@ -277,28 +221,16 @@ export class FastifyDriver extends BaseDriver {
             }
         };
 
-        const afterMiddlewaresAdapter = async (
-            request,
-            reply,
-            payload,
-            done,
-        ) => {
-            afterMiddlewares.forEach(middleware =>
-                middleware(request, reply, payload, done),
-            );
+        const afterMiddlewaresAdapter = async (request, reply, payload, done) => {
+            afterMiddlewares.forEach(middleware => middleware(request, reply, payload, done));
         };
 
         const errorMiddlewaresAdapter = async (request, reply, error, done) => {
-            errorMiddlewares.forEach(middleware =>
-                middleware(request, reply, error, done),
-            );
+            errorMiddlewares.forEach(middleware => middleware(request, reply, error, done));
         };
 
         // Register route and hooks
-        const route = ActionMetadata.appendBaseRoute(
-            this.routePrefix,
-            actionMetadata.fullRoute,
-        );
+        const route = ActionMetadata.appendBaseRoute(this.routePrefix, actionMetadata.fullRoute);
         this.useApp().route({
             method: this.actionToHttpMethod(actionMetadata),
             url: route.toString(),
@@ -318,8 +250,7 @@ export class FastifyDriver extends BaseDriver {
     }
 
     async checkAuthorization(request, reply, done, actionMetadata) {
-        if (!this.authorizationChecker)
-            throw new AuthorizationCheckerNotDefinedError();
+        if (!this.authorizationChecker) throw new AuthorizationCheckerNotDefinedError();
 
         const action: Action = {request, response: reply, next: done};
         try {
@@ -356,10 +287,9 @@ export class FastifyDriver extends BaseDriver {
                         payload?: any,
                     ) => {
                         try {
-                            const useResult =
-                                getFromContainer<FastifyMiddlewareInterface>(
-                                    use.middleware,
-                                ).use(request, reply, done, payload);
+                            const useResult = getFromContainer<FastifyMiddlewareInterface>(
+                                use.middleware,
+                            ).use(request, reply, done, payload);
 
                             if (this.isPromiseLike(useResult)) {
                                 useResult.catch((error: any) => {
@@ -466,9 +396,7 @@ export class FastifyDriver extends BaseDriver {
             // For example, for cookies:
             // https://github.com/fastify/fastify-cookie
             case "cookie":
-                return this.useApp().parseCookie(request.headers.cookie || "")[
-                    param.name
-                ];
+                return this.useApp().parseCookie(request.headers.cookie || "")[param.name];
 
             case "cookies":
                 return this.useApp().parseCookie(request.headers.cookie || "");
@@ -487,18 +415,11 @@ export class FastifyDriver extends BaseDriver {
         }
     }
 
-    handleError(
-        error: any,
-        action: ActionMetadata | undefined,
-        options: Action,
-    ) {
+    handleError(error: any, action: ActionMetadata | undefined, options: Action) {
         // Handle error using Fastify's reply
         if (action) {
             Object.keys(action.headers).forEach(name => {
-                (options.response as FastifyReply).header(
-                    name,
-                    action.headers[name],
-                );
+                (options.response as FastifyReply).header(name, action.headers[name]);
             });
         }
 
@@ -565,32 +486,20 @@ export class FastifyDriver extends BaseDriver {
         }
     }
 
-    private applyTemplateRender(
-        result: any,
-        options: Action,
-        action: ActionMetadata,
-    ) {
+    private applyTemplateRender(result: any, options: Action, action: ActionMetadata) {
         // if template is set then render it
         const renderOptions = result && result instanceof Object ? result : {};
 
-        options.response.view(
-            action.renderedTemplate,
-            renderOptions,
-            (err, html) => {
-                if (err) {
-                    throw err;
-                } else if (html) {
-                    options.response.send(html);
-                }
-            },
-        );
+        options.response.view(action.renderedTemplate, renderOptions, (err, html) => {
+            if (err) {
+                throw err;
+            } else if (html) {
+                options.response.send(html);
+            }
+        });
     }
 
-    private applyRedirect(
-        result: any,
-        options: Action,
-        action: ActionMetadata,
-    ) {
+    private applyRedirect(result: any, options: Action, action: ActionMetadata) {
         // if redirect is set then do it
         if (typeof result === "string") {
             options.response.redirect(result);
@@ -603,11 +512,7 @@ export class FastifyDriver extends BaseDriver {
         }
     }
 
-    private applyResponseStatus(
-        result: any,
-        action: ActionMetadata,
-        options: Action,
-    ) {
+    private applyResponseStatus(result: any, action: ActionMetadata, options: Action) {
         if (result === undefined && action.undefinedResultCode) {
             if (action.undefinedResultCode instanceof Function) {
                 throw new (action.undefinedResultCode as any)(options);
@@ -644,9 +549,7 @@ export class FastifyDriver extends BaseDriver {
                 }
             }
         } else {
-            throw new Error(
-                "Cannot load fastify. Try to install all required dependencies.",
-            );
+            throw new Error("Cannot load fastify. Try to install all required dependencies.");
         }
     }
 
@@ -719,10 +622,6 @@ export class FastifyDriver extends BaseDriver {
      * Checks if given value is a Promise-like object.
      */
     isPromiseLike(arg: any): arg is Promise<any> {
-        return (
-            arg != null &&
-            typeof arg === "object" &&
-            typeof arg.then === "function"
-        );
+        return arg != null && typeof arg === "object" && typeof arg.then === "function";
     }
 }

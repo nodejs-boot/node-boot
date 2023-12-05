@@ -6,12 +6,7 @@ import {HookHandlerDoneFunction} from "fastify/types/hooks";
 
 @Middleware({type: "before"})
 export class LoggingMiddleware
-    implements
-        FastifyMiddlewareInterface<
-            FastifyRequest,
-            FastifyReply,
-            HookHandlerDoneFunction
-        >
+    implements FastifyMiddlewareInterface<FastifyRequest, FastifyReply, HookHandlerDoneFunction>
 {
     @Inject()
     private logger: Logger;

@@ -1,14 +1,8 @@
-import {
-    ApplicationContext,
-    ConfigurationPropertiesAdapter,
-    IocContainer,
-} from "@node-boot/context";
+import {ApplicationContext, ConfigurationPropertiesAdapter, IocContainer} from "@node-boot/context";
 import {ConfigurationPropertiesMetadata} from "../metadata";
 import {ConfigService} from "../service";
 
-export function ConfigurationProperties(
-    args: ConfigurationPropertiesMetadata,
-): Function {
+export function ConfigurationProperties(args: ConfigurationPropertiesMetadata): Function {
     return function (target: any) {
         Reflect.defineMetadata("config:isConfigProperties", true, target);
         Reflect.defineMetadata("config:path", args.configPath, target);
@@ -17,22 +11,16 @@ export function ConfigurationProperties(
             new (class implements ConfigurationPropertiesAdapter {
                 bind(iocContainer: IocContainer) {
                     const config: ConfigService = iocContainer.get("config");
-                    const configProperties = config.get<typeof target>(
-                        args.configPath,
-                    );
+                    const configProperties = config.get<typeof target>(args.configPath);
 
                     if (configProperties) {
                         const instance = new target();
 
                         for (const propertyName in configProperties) {
                             if (
-                                Object.prototype.hasOwnProperty.call(
-                                    configProperties,
-                                    propertyName,
-                                )
+                                Object.prototype.hasOwnProperty.call(configProperties, propertyName)
                             ) {
-                                instance[propertyName] =
-                                    configProperties[propertyName];
+                                instance[propertyName] = configProperties[propertyName];
                             }
                         }
                         if (!iocContainer.has(args.configName)) {
@@ -43,9 +31,7 @@ export function ConfigurationProperties(
                             );
                         }
                     } else {
-                        throw new Error(
-                            `Configuration for prefix '${args.configPath}' not found.`,
-                        );
+                        throw new Error(`Configuration for prefix '${args.configPath}' not found.`);
                     }
                 }
             })(),

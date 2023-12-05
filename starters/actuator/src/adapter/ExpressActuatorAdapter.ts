@@ -13,18 +13,13 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
         private readonly configService?: ConfigService,
     ) {}
 
-    bind(
-        options: ActuatorOptions,
-        server: express.Application,
-        router: express.Application,
-    ): void {
+    bind(options: ActuatorOptions, server: express.Application, router: express.Application): void {
         router.use((req, res, next) => {
             // Start a timer for every request made
             res.locals.startEpoch = Date.now();
 
             res.once("finish", () => {
-                const responseTimeInMilliseconds =
-                    Date.now() - res.locals.startEpoch;
+                const responseTimeInMilliseconds = Date.now() - res.locals.startEpoch;
 
                 this.context.http_request_duration_milliseconds
                     .labels(req.method, req.path, res.statusCode)
@@ -55,22 +50,16 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
         });
 
         router.get("/actuator/memory", (req, res) => {
-            this.infoService
-                .getMemory()
-                .then(data => res.status(200).json(data));
+            this.infoService.getMemory().then(data => res.status(200).json(data));
         });
 
         router.get("/actuator/metrics", (req, res) => {
-            this.context.register
-                .getMetricsAsJSON()
-                .then(data => res.status(200).json(data));
+            this.context.register.getMetricsAsJSON().then(data => res.status(200).json(data));
         });
 
         router.get("/actuator/prometheus", (req, res) => {
             res.setHeader("Content-Type", this.context.register.contentType);
-            this.context.register
-                .metrics()
-                .then(data => res.status(200).send(data));
+            this.context.register.metrics().then(data => res.status(200).send(data));
         });
 
         router.get("/actuator/controllers", (req, res) => {

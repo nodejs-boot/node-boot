@@ -3,8 +3,7 @@ import {CockroachConnectionCredentialsOptions} from "typeorm/driver/cockroachdb/
 /**
  * Cockroachdb-specific connection options.
  */
-export interface CockroachConnectionProperties
-    extends CockroachConnectionCredentialsOptions {
+export interface CockroachConnectionProperties extends CockroachConnectionCredentialsOptions {
     /**
      * Enable time travel queries on cockroachdb.
      * https://www.cockroachlabs.com/docs/stable/as-of-system-time.html

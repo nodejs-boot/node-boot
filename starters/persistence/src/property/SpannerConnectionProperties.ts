@@ -3,8 +3,7 @@ import {SpannerConnectionCredentialsOptions} from "typeorm/driver/spanner/Spanne
 /**
  * Spanner specific connection options.
  */
-export interface SpannerConnectionProperties
-    extends SpannerConnectionCredentialsOptions {
+export interface SpannerConnectionProperties extends SpannerConnectionCredentialsOptions {
     /**
      * Database type.
      */

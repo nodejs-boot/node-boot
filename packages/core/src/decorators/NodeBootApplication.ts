@@ -1,8 +1,4 @@
-import {
-    ApplicationAdapter,
-    ApplicationContext,
-    ApplicationOptions,
-} from "@node-boot/context";
+import {ApplicationAdapter, ApplicationContext, ApplicationOptions} from "@node-boot/context";
 import {RoutingControllersOptions} from "routing-controllers";
 import {BeansConfigurationAdapter} from "../adapters";
 
@@ -22,9 +18,7 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
         };
 
         // Bind Configurations adapters to search from @Beans under the Application class
-        context.configurationAdapters.push(
-            new BeansConfigurationAdapter(target),
-        );
+        context.configurationAdapters.push(new BeansConfigurationAdapter(target));
 
         // Bind Application Adapter
         context.applicationAdapter = new (class implements ApplicationAdapter {
@@ -44,23 +38,16 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
                                            origin: ORIGIN,
                                            credentials: CREDENTIALS
                                          },*/
-                    routePrefix:
-                        context.applicationOptions.apiOptions?.routePrefix,
+                    routePrefix: context.applicationOptions.apiOptions?.routePrefix,
                     defaults: {
-                        nullResultCode:
-                            context.applicationOptions.apiOptions
-                                ?.nullResultCode,
-                        paramOptions:
-                            context.applicationOptions.apiOptions?.paramOptions,
+                        nullResultCode: context.applicationOptions.apiOptions?.nullResultCode,
+                        paramOptions: context.applicationOptions.apiOptions?.paramOptions,
                         undefinedResultCode:
-                            context.applicationOptions.apiOptions
-                                ?.undefinedResultCode,
+                            context.applicationOptions.apiOptions?.undefinedResultCode,
                     },
                     classTransformer: context.classTransformer,
-                    classToPlainTransformOptions:
-                        context.classToPlainTransformOptions,
-                    plainToClassTransformOptions:
-                        context.plainToClassTransformOptions,
+                    classToPlainTransformOptions: context.classToPlainTransformOptions,
+                    plainToClassTransformOptions: context.plainToClassTransformOptions,
                     controllers: context.controllerClasses,
                     middlewares: context.globalMiddlewares,
                     defaultErrorHandler: options?.defaultErrorHandler,

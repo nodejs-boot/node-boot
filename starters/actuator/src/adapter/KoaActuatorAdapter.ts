@@ -22,8 +22,7 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
 
             await next();
 
-            const responseTimeInMilliseconds =
-                Date.now() - ctx.state["startEpoch"];
+            const responseTimeInMilliseconds = Date.now() - ctx.state["startEpoch"];
 
             this.context.http_request_duration_milliseconds
                 .labels(ctx.method, ctx.path, ctx.status.toString())

@@ -5,8 +5,5 @@ import {RequestContext} from "@node-boot/context";
  * Must return true or promise with boolean true resolved for authorization to succeed.
  */
 export interface AuthorizationResolver {
-    authorize(
-        context: RequestContext,
-        roles: any[],
-    ): Promise<boolean> | boolean;
+    authorize(context: RequestContext, roles: any[]): Promise<boolean> | boolean;
 }

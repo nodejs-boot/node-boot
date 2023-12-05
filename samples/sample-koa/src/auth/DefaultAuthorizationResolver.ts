@@ -18,8 +18,7 @@ export class DefaultAuthorizationResolver implements AuthorizationResolver {
             roles: ["USER", "ADMIN"],
         };
         if (user && !roles.length) return true;
-        if (user && roles.find(role => user.roles.indexOf(role) !== -1))
-            return true;
+        if (user && roles.find(role => user.roles.indexOf(role) !== -1)) return true;
         return false;
     }
 }

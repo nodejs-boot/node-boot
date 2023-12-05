@@ -8,21 +8,12 @@ import {errorCodes, FastifyError} from "fastify";
 
 @ErrorHandler()
 export class CustomErrorHandler
-    implements
-        FastifyErrorHandlerInterface<
-            FastifyRequest,
-            FastifyReply,
-            FastifyError
-        >
+    implements FastifyErrorHandlerInterface<FastifyRequest, FastifyReply, FastifyError>
 {
     @Inject()
     private logger: Logger;
 
-    error(
-        request: FastifyRequest,
-        reply: FastifyReply,
-        error: FastifyError,
-    ): void {
+    error(request: FastifyRequest, reply: FastifyReply, error: FastifyError): void {
         if (error instanceof errorCodes.FST_ERR_BAD_STATUS_CODE) {
             // Log error
             this.logger.error(error);

@@ -18,15 +18,12 @@ export class DefaultRepositoriesAdapter implements RepositoriesAdapter {
             );
 
             logger.info(
-                `Registering an '${type.toString()}' repository '${
-                    target.name
-                }' for entity '${entity.name}'`,
+                `Registering an '${type.toString()}' repository '${target.name}' for entity '${
+                    entity.name
+                }'`,
             );
             // Set repository to entity manager cache
-            (entityManager as any).repositories.set(
-                target,
-                entityRepositoryInstance,
-            );
+            (entityManager as any).repositories.set(target, entityRepositoryInstance);
             // set it to the DI container
             iocContainer.set(target, entityRepositoryInstance);
         }

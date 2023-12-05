@@ -30,9 +30,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         // Initialize configuration and logging
         await this.init();
 
-        this.logger.info(
-            `Running Node-Boot application with '${this.serverType.toUpperCase()}'`,
-        );
+        this.logger.info(`Running Node-Boot application with '${this.serverType.toUpperCase()}'`);
         const context = ApplicationContext.get();
         if (context.diOptions) {
             this.logger.info(`Binding Node-Boot @Configuration classes`);
@@ -45,22 +43,15 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
                 });
             }
 
-            this.logger.info(
-                `Binding Node-Boot @ConfigurationProperties classes`,
-            );
+            this.logger.info(`Binding Node-Boot @ConfigurationProperties classes`);
             for (const configurationPropertiesAdapter of context.configurationPropertiesAdapters) {
-                configurationPropertiesAdapter.bind(
-                    context.diOptions.iocContainer,
-                );
+                configurationPropertiesAdapter.bind(context.diOptions.iocContainer);
             }
 
             // it's important to set container before any operation you do with routing-controllers,
             // including importing controllers
             this.logger.info(`Setting DI container`);
-            useContainer(
-                context.diOptions.iocContainer,
-                context.diOptions.options,
-            );
+            useContainer(context.diOptions.iocContainer, context.diOptions.options);
         }
 
         if (context.actuatorAdapter) {
@@ -80,8 +71,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             const openApiAdapter = context.openApi.bind(this.serverType);
             openApiAdapter.bind(
                 {
-                    basePath:
-                        context.applicationOptions.apiOptions?.routePrefix,
+                    basePath: context.applicationOptions.apiOptions?.routePrefix,
                     controllers: context.controllerClasses,
                 },
                 framework,
@@ -91,24 +81,15 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     }
 
     private setupAppConfigs(context: ApplicationContext) {
-        const appConfigs =
-            this.config.getOptional<ApplicationOptions>("node-boot.app");
+        const appConfigs = this.config.getOptional<ApplicationOptions>("node-boot.app");
         const apiConfigs = this.config.getOptional<ApiOptions>("node-boot.api");
 
         context.applicationOptions = {
             environment:
-                context.applicationOptions?.environment ??
-                appConfigs?.environment ??
-                "development",
+                context.applicationOptions?.environment ?? appConfigs?.environment ?? "development",
             port: context.applicationOptions?.port ?? appConfigs?.port ?? 3000,
-            platform:
-                context.applicationOptions?.platform ??
-                appConfigs?.platform ??
-                "node-boot",
-            name:
-                context.applicationOptions?.name ??
-                appConfigs?.name ??
-                "node-boot-app",
+            platform: context.applicationOptions?.platform ?? appConfigs?.platform ?? "node-boot",
+            name: context.applicationOptions?.name ?? appConfigs?.name ?? "node-boot-app",
             defaultErrorHandler:
                 context.applicationOptions?.defaultErrorHandler ??
                 appConfigs?.defaultErrorHandler ??

@@ -1,12 +1,4 @@
-import {
-    Body,
-    Delete,
-    Get,
-    HttpCode,
-    Param,
-    Post,
-    Put,
-} from "routing-controllers";
+import {Body, Delete, Get, HttpCode, Param, Post, Put} from "routing-controllers";
 import {UserService} from "../services/users.service";
 import {User} from "../interfaces/users.interface";
 import {BackendConfigProperties} from "../config/BackendConfigProperties";
@@ -58,10 +50,7 @@ export class UserController {
     @Put("/users/:id")
     @OpenAPI({summary: "Update a user"})
     async updateUser(@Param("id") userId: number, @Body() userData: User) {
-        const updateUserData: User[] = await this.user.updateUser(
-            userId,
-            userData,
-        );
+        const updateUserData: User[] = await this.user.updateUser(userId, userData);
         return {data: updateUserData, message: "updated"};
     }
 

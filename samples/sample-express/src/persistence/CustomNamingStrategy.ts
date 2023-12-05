@@ -5,10 +5,7 @@ import {PersistenceNamingStrategy} from "@node-boot/starter-persistence";
 export class CustomNamingStrategy extends DefaultNamingStrategy {
     name = "sample-naming-strategy";
 
-    override tableName(
-        targetName: string,
-        userSpecifiedName: string | undefined,
-    ): string {
+    override tableName(targetName: string, userSpecifiedName: string | undefined): string {
         return `nb-${super.tableName(targetName, userSpecifiedName)}`;
     }
 }

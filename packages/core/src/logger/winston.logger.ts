@@ -34,14 +34,10 @@ export function createRootLogger(
                 {
                     level: env["LOG_LEVEL"] || "info",
                     format:
-                        env["NODE_ENV"] === "production"
-                            ? winston.format.json()
-                            : colorFormat(),
+                        env["NODE_ENV"] === "production" ? winston.format.json() : colorFormat(),
                     transports: [
                         new winston.transports.Console({
-                            silent:
-                                env["JEST_WORKER_ID"] !== undefined &&
-                                !env["LOG_LEVEL"],
+                            silent: env["JEST_WORKER_ID"] !== undefined && !env["LOG_LEVEL"],
                         }),
                     ],
                 },
@@ -68,17 +64,13 @@ function colorFormat(): Format {
             },
         }),
         format.printf((info: TransformableInfo) => {
-            const {timestamp, level, message, plugin, service, ...fields} =
-                info;
+            const {timestamp, level, message, plugin, service, ...fields} = info;
             const prefix = plugin || service;
             const timestampColor = colorizer.colorize("timestamp", timestamp);
             const prefixColor = colorizer.colorize("prefix", prefix);
 
             const extraFields = Object.entries(fields)
-                .map(
-                    ([key, value]) =>
-                        `${colorizer.colorize("field", `${key}`)}=${value}`,
-                )
+                .map(([key, value]) => `${colorizer.colorize("field", `${key}`)}=${value}`)
                 .join(" ");
 
             return `${timestampColor} ${prefixColor} ${level} ${message} ${extraFields}`;

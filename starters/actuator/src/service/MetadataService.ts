@@ -1,13 +1,8 @@
 import {getMetadataArgsStorage, MetadataArgsStorage} from "routing-controllers";
-import {
-    CONTROLLER_PATH_METADATA_KEY,
-    CONTROLLER_VERSION_METADATA_KEY,
-} from "@node-boot/context";
+import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY} from "@node-boot/context";
 
 export class MetadataService {
-    constructor(
-        private readonly metadataStorage: MetadataArgsStorage = getMetadataArgsStorage(),
-    ) {}
+    constructor(private readonly metadataStorage: MetadataArgsStorage = getMetadataArgsStorage()) {}
 
     getControllers() {
         return this.metadataStorage.controllers.map(controller => {

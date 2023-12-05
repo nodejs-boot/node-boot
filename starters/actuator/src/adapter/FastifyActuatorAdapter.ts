@@ -13,11 +13,7 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
         private readonly configService?: ConfigService,
     ) {}
 
-    bind(
-        options: ActuatorOptions,
-        server: FastifyInstance,
-        router: FastifyInstance,
-    ): void {
+    bind(options: ActuatorOptions, server: FastifyInstance, router: FastifyInstance): void {
         router.addHook("onRequest", (request, reply, done) => {
             // Start a timer for every request made
             request.log.info({event: "onRequest"}, "Request received");
@@ -27,16 +23,11 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
 
         router.addHook("onSend", (request, reply, payload, done) => {
             // Retrieve data from the request context
-            const responseTimeInMilliseconds =
-                Date.now() - request["locals"].startEpoch;
+            const responseTimeInMilliseconds = Date.now() - request["locals"].startEpoch;
 
             // Observe response time
             this.context.http_request_duration_milliseconds
-                .labels(
-                    request.method,
-                    request.url,
-                    reply.statusCode.toString(),
-                )
+                .labels(request.method, request.url, reply.statusCode.toString())
                 .observe(responseTimeInMilliseconds);
 
             done(null, payload);

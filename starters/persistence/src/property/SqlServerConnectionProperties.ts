@@ -3,8 +3,7 @@ import {SqlServerConnectionCredentialsOptions} from "typeorm/driver/sqlserver/Sq
 /**
  * Microsoft Sql Server specific connection options.
  */
-export interface SqlServerConnectionProperties
-    extends SqlServerConnectionCredentialsOptions {
+export interface SqlServerConnectionProperties extends SqlServerConnectionCredentialsOptions {
     /**
      * Database type.
      */

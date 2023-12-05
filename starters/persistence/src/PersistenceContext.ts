@@ -8,8 +8,7 @@ export class PersistenceContext {
 
     repositories: RepositoryMetadata[] = [];
     migrations: (new (...args: any[]) => MigrationInterface)[] = [];
-    eventSubscribers: (new (...args: any[]) => EntitySubscriberInterface)[] =
-        [];
+    eventSubscribers: (new (...args: any[]) => EntitySubscriberInterface)[] = [];
     namingStrategy?: new (...args: any[]) => NamingStrategyInterface;
     queryCache?: new (...args: any[]) => QueryResultCache;
 

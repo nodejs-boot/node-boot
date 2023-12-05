@@ -25,9 +25,7 @@ export function EnableAuthorization(
 
         if (CurrentUserResolverClass) {
             const userResolver = new CurrentUserResolverClass();
-            ApplicationContext.get().currentUserChecker = async (
-                action: Action,
-            ) => {
+            ApplicationContext.get().currentUserChecker = async (action: Action) => {
                 return userResolver.getCurrentUser(action);
             };
         }

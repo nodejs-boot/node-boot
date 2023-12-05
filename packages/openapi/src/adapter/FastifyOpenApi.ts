@@ -3,11 +3,7 @@ import {FastifyInstance} from "fastify";
 import {OpenApiSpecAdapter} from "./OpenApiSpecAdapter";
 
 export class FastifyOpenApi implements OpenApiAdapter {
-    bind(
-        openApiOptions: OpenApiOptions,
-        server: FastifyInstance,
-        router: FastifyInstance,
-    ): void {
+    bind(openApiOptions: OpenApiOptions, server: FastifyInstance, router: FastifyInstance): void {
         const {spec, options} = OpenApiSpecAdapter.adapt(openApiOptions);
 
         router.get(options.swaggerOptions.url, async (request, reply) => {

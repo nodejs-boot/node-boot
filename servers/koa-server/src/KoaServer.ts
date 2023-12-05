@@ -21,9 +21,7 @@ export class KoaServer extends BaseServer<Koa, Router> {
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
-            const configs = context.applicationAdapter.bind(
-                context.diOptions?.iocContainer,
-            );
+            const configs = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
             const driver = new KoaDriver(this.framework, this.router);
             createServer(driver, configs);
@@ -41,12 +39,8 @@ export class KoaServer extends BaseServer<Koa, Router> {
 
         this.framework.listen(context.applicationOptions.port, () => {
             this.logger.info(`=================================`);
-            this.logger.info(
-                `======= ENV: ${context.applicationOptions.environment} =======`,
-            );
-            this.logger.info(
-                `🚀 App listening on the port ${context.applicationOptions.port}`,
-            );
+            this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+            this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
             this.logger.info(`=================================`);
         });
     }

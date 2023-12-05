@@ -157,9 +157,7 @@ export class Optional<T> {
         if (this.isPresent()) {
             return mapper(this.value!);
         }
-        throw new Error(
-            "FlatMap operation cannot be called on an empty Optional",
-        );
+        throw new Error("FlatMap operation cannot be called on an empty Optional");
     }
 
     /**
@@ -182,15 +180,13 @@ export class Optional<T> {
             return Optional.of(this.value.filter(predicate) as T);
         } else if (this.value instanceof Map || this.value instanceof Set) {
             // Filter map or set
-            const filteredEntries = Array.from(this.value.entries()).filter(
-                ([key, value]) => predicate(value),
+            const filteredEntries = Array.from(this.value.entries()).filter(([key, value]) =>
+                predicate(value),
             );
             if (this.value instanceof Map) {
                 return Optional.of(new Map(filteredEntries) as T);
             } else {
-                return Optional.of(
-                    new Set(filteredEntries.map(([key, value]) => value)) as T,
-                );
+                return Optional.of(new Set(filteredEntries.map(([key, value]) => value)) as T);
             }
         } else {
             // Filter single value
@@ -207,9 +203,7 @@ export class Optional<T> {
      * Returns an empty Optional object if the original Optional object is not present.
      * */
     convert<U>(converter: (value: T) => U): Optional<U | undefined> {
-        return this.isPresent()
-            ? Optional.of(converter(this.value!))
-            : Optional.empty();
+        return this.isPresent() ? Optional.of(converter(this.value!)) : Optional.empty();
     }
 
     /**
@@ -325,9 +319,7 @@ export class Optional<T> {
             const result = callback(this.value as T);
             return Optional.of(result);
         }
-        throw new Error(
-            "Running operations in empty/undefined objects is not possible",
-        );
+        throw new Error("Running operations in empty/undefined objects is not possible");
     }
 
     /**

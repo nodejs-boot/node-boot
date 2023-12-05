@@ -35,9 +35,7 @@ function decorateTypeDi(
         }
 
         // TypeDi is not available
-        console.warn(
-            "@Service decorator is only applied if 'TypeDi' dependency is available!",
-        );
+        console.warn("@Service decorator is only applied if 'TypeDi' dependency is available!");
         decorated = false;
     }
     return decorated;
@@ -59,9 +57,7 @@ function decorateInversify(
         decorated = true;
     } catch (error) {
         // Inversify is not available
-        console.warn(
-            "@inject decorator is only applied if 'Inversify' dependency is available!",
-        );
+        console.warn("@inject decorator is only applied if 'Inversify' dependency is available!");
         decorated = false;
     }
     return decorated;

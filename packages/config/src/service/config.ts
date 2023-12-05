@@ -1,11 +1,7 @@
 import {resolve as resolvePath} from "path";
 import parseArgs from "minimist";
 import {findPaths} from "@backstage/cli-common";
-import {
-    ConfigTarget,
-    loadConfig,
-    LoadConfigOptionsRemote,
-} from "@backstage/config-loader";
+import {ConfigTarget, loadConfig, LoadConfigOptionsRemote} from "@backstage/config-loader";
 import type {AppConfig} from "@backstage/config";
 import {ConfigReader} from "@backstage/config";
 import {ConfigService} from "./ConfigService";
@@ -51,11 +47,7 @@ export async function loadNodeBootConfig(options: {
         remote: options.remote,
         watch: {
             onChange(newConfigs) {
-                console.info(
-                    `Reloaded config from ${newConfigs
-                        .map(c => c.context)
-                        .join(", ")}`,
-                );
+                console.info(`Reloaded config from ${newConfigs.map(c => c.context).join(", ")}`);
                 const configsToMerge = [...newConfigs];
                 if (options.additionalConfigs) {
                     configsToMerge.push(...options.additionalConfigs);
@@ -71,9 +63,7 @@ export async function loadNodeBootConfig(options: {
         },
     });
 
-    console.info(
-        `Loaded config from ${appConfigs.map(c => c.context).join(", ")}`,
-    );
+    console.info(`Loaded config from ${appConfigs.map(c => c.context).join(", ")}`);
 
     const finalAppConfigs = [...appConfigs];
     if (options.additionalConfigs) {

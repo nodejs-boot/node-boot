@@ -1,8 +1,4 @@
-import {
-    ApplicationContext,
-    OpenApiAdapter,
-    OpenApiBridgeAdapter,
-} from "@node-boot/context";
+import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@node-boot/context";
 import * as oa from "openapi3-ts";
 import {ExpressOpenApi} from "../adapter";
 import {KoaOpenApi} from "../adapter/KoaOpenApi";
@@ -13,13 +9,9 @@ import {FastifyOpenApi} from "../adapter/FastifyOpenApi";
  *
  * @param openApi The OpenAPI definitions and base config
  */
-export function EnableOpenApi(
-    openApi: Partial<oa.OpenAPIObject> = {},
-): Function {
+export function EnableOpenApi(openApi: Partial<oa.OpenAPIObject> = {}): Function {
     return function (object: Function) {
-        ApplicationContext.get().openApi = new (class
-            implements OpenApiBridgeAdapter
-        {
+        ApplicationContext.get().openApi = new (class implements OpenApiBridgeAdapter {
             bind(serverType: string): OpenApiAdapter {
                 switch (serverType) {
                     case "express":

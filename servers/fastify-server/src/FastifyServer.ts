@@ -4,10 +4,7 @@ import {BaseServer} from "@node-boot/core";
 import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "./driver/FastifyDriver";
 
-export class FastifyServer extends BaseServer<
-    FastifyInstance,
-    FastifyInstance
-> {
+export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> {
     private readonly framework: FastifyInstance;
 
     constructor() {
@@ -23,9 +20,7 @@ export class FastifyServer extends BaseServer<
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
-            const configs = context.applicationAdapter.bind(
-                context.diOptions?.iocContainer,
-            );
+            const configs = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
             const driver = new FastifyDriver(
                 {
@@ -67,9 +62,7 @@ export class FastifyServer extends BaseServer<
                     process.exit(1);
                 }
                 this.logger.info(`=================================`);
-                this.logger.info(
-                    `======= ENV: ${context.applicationOptions.environment} =======`,
-                );
+                this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
                 this.logger.info(`🚀 App listening on ${address}`);
                 this.logger.info(`=================================`);
             },

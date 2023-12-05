@@ -14,15 +14,11 @@ export const runOnTransactionRollback = (cb: (e: Error) => void) => {
     return innerRunOnTransactionRollback(cb);
 };
 
-export const runOnTransactionComplete = (
-    cb: (e: Error | undefined) => void,
-) => {
+export const runOnTransactionComplete = (cb: (e: Error | undefined) => void) => {
     return innerRunOnTransactionComplete(cb);
 };
 
-export const runInTransaction = <
-    Func extends (this: unknown) => ReturnType<Func>,
->(
+export const runInTransaction = <Func extends (this: unknown) => ReturnType<Func>>(
     fn: Func,
     options?: WrapInTransactionOptions,
 ) => {

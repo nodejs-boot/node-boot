@@ -7,11 +7,7 @@ import type {
     ConfigurationAdapter,
     ConfigurationPropertiesAdapter,
 } from "./adapters";
-import {
-    ActuatorAdapter,
-    OpenApiBridgeAdapter,
-    RepositoriesAdapter,
-} from "./adapters";
+import {ActuatorAdapter, OpenApiBridgeAdapter, RepositoriesAdapter} from "./adapters";
 
 export class ApplicationContext {
     private static context: ApplicationContext;

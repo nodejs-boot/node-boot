@@ -7,8 +7,6 @@ export function Configuration(): Function {
     return function (target: Function) {
         Reflect.defineMetadata(IS_CONFIGURATION_KEY, true, target);
 
-        ApplicationContext.get().configurationAdapters.push(
-            new BeansConfigurationAdapter(target),
-        );
+        ApplicationContext.get().configurationAdapters.push(new BeansConfigurationAdapter(target));
     };
 }

@@ -5,8 +5,7 @@ import {MysqlConnectionCredentialsOptions} from "typeorm/driver/mysql/MysqlConne
  *
  * @see https://github.com/mysqljs/mysql#connection-options
  */
-export interface MysqlConnectionProperties
-    extends MysqlConnectionCredentialsOptions {
+export interface MysqlConnectionProperties extends MysqlConnectionCredentialsOptions {
     /**
      * The driver object
      * This defaults to require("mysql").

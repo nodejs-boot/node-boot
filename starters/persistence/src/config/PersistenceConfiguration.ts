@@ -20,19 +20,11 @@ import {REQUIRES_FIELD_INJECTION_KEY} from "@node-boot/di";
 @Configuration()
 export class PersistenceConfiguration {
     @Bean()
-    public dataSource({
-        iocContainer,
-        logger,
-        config,
-    }: BeansContext): DataSource {
+    public dataSource({iocContainer, logger, config}: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
-        const datasourceConfig = iocContainer.get(
-            "datasource-config",
-        ) as DataSourceOptions;
+        const datasourceConfig = iocContainer.get("datasource-config") as DataSourceOptions;
 
-        const entities = PersistenceContext.get().repositories.map(
-            repository => repository.entity,
-        );
+        const entities = PersistenceContext.get().repositories.map(repository => repository.entity);
         const dataSource = new DataSource({
             ...datasourceConfig,
             entities,
@@ -52,9 +44,7 @@ export class PersistenceConfiguration {
                     dataSource
                         .runMigrations()
                         .then(migrations => {
-                            logger.info(
-                                `${migrations.length} migration was successfully executed`,
-                            );
+                            logger.info(`${migrations.length} migration was successfully executed`);
                         })
                         .catch(reason => {
                             logger.info(`Migrations failed due to:`, reason);
@@ -73,8 +63,7 @@ export class PersistenceConfiguration {
                             subscriber,
                             fieldToInject,
                         );
-                        subscriber[fieldToInject] =
-                            iocContainer.get(propertyType);
+                        subscriber[fieldToInject] = iocContainer.get(propertyType);
                     }
                 }
 
@@ -82,9 +71,7 @@ export class PersistenceConfiguration {
                 const context = ApplicationContext.get();
                 if (context.diOptions) {
                     logger.info(`Binding persistence repositories`);
-                    context.repositoriesAdapter?.bind(
-                        context.diOptions.iocContainer,
-                    );
+                    context.repositoriesAdapter?.bind(context.diOptions.iocContainer);
                 } else {
                     throw new Error(
                         "diOptions with an IOC Container is required for Data Repositories",
@@ -92,10 +79,7 @@ export class PersistenceConfiguration {
                 }
             })
             .catch(err => {
-                logger.error(
-                    "Error during Persistence DataSource initialization",
-                    err,
-                );
+                logger.error("Error during Persistence DataSource initialization", err);
                 process.exit(1);
             });
         logger.info("DataSource bean provided successfully");

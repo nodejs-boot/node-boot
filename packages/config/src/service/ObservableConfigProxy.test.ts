@@ -72,15 +72,9 @@ describe("ObservableConfigProxy", () => {
         expect(config3.getNumber("x")).toBe(6);
 
         config1.setConfig(new ConfigReader({}));
-        expect(() => config1.getNumber("x")).toThrow(
-            "Missing required config value at 'x'",
-        );
-        expect(() => config2.getNumber("x")).toThrow(
-            "Missing required config value at 'a'",
-        );
-        expect(() => config3.getNumber("x")).toThrow(
-            "Missing required config value at 'a'",
-        );
+        expect(() => config1.getNumber("x")).toThrow("Missing required config value at 'x'");
+        expect(() => config2.getNumber("x")).toThrow("Missing required config value at 'a'");
+        expect(() => config3.getNumber("x")).toThrow("Missing required config value at 'a'");
 
         config1.setConfig(new ConfigReader({x: "s", a: {x: "s", b: {x: "s"}}}));
         expect(() => config1.getNumber("x")).toThrow(

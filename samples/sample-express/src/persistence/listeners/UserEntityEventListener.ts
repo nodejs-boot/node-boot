@@ -6,9 +6,7 @@ import {Logger} from "winston";
 import {GreetingService} from "../../services/greeting.service";
 
 @EntityEventSubscriber()
-export class UserEntityEventListener
-    implements EntitySubscriberInterface<User>
-{
+export class UserEntityEventListener implements EntitySubscriberInterface<User> {
     @Inject()
     private logger: Logger;
 

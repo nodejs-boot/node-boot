@@ -7,8 +7,6 @@ export class GreetingService {
     constructor(private readonly logger: Logger) {}
 
     public sayHello(user: User): void {
-        this.logger.info(
-            `I'm really happy that you exists ${user.id}/${user.email}`,
-        );
+        this.logger.info(`I'm really happy that you exists ${user.id}/${user.email}`);
     }
 }
