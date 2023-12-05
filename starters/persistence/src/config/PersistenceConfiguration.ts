@@ -25,6 +25,7 @@ export class PersistenceConfiguration {
         const datasourceConfig = iocContainer.get("datasource-config") as DataSourceOptions;
 
         const entities = PersistenceContext.get().repositories.map(repository => repository.entity);
+
         const dataSource = new DataSource({
             ...datasourceConfig,
             entities,
