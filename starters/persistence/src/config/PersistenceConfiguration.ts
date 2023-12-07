@@ -12,13 +12,26 @@ import {Logger} from "winston";
  *
  * <i>Main functionalities</i>:
  * * Configuring the DataSource bean for the persistence layer.
- * * Initializing the DataSource and running migrations if enabled.
- * * Binding data repositories to the DI container.
+ * * Initializing the DataSource.
+ * * Run migrations if enabled
+ * * Run database Sync if enabled
+ * * Binding data repositories to the DI container
+ * * Validate persistence layer consistency
  *
  *  @author manusant (ney.br.santos@gmail.com)
  * */
 @Configuration()
 export class PersistenceConfiguration {
+    /**
+     * The dataSource method in the PersistenceConfiguration class is responsible for configuring and providing the
+     * DataSource object for the persistence layer of the application.
+     *
+     * @param iocContainer (IocContainer): An instance of the IoC container used for dependency injection.
+     * @param logger (Logger): An instance of the logger class used for logging messages.
+     * @param config (Config): An instance of the configuration class used for retrieving configuration values.
+     *
+     * @return dataSource (DataSource): The configured and initialized DataSource object for the persistence layer.
+     * */
     @Bean()
     public dataSource({iocContainer, logger, config}: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
@@ -70,6 +83,15 @@ export class PersistenceConfiguration {
         return dataSource;
     }
 
+    /**
+     * The entityManager method in the PersistenceConfiguration class is responsible for providing an instance of the
+     * EntityManager class, which is used for managing database operations.
+     *
+     * @param iocContainer (IocContainer): An instance of the IoC container used for dependency injection.
+     * @param logger (Logger): An instance of the logger class used for logging messages.
+     *
+     * @return entityManager (EntityManager): The provided instance of the EntityManager class
+     * */
     @Bean()
     public entityManager({iocContainer, logger}: BeansContext): EntityManager {
         logger.info("Providing EntityManager");
@@ -78,6 +100,15 @@ export class PersistenceConfiguration {
         return dataSource.manager;
     }
 
+    /**
+     * The setupInjection method in the PersistenceConfiguration class is responsible for setting up dependency injection
+     * for the persistence event subscribers. It retrieves the subscribers from the dataSource object and iterates over
+     * each subscriber to inject the required dependencies using the IoC container.
+     *
+     * @param logger (Logger): An instance of the logger class used for logging messages.
+     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
+     * @param iocContainer (IocContainer<unknown>): An instance of the IoC container used for dependency injection.
+     * */
     static setupInjection(
         logger: Logger,
         dataSource: DataSource,
@@ -100,6 +131,13 @@ export class PersistenceConfiguration {
         logger.info(`${subscribers.length} persistence event subscribers successfully injected`);
     }
 
+    /**
+     * The runMigration method in the PersistenceConfiguration class is responsible for running database migrations
+     * using the dataSource object. It logs the success or failure of the migration operation.
+     *
+     * @param logger (Logger): An instance of the logger class used for logging messages.
+     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
+     * */
     static async runMigration(logger: Logger, dataSource: DataSource) {
         logger.info("Running migrations");
         try {
@@ -110,6 +148,13 @@ export class PersistenceConfiguration {
         }
     }
 
+    /**
+     * The bindDataRepositories method in the PersistenceConfiguration class is responsible for binding the data
+     * repositories to the IoC container. It checks if the diOptions property is defined in the ApplicationContext and
+     * then calls the bind method on the repositoriesAdapter using the IoC container.
+     *
+     * @param logger (Logger): An instance of the logger class used for logging messages
+     * */
     static bindDataRepositories(logger: Logger) {
         const context = ApplicationContext.get();
         if (context.diOptions) {
@@ -120,6 +165,14 @@ export class PersistenceConfiguration {
         }
     }
 
+    /**
+     * The runDatabaseSync method in the PersistenceConfiguration class is responsible for starting the synchronization
+     * of the database. It calls the synchronize method on the DataSource object to perform the synchronization and logs
+     * the success or failure of the operation.
+     *
+     * @param logger (Logger): An instance of the logger class used for logging messages.
+     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
+     * */
     static async runDatabaseSync(logger: Logger, dataSource: DataSource) {
         logger.info(`Starting database synchronization`);
         try {
@@ -130,6 +183,13 @@ export class PersistenceConfiguration {
         }
     }
 
+    /**
+     * The ensureDatabase method in the PersistenceConfiguration class is responsible for validating the consistency of
+     * the database by comparing the registered entities with the existing tables in the database.
+     *
+     * @param logger (Logger): An instance of the logger class used for logging messages.
+     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
+     * */
     static async ensureDatabase(logger: Logger, dataSource: DataSource) {
         const queryRunner = dataSource.createQueryRunner();
 
