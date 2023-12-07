@@ -9,12 +9,6 @@ export interface SpannerConnectionProperties extends SpannerConnectionCredential
      */
     readonly type: "spanner";
 
-    /**
-     * The driver object
-     * This defaults to require("@google-cloud/spanner").
-     */
-    readonly driver?: any;
-
     // todo
     readonly database?: string;
 

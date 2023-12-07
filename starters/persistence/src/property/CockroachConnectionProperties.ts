@@ -16,18 +16,6 @@ export interface CockroachConnectionProperties extends CockroachConnectionCreden
     readonly schema?: string;
 
     /**
-     * The driver object
-     * This defaults to `require("pg")`.
-     */
-    readonly driver?: any;
-
-    /**
-     * The driver object
-     * This defaults to `require("pg-native")`.
-     */
-    readonly nativeDriver?: any;
-
-    /**
      * Replication setup.
      */
     readonly replication?: {
@@ -47,12 +35,6 @@ export interface CockroachConnectionProperties extends CockroachConnectionCreden
      * the service using this connection. Defaults to 'undefined'
      */
     readonly applicationName?: string;
-
-    /**
-     * Function handling errors thrown by drivers pool.
-     * Defaults to logging error with `warn` level.
-     */
-    readonly poolErrorHandler?: (err: any) => any;
 
     /**
      * Max number of transaction retries in case of 40001 error.

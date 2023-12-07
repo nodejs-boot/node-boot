@@ -57,6 +57,6 @@ node-boot:
         type: "better-sqlite3"
         synchronize: false # False, meaning that the application rely on migrations
         cache: true
-        runMigrations: true
+        migrationsRun: true
         better-sqlite3:
             database: "express-sample.db"

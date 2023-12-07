@@ -50,8 +50,6 @@ export class FactsServiceApp {
             })
             .catch(error => {
                 console.error("Error starting Node-Boot application.", error);
-                // Terminate the process with a non-zero exit code (1).
-                process.exit(1);
             });
     }
 }

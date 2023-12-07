@@ -10,18 +10,6 @@ export interface SapConnectionProperties extends SapConnectionCredentialsOptions
     readonly schema?: string;
 
     /**
-     * The driver objects
-     * This defaults to require("hdb-pool")
-     */
-    readonly driver?: any;
-
-    /**
-     * The driver objects
-     * This defaults to require("@sap/hana-client")
-     */
-    readonly hanaClientDriver?: any;
-
-    /**
      * Pool options.
      */
     readonly pool?: {
@@ -51,12 +39,6 @@ export interface SapConnectionProperties extends SapConnectionCredentialsOptions
          * Idle timeout
          */
         readonly idleTimeout?: number;
-
-        /**
-         * Function handling errors thrown by drivers pool.
-         * Defaults to logging error with `warn` level.
-         */
-        readonly poolErrorHandler?: (err: any) => any;
     };
 
     readonly poolSize?: never;

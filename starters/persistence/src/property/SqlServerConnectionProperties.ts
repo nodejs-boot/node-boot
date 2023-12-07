@@ -5,11 +5,6 @@ import {SqlServerConnectionCredentialsOptions} from "typeorm/driver/sqlserver/Sq
  */
 export interface SqlServerConnectionProperties extends SqlServerConnectionCredentialsOptions {
     /**
-     * Database type.
-     */
-    readonly type: "mssql";
-
-    /**
      * Connection timeout in ms (default: 15000).
      */
     readonly connectionTimeout?: number;
@@ -30,12 +25,6 @@ export interface SqlServerConnectionProperties extends SqlServerConnectionCreden
      * Database schema.
      */
     readonly schema?: string;
-
-    /**
-     * The driver object
-     * This defaults to `require("mssql")`
-     */
-    readonly driver?: any;
 
     /**
      * An optional object/dictionary with the any of the properties
@@ -104,12 +93,6 @@ export interface SqlServerConnectionProperties extends SqlServerConnectionCreden
          * to idle time. Supercedes softIdleTimeoutMillis Default: 30000
          */
         readonly idleTimeoutMillis?: number;
-
-        /*
-         * Function handling errors thrown by drivers pool.
-         * Defaults to logging error with `warn` level.
-         */
-        readonly errorHandler?: (err: any) => any;
     };
 
     /**

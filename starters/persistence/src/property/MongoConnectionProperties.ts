@@ -1,5 +1,3 @@
-import {ReadPreference} from "typeorm";
-
 /**
  * MongoDB specific connection options.
  * Synced with http://mongodb.github.io/node-mongodb-native/3.1/api/MongoClient.html
@@ -235,22 +233,12 @@ export interface MongoConnectionProperties {
      * The preferred read preference (ReadPreference.PRIMARY, ReadPreference.PRIMARY_PREFERRED, ReadPreference.SECONDARY,
      * ReadPreference.SECONDARY_PREFERRED, ReadPreference.NEAREST).
      */
-    readonly readPreference?: ReadPreference | string;
-
-    /**
-     * A primary key factory object for generation of custom _id keys.
-     */
-    readonly pkFactory?: any;
-
-    /**
-     * A Promise library class the application wishes to use such as Bluebird, must be ES6 compatible.
-     */
-    readonly promiseLibrary?: any;
-
-    /**
-     * Specify a read concern for the collection. (only MongoDB 3.2 or higher supported).
-     */
-    readonly readConcern?: any;
+    readonly readPreference?:
+        | "primary"
+        | "primaryPreferred"
+        | "secondary"
+        | "secondaryPreferred"
+        | "nearest";
 
     /**
      * Specify a maxStalenessSeconds value for secondary reads, minimum is 90 seconds
@@ -258,18 +246,10 @@ export interface MongoConnectionProperties {
     readonly maxStalenessSeconds?: number;
 
     /**
-     * Specify the log level used by the driver logger (error/warn/info/debug).
-     */
-    readonly loggerLevel?: "error" | "warn" | "info" | "debug";
-
-    // Do not overwrite BaseDataSourceOptions.logger
-    // readonly logger?: any;
-
-    /**
-     * Ensure we check server identify during SSL, set to false to disable checking. Only works for Node 0.12.x or higher. You can pass in a boolean or your own checkServerIdentity override function
+     * Ensure we check server identify during SSL, set to false to disable checking. Only works for Node 0.12.x or higher.
      * Default: true
      */
-    readonly checkServerIdentity?: boolean | Function;
+    readonly checkServerIdentity?: boolean;
 
     /**
      * Validate MongoClient passed in options for correctness. Default: false
@@ -287,19 +267,9 @@ export interface MongoConnectionProperties {
     readonly authMechanism?: string;
 
     /**
-     * Type of compression to use: snappy or zlib
-     */
-    readonly compression?: any;
-
-    /**
      * Specify a file sync write concern. Default: false
      */
     readonly fsync?: boolean;
-
-    /**
-     * Read preference tags
-     */
-    readonly readPreferenceTags?: any[];
 
     /**
      * The number of retries for a tailable cursor. Default: 5
@@ -331,11 +301,6 @@ export interface MongoConnectionProperties {
      * https://github.com/mongodb/node-mongodb-native/releases/tag/v3.2.1
      */
     readonly useUnifiedTopology?: boolean;
-
-    /**
-     * Automatic Client-Side Field Level Encryption configuration.
-     */
-    readonly autoEncryption?: any;
 
     /**
      * Enables or disables the ability to retry writes upon encountering transient network errors.

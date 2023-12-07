@@ -19,11 +19,10 @@ export class DataSourceConfiguration {
         }
 
         const persistenceLogger = new PersistenceLogger(logger);
-        const persistenceContext = PersistenceContext.get();
+        const {databaseConnectionOverrides, eventSubscribers, migrations, namingStrategy} =
+            PersistenceContext.get();
 
-        const namingStrategy = persistenceContext.namingStrategy
-            ? new persistenceContext.namingStrategy()
-            : undefined;
+        const strategy = namingStrategy ? new namingStrategy() : undefined;
 
         let cacheConfig;
         if (iocContainer.has(QUERY_CACHE_CONFIG)) {
@@ -34,7 +33,7 @@ export class DataSourceConfiguration {
             );
         }
 
-        const databaseConfigs = persistenceProperties[persistenceProperties.type];
+        let databaseConfigs = persistenceProperties[persistenceProperties.type];
         if (!databaseConfigs) {
             throw new Error(
                 `Invalid persistence configuration. No database specific configuration found for ${persistenceProperties.type} database under ${PERSISTENCE_CONFIG_PATH}' configuration node.`,
@@ -43,20 +42,42 @@ export class DataSourceConfiguration {
         // Set the type from configurations to the driver/connection type
         databaseConfigs.type = persistenceProperties.type;
 
-        logger.info(
-            `${persistenceContext.eventSubscribers.length} subscribers found and ready to be registered`,
-        );
-        logger.info(
-            `${persistenceContext.migrations.length} migrations found and ready to be registered`,
-        );
+        logger.info(`${eventSubscribers.length} subscribers found and ready to be registered`);
+        logger.info(`${migrations.length} migrations found and ready to be registered`);
+
+        if (databaseConnectionOverrides) {
+            if (databaseConnectionOverrides.type !== persistenceProperties.type) {
+                throw new Error(`Database type mismatch between configuration properties (${persistenceProperties.type}) 
+                and @DatasourceConfiguration(...) (${databaseConnectionOverrides.type})`);
+            }
+
+            databaseConfigs = {
+                ...databaseConfigs,
+                ...(databaseConnectionOverrides as any),
+            };
+        }
+
+        if (databaseConfigs.synchronize && databaseConfigs.migrationsRun) {
+            throw new Error(
+                `Only one of "synchronize" or "migrationsRun" config property can be enabled. Please set one of them to false`,
+            );
+        }
+
+        // Save the synchronization and migration state
+        PersistenceContext.get().synchronizeDatabase = databaseConfigs.synchronize;
+        PersistenceContext.get().migrationsRun = databaseConfigs.migrationsRun;
 
         return {
-            ...(databaseConfigs as DataSourceOptions),
-            namingStrategy,
-            subscribers: persistenceContext.eventSubscribers,
-            migrations: persistenceContext.migrations,
+            ...databaseConfigs,
+            namingStrategy: strategy,
+            subscribers: eventSubscribers,
+            migrations: migrations,
             logger: persistenceLogger,
             cache: cacheConfig,
+            // IMPORTANT: Disable synchronization and migrations run during datasource initialization. If enabled it will be synced afterward
+            // If enabled here it will cause injection issues
+            synchronize: false,
+            migrationsRun: false,
         };
     }
 }

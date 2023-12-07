@@ -10,12 +10,6 @@ export interface OracleConnectionProperties extends OracleConnectionCredentialsO
     readonly schema?: string;
 
     /**
-     * The driver object
-     * This defaults to require("oracledb")
-     */
-    readonly driver?: any;
-
-    /**
      * A boolean determining whether to pass time values in UTC or local time. (default: false).
      */
     readonly useUTC?: boolean;

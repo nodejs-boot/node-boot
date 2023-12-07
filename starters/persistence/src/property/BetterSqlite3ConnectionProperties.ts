@@ -25,13 +25,6 @@ export interface BetterSqlite3ConnectionProperties {
     readonly statementCacheSize?: number;
 
     /**
-     * Function to run before a database is used in typeorm.
-     * You can set pragmas, register plugins or register
-     * functions or aggregates in this function.
-     */
-    readonly prepareDatabase?: (db: any) => void | Promise<void>;
-
-    /**
      * Open the database connection in readonly mode.
      * Default: false.
      */
@@ -50,11 +43,6 @@ export interface BetterSqlite3ConnectionProperties {
      * Default: 5000.
      */
     readonly timeout?: number;
-
-    /**
-     * Provide a function that gets called with every SQL string executed by the database connection.
-     */
-    readonly verbose?: Function;
 
     /**
      * Relative or absolute path to the native addon (better_sqlite3.node).

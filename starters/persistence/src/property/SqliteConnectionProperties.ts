@@ -3,20 +3,9 @@
  */
 export interface SqliteConnectionProperties {
     /**
-     * Database type.
-     */
-    readonly type: "sqlite";
-
-    /**
      * Storage type or path to the storage.
      */
     readonly database: string;
-
-    /**
-     * The driver object
-     * This defaults to require("sqlite3")
-     */
-    readonly driver?: any;
 
     /**
      * Encryption key for for SQLCipher.

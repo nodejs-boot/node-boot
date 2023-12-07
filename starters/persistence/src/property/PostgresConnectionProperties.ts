@@ -10,18 +10,6 @@ export interface PostgresConnectionProperties extends PostgresConnectionCredenti
     readonly schema?: string;
 
     /**
-     * The driver object
-     * This defaults to `require("pg")`.
-     */
-    readonly driver?: any;
-
-    /**
-     * The driver object
-     * This defaults to `require("pg-native")`.
-     */
-    readonly nativeDriver?: any;
-
-    /**
      * A boolean determining whether to pass time values in UTC or local time. (default: false).
      */
     readonly useUTC?: boolean;
@@ -53,12 +41,6 @@ export interface PostgresConnectionProperties extends PostgresConnectionCredenti
      * If uuid-ossp is selected, TypeORM will use the uuid_generate_v4() function from this extension.
      */
     readonly uuidExtension?: "pgcrypto" | "uuid-ossp";
-
-    /*
-     * Function handling errors thrown by drivers pool.
-     * Defaults to logging error with `warn` level.
-     */
-    readonly poolErrorHandler?: (err: any) => any;
 
     /**
      * Include notification messages from Postgres server in client logs

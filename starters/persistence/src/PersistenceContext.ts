@@ -2,6 +2,7 @@ import {RepositoryMetadata} from "./metadata/RepositoryMetadata";
 import {NamingStrategyInterface} from "typeorm/naming-strategy/NamingStrategyInterface";
 import {QueryResultCache} from "typeorm/cache/QueryResultCache";
 import {EntitySubscriberInterface, MigrationInterface} from "typeorm";
+import {NodeBootDataSourceOptions} from "./property/NodeBootDataSourceOptions";
 
 export class PersistenceContext {
     private static context: PersistenceContext;
@@ -11,6 +12,9 @@ export class PersistenceContext {
     eventSubscribers: (new (...args: any[]) => EntitySubscriberInterface)[] = [];
     namingStrategy?: new (...args: any[]) => NamingStrategyInterface;
     queryCache?: new (...args: any[]) => QueryResultCache;
+    databaseConnectionOverrides?: NodeBootDataSourceOptions;
+    synchronizeDatabase?: boolean;
+    migrationsRun?: boolean;
 
     static get(): PersistenceContext {
         if (!PersistenceContext.context) {
