@@ -23,7 +23,7 @@ import {Logger} from "winston";
 @Configuration()
 export class PersistenceConfiguration {
     /**
-     * The dataSource method in the PersistenceConfiguration class is responsible for configuring and providing the
+     * The dataSource method  is responsible for configuring and providing the
      * DataSource object for the persistence layer of the application.
      *
      * @param iocContainer (IocContainer): An instance of the IoC container used for dependency injection.
@@ -84,7 +84,7 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The entityManager method in the PersistenceConfiguration class is responsible for providing an instance of the
+     * The entityManager method  is responsible for providing an instance of the
      * EntityManager class, which is used for managing database operations.
      *
      * @param iocContainer (IocContainer): An instance of the IoC container used for dependency injection.
@@ -101,7 +101,7 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The setupInjection method in the PersistenceConfiguration class is responsible for setting up dependency injection
+     * The setupInjection method  is responsible for setting up dependency injection
      * for the persistence event subscribers. It retrieves the subscribers from the dataSource object and iterates over
      * each subscriber to inject the required dependencies using the IoC container.
      *
@@ -132,7 +132,7 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The runMigration method in the PersistenceConfiguration class is responsible for running database migrations
+     * The runMigration method  is responsible for running database migrations
      * using the dataSource object. It logs the success or failure of the migration operation.
      *
      * @param logger (Logger): An instance of the logger class used for logging messages.
@@ -149,7 +149,7 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The bindDataRepositories method in the PersistenceConfiguration class is responsible for binding the data
+     * The bindDataRepositories method  is responsible for binding the data
      * repositories to the IoC container. It checks if the diOptions property is defined in the ApplicationContext and
      * then calls the bind method on the repositoriesAdapter using the IoC container.
      *
@@ -166,7 +166,7 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The runDatabaseSync method in the PersistenceConfiguration class is responsible for starting the synchronization
+     * The runDatabaseSync method  is responsible for starting the synchronization
      * of the database. It calls the synchronize method on the DataSource object to perform the synchronization and logs
      * the success or failure of the operation.
      *
@@ -184,7 +184,7 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The ensureDatabase method in the PersistenceConfiguration class is responsible for validating the consistency of
+     * The ensureDatabase method is responsible for validating the consistency of
      * the database by comparing the registered entities with the existing tables in the database.
      *
      * @param logger (Logger): An instance of the logger class used for logging messages.
