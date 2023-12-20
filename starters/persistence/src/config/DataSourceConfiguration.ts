@@ -19,8 +19,7 @@ export class DataSourceConfiguration {
         }
 
         const persistenceLogger = new PersistenceLogger(logger);
-        const {databaseConnectionOverrides, eventSubscribers, migrations, namingStrategy} =
-            PersistenceContext.get();
+        const {databaseConnectionOverrides, eventSubscribers, migrations, namingStrategy} = PersistenceContext.get();
 
         const strategy = namingStrategy ? new namingStrategy() : undefined;
 
@@ -28,9 +27,7 @@ export class DataSourceConfiguration {
         if (iocContainer.has(QUERY_CACHE_CONFIG)) {
             cacheConfig = iocContainer.get(QUERY_CACHE_CONFIG);
         } else {
-            logger.warn(
-                "No query cache configuration found while building datasource configuration",
-            );
+            logger.warn("No query cache configuration found while building datasource configuration");
         }
 
         let databaseConfigs = persistenceProperties[persistenceProperties.type];
@@ -58,9 +55,7 @@ export class DataSourceConfiguration {
         }
 
         if (databaseConfigs.synchronize && databaseConfigs.migrationsRun) {
-            throw new Error(
-                `Only one of "synchronize" or "migrationsRun" config property can be enabled. Please set one of them to false`,
-            );
+            throw new Error(`Only one of "synchronize" or "migrationsRun" config property can be enabled. Please set one of them to false`);
         }
 
         // Save the synchronization and migration state

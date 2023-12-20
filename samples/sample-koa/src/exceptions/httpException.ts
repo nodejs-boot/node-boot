@@ -1,4 +1,4 @@
-import {HttpError} from "routing-controllers";
+import {HttpError} from "@node-boot/error";
 
 export class HttpException extends HttpError {
     public status: number;

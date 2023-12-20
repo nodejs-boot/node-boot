@@ -1,7 +1,6 @@
-import {Controller as InnerController} from "routing-controllers";
 import {decorateDi} from "@node-boot/di";
-import {ControllerOptions} from "routing-controllers/types/decorator-options/ControllerOptions";
-import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY} from "@node-boot/context";
+import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY, ControllerOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@node-boot/engine";
 
 /**
  * Defines a class as a controller.
@@ -23,6 +22,12 @@ export function Controller(baseRoute?: string, version?: string, options?: Contr
 
         // DI is optional and the decorator will only be applied if the DI container dependency is available.
         decorateDi(target);
-        InnerController(baseRoute, options)(target);
+        // Register controller metadata into the engine
+        NodeBootToolkit.getMetadataArgsStorage().controllers.push({
+            type: "default",
+            route: baseRoute,
+            target,
+            options,
+        });
     };
 }

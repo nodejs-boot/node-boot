@@ -11,13 +11,7 @@ import {AuroraPostgresConnectionOptions} from "typeorm/driver/aurora-postgres/Au
 import {BetterSqlite3ConnectionOptions} from "typeorm/driver/better-sqlite3/BetterSqlite3ConnectionOptions";
 import {SpannerConnectionOptions} from "typeorm/driver/spanner/SpannerConnectionOptions";
 
-type NotOverridable =
-    | "subscribers"
-    | "namingStrategy"
-    | "cache"
-    | "logger"
-    | "entities"
-    | "migrations";
+type NotOverridable = "subscribers" | "namingStrategy" | "cache" | "logger" | "entities" | "migrations";
 
 export type NodeBootDataSourceOptions =
     | Omit<MysqlConnectionOptions, NotOverridable>

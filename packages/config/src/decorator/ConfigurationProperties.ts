@@ -17,9 +17,7 @@ export function ConfigurationProperties(args: ConfigurationPropertiesMetadata): 
                         const instance = new target();
 
                         for (const propertyName in configProperties) {
-                            if (
-                                Object.prototype.hasOwnProperty.call(configProperties, propertyName)
-                            ) {
+                            if (Object.prototype.hasOwnProperty.call(configProperties, propertyName)) {
                                 instance[propertyName] = configProperties[propertyName];
                             }
                         }

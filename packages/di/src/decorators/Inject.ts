@@ -17,8 +17,7 @@ export function Inject(options?: InjectionOptions): Function {
         // Registering metadata for custom filed injection (used for example in the Persistence Event Subscribers)
         if (propertyName && typeof propertyName === "string") {
             const propertyType = Reflect.getMetadata("design:type", target, propertyName);
-            const injectProperties: string[] =
-                Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, target) || [];
+            const injectProperties: string[] = Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, target) || [];
             injectProperties.push(propertyName);
             Reflect.defineMetadata(REQUIRES_FIELD_INJECTION_KEY, injectProperties, target);
         }

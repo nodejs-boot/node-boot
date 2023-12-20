@@ -1,4 +1,4 @@
-import {Authorized as InnerAuthorized} from "routing-controllers";
+import {NodeBootToolkit} from "@node-boot/engine";
 
 /**
  * Marks controller action to have a special access.
@@ -27,12 +27,14 @@ export function Authorized(role: Function): Function;
 /**
  * Marks controller action to have a special access.
  * Authorization logic must be defined in routing-controllers settings.
- *
- * @param roleOrRoles Arguments for routing-controllers @Authorized decorator
  */
-export function Authorized(roleOrRoles?: string | string[] | Function) {
-    return <TFunction extends Function>(clsOrObject: Function | Object, method?: string) => {
-        // DI is optional and the decorator will only be applied if the DI container dependency is available.
-        InnerAuthorized(roleOrRoles)(clsOrObject, method);
+export function Authorized(roleOrRoles?: string | string[] | Function): Function {
+    return function (clsOrObject: Function | Object, method?: string) {
+        NodeBootToolkit.getMetadataArgsStorage().responseHandlers.push({
+            type: "authorized",
+            target: method ? clsOrObject.constructor : (clsOrObject as Function),
+            method: method,
+            value: roleOrRoles,
+        });
     };
 }

@@ -1,5 +1,4 @@
-import {ApplicationAdapter, ApplicationContext, ApplicationOptions} from "@node-boot/context";
-import {RoutingControllersOptions} from "routing-controllers";
+import {ApplicationAdapter, ApplicationContext, ApplicationOptions, NodeBootEngineOptions} from "@node-boot/context";
 import {BeansConfigurationAdapter} from "../adapters";
 
 /**
@@ -22,13 +21,10 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
 
         // Bind Application Adapter
         context.applicationAdapter = new (class implements ApplicationAdapter {
-            bind(): RoutingControllersOptions {
+            bind(): NodeBootEngineOptions {
                 const context = ApplicationContext.get();
 
-                if (
-                    context.applicationOptions.customErrorHandler &&
-                    context.applicationOptions.defaultErrorHandler
-                ) {
+                if (context.applicationOptions.customErrorHandler && context.applicationOptions.defaultErrorHandler) {
                     throw new Error(
                         `Invalid configurations: 'defaultErrorHandler' cannot be enabled if an @ErrorHandler is provided. Please disable defaultErrorHandler or delete the custom @ErrorHandler.`,
                     );
@@ -42,8 +38,7 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
                     defaults: {
                         nullResultCode: context.applicationOptions.apiOptions?.nullResultCode,
                         paramOptions: context.applicationOptions.apiOptions?.paramOptions,
-                        undefinedResultCode:
-                            context.applicationOptions.apiOptions?.undefinedResultCode,
+                        undefinedResultCode: context.applicationOptions.apiOptions?.undefinedResultCode,
                     },
                     classTransformer: context.classTransformer,
                     classToPlainTransformOptions: context.classToPlainTransformOptions,

@@ -233,12 +233,7 @@ export interface MongoConnectionProperties {
      * The preferred read preference (ReadPreference.PRIMARY, ReadPreference.PRIMARY_PREFERRED, ReadPreference.SECONDARY,
      * ReadPreference.SECONDARY_PREFERRED, ReadPreference.NEAREST).
      */
-    readonly readPreference?:
-        | "primary"
-        | "primaryPreferred"
-        | "secondary"
-        | "secondaryPreferred"
-        | "nearest";
+    readonly readPreference?: "primary" | "primaryPreferred" | "secondary" | "secondaryPreferred" | "nearest";
 
     /**
      * Specify a maxStalenessSeconds value for secondary reads, minimum is 90 seconds

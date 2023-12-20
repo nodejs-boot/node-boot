@@ -5,5 +5,7 @@ export * from "./ioc";
 export * from "./options";
 export * from "./ApplicationContext";
 export * from "./types";
+export * from "./handlers";
+export * from "./checkers";
 export * from "./metadata";
 export * from "./config";

@@ -70,6 +70,22 @@ export class Optional<T> {
         return this;
     }
 
+    ifThrow(predicate: (value: T) => boolean, errorProvider: () => Error): Optional<T> {
+        this.ifEmptyThrow(() => new Error("'ifThrow' can only be called for non empty optionals"));
+        if (predicate(this.value!)) {
+            throw errorProvider();
+        }
+        return this;
+    }
+
+    if<U>(predicate: (value: T) => boolean, mapper: (value: T) => U): Optional<U | T> {
+        this.ifEmptyThrow(() => new Error("'if' can only be called for non empty optionals"));
+        if (predicate(this.value!)) {
+            return Optional.of(mapper(this.value!));
+        }
+        return this;
+    }
+
     /**
      * The get method  is used to retrieve the value inside the Optional object. If the Optional
      * object is empty, it throws an error indicating that the value is not present.
@@ -180,9 +196,7 @@ export class Optional<T> {
             return Optional.of(this.value.filter(predicate) as T);
         } else if (this.value instanceof Map || this.value instanceof Set) {
             // Filter map or set
-            const filteredEntries = Array.from(this.value.entries()).filter(([key, value]) =>
-                predicate(value),
-            );
+            const filteredEntries = Array.from(this.value.entries()).filter(([key, value]) => predicate(value));
             if (this.value instanceof Map) {
                 return Optional.of(new Map(filteredEntries) as T);
             } else {

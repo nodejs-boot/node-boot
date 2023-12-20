@@ -10,11 +10,7 @@ export class PersistenceLogger extends AbstractLogger {
     /**
      * Write log to specific output.
      */
-    protected writeLog(
-        level: LogLevel,
-        logMessage: LogMessage | LogMessage[],
-        queryRunner?: QueryRunner,
-    ) {
+    protected writeLog(level: LogLevel, logMessage: LogMessage | LogMessage[], queryRunner?: QueryRunner) {
         const messages = this.prepareLogMessages(logMessage, {
             highlightSql: false,
         });

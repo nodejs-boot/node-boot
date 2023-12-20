@@ -11,9 +11,7 @@ import {OpenAPI as InnerOpenAPI} from "routing-controllers-openapi";
  * returning an updated Operation.
  */
 export function OpenAPI(...args: Parameters<typeof InnerOpenAPI>) {
-    return <TFunction extends Function>(
-        ...innerArgs: [Function] | [object, string, PropertyDescriptor]
-    ) => {
+    return <TFunction extends Function>(...innerArgs: [Function] | [object, string, PropertyDescriptor]) => {
         InnerOpenAPI(...args)(...innerArgs);
     };
 }

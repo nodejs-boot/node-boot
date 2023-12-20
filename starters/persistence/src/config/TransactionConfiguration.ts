@@ -1,11 +1,7 @@
 import {Bean, Configuration} from "@node-boot/core";
 import {BeansContext} from "@node-boot/context";
 import {DataSource} from "typeorm";
-import {
-    addTransactionalDataSource,
-    initializeTransactionalContext,
-    StorageDriver,
-} from "typeorm-transactional";
+import {addTransactionalDataSource, initializeTransactionalContext, StorageDriver} from "typeorm-transactional";
 
 @Configuration()
 export class TransactionConfiguration {

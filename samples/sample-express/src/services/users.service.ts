@@ -1,25 +1,16 @@
-import {HttpException} from "../exceptions/httpException";
 import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {Logger} from "winston";
 import {ConfigService} from "@node-boot/config";
 import {Service} from "@node-boot/core";
-import {NotFoundError} from "routing-controllers";
 import {User, UserRepository} from "../persistence";
 import {UserModel} from "../models/users.model";
 import {Optional} from "@node-boot/extension";
-import {
-    runOnTransactionCommit,
-    runOnTransactionRollback,
-    Transactional,
-} from "@node-boot/starter-persistence";
+import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
+import {HttpError, NotFoundError} from "@node-boot/error";
 
 @Service()
 export class UserService {
-    constructor(
-        private readonly logger: Logger,
-        private readonly configService: ConfigService,
-        private readonly userRepository: UserRepository,
-    ) {
+    constructor(private readonly logger: Logger, private readonly configService: ConfigService, private readonly userRepository: UserRepository) {
         UserModel.forEach(user => this.userRepository.save(user));
     }
 
@@ -55,9 +46,7 @@ export class UserService {
         });
 
         return Optional.of(existingUser)
-            .ifPresentThrow(
-                () => new HttpException(409, `This email ${userData.email} already exists`),
-            )
+            .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
             .elseAsync(() => this.userRepository.save(userData));
     }
 
@@ -68,7 +57,7 @@ export class UserService {
         });
 
         return Optional.of(user)
-            .orElseThrow(() => new HttpException(409, "User doesn't exist"))
+            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .map(user => {
                 return {
                     ...user,
@@ -89,7 +78,7 @@ export class UserService {
         });
 
         await Optional.of(user)
-            .orElseThrow(() => new HttpException(409, "User doesn't exist"))
+            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .runAsync(user => this.userRepository.delete({id: userId}));
 
         throw new Error("Error after deleting that should rollback transaction");

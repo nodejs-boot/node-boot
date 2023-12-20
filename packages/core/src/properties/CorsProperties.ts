@@ -8,13 +8,7 @@ export type CorsProperties = {
     /**
      * Configures the Fastify Lifecycle Hook.
      */
-    hook?:
-        | "onRequest"
-        | "preParsing"
-        | "preValidation"
-        | "preHandler"
-        | "preSerialization"
-        | "onSend";
+    hook?: "onRequest" | "preParsing" | "preValidation" | "preHandler" | "preSerialization" | "onSend";
     /**
      * Configures the Access-Control-Allow-Origin CORS header.
      */

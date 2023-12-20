@@ -1,1 +1,1 @@
-export {KoaServer} from "./KoaServer";
+export {KoaServer} from "./server";

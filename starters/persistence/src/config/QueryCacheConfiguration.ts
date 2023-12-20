@@ -39,11 +39,7 @@ export class QueryCacheConfiguration {
                 }
 
                 if (cacheConfig) {
-                    logger.info(
-                        `Configuring query cache with options from configuration${
-                            cacheProvider ? " and custom cache provider" : ""
-                        }`,
-                    );
+                    logger.info(`Configuring query cache with options from configuration${cacheProvider ? " and custom cache provider" : ""}`);
                     iocContainer.set(QUERY_CACHE_CONFIG, {
                         ...cacheConfig,
                         provider: cacheProvider,
@@ -56,21 +52,12 @@ export class QueryCacheConfiguration {
                 } else if (cacheEnabled) {
                     // If cache is only enabled, falling back to database cache or to a custom provider if specified
                     logger.info(
-                        `${
-                            cacheProvider
-                                ? "Configuring custom query cache provider"
-                                : "Enabling database query cache with default configurations"
-                        }`,
+                        `${cacheProvider ? "Configuring custom query cache provider" : "Enabling database query cache with default configurations"}`,
                     );
-                    iocContainer.set(
-                        QUERY_CACHE_CONFIG,
-                        cacheProvider ? {provider: cacheProvider} : true,
-                    );
+                    iocContainer.set(QUERY_CACHE_CONFIG, cacheProvider ? {provider: cacheProvider} : true);
                 } else {
                     // Cache is explicitly disabled
-                    logger.warn(
-                        "Persistence query cache is not enabled. Enable it to boost your application performance.",
-                    );
+                    logger.warn("Persistence query cache is not enabled. Enable it to boost your application performance.");
                 }
             }
         }

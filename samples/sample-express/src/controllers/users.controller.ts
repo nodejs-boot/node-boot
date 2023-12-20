@@ -1,10 +1,9 @@
-import {Body, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "routing-controllers";
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "@node-boot/core";
 import {UserService} from "../services/users.service";
 import {ValidationMiddleware} from "../middlewares/validation.middleware";
 import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
-import {Controller} from "@node-boot/core";
 import {Inject} from "@node-boot/di";
 import {OpenAPI} from "@node-boot/openapi";
 import {Authorized} from "@node-boot/authorization";
@@ -22,11 +21,7 @@ export class UserController {
     @Get("/")
     @OpenAPI({summary: "Return a list of users"})
     async getUsers() {
-        this.logger.info(
-            `Injected backend configuration properties: ${JSON.stringify(
-                this.appConfigProperties,
-            )}`,
-        );
+        this.logger.info(`Injected backend configuration properties: ${JSON.stringify(this.appConfigProperties)}`);
         const findAllUsersData: User[] = await this.user.findAllUser();
         return {data: findAllUsersData, message: "findAll"};
     }

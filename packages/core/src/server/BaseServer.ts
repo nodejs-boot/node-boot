@@ -1,8 +1,7 @@
-import {ApiOptions, ApplicationContext, Config} from "@node-boot/context";
+import {ApiOptions, ApplicationContext, Config, useContainer} from "@node-boot/context";
 import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
-import {useContainer} from "routing-controllers";
 import {ApplicationOptions} from "@node-boot/context/src";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
@@ -85,19 +84,12 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         const apiConfigs = this.config.getOptional<ApiOptions>("node-boot.api");
 
         context.applicationOptions = {
-            environment:
-                context.applicationOptions?.environment ?? appConfigs?.environment ?? "development",
+            environment: context.applicationOptions?.environment ?? appConfigs?.environment ?? "development",
             port: context.applicationOptions?.port ?? appConfigs?.port ?? 3000,
             platform: context.applicationOptions?.platform ?? appConfigs?.platform ?? "node-boot",
             name: context.applicationOptions?.name ?? appConfigs?.name ?? "node-boot-app",
-            defaultErrorHandler:
-                context.applicationOptions?.defaultErrorHandler ??
-                appConfigs?.defaultErrorHandler ??
-                false,
-            customErrorHandler:
-                context.applicationOptions?.customErrorHandler ??
-                appConfigs?.customErrorHandler ??
-                false,
+            defaultErrorHandler: context.applicationOptions?.defaultErrorHandler ?? appConfigs?.defaultErrorHandler ?? false,
+            customErrorHandler: context.applicationOptions?.customErrorHandler ?? appConfigs?.customErrorHandler ?? false,
             apiOptions: context.applicationOptions.apiOptions ?? apiConfigs,
         };
     }
@@ -113,10 +105,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     }
 
     private async initLogger(context: ApplicationContext) {
-        this.logger = createLogger(
-            context.applicationOptions.name!,
-            context.applicationOptions.platform!,
-        );
+        this.logger = createLogger(context.applicationOptions.name!, context.applicationOptions.platform!);
         this.logger.info(`Initializing Node-Boot logger`);
         context.diOptions?.iocContainer.set(Logger, this.logger);
         context.diOptions?.iocContainer.set("logger", this.logger);

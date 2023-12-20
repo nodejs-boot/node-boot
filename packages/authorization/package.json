@@ -29,9 +29,7 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/context": "1.0.0"
-    },
-    "peerDependencies": {
-        "routing-controllers": ">=0.10.4"
+        "@node-boot/context": "1.0.0",
+        "@node-boot/engine": "1.0.0"
     }
 }

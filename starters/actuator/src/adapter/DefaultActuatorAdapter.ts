@@ -11,10 +11,7 @@ import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
 export class DefaultActuatorAdapter implements ActuatorAdapter {
     private metricsContext: MetricsContext;
 
-    constructor(
-        private readonly register = new Prometheus.Registry(),
-        private readonly infoService: InfoService = new InfoService(),
-    ) {}
+    constructor(private readonly register = new Prometheus.Registry(), private readonly infoService: InfoService = new InfoService()) {}
 
     private setupMetrics(options: ActuatorOptions) {
         this.register.setDefaultLabels({
@@ -56,33 +53,17 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
         let frameworkAdapter: ActuatorAdapter;
         switch (options.serverType) {
             case "express":
-                frameworkAdapter = new ExpressActuatorAdapter(
-                    context,
-                    this.infoService,
-                    metadataService,
-                    configService,
-                );
+                frameworkAdapter = new ExpressActuatorAdapter(context, this.infoService, metadataService, configService);
                 break;
             case "koa":
-                frameworkAdapter = new KoaActuatorAdapter(
-                    context,
-                    this.infoService,
-                    metadataService,
-                    configService,
-                );
+                frameworkAdapter = new KoaActuatorAdapter(context, this.infoService, metadataService, configService);
                 break;
             case "fastify":
-                frameworkAdapter = new FastifyActuatorAdapter(
-                    context,
-                    this.infoService,
-                    metadataService,
-                    configService,
-                );
+                frameworkAdapter = new FastifyActuatorAdapter(context, this.infoService, metadataService, configService);
                 break;
             default:
                 throw new Error(
-                    "Actuator feature is only allowed for express, koa and fastify servers. " +
-                        "Please remove @EnableActuator from your application",
+                    "Actuator feature is only allowed for express, koa and fastify servers. " + "Please remove @EnableActuator from your application",
                 );
         }
         frameworkAdapter.bind(options, server, router);

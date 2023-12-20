@@ -35,9 +35,7 @@ function decorateInversify<TFunction>(target: TFunction): boolean {
         decorated = true;
     } catch (error) {
         // Inversify is not available
-        console.warn(
-            "@injectable decorator is only applied if 'Inversify' dependency is available!",
-        );
+        console.warn("@injectable decorator is only applied if 'Inversify' dependency is available!");
         decorated = false;
     }
     return decorated;

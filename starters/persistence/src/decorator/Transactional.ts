@@ -23,11 +23,7 @@ import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typ
  *      name: The name or symbol of the method being decorated.
  * */
 export const Transactional = (options?: WrapInTransactionOptions): MethodDecorator => {
-    return (
-        target: Object,
-        propertyKey: string | symbol,
-        descriptor: TypedPropertyDescriptor<any>,
-    ) => {
+    return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
         InnerTransactional(options)(target, propertyKey, descriptor);
     };
 };

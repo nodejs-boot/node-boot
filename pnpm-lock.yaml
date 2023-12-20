@@ -68,9 +68,9 @@ importers:
       '@node-boot/context':
         specifier: 1.0.0
         version: link:../context
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../engine
 
   packages/config:
     dependencies:
@@ -102,12 +102,12 @@ importers:
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.0
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       winston:
         specifier: '>=3.10.0'
         version: 3.10.0
@@ -123,9 +123,15 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../di
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../engine
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.0
       glob:
         specifier: ^10.3.3
         version: 10.3.3
@@ -138,9 +144,6 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       winston:
         specifier: '>=3.10.0'
         version: 3.10.0
@@ -157,6 +160,26 @@ importers:
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
+
+  packages/engine:
+    dependencies:
+      '@node-boot/context':
+        specifier: 1.0.0
+        version: link:../context
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../extension
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.0
+
+  packages/error: {}
 
   packages/extension: {}
 
@@ -217,6 +240,9 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../../packages/di
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
       '@node-boot/express-server':
         specifier: 1.0.0
         version: link:../../servers/express-server
@@ -265,12 +291,6 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: ^0.10.4
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      routing-controllers-openapi:
-        specifier: ^4.0.0
-        version: 4.0.0(routing-controllers@0.10.4)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
@@ -323,6 +343,12 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../../packages/di
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       '@node-boot/fastify-server':
         specifier: 1.0.0
         version: link:../../servers/fastify-server
@@ -332,6 +358,9 @@ importers:
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
+      '@node-boot/starter-persistence':
+        specifier: 1.0.0
+        version: link:../../starters/persistence
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
@@ -365,15 +394,12 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: ^0.10.4
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      routing-controllers-openapi:
-        specifier: ^4.0.0
-        version: 4.0.0(routing-controllers@0.10.4)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
+      typeorm:
+        specifier: ^0.3.17
+        version: 0.3.17(better-sqlite3@9.1.1)
       winston:
         specifier: ^3.10.0
         version: 3.10.0
@@ -423,6 +449,12 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../../packages/di
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       '@node-boot/koa-server':
         specifier: 1.0.0
         version: link:../../servers/koa-server
@@ -432,6 +464,9 @@ importers:
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
+      '@node-boot/starter-persistence':
+        specifier: 1.0.0
+        version: link:../../starters/persistence
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -459,12 +494,12 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: ^0.10.4
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
+      typeorm:
+        specifier: ^0.3.17
+        version: 0.3.17(better-sqlite3@9.1.1)
       winston:
         specifier: ^3.10.0
         version: 3.10.0
@@ -502,6 +537,12 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
@@ -511,9 +552,6 @@ importers:
       multer:
         specifier: ^1.4.5-lts.1
         version: 1.4.5-lts.1
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -548,15 +586,18 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
       fastify:
         specifier: '>=4.21.0'
         version: 4.21.0
       handlebars:
         specifier: ^4.7.8
         version: 4.7.8
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       template-url:
         specifier: ^1.0.0
         version: 1.0.0
@@ -575,6 +616,12 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
       koa:
         specifier: '>=2.14.2'
         version: 2.14.2
@@ -588,6 +635,9 @@ importers:
       '@types/koa':
         specifier: ^2.13.8
         version: 2.13.8
+      '@types/koa-router':
+        specifier: ^7.4.8
+        version: 7.4.8
 
   starters/actuator:
     dependencies:
@@ -1964,6 +2014,12 @@ packages:
     dependencies:
       '@types/koa': 2.13.8
       helmet: 4.6.0
+    dev: true
+
+  /@types/koa-router@7.4.8:
+    resolution: {integrity: sha512-SkWlv4F9f+l3WqYNQHnWjYnyTxYthqt8W9az2RTdQW7Ay8bc00iRZcrb8MC75iEfPqnGcg2csEl8tTG1NQPD4A==}
+    dependencies:
+      '@types/koa': 2.13.11
     dev: true
 
   /@types/koa@2.13.11:

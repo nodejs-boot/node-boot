@@ -1,9 +1,4 @@
-import {
-    BEAN_METADATA_KEY,
-    BEAN_NAME_METADATA_KEY,
-    BeansContext,
-    ConfigurationAdapter,
-} from "@node-boot/context";
+import {BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY, BeansContext, ConfigurationAdapter} from "@node-boot/context";
 
 export class BeansConfigurationAdapter implements ConfigurationAdapter {
     constructor(private readonly target: Function) {}
@@ -43,11 +38,7 @@ export class BeansConfigurationAdapter implements ConfigurationAdapter {
                     if (this.isPrimitive(beanInstance)) {
                         iocContainer.set(propertyName, beanInstance);
                     } else if (beanInstance) {
-                        let beanType = Reflect.getMetadata(
-                            "design:returntype",
-                            prototype,
-                            propertyName,
-                        );
+                        let beanType = Reflect.getMetadata("design:returntype", prototype, propertyName);
 
                         if (beanType === Promise) {
                             throw new Error(
@@ -58,10 +49,7 @@ export class BeansConfigurationAdapter implements ConfigurationAdapter {
 
                         if (!beanType) {
                             // When no return type is provided by the bean function
-                            beanType =
-                                typeof beanInstance === "function"
-                                    ? beanInstance
-                                    : beanInstance.constructor;
+                            beanType = typeof beanInstance === "function" ? beanInstance : beanInstance.constructor;
                         }
                         iocContainer.set(beanType, beanInstance);
                     }

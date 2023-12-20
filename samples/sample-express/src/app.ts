@@ -1,25 +1,19 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {
-    Configurations,
-    Controllers,
-    EnableDI,
-    GlobalMiddlewares,
-    NodeBoot,
-    NodeBootApplication,
-} from "@node-boot/core";
+import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
 import {EnableOpenApi} from "@node-boot/openapi";
 import {AppConfigProperties} from "./config/AppConfigProperties";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
 import {MultipleConfigurations} from "./config/MultipleConfigurations";
-import {ErrorMiddleware} from "./middlewares/error.middleware";
 import {EnableAuthorization} from "@node-boot/authorization";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
 import {ExpressServer} from "@node-boot/express-server";
 import {EnableActuator} from "@node-boot/starter-actuator";
 import {EnableRepositories} from "@node-boot/starter-persistence";
+import {EnableDI} from "@node-boot/di";
+import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
 
 @EnableDI(Container)
 @EnableOpenApi()

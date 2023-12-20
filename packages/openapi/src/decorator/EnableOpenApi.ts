@@ -22,8 +22,7 @@ export function EnableOpenApi(openApi: Partial<oa.OpenAPIObject> = {}): Function
                         return new FastifyOpenApi();
                     default:
                         throw new Error(
-                            "OpenAPI feature is only allowed for express and koa servers. " +
-                                "Please remove @EnableOpenApi from your application",
+                            "OpenAPI feature is only allowed for express and koa servers. " + "Please remove @EnableOpenApi from your application",
                         );
                 }
             }

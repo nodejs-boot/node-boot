@@ -11,17 +11,9 @@ export class DefaultRepositoriesAdapter implements RepositoriesAdapter {
         for (const repository of PersistenceContext.get().repositories) {
             const {target, entity, type} = repository;
 
-            const entityRepositoryInstance = new (target as any)(
-                entity,
-                entityManager,
-                entityManager.queryRunner,
-            );
+            const entityRepositoryInstance = new (target as any)(entity, entityManager, entityManager.queryRunner);
 
-            logger.info(
-                `Registering an '${type.toString()}' repository '${target.name}' for entity '${
-                    entity.name
-                }'`,
-            );
+            logger.info(`Registering an '${type.toString()}' repository '${target.name}' for entity '${entity.name}'`);
             // Set repository to entity manager cache
             (entityManager as any).repositories.set(target, entityRepositoryInstance);
             // set it to the DI container

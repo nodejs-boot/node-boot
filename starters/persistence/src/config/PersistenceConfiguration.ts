@@ -56,24 +56,18 @@ export class PersistenceConfiguration {
                 const initializationPromises: Promise<unknown>[] = [];
                 // Run migrations if enabled
                 if (migrationsRun) {
-                    initializationPromises.push(
-                        PersistenceConfiguration.runMigration(logger, dataSource),
-                    );
+                    initializationPromises.push(PersistenceConfiguration.runMigration(logger, dataSource));
                 }
 
                 if (synchronizeDatabase) {
-                    initializationPromises.push(
-                        PersistenceConfiguration.runDatabaseSync(logger, dataSource),
-                    );
+                    initializationPromises.push(PersistenceConfiguration.runDatabaseSync(logger, dataSource));
                 }
 
                 // Bind Data Repositories if DI container is configured
                 PersistenceConfiguration.bindDataRepositories(logger);
 
                 // Validate database consistency
-                Promise.all(initializationPromises).then(_ =>
-                    PersistenceConfiguration.ensureDatabase(logger, dataSource),
-                );
+                Promise.all(initializationPromises).then(_ => PersistenceConfiguration.ensureDatabase(logger, dataSource));
             })
             .catch(err => {
                 logger.error("Error during Persistence DataSource initialization:", err);
@@ -109,20 +103,11 @@ export class PersistenceConfiguration {
      * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
      * @param iocContainer (IocContainer<unknown>): An instance of the IoC container used for dependency injection.
      * */
-    static setupInjection(
-        logger: Logger,
-        dataSource: DataSource,
-        iocContainer: IocContainer<unknown>,
-    ) {
+    static setupInjection(logger: Logger, dataSource: DataSource, iocContainer: IocContainer<unknown>) {
         const subscribers = dataSource.subscribers;
-        logger.info(
-            `Setting up dependency injection for ${subscribers.length} persistence event subscribers`,
-        );
+        logger.info(`Setting up dependency injection for ${subscribers.length} persistence event subscribers`);
         for (const subscriber of subscribers) {
-            for (const fieldToInject of Reflect.getMetadata(
-                REQUIRES_FIELD_INJECTION_KEY,
-                subscriber,
-            ) || []) {
+            for (const fieldToInject of Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, subscriber) || []) {
                 // Extract type metadata for field injection. This is useful for custom injection in some modules
                 const propertyType = Reflect.getMetadata("design:type", subscriber, fieldToInject);
                 subscriber[fieldToInject] = iocContainer.get(propertyType);
@@ -196,13 +181,9 @@ export class PersistenceConfiguration {
         try {
             const tables = await queryRunner.getTables();
             const entities = dataSource.entityMetadatas;
-            logger.info(
-                `Database validation: Running consistency validation for ${tables.length}-tables/${entities.length}-entities.`,
-            );
+            logger.info(`Database validation: Running consistency validation for ${tables.length}-tables/${entities.length}-entities.`);
 
-            const existingEntities = entities.filter(
-                entity => tables.find(table => table.name.includes(entity.tableName)) !== undefined,
-            );
+            const existingEntities = entities.filter(entity => tables.find(table => table.name.includes(entity.tableName)) !== undefined);
 
             if (existingEntities.length !== entities.length) {
                 logger.error(

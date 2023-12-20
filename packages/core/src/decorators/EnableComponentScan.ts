@@ -12,32 +12,21 @@ export function EnableComponentScan(options?: ComponentScanOptions): Function {
         const srcDir = __dirname.substring(0, __dirname.indexOf("/src")) + "/dist";
 
         if (options.controllerPaths) {
-            ApplicationContext.get().controllerClasses = getClassesFromPaths(
-                options.controllerPaths,
-                srcDir,
-            );
+            ApplicationContext.get().controllerClasses = getClassesFromPaths(options.controllerPaths, srcDir);
         }
 
         if (options.interceptorPaths) {
-            ApplicationContext.get().interceptorClasses = getClassesFromPaths(
-                options.interceptorPaths,
-                srcDir,
-            );
+            ApplicationContext.get().interceptorClasses = getClassesFromPaths(options.interceptorPaths, srcDir);
         }
 
         if (options.middlewarePaths) {
-            ApplicationContext.get().globalMiddlewares = getClassesFromPaths(
-                options.middlewarePaths,
-                srcDir,
-            );
+            ApplicationContext.get().globalMiddlewares = getClassesFromPaths(options.middlewarePaths, srcDir);
         }
     };
 }
 
 function getClassesFromPaths(componentPaths: string[], srcDir: string) {
-    const paths = componentPaths.map(componentPath =>
-        path.join(srcDir, `${componentPath}/**/*.js`),
-    );
+    const paths = componentPaths.map(componentPath => path.join(srcDir, `${componentPath}/**/*.js`));
 
     return importClassesFromDirectories(paths);
 }
@@ -45,10 +34,7 @@ function getClassesFromPaths(componentPaths: string[], srcDir: string) {
 /**
  * Loads all exported classes from the given directory.
  */
-export function importClassesFromDirectories(
-    directories: string[],
-    formats = [".js", ".ts", ".tsx"],
-): Function[] {
+export function importClassesFromDirectories(directories: string[], formats = [".js", ".ts", ".tsx"]): Function[] {
     const loadFileClasses = function (exported: any, allLoaded: Function[]) {
         if (exported instanceof Function) {
             allLoaded.push(exported);

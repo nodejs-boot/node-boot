@@ -31,6 +31,8 @@
     "dependencies": {
         "@node-boot/context": "1.0.0",
         "@node-boot/core": "1.0.0",
+        "@node-boot/engine": "1.0.0",
+        "@node-boot/error": "1.0.0",
         "@fastify/cookie": "^9.0.4",
         "@fastify/session": "^10.4.0",
         "@fastify/multipart": "^7.7.3",
@@ -40,7 +42,6 @@
         "handlebars": "^4.7.8"
     },
     "peerDependencies": {
-        "routing-controllers": ">=0.10.4",
         "fastify": ">=4.21.0"
     }
 }
