@@ -270,12 +270,18 @@ importers:
       class-validator:
         specifier: ^0.14.0
         version: 0.14.0
+      cookie:
+        specifier: ^0.6.0
+        version: 0.6.0
       cors:
         specifier: ^2.8.5
         version: 2.8.5
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-session:
+        specifier: ^1.17.3
+        version: 1.17.3
       helmet:
         specifier: ^7.0.0
         version: 7.0.0
@@ -291,6 +297,9 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
+      swagger-ui-express:
+        specifier: ^5.0.0
+        version: 5.0.0(express@4.18.2)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
@@ -328,6 +337,27 @@ importers:
 
   samples/sample-fastify:
     dependencies:
+      '@fastify/cookie':
+        specifier: ^9.0.4
+        version: 9.0.4
+      '@fastify/cors':
+        specifier: ^8.4.1
+        version: 8.4.1
+      '@fastify/multipart':
+        specifier: ^7.7.3
+        version: 7.7.3
+      '@fastify/session':
+        specifier: ^10.4.0
+        version: 10.4.0
+      '@fastify/swagger':
+        specifier: ^8.10.0
+        version: 8.10.0
+      '@fastify/swagger-ui':
+        specifier: ^1.9.3
+        version: 1.9.3
+      '@fastify/view':
+        specifier: ^8.0.0
+        version: 8.0.0
       '@node-boot/authorization':
         specifier: 1.0.0
         version: link:../../packages/authorization
@@ -361,36 +391,18 @@ importers:
       '@node-boot/starter-persistence':
         specifier: 1.0.0
         version: link:../../starters/persistence
-      body-parser:
-        specifier: ^1.20.2
-        version: 1.20.2
+      better-sqlite3:
+        specifier: ^9.1.1
+        version: 9.1.1
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
       class-validator:
         specifier: ^0.14.0
         version: 0.14.0
-      cors:
-        specifier: ^2.8.5
-        version: 2.8.5
       fastify:
         specifier: ^4.21.0
         version: 4.21.0
-      fastify-multer:
-        specifier: ^2.0.3
-        version: 2.0.3
-      helmet:
-        specifier: ^7.0.0
-        version: 7.0.0
-      hpp:
-        specifier: ^0.2.3
-        version: 0.2.3
-      middie:
-        specifier: ^7.1.0
-        version: 7.1.0
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -404,15 +416,6 @@ importers:
         specifier: ^3.10.0
         version: 3.10.0
     devDependencies:
-      '@types/body-parser':
-        specifier: ^1.19.2
-        version: 1.19.2
-      '@types/cors':
-        specifier: ^2.8.13
-        version: 2.8.13
-      '@types/hpp':
-        specifier: ^0.2.2
-        version: 0.2.2
       '@types/jest':
         specifier: ^28.1.6
         version: 28.1.6
@@ -482,15 +485,18 @@ importers:
       koa-bodyparser:
         specifier: ^4.4.1
         version: 4.4.1
+      koa-cookies:
+        specifier: ^4.0.2
+        version: 4.0.2
       koa-helmet:
         specifier: ^7.0.2
         version: 7.0.2
+      koa-session:
+        specifier: ^6.4.0
+        version: 6.4.0
       koa2-swagger-ui:
         specifier: ^5.8.0
         version: 5.8.0
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -547,22 +553,22 @@ importers:
         specifier: 1.0.0
         version: link:../../packages/extension
       body-parser:
-        specifier: ^1.20.2
+        specifier: '>=1.20.2'
         version: 1.20.2
       cookie:
-        specifier: ^0.6.0
+        specifier: '>=0.6.0'
         version: 0.6.0
       cors:
-        specifier: ^2.8.5
+        specifier: '>=2.8.5'
         version: 2.8.5
       express:
         specifier: '>=4.18.2'
         version: 4.18.2
       express-session:
-        specifier: ^1.17.3
+        specifier: '>=1.17.3'
         version: 1.17.3
       multer:
-        specifier: ^1.4.5-lts.1
+        specifier: '>=1.4.5-lts.1'
         version: 1.4.5-lts.1
       template-url:
         specifier: ^1.0.0
@@ -590,19 +596,19 @@ importers:
   servers/fastify-server:
     dependencies:
       '@fastify/cookie':
-        specifier: ^9.0.4
+        specifier: '>=9.0.4'
         version: 9.0.4
       '@fastify/cors':
-        specifier: ^8.4.1
+        specifier: '>=8.4.1'
         version: 8.4.1
       '@fastify/multipart':
-        specifier: ^7.7.3
+        specifier: '>=7.7.3'
         version: 7.7.3
       '@fastify/session':
-        specifier: ^10.4.0
+        specifier: '>=10.4.0'
         version: 10.4.0
       '@fastify/view':
-        specifier: ^8.0.0
+        specifier: '>=8.0.0'
         version: 8.0.0
       '@node-boot/context':
         specifier: 1.0.0
@@ -622,9 +628,6 @@ importers:
       fastify:
         specifier: '>=4.21.0'
         version: 4.21.0
-      handlebars:
-        specifier: ^4.7.8
-        version: 4.7.8
       template-url:
         specifier: ^1.0.0
         version: 1.0.0
@@ -3063,16 +3066,6 @@ packages:
       typedarray: 0.0.6
     dev: false
 
-  /concat-stream@2.0.0:
-    resolution: {integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==}
-    engines: {'0': node >= 6.0}
-    dependencies:
-      buffer-from: 1.1.2
-      inherits: 2.0.4
-      readable-stream: 3.6.2
-      typedarray: 0.0.6
-    dev: false
-
   /content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
     engines: {node: '>= 0.6'}
@@ -3699,30 +3692,6 @@ packages:
 
   /fast-uri@2.2.0:
     resolution: {integrity: sha512-cIusKBIt/R/oI6z/1nyfe2FvGKVTohVRfvkOhvx0nCEW+xf5NoCXjAHcWp93uOUBchzYcsvPlrapAdX1uW+YGg==}
-    dev: false
-
-  /fastify-multer@2.0.3:
-    resolution: {integrity: sha512-QnFqrRgxmUwWHTgX9uyQSu0C/hmVCfcxopqjApZ4uaZD5W9MJ+nHUlW4+9q7Yd3BRxDIuHvgiM5mjrh6XG8cAA==}
-    engines: {node: '>=10.17.0'}
-    dependencies:
-      '@fastify/busboy': 1.2.1
-      append-field: 1.0.0
-      concat-stream: 2.0.0
-      fastify-plugin: 2.3.4
-      mkdirp: 1.0.4
-      on-finished: 2.4.1
-      type-is: 1.6.18
-      xtend: 4.0.2
-    dev: false
-
-  /fastify-plugin@2.3.4:
-    resolution: {integrity: sha512-I+Oaj6p9oiRozbam30sh39BiuiqBda7yK2nmSPVwDCfIBlKnT8YB3MY+pRQc2Fcd07bf6KPGklHJaQ2Qu81TYQ==}
-    dependencies:
-      semver: 7.5.4
-    dev: false
-
-  /fastify-plugin@3.0.1:
-    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
     dev: false
 
   /fastify-plugin@4.5.1:
@@ -5207,21 +5176,6 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /middie@7.0.0:
-    resolution: {integrity: sha512-gAX1DrlTOMsDW6MskZrCJQW1j56I7VHqKFdwGSMtZuIbymye2j89R1juPLLCyEMrx0sZR9EZ+VqnWqOh9KH4PQ==}
-    dependencies:
-      fastify-plugin: 3.0.1
-      path-to-regexp: 6.2.1
-      reusify: 1.0.4
-    dev: false
-
-  /middie@7.1.0:
-    resolution: {integrity: sha512-1Fq0i+nGYlPyVv5pBbnXSdkcQ4in1d9pNv2DMwTKGztsqyAng9PN/PNl4PMhccScEWOvj+HT5QtANsA0AuYHFw==}
-    dependencies:
-      middie-deprecated: /middie@7.0.0
-      process-warning: 1.0.0
-    dev: false
-
   /mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -5803,10 +5757,6 @@ packages:
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     requiresBuild: true
-    dev: false
-
-  /process-warning@1.0.0:
-    resolution: {integrity: sha512-du4wfLyj4yCZq1VupnVSZmRsPJsNuxoDQFdCFHLaYiEbFBD7QE0a+I4D7hOxrVnh78QE/YipFAj9lXHiXocV+Q==}
     dev: false
 
   /process-warning@2.2.0:
@@ -6553,7 +6503,6 @@ packages:
     resolution: {integrity: sha512-NZ8YDKqf58+bWbD3v1NnF9QCveqtovT8e/4fJoc/ZgafJdFSqVEYiXM+OnS6rg9Yrb8z6bwpJ4H6hLk7mMs36Q==}
     requiresBuild: true
     dev: false
-    optional: true
 
   /swagger-ui-express@5.0.0(express@4.18.2):
     resolution: {integrity: sha512-tsU9tODVvhyfkNSvf03E6FAk+z+5cU3lXAzMy6Pv4av2Gt2xA0++fogwC4qo19XuFf6hdxevPuVCSKFuMHJhFA==}
@@ -6565,7 +6514,6 @@ packages:
       express: 4.18.2
       swagger-ui-dist: 5.3.2
     dev: false
-    optional: true
 
   /tar-fs@2.1.1:
     resolution: {integrity: sha512-V0r2Y9scmbDRLCNex/+hYzvp/zyYjvFbHPNgVTKfQvVrb6guiE/fxP+XblDNR011utopbkex2nM4dHNV6GDsng==}
