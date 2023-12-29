@@ -3,6 +3,7 @@ import express from "express";
 import {BaseServer} from "@node-boot/core";
 import {ExpressDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
+import {ExpressServerConfigs} from "../driver/ExpressDriver";
 
 export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
@@ -21,10 +22,16 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
-            const configs = context.applicationAdapter.bind(context.diOptions?.iocContainer);
+            const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const driver = new ExpressDriver(this.framework);
-            NodeBootToolkit.createServer(driver, configs);
+            const serverConfigs: ExpressServerConfigs = {}; // TODO pass express server configs
+
+            const driver = new ExpressDriver({
+                configs: serverConfigs,
+                logger: this.logger,
+                express: this.framework,
+            });
+            NodeBootToolkit.createServer(driver, engineOptions);
         } else {
             throw new Error("Error stating Application. Please enable NodeBoot application using @NodeBootApplication");
         }

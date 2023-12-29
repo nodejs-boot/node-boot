@@ -250,11 +250,13 @@ export class Optional<T> {
      * The ifEmpty method  executes a specified action if the value inside the Optional object is empty.
      *
      * @param action A callback function that performs an action when the value inside the Optional object is empty.
+     * @return Returns the Optional object itself.
      * */
-    ifEmpty(action: () => void): void {
+    ifEmpty(action: () => void): Optional<T> {
         if (this.isEmpty()) {
             action();
         }
+        return this;
     }
 
     /**

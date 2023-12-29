@@ -7,12 +7,6 @@ import {AuthorizationChecker, CurrentUserChecker} from "../checkers";
  */
 export interface NodeBootEngineOptions {
     /**
-     * Indicates if cors are enabled.
-     * This requires installation of additional module (cors for express and @koa/cors for koa).
-     */
-    cors?: boolean | Object;
-
-    /**
      * Global route prefix, for example '/api'.
      */
     routePrefix?: string;

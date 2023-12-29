@@ -1,6 +1,6 @@
 import {IocContainer} from "./ioc";
 import {Logger} from "winston";
-import {Config} from "./config";
+import {Config} from "./services";
 
 /**
  * Controller action properties.

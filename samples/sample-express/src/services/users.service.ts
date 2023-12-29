@@ -1,12 +1,12 @@
 import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {Logger} from "winston";
-import {ConfigService} from "@node-boot/config";
 import {Service} from "@node-boot/core";
 import {User, UserRepository} from "../persistence";
 import {UserModel} from "../models/users.model";
 import {Optional} from "@node-boot/extension";
 import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
 import {HttpError, NotFoundError} from "@node-boot/error";
+import {ConfigService} from "@node-boot/config";
 
 @Service()
 export class UserService {
@@ -18,6 +18,7 @@ export class UserService {
         this.logger.info("Getting all users");
         const appName = this.configService.getString("node-boot.app.name");
         this.logger.info(`Reading node-boot.app.name from app-config.yam: ${appName}`);
+
         return this.userRepository.find();
     }
 

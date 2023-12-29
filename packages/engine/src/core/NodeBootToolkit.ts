@@ -4,6 +4,7 @@ import {ValidationOptions} from "class-validator";
 import {NodeBootDriver} from "./NodeBootDriver";
 import {ComponentImporter} from "../service/ComponentImporter";
 import {CustomParameterDecorator, NodeBootEngineOptions} from "@node-boot/context";
+import {Optional} from "@node-boot/extension";
 
 export class NodeBootToolkit {
     /**
@@ -73,15 +74,10 @@ export class NodeBootToolkit {
         driver.classToPlainTransformOptions = options.classToPlainTransformOptions;
         driver.plainToClassTransformOptions = options.plainToClassTransformOptions;
 
-        if (options.errorOverridingMap !== undefined) driver.errorOverridingMap = options.errorOverridingMap;
-
-        if (options.routePrefix !== undefined) driver.routePrefix = options.routePrefix;
-
-        if (options.currentUserChecker !== undefined) driver.currentUserChecker = options.currentUserChecker;
-
-        if (options.authorizationChecker !== undefined) driver.authorizationChecker = options.authorizationChecker;
-
-        driver.cors = options.cors;
+        Optional.of(options.errorOverridingMap).ifPresent(it => (driver.errorOverridingMap = it));
+        Optional.of(options.routePrefix).ifPresent(it => (driver.routePrefix = it));
+        Optional.of(options.currentUserChecker).ifPresent(it => (driver.currentUserChecker = it));
+        Optional.of(options.authorizationChecker).ifPresent(it => (driver.authorizationChecker = it));
     }
 
     /**

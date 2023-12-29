@@ -32,17 +32,24 @@
         "@node-boot/context": "1.0.0",
         "@node-boot/core": "1.0.0",
         "@node-boot/engine": "1.0.0",
-        "@node-boot/error": "1.0.0"
+        "@node-boot/error": "1.0.0",
+        "@node-boot/extension": "1.0.0",
+        "template-url": "^1.0.0"
     },
     "peerDependencies": {
-        "routing-controllers": ">=0.10.4",
-        "koa": ">=2.14.2",
+        "koa": "^2.14.2",
         "@koa/router": "^12.0.0",
         "koa-bodyparser": "^4.4.1",
-        "@koa/multer": "^3.0.2"
+        "@koa/multer": "^3.0.2",
+        "@koa/cors": "^5.0.0",
+        "koa-session": "^6.4.0",
+        "koa-cookies": "^4.0.2"
     },
     "devDependencies": {
-        "@types/koa": "^2.13.8",
-        "@types/koa-router": "^7.4.8"
+        "@types/koa": "^2.13.12",
+        "@types/koa-session": "^6.4.5",
+        "@types/koa__multer": "^2.0.7",
+        "@types/koa__cors": "^5.0.0",
+        "@types/koa__router": "^12.0.4"
     }
 }

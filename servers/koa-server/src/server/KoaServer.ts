@@ -4,6 +4,7 @@ import Router from "@koa/router";
 import {BaseServer} from "@node-boot/core";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {KoaDriver} from "../driver";
+import {KoaServerConfigs} from "../driver/KoaDriver";
 
 export class KoaServer extends BaseServer<Koa, Router> {
     private readonly framework: Koa;
@@ -22,10 +23,17 @@ export class KoaServer extends BaseServer<Koa, Router> {
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
-            const configs = context.applicationAdapter.bind(context.diOptions?.iocContainer);
+            const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const driver = new KoaDriver(this.framework, this.router);
-            NodeBootToolkit.createServer(driver, configs);
+            const serverConfigs: KoaServerConfigs = {};
+
+            const driver = new KoaDriver({
+                configs: serverConfigs,
+                koa: this.framework,
+                logger: this.logger,
+                router: this.router,
+            });
+            NodeBootToolkit.createServer(driver, engineOptions);
         } else {
             throw new Error("Error stating Application. Please enable NodeBoot application using @NodeBootApplication");
         }

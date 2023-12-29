@@ -1,23 +1,41 @@
 import {isPromiseLike, NodeBootDriver} from "@node-boot/engine";
-import {Action, ActionMetadata, getFromContainer, MiddlewareMetadata, ParamMetadata, RoleChecker, UseMetadata} from "@node-boot/context";
+import {Action, ActionMetadata, getFromContainer, MiddlewareMetadata, ParamMetadata, UseMetadata} from "@node-boot/context";
 import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError, HttpError, NotFoundError} from "@node-boot/error";
 import Koa from "koa";
 import Router from "@koa/router";
-import {MiddlewareInterface} from "@node-boot/context/src";
+import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
+import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
+import {DependenciesLoader} from "../loader";
+import session, {opts as SessionOptions} from "koa-session";
+import {parseCookie} from "koa-cookies";
+import cors, {Options as CorsOptions} from "@koa/cors";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const cookie = require("cookie");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
+
+export type KoaServerConfigs = ServerConfigOptions<unknown, CorsOptions, SessionOptions, unknown, unknown>;
+
+type KoaServerOptions = {
+    logger: LoggerService;
+    configs?: KoaServerConfigs;
+    koa?: Koa;
+    router?: Router;
+};
 
 /**
  * Integration with koa framework.
  */
 export class KoaDriver extends NodeBootDriver<Koa> {
-    constructor(private readonly koa?: Koa, private readonly router?: Router) {
+    private readonly logger: LoggerService;
+    private readonly router: Router;
+    private readonly configs?: KoaServerConfigs;
+
+    constructor(serverOptions: KoaServerOptions) {
         super();
-        this.app = koa ?? this.loadKoa();
-        this.router = router ?? this.loadRouter();
+        this.logger = serverOptions.logger;
+        this.configs = serverOptions.configs;
+        this.app = serverOptions.koa ?? DependenciesLoader.loadKoa();
+        this.router = serverOptions.router ?? DependenciesLoader.loadRouter();
     }
 
     /**
@@ -27,15 +45,26 @@ export class KoaDriver extends NodeBootDriver<Koa> {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const bodyParser = require("koa-bodyparser");
         this.app.use(bodyParser());
-        if (this.cors) {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const cors = require("@koa/cors");
-            if (this.cors === true) {
-                this.app.use(cors());
-            } else {
-                this.app.use(cors(this.cors));
-            }
-        }
+
+        ServerConfig.of(this.configs)
+            .ifCors(
+                options => this.app.use(cors(options)),
+                () => this.logger.warn(`CORS is not configured`),
+            )
+            .ifCookies(
+                options => this.app.use(parseCookie()), // always add all cookies to ctx.cookies
+                () => this.logger.warn(`Cookies is not configured`),
+            )
+            .ifSession(
+                options => {
+                    if (options) {
+                        this.app.use(session(options, this.app));
+                    } else {
+                        this.app.use(session(this.app));
+                    }
+                },
+                () => this.logger.warn(`Session is not configured`),
+            );
     }
 
     /**
@@ -67,10 +96,7 @@ export class KoaDriver extends NodeBootDriver<Koa> {
 
                 const action: Action = {request: context.request, response: context.response, context, next};
                 try {
-                    const checkResult =
-                        actionMetadata.authorizedRoles instanceof Function
-                            ? getFromContainer<RoleChecker>(actionMetadata.authorizedRoles, action).check(action)
-                            : this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
+                    const checkResult = this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
 
                     const handleError = (result: any) => {
                         if (!result) {
@@ -96,7 +122,7 @@ export class KoaDriver extends NodeBootDriver<Koa> {
         }
 
         if (actionMetadata.isFileUsed || actionMetadata.isFilesUsed) {
-            const multer = this.loadMulter();
+            const multer = DependenciesLoader.loadMulter();
             actionMetadata.params
                 .filter(param => param.type === "file")
                 .forEach(param => {
@@ -193,10 +219,10 @@ export class KoaDriver extends NodeBootDriver<Koa> {
                 return context.query;
 
             case "file":
-                return actionOptions.context.request.file;
+                return context.request.file;
 
             case "files":
-                return actionOptions.context.request.files;
+                return context.request.files;
 
             case "header":
                 return context.headers[param.name.toLowerCase()];
@@ -205,12 +231,12 @@ export class KoaDriver extends NodeBootDriver<Koa> {
                 return request.headers;
 
             case "cookie":
-                if (!context.headers.cookie) return;
-                return cookie.parse(context.headers.cookie)[param.name];
+                if (!context.cookies) return;
+                return context.cookies[param.name];
 
             case "cookies":
-                if (!request.headers.cookie) return {};
-                return cookie.parse(request.headers.cookie);
+                if (!context.cookies) return {};
+                return context.cookies;
         }
     }
 
@@ -346,46 +372,5 @@ export class KoaDriver extends NodeBootDriver<Koa> {
             }
         });
         return middlewareFunctions;
-    }
-
-    /**
-     * Dynamically loads koa module.
-     */
-    protected loadKoa(): Koa {
-        if (require) {
-            try {
-                return new (require("koa"))();
-            } catch (e) {
-                throw new Error("koa package was not found installed. Try to install it: npm install koa@next --save");
-            }
-        } else {
-            throw new Error("Cannot load koa. Try to install all required dependencies.");
-        }
-    }
-
-    /**
-     * Dynamically loads @koa/router module.
-     */
-    private loadRouter(): Router {
-        if (require) {
-            try {
-                return new (require("@koa/router"))();
-            } catch (e) {
-                throw new Error("@koa/router package was not found installed. Try to install it: npm install @koa/router --save");
-            }
-        } else {
-            throw new Error("Cannot load koa. Try to install all required dependencies.");
-        }
-    }
-
-    /**
-     * Dynamically loads @koa/multer module.
-     */
-    private loadMulter() {
-        try {
-            return require("@koa/multer");
-        } catch (e) {
-            throw new Error("@koa/multer package was not found installed. Try to install it: npm install @koa/multer --save");
-        }
     }
 }

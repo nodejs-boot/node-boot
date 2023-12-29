@@ -1,4 +1,4 @@
-import {ClassFiles} from "@node-boot/extension/src";
+import {ClassFiles} from "@node-boot/extension";
 import {NodeBootEngineOptions} from "@node-boot/context";
 
 export class ComponentImporter {

@@ -4,6 +4,7 @@ import {
     ActionMetadata,
     ErrorHandlerInterface,
     getFromContainer,
+    LoggerService,
     MiddlewareInterface,
     MiddlewareMetadata,
     NodeBootEngineOptions,
@@ -21,6 +22,7 @@ import templateUrl from "template-url";
 import {FastifyCorsOptions} from "@fastify/cors";
 import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError, HttpError, NotFoundError} from "@node-boot/error";
 import {DependenciesLoader} from "../loader";
+import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
 
 const actionToHttpMethodMap = {
     delete: "DELETE",
@@ -31,45 +33,68 @@ const actionToHttpMethodMap = {
     post: "POST",
 };
 
-export type ServerOptions = {
-    cookieOptions?: FastifyCookieOptions;
-    corsOptions?: FastifyCorsOptions;
-    sessionOptions?: FastifySessionOptions;
-    multipartOptions?: FastifyMultipartOptions;
-    templateOptions?: FastifyViewOptions;
+export type FastifyServerConfigs = ServerConfigOptions<
+    FastifyCookieOptions,
+    FastifyCorsOptions,
+    FastifySessionOptions,
+    FastifyMultipartOptions,
+    FastifyViewOptions
+>;
+
+type FastifyServerOptions = {
+    logger: LoggerService;
+    configs?: FastifyServerConfigs;
+    fastify?: FastifyInstance;
 };
 
 export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<FastifyRequest, FastifyReply>> {
-    constructor(private readonly serverOptions: ServerOptions, fastify?: FastifyInstance) {
+    private readonly logger: LoggerService;
+    private readonly configs?: FastifyServerConfigs;
+
+    constructor(options: FastifyServerOptions) {
         super();
-        this.app = fastify ?? this.loadFastify();
+        this.logger = options.logger;
+        this.configs = options.configs;
+        this.app = options.fastify ?? this.loadFastify();
     }
 
     initialize() {
-        if (this.serverOptions.cookieOptions) {
-            const fastifyCookie = DependenciesLoader.loadCookie();
-            this.app.register(fastifyCookie, this.serverOptions.cookieOptions);
-        }
-
-        if (this.serverOptions.corsOptions) {
-            const fastifyCors = DependenciesLoader.loadCors();
-            this.app.register(fastifyCors, this.serverOptions.corsOptions);
-        }
-
-        if (this.serverOptions.sessionOptions) {
-            const fastifySession = DependenciesLoader.loadSession();
-            this.app.register(fastifySession, this.serverOptions.sessionOptions);
-        }
-
-        if (this.serverOptions.multipartOptions) {
-            const fastifyMultipart = DependenciesLoader.loadMultipart();
-            this.app.register(fastifyMultipart, this.serverOptions.multipartOptions);
-        }
-
-        if (this.serverOptions.templateOptions) {
-            const fastifyView = DependenciesLoader.loadView();
-            this.app.register(fastifyView, this.serverOptions.templateOptions);
-        }
+        ServerConfig.of(this.configs)
+            .ifCookies(
+                options => {
+                    const fastifyCookie = DependenciesLoader.loadCookie();
+                    this.app.register(fastifyCookie, options);
+                },
+                () => this.logger.warn(`Cookies is not configured`),
+            )
+            .ifCors(
+                options => {
+                    const fastifyCors = DependenciesLoader.loadCors();
+                    this.app.register(fastifyCors, options);
+                },
+                () => this.logger.warn(`CORS is not configured`),
+            )
+            .ifSession(
+                options => {
+                    const fastifySession = DependenciesLoader.loadSession();
+                    this.app.register(fastifySession, options);
+                },
+                () => this.logger.warn(`Session is not configured`),
+            )
+            .ifTemplate(
+                options => {
+                    const fastifyView = DependenciesLoader.loadView();
+                    this.app.register(fastifyView, options);
+                },
+                () => this.logger.warn(`Session is not configured`),
+            )
+            .ifMultipart(
+                options => {
+                    const fastifyMultipart = DependenciesLoader.loadMultipart();
+                    this.app.register(fastifyMultipart, options);
+                },
+                () => this.logger.warn(`Multipart is not configured`),
+            );
     }
 
     /**
@@ -293,7 +318,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         uses.filter((use: UseMetadata) => use.isErrorMiddleware()).forEach((use: UseMetadata) => {
             // if this is function instance of ErrorMiddlewareInterface
             middlewareFunctions.push((request: FastifyRequest, reply: FastifyReply, error: FastifyError, done: () => void) => {
-                return getFromContainer<ErrorHandlerInterface>(use.middleware).onError(error, {request, response: reply, next: done});
+                return getFromContainer<ErrorHandlerInterface>(use.middleware).onError(error, {
+                    request,
+                    response: reply,
+                    next: done,
+                });
             });
         });
         return middlewareFunctions;

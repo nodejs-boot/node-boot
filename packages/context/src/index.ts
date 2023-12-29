@@ -8,4 +8,4 @@ export * from "./types";
 export * from "./handlers";
 export * from "./checkers";
 export * from "./metadata";
-export * from "./config";
+export * from "./services";

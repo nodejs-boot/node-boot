@@ -11,35 +11,57 @@ import {
 } from "@node-boot/context";
 import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError, NotFoundError} from "@node-boot/error";
 import {Application, Request, Response} from "express";
-import {MiddlewareInterface} from "@node-boot/context/src";
+import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
+import cookie, {CookieParseOptions, CookieSerializeOptions} from "cookie";
+import cors, {CorsOptions} from "cors";
+import session, {SessionOptions} from "express-session";
+import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
+import {Options as MulterOptions} from "multer";
+import {DependenciesLoader} from "../loader";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const cookie = require("cookie");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
+
+export type ExpressServerConfigs = ServerConfigOptions<CookieParseOptions & CookieSerializeOptions, CorsOptions, SessionOptions, MulterOptions>;
+
+type ExpressServerOptions = {
+    logger: LoggerService;
+    configs?: ExpressServerConfigs;
+    express?: Application;
+};
+
+type CookieOptions = {
+    secret?: string | string[];
+    options?: CookieParseOptions;
+};
 
 /**
  * Integration with express framework.
  */
 export class ExpressDriver extends NodeBootDriver<Application> {
-    constructor(express?: Application) {
+    private readonly logger: LoggerService;
+    private readonly configs?: ExpressServerConfigs;
+
+    constructor(serverOptions: ExpressServerOptions) {
         super();
-        this.app = express ?? this.loadExpress();
+        this.app = serverOptions.express ?? DependenciesLoader.loadExpress();
+        this.logger = serverOptions.logger;
+        this.configs = serverOptions.configs;
     }
 
     /**
      * Initializes the things driver needs before routes and middlewares registration.
      */
     initialize() {
-        if (this.cors) {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const cors = require("cors");
-            if (this.cors === true) {
-                this.app.use(cors());
-            } else {
-                this.app.use(cors(this.cors));
-            }
-        }
+        ServerConfig.of(this.configs)
+            .ifCors(
+                options => this.app.use(cors(options)),
+                () => this.logger.warn(`CORS is not configured`),
+            )
+            .ifSession(
+                options => this.app.use(session(options)),
+                () => this.logger.warn(`Session is not configured`),
+            );
     }
 
     /**
@@ -47,9 +69,6 @@ export class ExpressDriver extends NodeBootDriver<Application> {
      */
     registerMiddleware(middleware: MiddlewareMetadata, options: NodeBootEngineOptions): void {
         let middlewareWrapper;
-
-        // FIXME Improve this code using the the DI container
-        //middleware.getInstance<ExpressErrorMiddlewareInterface>();
 
         // if its an error handler then register it with proper signature in express
         if ((middleware.instance as ErrorHandlerInterface).onError) {
@@ -95,9 +114,9 @@ export class ExpressDriver extends NodeBootDriver<Application> {
 
         if (actionMetadata.isBodyUsed) {
             if (actionMetadata.isJsonTyped) {
-                defaultMiddlewares.push(this.loadBodyParser().json(actionMetadata.bodyExtraOptions));
+                defaultMiddlewares.push(DependenciesLoader.loadBodyParser().json(actionMetadata.bodyExtraOptions));
             } else {
-                defaultMiddlewares.push(this.loadBodyParser().text(actionMetadata.bodyExtraOptions));
+                defaultMiddlewares.push(DependenciesLoader.loadBodyParser().text(actionMetadata.bodyExtraOptions));
             }
         }
 
@@ -133,7 +152,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         }
 
         if (actionMetadata.isFileUsed || actionMetadata.isFilesUsed) {
-            const multer = this.loadMulter();
+            const multer = DependenciesLoader.loadMulter();
             actionMetadata.params
                 .filter(param => param.type === "file")
                 .forEach(param => {
@@ -230,12 +249,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                 return request.files;
 
             case "cookie":
-                if (!request.headers.cookie) return;
-                return cookie.parse(request.headers.cookie)[param.name];
-
+                if (request.headers.cookie) return;
+                return cookie.parse(request.headers.cookie, this.configs?.cookie?.options)[param.name];
             case "cookies":
-                if (!request.headers.cookie) return {};
-                return cookie.parse(request.headers.cookie);
+                if (!request.headers.cookie) return;
+                return cookie.parse(request.headers.cookie, this.configs?.cookie?.options);
         }
     }
 
@@ -414,43 +432,5 @@ export class ExpressDriver extends NodeBootDriver<Application> {
             }
         });
         return middlewareFunctions;
-    }
-
-    /**
-     * Dynamically loads express module.
-     */
-    protected loadExpress(): Application {
-        if (require) {
-            try {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                return require("express")();
-            } catch (e) {
-                throw new Error("express package was not found installed. Try to install it: npm install express --save");
-            }
-        } else {
-            throw new Error("Cannot load express. Try to install all required dependencies.");
-        }
-    }
-
-    /**
-     * Dynamically loads body-parser module.
-     */
-    protected loadBodyParser() {
-        try {
-            return require("body-parser");
-        } catch (e) {
-            throw new Error("body-parser package was not found installed. Try to install it: npm install body-parser --save");
-        }
-    }
-
-    /**
-     * Dynamically loads multer module.
-     */
-    protected loadMulter() {
-        try {
-            return require("multer");
-        } catch (e) {
-            throw new Error("multer package was not found installed. Try to install it: npm install multer --save");
-        }
     }
 }

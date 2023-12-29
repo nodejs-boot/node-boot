@@ -1,12 +1,11 @@
-import {ApiOptions, ApplicationContext, Config, useContainer} from "@node-boot/context";
+import {ApiOptions, ApplicationContext, ApplicationOptions, useContainer} from "@node-boot/context";
 import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
-import {ApplicationOptions} from "@node-boot/context/src";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
-    protected config: Config;
+    protected config: ConfigService;
 
     protected constructor(private readonly serverType: string) {}
 

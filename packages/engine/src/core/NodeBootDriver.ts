@@ -64,12 +64,6 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
     routePrefix = "";
 
     /**
-     * Indicates if cors are enabled.
-     * This requires installation of additional module (cors for express and @koa/cors for koa).
-     */
-    cors?: boolean | Object;
-
-    /**
      * Map of error overrides.
      */
     errorOverridingMap: {[key: string]: any};

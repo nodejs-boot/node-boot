@@ -110,7 +110,7 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
     /**
      * Handles result of the action method execution.
      */
-    protected handleCallMethodResult(result: any, action: ActionMetadata, options: Action, interceptorFns: Function[]): any {
+    protected handleCallMethodResult(result: any, action: ActionMetadata, options: Action, interceptorFns: Function[]) {
         if (isPromiseLike(result)) {
             return result
                 .then((data: any) => {

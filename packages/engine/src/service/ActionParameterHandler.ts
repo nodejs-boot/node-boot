@@ -17,7 +17,7 @@ import {Action, ParamMetadata} from "@node-boot/context";
  * Handles action parameter.
  */
 export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TServer>> {
-    constructor(private driver: TDriver) {}
+    constructor(private readonly driver: TDriver) {}
 
     /**
      * Handles action parameter.
@@ -98,7 +98,7 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     /**
      * Normalizes parameter value.
      */
-    protected async normalizeParamValue(value: any, param: ParamMetadata): Promise<any> {
+    protected async normalizeParamValue(value: any, param: ParamMetadata) {
         if (value === null || value === undefined) return value;
 
         const isNormalizationNeeded = typeof value === "object" && ["queries", "headers", "params", "cookies"].includes(param.type);
