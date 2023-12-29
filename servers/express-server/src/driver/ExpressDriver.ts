@@ -9,7 +9,12 @@ import {
     ParamMetadata,
     UseMetadata,
 } from "@node-boot/context";
-import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError, NotFoundError} from "@node-boot/error";
+import {
+    AccessDeniedError,
+    AuthorizationCheckerNotDefinedError,
+    AuthorizationRequiredError,
+    NotFoundError,
+} from "@node-boot/error";
 import {Application, Request, Response} from "express";
 import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
 import cookie, {CookieParseOptions, CookieSerializeOptions} from "cookie";
@@ -22,7 +27,12 @@ import {DependenciesLoader} from "../loader";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
 
-export type ExpressServerConfigs = ServerConfigOptions<CookieParseOptions & CookieSerializeOptions, CorsOptions, SessionOptions, MulterOptions>;
+export type ExpressServerConfigs = ServerConfigOptions<
+    CookieParseOptions & CookieSerializeOptions,
+    CorsOptions,
+    SessionOptions,
+    MulterOptions
+>;
 
 type ExpressServerOptions = {
     logger: LoggerService;
@@ -141,7 +151,9 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                     };
 
                     if (isPromiseLike(checkResult)) {
-                        checkResult.then(result => handleError(result)).catch(error => this.handleError(error, actionMetadata, action));
+                        checkResult
+                            .then(result => handleError(result))
+                            .catch(error => this.handleError(error, actionMetadata, action));
                     } else {
                         handleError(checkResult);
                     }

@@ -22,6 +22,11 @@ export interface MiddlewareInterface<TRequest = any, TResponse = any, TNext = Fu
  *
  * Given that it is not possible to process all uncaught errors sensibly, the best way to deal with them is to crash.
  */
-export interface ErrorHandlerInterface<TError extends Error = Error, TRequest = any, TResponse = any, TNext = Function> {
+export interface ErrorHandlerInterface<
+    TError extends Error = Error,
+    TRequest = any,
+    TResponse = any,
+    TNext = Function,
+> {
     onError(error: TError, action: Action<TRequest, TResponse, TNext>, metadata?: ActionMetadata): any;
 }

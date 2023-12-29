@@ -69,7 +69,9 @@ export class InfoService {
         let git;
 
         if (properties !== undefined) {
-            const time = dateFormat ? dayjs(properties.get("git.commit.time")).format(dateFormat) : properties.get("git.commit.time");
+            const time = dateFormat
+                ? dayjs(properties.get("git.commit.time")).format(dateFormat)
+                : properties.get("git.commit.time");
 
             if (infoGitMode === "simple") {
                 git = {

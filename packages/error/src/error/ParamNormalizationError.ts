@@ -7,7 +7,11 @@ export class InvalidParamError extends BadRequestError {
     override name = "ParamNormalizationError";
 
     constructor(value: any, parameterName: string, parameterType: string) {
-        super(`Given parameter ${parameterName} is invalid. Value (${JSON.stringify(value)}) cannot be parsed into ${parameterType}.`);
+        super(
+            `Given parameter ${parameterName} is invalid. Value (${JSON.stringify(
+                value,
+            )}) cannot be parsed into ${parameterType}.`,
+        );
 
         Object.setPrototypeOf(this, InvalidParamError.prototype);
     }

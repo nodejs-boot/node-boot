@@ -25,7 +25,9 @@ export class DependenciesLoader {
             try {
                 return new (require("@koa/router"))();
             } catch (e) {
-                throw new Error("@koa/router package was not found installed. Try to install it: npm install @koa/router --save");
+                throw new Error(
+                    "@koa/router package was not found installed. Try to install it: npm install @koa/router --save",
+                );
             }
         } else {
             throw new Error("Cannot load koa. Try to install all required dependencies.");
@@ -45,7 +47,9 @@ export class DependenciesLoader {
         try {
             return require("@koa/multer");
         } catch (e) {
-            throw new Error("@koa/multer package was not found installed. Try to install it: npm install @koa/multer --save");
+            throw new Error(
+                "@koa/multer package was not found installed. Try to install it: npm install @koa/multer --save",
+            );
         }
     }
 
@@ -56,7 +60,9 @@ export class DependenciesLoader {
         try {
             return require("@koa/cors");
         } catch (e) {
-            throw new Error("@koa/cors package was not found installed. Try to install it: npm install @koa/cors --save");
+            throw new Error(
+                "@koa/cors package was not found installed. Try to install it: npm install @koa/cors --save",
+            );
         }
     }
 
@@ -67,7 +73,9 @@ export class DependenciesLoader {
         try {
             return require("koa-session");
         } catch (e) {
-            throw new Error("koa-session package was not found installed. Try to install it: npm install koa-session --save");
+            throw new Error(
+                "koa-session package was not found installed. Try to install it: npm install koa-session --save",
+            );
         }
     }
 }

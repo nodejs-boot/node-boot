@@ -77,9 +77,15 @@ describe("ObservableConfigProxy", () => {
         expect(() => config3.getNumber("x")).toThrow("Missing required config value at 'a'");
 
         config1.setConfig(new ConfigReader({x: "s", a: {x: "s", b: {x: "s"}}}));
-        expect(() => config1.getNumber("x")).toThrow("Unable to convert config value for key 'x' in 'mock-config' to a number");
-        expect(() => config2.getNumber("x")).toThrow("Unable to convert config value for key 'a.x' in 'mock-config' to a number");
-        expect(() => config3.getNumber("x")).toThrow("Unable to convert config value for key 'a.b.x' in 'mock-config' to a number");
+        expect(() => config1.getNumber("x")).toThrow(
+            "Unable to convert config value for key 'x' in 'mock-config' to a number",
+        );
+        expect(() => config2.getNumber("x")).toThrow(
+            "Unable to convert config value for key 'a.x' in 'mock-config' to a number",
+        );
+        expect(() => config3.getNumber("x")).toThrow(
+            "Unable to convert config value for key 'a.b.x' in 'mock-config' to a number",
+        );
     });
 
     it("should make sub configs available as expected", () => {

@@ -87,8 +87,10 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             port: context.applicationOptions?.port ?? appConfigs?.port ?? 3000,
             platform: context.applicationOptions?.platform ?? appConfigs?.platform ?? "node-boot",
             name: context.applicationOptions?.name ?? appConfigs?.name ?? "node-boot-app",
-            defaultErrorHandler: context.applicationOptions?.defaultErrorHandler ?? appConfigs?.defaultErrorHandler ?? false,
-            customErrorHandler: context.applicationOptions?.customErrorHandler ?? appConfigs?.customErrorHandler ?? false,
+            defaultErrorHandler:
+                context.applicationOptions?.defaultErrorHandler ?? appConfigs?.defaultErrorHandler ?? false,
+            customErrorHandler:
+                context.applicationOptions?.customErrorHandler ?? appConfigs?.customErrorHandler ?? false,
             apiOptions: context.applicationOptions.apiOptions ?? apiConfigs,
         };
     }

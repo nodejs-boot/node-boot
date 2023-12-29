@@ -18,6 +18,9 @@ export const runOnTransactionComplete = (cb: (e: Error | undefined) => void) => 
     return innerRunOnTransactionComplete(cb);
 };
 
-export const runInTransaction = <Func extends (this: unknown) => ReturnType<Func>>(fn: Func, options?: WrapInTransactionOptions) => {
+export const runInTransaction = <Func extends (this: unknown) => ReturnType<Func>>(
+    fn: Func,
+    options?: WrapInTransactionOptions,
+) => {
     return wrapInTransaction(fn, options)();
 };

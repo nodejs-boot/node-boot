@@ -55,7 +55,9 @@ export class DataSourceConfiguration {
         }
 
         if (databaseConfigs.synchronize && databaseConfigs.migrationsRun) {
-            throw new Error(`Only one of "synchronize" or "migrationsRun" config property can be enabled. Please set one of them to false`);
+            throw new Error(
+                `Only one of "synchronize" or "migrationsRun" config property can be enabled. Please set one of them to false`,
+            );
         }
 
         // Save the synchronization and migration state

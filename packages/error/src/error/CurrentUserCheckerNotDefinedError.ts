@@ -7,7 +7,9 @@ export class CurrentUserCheckerNotDefinedError extends InternalServerError {
     override name = "CurrentUserCheckerNotDefinedError";
 
     constructor() {
-        super(`Cannot use @CurrentUser decorator. Please define currentUserChecker function in routing-controllers action before using it.`);
+        super(
+            `Cannot use @CurrentUser decorator. Please define currentUserChecker function in routing-controllers action before using it.`,
+        );
         Object.setPrototypeOf(this, CurrentUserCheckerNotDefinedError.prototype);
     }
 }

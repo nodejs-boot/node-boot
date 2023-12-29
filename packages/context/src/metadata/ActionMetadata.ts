@@ -144,7 +144,11 @@ export class ActionMetadata {
      */
     methodOverride?: (actionMetadata: ActionMetadata, action: Action, params: any[]) => Promise<any> | any;
 
-    constructor(controllerMetadata: ControllerMetadata, args: ActionMetadataArgs, private globalOptions: NodeBootEngineOptions) {
+    constructor(
+        controllerMetadata: ControllerMetadata,
+        args: ActionMetadataArgs,
+        private globalOptions: NodeBootEngineOptions,
+    ) {
         this.controllerMetadata = controllerMetadata;
         this.route = args.route;
         this.target = args.target;
@@ -174,7 +178,9 @@ export class ActionMetadata {
      * Action metadata can be used only after its build.
      */
     build(responseHandlers: ResponseHandlerMetadata[]) {
-        const classTransformerResponseHandler = responseHandlers.find(handler => handler.type === "response-class-transform-options");
+        const classTransformerResponseHandler = responseHandlers.find(
+            handler => handler.type === "response-class-transform-options",
+        );
         const undefinedResultHandler = responseHandlers.find(handler => handler.type === "on-undefined");
         const nullResultHandler = responseHandlers.find(handler => handler.type === "on-null");
         const successCodeHandler = responseHandlers.find(handler => handler.type === "success-code");
@@ -190,7 +196,9 @@ export class ActionMetadata {
             ? undefinedResultHandler.value
             : this.globalOptions.defaults && this.globalOptions.defaults.undefinedResultCode;
 
-        this.nullResultCode = nullResultHandler ? nullResultHandler.value : this.globalOptions.defaults && this.globalOptions.defaults.nullResultCode;
+        this.nullResultCode = nullResultHandler
+            ? nullResultHandler.value
+            : this.globalOptions.defaults && this.globalOptions.defaults.nullResultCode;
 
         if (successCodeHandler) this.successHttpCode = successCodeHandler.value;
         if (redirectHandler) this.redirect = redirectHandler.value;
@@ -200,12 +208,17 @@ export class ActionMetadata {
         this.isBodyUsed = !!this.params.find(param => param.type === "body" || param.type === "body-param");
         this.isFilesUsed = !!this.params.find(param => param.type === "files");
         this.isFileUsed = !!this.params.find(param => param.type === "file");
-        this.isJsonTyped = contentTypeHandler !== undefined ? /json/.test(contentTypeHandler.value) : this.controllerMetadata.type === "json";
+        this.isJsonTyped =
+            contentTypeHandler !== undefined
+                ? /json/.test(contentTypeHandler.value)
+                : this.controllerMetadata.type === "json";
         this.fullRoute = this.buildFullRoute();
         this.headers = this.buildHeaders(responseHandlers);
 
         this.isAuthorizedUsed = this.controllerMetadata.isAuthorizedUsed || !!authorizedHandler;
-        this.authorizedRoles = (this.controllerMetadata.authorizedRoles || []).concat((authorizedHandler && authorizedHandler.value) || []);
+        this.authorizedRoles = (this.controllerMetadata.authorizedRoles || []).concat(
+            (authorizedHandler && authorizedHandler.value) || [],
+        );
     }
 
     /**

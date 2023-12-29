@@ -1,5 +1,12 @@
 import {MetadataBuilder} from "../metadata/MetadataBuilder";
-import {Action, ActionMetadata, getFromContainer, InterceptorInterface, InterceptorMetadata, NodeBootEngineOptions} from "@node-boot/context";
+import {
+    Action,
+    ActionMetadata,
+    getFromContainer,
+    InterceptorInterface,
+    InterceptorMetadata,
+    NodeBootEngineOptions,
+} from "@node-boot/context";
 import {isPromiseLike, runInSequence} from "../util";
 import {NodeBootDriver} from "./NodeBootDriver";
 import {ActionParameterHandler} from "../service/ActionParameterHandler";
@@ -95,7 +102,9 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
         return Promise.all(paramsPromises)
             .then(params => {
                 // execute action and handle result
-                const allParams = actionMetadata.appendParams ? actionMetadata.appendParams(action).concat(params) : params;
+                const allParams = actionMetadata.appendParams
+                    ? actionMetadata.appendParams(action).concat(params)
+                    : params;
                 const result = actionMetadata.methodOverride
                     ? actionMetadata.methodOverride(actionMetadata, action, allParams)
                     : actionMetadata.callMethod(allParams, action);

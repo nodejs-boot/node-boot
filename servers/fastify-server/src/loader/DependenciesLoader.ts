@@ -6,7 +6,9 @@ export class DependenciesLoader {
         try {
             return require("@fastify/session");
         } catch (e) {
-            throw new Error("@fastify/session package was not found installed. Try to install it: npm install @fastify/session --save");
+            throw new Error(
+                "@fastify/session package was not found installed. Try to install it: npm install @fastify/session --save",
+            );
         }
     }
 
@@ -17,7 +19,9 @@ export class DependenciesLoader {
         try {
             return require("@fastify/cookie");
         } catch (e) {
-            throw new Error("@fastify/cookie package was not found installed. Try to install it: npm install @fastify/cookie --save");
+            throw new Error(
+                "@fastify/cookie package was not found installed. Try to install it: npm install @fastify/cookie --save",
+            );
         }
     }
 
@@ -28,7 +32,9 @@ export class DependenciesLoader {
         try {
             return require("@fastify/multipart");
         } catch (e) {
-            throw new Error("@fastify/multipart package was not found installed. Try to install it: npm install @fastify/multipart --save");
+            throw new Error(
+                "@fastify/multipart package was not found installed. Try to install it: npm install @fastify/multipart --save",
+            );
         }
     }
 
@@ -39,7 +45,9 @@ export class DependenciesLoader {
         try {
             return require("@fastify/cors");
         } catch (e) {
-            throw new Error("@fastify/cors package was not found installed. Try to install it: npm install @fastify/cors --save");
+            throw new Error(
+                "@fastify/cors package was not found installed. Try to install it: npm install @fastify/cors --save",
+            );
         }
     }
 
@@ -50,7 +58,9 @@ export class DependenciesLoader {
         try {
             return require("@fastify/view");
         } catch (e) {
-            throw new Error("@fastify/view package was not found installed. Try to install it: npm install @fastify/view --save");
+            throw new Error(
+                "@fastify/view package was not found installed. Try to install it: npm install @fastify/view --save",
+            );
         }
     }
 }

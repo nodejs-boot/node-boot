@@ -6,7 +6,10 @@ import {OfParamMetadata} from "./types";
  * @author Manuel Santos <ney.br.santos@gmail.com>
  * */
 export class Param {
-    static ofString(value: string | undefined | null, paramMetadata: OfParamMetadata): Optional<number | boolean | Date | string | undefined> {
+    static ofString(
+        value: string | undefined | null,
+        paramMetadata: OfParamMetadata,
+    ): Optional<number | boolean | Date | string | undefined> {
         if (value === null || value === undefined) {
             return Optional.empty();
         }

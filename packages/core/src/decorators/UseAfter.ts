@@ -22,7 +22,9 @@ export function UseAfter(...middlewares: Array<(request: any, response: any, nex
  * Specifies a given middleware to be used for controller or controller action AFTER the action executes.
  * Must be set to controller action or controller class.
  */
-export function UseAfter(...middlewares: Array<Function | ((request: any, response: any, next: Function) => any)>): Function {
+export function UseAfter(
+    ...middlewares: Array<Function | ((request: any, response: any, next: Function) => any)>
+): Function {
     return function (objectOrFunction: Object | Function, methodName?: string) {
         middlewares.forEach(middleware => {
             NodeBootToolkit.getMetadataArgsStorage().uses.push({

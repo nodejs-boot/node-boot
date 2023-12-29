@@ -8,7 +8,9 @@ export class MetadataService {
         return this.metadataStorage.controllers.map(controller => {
             const controllerPath = Reflect.getMetadata(CONTROLLER_PATH_METADATA_KEY, controller.target);
             const controllerVersion = Reflect.getMetadata(CONTROLLER_VERSION_METADATA_KEY, controller.target);
-            const actions = this.metadataStorage.actions.filter(action => action.target.name === controller.target.name);
+            const actions = this.metadataStorage.actions.filter(
+                action => action.target.name === controller.target.name,
+            );
             return {
                 actions,
                 controller: controller.target.name,

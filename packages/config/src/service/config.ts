@@ -30,7 +30,9 @@ export async function loadNodeBootConfig(options: {
 }): Promise<{config: ConfigService}> {
     const args = parseArgs(options.argv);
 
-    const configTargets: ConfigTarget[] = [args["config"] ?? []].flat().map(arg => (isValidUrl(arg) ? {url: arg} : {path: resolvePath(arg)}));
+    const configTargets: ConfigTarget[] = [args["config"] ?? []]
+        .flat()
+        .map(arg => (isValidUrl(arg) ? {url: arg} : {path: resolvePath(arg)}));
 
     /* eslint-disable-next-line no-restricted-syntax */
     const paths = findPaths(__dirname);

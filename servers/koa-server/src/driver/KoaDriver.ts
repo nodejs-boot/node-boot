@@ -1,6 +1,19 @@
 import {isPromiseLike, NodeBootDriver} from "@node-boot/engine";
-import {Action, ActionMetadata, getFromContainer, MiddlewareMetadata, ParamMetadata, UseMetadata} from "@node-boot/context";
-import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError, HttpError, NotFoundError} from "@node-boot/error";
+import {
+    Action,
+    ActionMetadata,
+    getFromContainer,
+    MiddlewareMetadata,
+    ParamMetadata,
+    UseMetadata,
+} from "@node-boot/context";
+import {
+    AccessDeniedError,
+    AuthorizationCheckerNotDefinedError,
+    AuthorizationRequiredError,
+    HttpError,
+    NotFoundError,
+} from "@node-boot/error";
 import Koa from "koa";
 import Router from "@koa/router";
 import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
@@ -111,7 +124,9 @@ export class KoaDriver extends NodeBootDriver<Koa> {
                     };
 
                     if (isPromiseLike(checkResult)) {
-                        return checkResult.then(result => handleError(result)).catch(error => this.handleError(error, actionMetadata, action));
+                        return checkResult
+                            .then(result => handleError(result))
+                            .catch(error => this.handleError(error, actionMetadata, action));
                     } else {
                         return handleError(checkResult);
                     }

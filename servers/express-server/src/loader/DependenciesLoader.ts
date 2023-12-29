@@ -10,7 +10,9 @@ export class DependenciesLoader {
                 // eslint-disable-next-line @typescript-eslint/no-var-requires
                 return require("express")();
             } catch (e) {
-                throw new Error("express package was not found installed. Try to install it: npm install express --save");
+                throw new Error(
+                    "express package was not found installed. Try to install it: npm install express --save",
+                );
             }
         } else {
             throw new Error("Cannot load express. Try to install all required dependencies.");
@@ -24,7 +26,9 @@ export class DependenciesLoader {
         try {
             return require("body-parser");
         } catch (e) {
-            throw new Error("body-parser package was not found installed. Try to install it: npm install body-parser --save");
+            throw new Error(
+                "body-parser package was not found installed. Try to install it: npm install body-parser --save",
+            );
         }
     }
 

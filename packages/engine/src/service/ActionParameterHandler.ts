@@ -71,12 +71,17 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
                 if (isPromiseLike(value)) {
                     return value.then(currentUser => {
                         if (!currentUser) {
-                            return Promise.reject(new AuthorizationRequiredError(action.request.method, action.request.url));
+                            return Promise.reject(
+                                new AuthorizationRequiredError(action.request.method, action.request.url),
+                            );
                         }
                         return currentUser;
                     });
                 } else {
-                    if (!value) return Promise.reject(new AuthorizationRequiredError(action.request.method, action.request.url));
+                    if (!value)
+                        return Promise.reject(
+                            new AuthorizationRequiredError(action.request.method, action.request.url),
+                        );
                 }
             } else if (param.name && isValueEmpty) {
                 // regular check for all other parameters // todo: figure out something with param.name usage and multiple things params (query params, upload files etc.)
@@ -101,7 +106,8 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     protected async normalizeParamValue(value: any, param: ParamMetadata) {
         if (value === null || value === undefined) return value;
 
-        const isNormalizationNeeded = typeof value === "object" && ["queries", "headers", "params", "cookies"].includes(param.type);
+        const isNormalizationNeeded =
+            typeof value === "object" && ["queries", "headers", "params", "cookies"].includes(param.type);
         const isTargetPrimitive = ["number", "string", "boolean"].includes(param.targetName);
         const isTransformationNeeded = (param.parse || param.isTargetObject) && param.type !== "param";
 
@@ -111,7 +117,11 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
                 Object.keys(value).map(async key => {
                     const keyValue = value[key];
                     if (typeof keyValue === "string") {
-                        const ParamType: Function | undefined = (Reflect as any).getMetadata("design:type", param.targetType.prototype, key);
+                        const ParamType: Function | undefined = (Reflect as any).getMetadata(
+                            "design:type",
+                            param.targetType.prototype,
+                            key,
+                        );
                         if (ParamType) {
                             const typeString = ParamType.name.toLowerCase();
                             value[key] = await this.normalizeParamValue(keyValue, {
@@ -199,15 +209,24 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     protected validateValue(value: any, paramMetadata: ParamMetadata): Promise<any> | any {
         // Validate only if validations is enabled globally via configurations
         if (this.driver.enableValidation) {
-            const shouldValidate = paramMetadata.targetType && paramMetadata.targetType !== Object && value instanceof paramMetadata.targetType;
+            const shouldValidate =
+                paramMetadata.targetType &&
+                paramMetadata.targetType !== Object &&
+                value instanceof paramMetadata.targetType;
 
             // When enabled globally, still skip validation if disabled by the route
             if (paramMetadata.validate !== false && shouldValidate) {
-                const options = Object.assign({forbidUnknownValues: false}, this.driver.validationOptions, paramMetadata.validate);
+                const options = Object.assign(
+                    {forbidUnknownValues: false},
+                    this.driver.validationOptions,
+                    paramMetadata.validate,
+                );
                 return validate(value, options)
                     .then(() => value)
                     .catch((validationErrors: ValidationError[]) => {
-                        const error: any = new BadRequestError(`Invalid ${paramMetadata.type}, check 'errors' property for more info.`);
+                        const error: any = new BadRequestError(
+                            `Invalid ${paramMetadata.type}, check 'errors' property for more info.`,
+                        );
                         error.errors = validationErrors;
                         error.paramName = paramMetadata.name;
                         throw error;

@@ -20,7 +20,13 @@ import {FastifyMultipartOptions} from "@fastify/multipart";
 import {FastifyViewOptions} from "@fastify/view";
 import templateUrl from "template-url";
 import {FastifyCorsOptions} from "@fastify/cors";
-import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError, HttpError, NotFoundError} from "@node-boot/error";
+import {
+    AccessDeniedError,
+    AuthorizationCheckerNotDefinedError,
+    AuthorizationRequiredError,
+    HttpError,
+    NotFoundError,
+} from "@node-boot/error";
 import {DependenciesLoader} from "../loader";
 import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
 
@@ -123,7 +129,12 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                 this.nameGlobalMiddlewareFunction(fastifyHook, middleware);
                 this.app.addHook("preHandler", fastifyHook);
             } else {
-                fastifyHook = (request: FastifyRequest, reply: FastifyReply, payload: any, done: DoneFuncWithErrOrRes) => {
+                fastifyHook = (
+                    request: FastifyRequest,
+                    reply: FastifyReply,
+                    payload: any,
+                    done: DoneFuncWithErrOrRes,
+                ) => {
                     this.callGlobalMiddleware(request, options, middleware, reply, done, payload);
                 };
 
@@ -187,13 +198,18 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         });
     }
 
-    registerAction(actionMetadata: ActionMetadata, executeAction: (action: Action<FastifyRequest, FastifyReply>) => any) {
+    registerAction(
+        actionMetadata: ActionMetadata,
+        executeAction: (action: Action<FastifyRequest, FastifyReply>) => any,
+    ) {
         const defaultMiddlewares: any[] = [];
 
         if (actionMetadata.isAuthorizedUsed) {
-            defaultMiddlewares.push(async (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) => {
-                await this.checkAuthorization(request, reply, done, actionMetadata);
-            });
+            defaultMiddlewares.push(
+                async (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) => {
+                    await this.checkAuthorization(request, reply, done, actionMetadata);
+                },
+            );
         }
 
         // TODO Make sure nothing is required if @fastify/multipart is registered
@@ -218,11 +234,21 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
             }
         };
 
-        const afterMiddlewaresAdapter = async (request: FastifyRequest, reply: FastifyReply, payload: any, done: DoneFuncWithErrOrRes) => {
+        const afterMiddlewaresAdapter = async (
+            request: FastifyRequest,
+            reply: FastifyReply,
+            payload: any,
+            done: DoneFuncWithErrOrRes,
+        ) => {
             afterMiddlewares.forEach(middleware => middleware(request, reply, payload, done));
         };
 
-        const errorMiddlewaresAdapter = async (request: FastifyRequest, reply: FastifyReply, error: Error, done: () => void) => {
+        const errorMiddlewaresAdapter = async (
+            request: FastifyRequest,
+            reply: FastifyReply,
+            error: Error,
+            done: () => void,
+        ) => {
             errorMiddlewares.forEach(middleware => middleware(request, reply, error, done));
         };
 
@@ -246,7 +272,12 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         return httpMethod;
     }
 
-    async checkAuthorization(request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction, actionMetadata: ActionMetadata) {
+    async checkAuthorization(
+        request: FastifyRequest,
+        reply: FastifyReply,
+        done: HookHandlerDoneFunction,
+        actionMetadata: ActionMetadata,
+    ) {
         if (!this.authorizationChecker) throw new AuthorizationCheckerNotDefinedError();
 
         const action: Action = {request, response: reply, next: done};
@@ -274,7 +305,12 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
             if (use.isCustomMiddleware()) {
                 // if this is function instance of MiddlewareInterface
                 middlewareFunctions.push(
-                    (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction | DoneFuncWithErrOrRes, payload?: any) => {
+                    (
+                        request: FastifyRequest,
+                        reply: FastifyReply,
+                        done: HookHandlerDoneFunction | DoneFuncWithErrOrRes,
+                        payload?: any,
+                    ) => {
                         try {
                             const useResult = getFromContainer<MiddlewareInterface>(use.middleware).use(
                                 {request, response: reply, next: done},
@@ -317,13 +353,15 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         const middlewareFunctions: Function[] = [];
         uses.filter((use: UseMetadata) => use.isErrorMiddleware()).forEach((use: UseMetadata) => {
             // if this is function instance of ErrorMiddlewareInterface
-            middlewareFunctions.push((request: FastifyRequest, reply: FastifyReply, error: FastifyError, done: () => void) => {
-                return getFromContainer<ErrorHandlerInterface>(use.middleware).onError(error, {
-                    request,
-                    response: reply,
-                    next: done,
-                });
-            });
+            middlewareFunctions.push(
+                (request: FastifyRequest, reply: FastifyReply, error: FastifyError, done: () => void) => {
+                    return getFromContainer<ErrorHandlerInterface>(use.middleware).onError(error, {
+                        request,
+                        response: reply,
+                        next: done,
+                    });
+                },
+            );
         });
         return middlewareFunctions;
     }
@@ -390,7 +428,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    handleError(error: Error, actionMetadata: ActionMetadata | undefined, action: Action<FastifyRequest, FastifyReply>) {
+    handleError(
+        error: Error,
+        actionMetadata: ActionMetadata | undefined,
+        action: Action<FastifyRequest, FastifyReply>,
+    ) {
         // Handle error using Fastify's reply
         if (actionMetadata) {
             Object.keys(actionMetadata.headers).forEach(name => {
@@ -461,7 +503,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    private applyTemplateRender(result: any, action: Action<FastifyRequest, FastifyReply>, actionMetadata: ActionMetadata) {
+    private applyTemplateRender(
+        result: any,
+        action: Action<FastifyRequest, FastifyReply>,
+        actionMetadata: ActionMetadata,
+    ) {
         // if template is set then render it
         // Check doc https://www.npmjs.com/package/@fastify/view
         const renderOptions = result && result instanceof Object ? result : {};
@@ -511,7 +557,9 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                 const fastify = require("fastify")();
                 return fastify();
             } catch (e) {
-                throw new Error("fastify package was not found installed. Try to install it: npm install fastify --save");
+                throw new Error(
+                    "fastify package was not found installed. Try to install it: npm install fastify --save",
+                );
             }
         } else {
             throw new Error("Cannot load fastify. Try to install all required dependencies.");

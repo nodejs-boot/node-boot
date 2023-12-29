@@ -18,7 +18,10 @@ export class NodeBootToolkit {
     /**
      * Registers all loaded actions in your application using selected driver.
      */
-    static createServer<TServer, TDriver extends NodeBootDriver<TServer>>(driver: TDriver, options?: NodeBootEngineOptions): any {
+    static createServer<TServer, TDriver extends NodeBootDriver<TServer>>(
+        driver: TDriver,
+        options?: NodeBootEngineOptions,
+    ): any {
         NodeBootToolkit.createEngine(driver, options);
         return driver.app;
     }
@@ -26,7 +29,10 @@ export class NodeBootToolkit {
     /**
      * Registers all loaded actions in your express application.
      */
-    static createEngine<TServer, TDriver extends NodeBootDriver<TServer>>(driver: TDriver, options: NodeBootEngineOptions = {}): void {
+    static createEngine<TServer, TDriver extends NodeBootDriver<TServer>>(
+        driver: TDriver,
+        options: NodeBootEngineOptions = {},
+    ): void {
         // import all controllers, middlewares and error handlers
         const controllerClasses = ComponentImporter.importControllers(options);
         const middlewareClasses = ComponentImporter.importMiddlewares(options);
@@ -43,7 +49,10 @@ export class NodeBootToolkit {
             .registerMiddlewares("after", middlewareClasses); // todo: register only for loaded controllers?
     }
 
-    private static configureDriver<TServer, TDriver extends NodeBootDriver<TServer>>(driver: TDriver, options: NodeBootEngineOptions) {
+    private static configureDriver<TServer, TDriver extends NodeBootDriver<TServer>>(
+        driver: TDriver,
+        options: NodeBootEngineOptions,
+    ) {
         if (options && options.development !== undefined) {
             driver.developmentMode = options.development;
         } else {

@@ -67,7 +67,9 @@ export class PersistenceConfiguration {
                 PersistenceConfiguration.bindDataRepositories(logger);
 
                 // Validate database consistency
-                Promise.all(initializationPromises).then(_ => PersistenceConfiguration.ensureDatabase(logger, dataSource));
+                Promise.all(initializationPromises).then(_ =>
+                    PersistenceConfiguration.ensureDatabase(logger, dataSource),
+                );
             })
             .catch(err => {
                 logger.error("Error during Persistence DataSource initialization:", err);
@@ -181,9 +183,13 @@ export class PersistenceConfiguration {
         try {
             const tables = await queryRunner.getTables();
             const entities = dataSource.entityMetadatas;
-            logger.info(`Database validation: Running consistency validation for ${tables.length}-tables/${entities.length}-entities.`);
+            logger.info(
+                `Database validation: Running consistency validation for ${tables.length}-tables/${entities.length}-entities.`,
+            );
 
-            const existingEntities = entities.filter(entity => tables.find(table => table.name.includes(entity.tableName)) !== undefined);
+            const existingEntities = entities.filter(
+                entity => tables.find(table => table.name.includes(entity.tableName)) !== undefined,
+            );
 
             if (existingEntities.length !== entities.length) {
                 logger.error(

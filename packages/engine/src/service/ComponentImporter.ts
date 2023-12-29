@@ -6,7 +6,9 @@ export class ComponentImporter {
         let interceptorClasses: Function[] = [];
         if (options?.interceptors?.length) {
             interceptorClasses = (options.interceptors as any[]).filter(controller => controller instanceof Function);
-            const interceptorDirs = (options.interceptors as any[]).filter(controller => typeof controller === "string");
+            const interceptorDirs = (options.interceptors as any[]).filter(
+                controller => typeof controller === "string",
+            );
             interceptorClasses.push(...ClassFiles.loadFromDirectories(interceptorDirs));
         }
         return interceptorClasses;

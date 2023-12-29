@@ -7,7 +7,9 @@ export class AuthorizationCheckerNotDefinedError extends InternalServerError {
     override name = "AuthorizationCheckerNotDefinedError";
 
     constructor() {
-        super(`Cannot use @Authorized decorator. Please define authorizationChecker function in routing-controllers action before using it.`);
+        super(
+            `Cannot use @Authorized decorator. Please define authorizationChecker function in routing-controllers action before using it.`,
+        );
         Object.setPrototypeOf(this, AuthorizationCheckerNotDefinedError.prototype);
     }
 }

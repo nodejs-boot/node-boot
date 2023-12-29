@@ -151,7 +151,8 @@ export class MetadataArgsStorage {
      * Metadata args storage follows the best practices and stores metadata in a global variable.
      */
     static get(): MetadataArgsStorage {
-        if (!(global as any).engineMetadataArgsStorage) (global as any).engineMetadataArgsStorage = new MetadataArgsStorage();
+        if (!(global as any).engineMetadataArgsStorage)
+            (global as any).engineMetadataArgsStorage = new MetadataArgsStorage();
 
         return (global as any).engineMetadataArgsStorage;
     }

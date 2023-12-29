@@ -112,7 +112,13 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
             if (error.stack && this.developmentMode) processedError.stack = error.stack;
 
             Object.keys(error)
-                .filter(key => key !== "stack" && key !== "name" && key !== "message" && (!(error instanceof HttpError) || key !== "httpCode"))
+                .filter(
+                    key =>
+                        key !== "stack" &&
+                        key !== "name" &&
+                        key !== "message" &&
+                        (!(error instanceof HttpError) || key !== "httpCode"),
+                )
                 .forEach(key => (processedError[key] = (error as any)[key]));
 
             if (this.errorOverridingMap)

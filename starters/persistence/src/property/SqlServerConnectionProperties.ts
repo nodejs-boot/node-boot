@@ -210,7 +210,12 @@ export interface SqlServerConnectionProperties extends SqlServerConnectionCreden
          * The default isolation level for new connections. All out-of-transaction queries are executed with this
          * setting. The isolation levels are available from require('tedious').ISOLATION_LEVEL .
          */
-        readonly connectionIsolationLevel?: "READ_UNCOMMITTED" | "READ_COMMITTED" | "REPEATABLE_READ" | "SERIALIZABLE" | "SNAPSHOT";
+        readonly connectionIsolationLevel?:
+            | "READ_UNCOMMITTED"
+            | "READ_COMMITTED"
+            | "REPEATABLE_READ"
+            | "SERIALIZABLE"
+            | "SNAPSHOT";
 
         /**
          * A boolean, determining whether the connection will request read only access from a SQL Server

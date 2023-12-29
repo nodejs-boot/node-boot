@@ -21,7 +21,9 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
             res.once("finish", () => {
                 const responseTimeInMilliseconds = Date.now() - res.locals.startEpoch;
 
-                this.context.http_request_duration_milliseconds.labels(req.method, req.path, res.statusCode).observe(responseTimeInMilliseconds);
+                this.context.http_request_duration_milliseconds
+                    .labels(req.method, req.path, res.statusCode)
+                    .observe(responseTimeInMilliseconds);
             });
 
             // Increment the HTTP request counter
