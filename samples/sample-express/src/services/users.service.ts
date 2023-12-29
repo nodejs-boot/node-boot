@@ -10,7 +10,11 @@ import {ConfigService} from "@node-boot/config";
 
 @Service()
 export class UserService {
-    constructor(private readonly logger: Logger, private readonly configService: ConfigService, private readonly userRepository: UserRepository) {
+    constructor(
+        private readonly logger: Logger,
+        private readonly configService: ConfigService,
+        private readonly userRepository: UserRepository,
+    ) {
         UserModel.forEach(user => this.userRepository.save(user));
     }
 
