@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import {Container} from "typedi";
 import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
-import {BackendConfigProperties} from "./config/BackendConfigProperties";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
 import {MultipleConfigurations} from "./config/MultipleConfigurations";
@@ -14,10 +13,11 @@ import {EnableActuator} from "@node-boot/starter-actuator";
 import {EnableRepositories} from "@node-boot/starter-persistence";
 import {EnableDI} from "@node-boot/di";
 import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
+import {AppConfigProperties} from "./config/AppConfigProperties";
 
 @EnableDI(Container)
 @EnableOpenApi()
-@Configurations([BackendConfigProperties, MultipleConfigurations])
+@Configurations([AppConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
 @GlobalMiddlewares([LoggingMiddleware, CustomErrorHandler])
 //@EnableComponentScan()

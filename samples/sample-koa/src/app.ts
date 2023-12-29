@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import {Container} from "typedi";
 import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
-import {BackendConfigProperties} from "./config/BackendConfigProperties";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
 import {MultipleConfigurations} from "./config/MultipleConfigurations";
@@ -12,10 +11,12 @@ import {EnableOpenApi} from "@node-boot/openapi";
 import {EnableActuator} from "@node-boot/starter-actuator";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
 import {EnableDI} from "@node-boot/di";
+import {AppConfigProperties} from "./config/AppConfigProperties";
+import {EnableRepositories} from "@node-boot/starter-persistence";
 
 @EnableDI(Container)
 @EnableOpenApi()
-@Configurations([BackendConfigProperties, MultipleConfigurations])
+@Configurations([AppConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
 @GlobalMiddlewares([LoggingMiddleware])
 //@EnableComponentScan()
@@ -31,6 +32,7 @@ import {EnableDI} from "@node-boot/di";
 * */
 @EnableActuator()
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationChecker)
+@EnableRepositories()
 @NodeBootApplication()
 export class FactsServiceApp {
     static start() {

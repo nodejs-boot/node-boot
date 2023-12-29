@@ -224,14 +224,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         const errorMiddlewares = this.prepareUseErrorMiddlewares(uses);
 
         const routeHandler = async (request: FastifyRequest, reply: FastifyReply) => {
-            // This ensures that a request is only processed once. Multiple routes may match a request
-            // e.g. GET /users/me matches both @All(/users/me) and @Get(/users/:id)), only the first matching route should
-            // be called.
-            // The following middleware only starts an action processing if the request has not been processed before.
-            if (!request["locals"].routeStarted) {
-                request["locals"].routeStarted = true;
-                await executeAction({request, response: reply});
-            }
+            await executeAction({request, response: reply});
         };
 
         const afterMiddlewaresAdapter = async (

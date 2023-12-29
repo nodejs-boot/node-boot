@@ -22,33 +22,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         // Bind application container through adapter
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
-            const serverConfigs: FastifyServerConfigs = {
-                cookie: {
-                    enabled: true,
-                    options: {
-                        secret: "my-secret", // for cookies signature
-                        hook: "onRequest", // set to false to disable cookie autoparsing or set autoparsing on any of the following hooks: 'onRequest', 'preParsing', 'preHandler', 'preValidation'. default: 'onRequest'
-                        parseOptions: {}, // options for parsing cookies
-                    },
-                },
-                session: {
-                    enabled: false,
-                    options: {
-                        secret: "a secret with minimum length of 32 characters",
-                    },
-                },
-                template: {
-                    enabled: false,
-                    options: {
-                        engine: {
-                            handlebars: require("handlebars"),
-                        },
-                    },
-                },
-                multipart: {
-                    enabled: false,
-                },
-            };
+            const serverConfigs: FastifyServerConfigs = {};
 
             const driver = new FastifyDriver({
                 configs: serverConfigs,
@@ -70,6 +44,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
             if (err) {
                 this.logger.error(err);
+                process.exit(1);
             } else {
                 this.logger.info(`=================================`);
                 this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
