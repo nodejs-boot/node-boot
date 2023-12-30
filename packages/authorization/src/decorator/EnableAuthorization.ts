@@ -10,7 +10,7 @@ export function EnableAuthorization(
     CurrentUserCheckerClass?: new () => CurrentUserChecker,
     AuthorizationCheckerClass?: new () => AuthorizationChecker,
 ): Function {
-    return function (object: Function) {
+    return function () {
         if (AuthorizationCheckerClass) {
             ApplicationContext.get().authorizationChecker = new AuthorizationCheckerClass();
         }

@@ -39,12 +39,6 @@ type ExpressServerOptions = {
     configs?: ExpressServerConfigs;
     express?: Application;
 };
-
-type CookieOptions = {
-    secret?: string | string[];
-    options?: CookieParseOptions;
-};
-
 /**
  * Integration with express framework.
  */
@@ -196,7 +190,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         //   This causes a double execution on our side.
         // * Multiple routes match the request (e.g. GET /users/me matches both @All(/users/me) and @Get(/users/:id)).
         // The following middleware only starts an action processing if the request has not been processed before.
-        const routeGuard = function routeGuard(request: any, response: any, next: Function) {
+        const routeGuard = function routeGuard(
+            request: Request & {routingControllersStarted?: boolean},
+            _: unknown,
+            next: Function,
+        ) {
             if (!request.routingControllersStarted) {
                 request.routingControllersStarted = true;
                 return next();
@@ -280,7 +278,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         }
 
         // transform result if needed
-        result = this.transformResult(result, actionMetadata, action);
+        result = this.transformResult(result, actionMetadata);
 
         // set http status code
         if (result === undefined && actionMetadata.undefinedResultCode) {

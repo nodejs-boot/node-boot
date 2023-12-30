@@ -22,7 +22,7 @@
         "pnpm": ">=7.5.1"
     },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "src/index.ts",
     "scripts": {
         "build": "turbo run build",
         "build:clean": "turbo run clean:build",

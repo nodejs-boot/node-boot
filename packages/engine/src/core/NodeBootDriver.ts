@@ -79,7 +79,7 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
      */
     currentUserChecker?: CurrentUserChecker;
 
-    protected transformResult(result: any, actionMetadata: ActionMetadata, action: TAction): any {
+    protected transformResult<T = unknown>(result: any, actionMetadata: ActionMetadata): T {
         // check if we need to transform result
         const shouldTransform =
             this.useClassTransformer && // transform only if class-transformer is enabled

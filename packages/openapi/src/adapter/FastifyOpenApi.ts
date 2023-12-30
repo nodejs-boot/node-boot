@@ -6,7 +6,7 @@ export class FastifyOpenApi implements OpenApiAdapter {
     bind(openApiOptions: OpenApiOptions, server: FastifyInstance, router: FastifyInstance): void {
         const {spec, options} = OpenApiSpecAdapter.adapt(openApiOptions);
 
-        router.get(options.swaggerOptions.url, async (request, reply) => {
+        router.get(options.swaggerOptions.url, async (_, reply) => {
             reply.send(spec);
         });
         server.register(require("@fastify/swagger"), {

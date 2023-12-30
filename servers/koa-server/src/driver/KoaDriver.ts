@@ -65,7 +65,7 @@ export class KoaDriver extends NodeBootDriver<Koa> {
                 () => this.logger.warn(`CORS is not configured`),
             )
             .ifCookies(
-                options => this.app.use(parseCookie()), // always add all cookies to ctx.cookies
+                () => this.app.use(parseCookie()), // always add all cookies to ctx.cookies
                 () => this.logger.warn(`Cookies is not configured`),
             )
             .ifSession(
@@ -265,7 +265,7 @@ export class KoaDriver extends NodeBootDriver<Koa> {
         }
 
         // transform result if needed
-        result = this.transformResult(result, action, options);
+        result = this.transformResult(result, action);
 
         if (action.redirect) {
             // if redirect is set then do it

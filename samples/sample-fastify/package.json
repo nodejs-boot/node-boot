@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "src/index.ts",
     "scripts": {
         "start": "pnpm run build && node dist/server.js",
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",

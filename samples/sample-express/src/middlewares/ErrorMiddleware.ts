@@ -11,7 +11,7 @@ export class ErrorMiddleware implements ErrorHandlerInterface<HttpError, Request
     private logger: Logger;
 
     onError(error: HttpError, action: Action<Request, Response, Function>): any {
-        const {request, response, next} = action;
+        const {request, next} = action;
         try {
             const status: number = error.httpCode || 500;
             const message: string = error.message || "Something went wrong";

@@ -9,8 +9,6 @@ import {ConfigService} from "@node-boot/config";
 import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
 
 export class DefaultActuatorAdapter implements ActuatorAdapter {
-    private metricsContext: MetricsContext;
-
     constructor(
         private readonly register = new Prometheus.Registry(),
         private readonly infoService: InfoService = new InfoService(),
@@ -43,7 +41,6 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
             http_request_duration_milliseconds,
             http_request_counter,
         };
-        this.metricsContext = context;
         return context;
     }
 

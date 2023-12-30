@@ -1,6 +1,9 @@
 import {plainToInstance} from "class-transformer";
 import {validateOrReject, ValidationError} from "class-validator";
 import {HttpException} from "../exceptions/httpException";
+import {Next, Request} from "koa";
+
+type ReqWithBody = Request & {body?: unknown};
 
 /**
  * @name ValidationMiddleware
@@ -16,8 +19,8 @@ export const ValidationMiddleware = (
     whitelist = false,
     forbidNonWhitelisted = false,
 ) => {
-    return (req: any, res: any, next: any) => {
-        const dto = plainToInstance(type, req.body);
+    return (req: ReqWithBody, _res: never, next: Next) => {
+        const dto: object = plainToInstance(type, req.body);
         validateOrReject(dto, {
             skipMissingProperties,
             whitelist,
@@ -25,13 +28,14 @@ export const ValidationMiddleware = (
         })
             .then(() => {
                 req.body = dto;
-                next();
+                return next();
             })
             .catch((errors: ValidationError[]) => {
                 const message = errors
                     .map((error: ValidationError) => Object.values(error.constraints ?? {}))
                     .join(", ");
-                next(new HttpException(400, message));
+                // void next(new HttpException(400, message));
+                throw new HttpException(400, message);
             });
     };
 };

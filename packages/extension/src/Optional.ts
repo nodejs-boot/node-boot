@@ -196,11 +196,11 @@ export class Optional<T> {
             return Optional.of(this.value.filter(predicate) as T);
         } else if (this.value instanceof Map || this.value instanceof Set) {
             // Filter map or set
-            const filteredEntries = Array.from(this.value.entries()).filter(([key, value]) => predicate(value));
+            const filteredEntries = Array.from(this.value.entries()).filter(([, value]) => predicate(value));
             if (this.value instanceof Map) {
                 return Optional.of(new Map(filteredEntries) as T);
             } else {
-                return Optional.of(new Set(filteredEntries.map(([key, value]) => value)) as T);
+                return Optional.of(new Set(filteredEntries.map(([, value]) => value)) as T);
             }
         } else {
             // Filter single value

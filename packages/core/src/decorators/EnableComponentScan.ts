@@ -2,7 +2,7 @@ import {ApplicationContext, ComponentScanOptions} from "@node-boot/context";
 import path from "path";
 
 export function EnableComponentScan(options?: ComponentScanOptions): Function {
-    return function (object: Function) {
+    return function () {
         options = options ?? {
             controllerPaths: ["/controllers"],
             middlewarePaths: ["/middlewares"],

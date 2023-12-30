@@ -5,7 +5,7 @@ import {TransactionConfiguration} from "../config/TransactionConfiguration";
 import {QueryCacheConfiguration} from "../config/QueryCacheConfiguration";
 
 export const EnableRepositories = (): ClassDecorator => {
-    return (target: Function) => {
+    return () => {
         // Register repositories adapter
         ApplicationContext.get().repositoriesAdapter = new DefaultRepositoriesAdapter();
 

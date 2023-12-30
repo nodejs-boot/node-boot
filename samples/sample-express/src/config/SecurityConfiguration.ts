@@ -7,7 +7,7 @@ import {Application} from "express";
 @Configuration()
 export class SecurityConfiguration {
     @Bean()
-    public security({application, iocContainer}: BeansContext<Application>) {
+    public security({application}: BeansContext<Application>) {
         application.use(hpp());
         application.use(helmet());
         application.disable("x-powered-by");

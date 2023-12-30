@@ -7,7 +7,7 @@ import cors from "@koa/cors";
 @Configuration()
 export class SecurityConfiguration {
     @Bean()
-    public security({application, iocContainer}: BeansContext<Koa>) {
+    public security({application}: BeansContext<Koa>) {
         application.use(
             helmet({
                 // FIXME - Disabling contentSecurityPolicy if @EnableOpenApi is applied

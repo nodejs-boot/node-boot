@@ -1,32 +1,26 @@
 {
-  "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
-  "compilerOptions": {
-    /* Basic Options */
-    "incremental": true,
-    "declaration": true,
-    "allowJs": true,
-    "noEmit": true,
-    "strict": true,
+    "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
+    "compilerOptions": {
+        /* Basic Options */
+        "incremental": true,
+        "declaration": true,
+        "allowJs": true,
+        "noEmit": true,
+        "strict": true,
 
-    /* Strict Type-Checking Options */
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": false,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "resolveJsonModule": true,
-    "preserveValueImports": false,
-    "importsNotUsedAsValues": "remove",
-    "skipLibCheck": true,
-    "exactOptionalPropertyTypes": false,
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "esModuleInterop": true,
-
-    /* Experimental Options */
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+        "strictPropertyInitialization": false,
+        /* Strict Type-Checking Options */
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "resolveJsonModule": true,
+        "preserveValueImports": false,
+        "importsNotUsedAsValues": "remove",
+        "skipLibCheck": true,
+        "exactOptionalPropertyTypes": false,
+        "esModuleInterop": true,
+        "noImplicitAny": false,
+        /* Experimental Options */
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
 }
