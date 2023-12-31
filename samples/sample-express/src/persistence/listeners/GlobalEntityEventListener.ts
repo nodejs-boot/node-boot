@@ -98,42 +98,42 @@ export class GlobalEntityEventListener implements EntitySubscriberInterface {
     /**
      * Called before transaction start.
      */
-    beforeTransactionStart(event: TransactionStartEvent) {
+    beforeTransactionStart(_: TransactionStartEvent) {
         this.logger.info(`BEFORE TRANSACTION STARTED`);
     }
 
     /**
      * Called after transaction start.
      */
-    afterTransactionStart(event: TransactionStartEvent) {
+    afterTransactionStart(_: TransactionStartEvent) {
         this.logger.info(`AFTER TRANSACTION STARTED`);
     }
 
     /**
      * Called before transaction commit.
      */
-    beforeTransactionCommit(event: TransactionCommitEvent) {
+    beforeTransactionCommit(_: TransactionCommitEvent) {
         this.logger.info(`BEFORE TRANSACTION COMMITTED`);
     }
 
     /**
      * Called after transaction commit.
      */
-    afterTransactionCommit(event: TransactionCommitEvent) {
+    afterTransactionCommit(_: TransactionCommitEvent) {
         this.logger.info(`AFTER TRANSACTION COMMITTED`);
     }
 
     /**
      * Called before transaction rollback.
      */
-    beforeTransactionRollback(event: TransactionRollbackEvent) {
+    beforeTransactionRollback(_: TransactionRollbackEvent) {
         this.logger.info(`BEFORE TRANSACTION ROLLBACK`);
     }
 
     /**
      * Called after transaction rollback.
      */
-    afterTransactionRollback(event: TransactionRollbackEvent) {
+    afterTransactionRollback(_: TransactionRollbackEvent) {
         this.logger.info(`AFTER TRANSACTION ROLLBACK`);
     }
 }

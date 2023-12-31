@@ -12,7 +12,6 @@ export * from "./CookieParam";
 export * from "./CookieParams";
 export * from "./Ctx";
 export * from "./Delete";
-export * from "./EnableAutoConfiguration";
 export * from "./EnableClassTransformer";
 export * from "./EnableComponentScan";
 export * from "./ErrorHandler";

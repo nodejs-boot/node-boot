@@ -9,7 +9,7 @@ export class DefaultAuthorizationResolver implements AuthorizationChecker<Reques
     @Inject()
     private logger: Logger;
 
-    async check(action: Action<Request, Response>, roles: string[]): Promise<boolean> {
+    async check(_: Action<Request, Response>, roles: string[]): Promise<boolean> {
         // here you can use request/response objects from action
         // also if decorator defines roles it needs to access the action
         // you can use them to provide granular access check
@@ -17,8 +17,6 @@ export class DefaultAuthorizationResolver implements AuthorizationChecker<Reques
         // either promise that resolves a boolean value
         // demo code:
         this.logger.info(`Checking authorization`);
-
-        const token = action.request.headers["authorization"];
 
         //const user = await getEntityManager().findOneByToken(User, token);
         const user = {

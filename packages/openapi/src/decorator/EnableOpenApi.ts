@@ -7,10 +7,10 @@ import {FastifyOpenApi} from "../adapter/FastifyOpenApi";
 /**
  * Defines the configurations to enable Swagger Open API
  *
- * @param openApi The OpenAPI definitions and base config
+ * @param _ The OpenAPI definitions and base config
  */
-export function EnableOpenApi(openApi: Partial<oa.OpenAPIObject> = {}): Function {
-    return function (object: Function) {
+export function EnableOpenApi(_: Partial<oa.OpenAPIObject> = {}): Function {
+    return function () {
         ApplicationContext.get().openApi = new (class implements OpenApiBridgeAdapter {
             bind(serverType: string): OpenApiAdapter {
                 switch (serverType) {

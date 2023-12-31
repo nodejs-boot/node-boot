@@ -10,7 +10,7 @@ export class LoggingMiddleware implements MiddlewareInterface<Request, Response>
     private logger: Logger;
 
     use(action: Action<Request, Response, Function>): any {
-        const {request, response, next} = action;
+        const {next} = action;
         this.logger.info(`Logging Middleware: Incoming request`);
         next?.();
     }

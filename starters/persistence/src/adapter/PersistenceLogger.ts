@@ -1,5 +1,4 @@
 import {AbstractLogger, LogLevel, LogMessage} from "typeorm";
-import {QueryRunner} from "typeorm/query-runner/QueryRunner";
 import {Logger} from "winston";
 
 export class PersistenceLogger extends AbstractLogger {
@@ -10,7 +9,7 @@ export class PersistenceLogger extends AbstractLogger {
     /**
      * Write log to specific output.
      */
-    protected writeLog(level: LogLevel, logMessage: LogMessage | LogMessage[], queryRunner?: QueryRunner) {
+    protected writeLog(level: LogLevel, logMessage: LogMessage | LogMessage[]) {
         const messages = this.prepareLogMessages(logMessage, {
             highlightSql: false,
         });

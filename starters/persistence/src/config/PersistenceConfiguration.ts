@@ -33,7 +33,7 @@ export class PersistenceConfiguration {
      * @return dataSource (DataSource): The configured and initialized DataSource object for the persistence layer.
      * */
     @Bean()
-    public dataSource({iocContainer, logger, config}: BeansContext): DataSource {
+    public dataSource({iocContainer, logger}: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
         const datasourceConfig = iocContainer.get("datasource-config") as DataSourceOptions;
 
@@ -112,7 +112,7 @@ export class PersistenceConfiguration {
             for (const fieldToInject of Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, subscriber) || []) {
                 // Extract type metadata for field injection. This is useful for custom injection in some modules
                 const propertyType = Reflect.getMetadata("design:type", subscriber, fieldToInject);
-                subscriber[fieldToInject] = iocContainer.get(propertyType);
+                subscriber[fieldToInject as never] = iocContainer.get(propertyType) as never;
             }
         }
         logger.info(`${subscribers.length} persistence event subscribers successfully injected`);

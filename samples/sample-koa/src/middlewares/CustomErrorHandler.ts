@@ -11,7 +11,7 @@ export class CustomErrorHandler implements ErrorHandlerInterface<HttpError, Requ
     private logger: Logger;
 
     onError(error: HttpError, action: Action<Request, Response>): void {
-        const {request, response, next} = action;
+        const {request, next} = action;
         try {
             const status: number = error.httpCode || 500;
             const message: string = error.message || "Something went wrong";

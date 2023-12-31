@@ -165,7 +165,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                 );
                 if (isPromiseLike(useResult)) {
                     useResult
-                        .then(useResult => done())
+                        .then(() => done())
                         .catch((error: any) => {
                             this.handleError(error, undefined, {
                                 request,

@@ -7,7 +7,7 @@ import {ApplicationContext, IocContainer, UseContainerOptions} from "@node-boot/
  * @param options Extra options for the IOC container
  */
 export function EnableDI<TContainer>(iocContainer: IocContainer<TContainer>, options?: UseContainerOptions): Function {
-    return function (object: Function) {
+    return function () {
         ApplicationContext.get().diOptions = {
             iocContainer,
             options,
