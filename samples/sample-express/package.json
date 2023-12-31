@@ -19,7 +19,7 @@
     "types": "src/index.ts",
     "scripts": {
         "create:migration": "typeorm migration:create ./src/persistence/migrations/migration",
-        "start": "pnpm run build && node dist/server.js",
+        "start": "pnpm run build && ts-node src/server.ts",
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "build": "tsc -p tsconfig.build.json",

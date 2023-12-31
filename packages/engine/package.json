@@ -16,7 +16,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "src/index.js",
+    "main": "dist/index.js",
     "types": "src/index.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
