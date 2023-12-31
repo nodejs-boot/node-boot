@@ -1,5 +1,4 @@
-import {UseContainerOptions} from "routing-controllers/types/container";
-import {IocContainer} from "../ioc";
+import {IocContainer, UseContainerOptions} from "../ioc";
 
 export type DependencyInjectionOptions = {
     iocContainer: IocContainer;

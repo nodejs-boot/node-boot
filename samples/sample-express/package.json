@@ -16,8 +16,9 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "src/index.ts",
     "scripts": {
+        "create:migration": "typeorm migration:create ./src/persistence/migrations/migration",
         "start": "pnpm run build && node dist/server.js",
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
@@ -38,11 +39,10 @@
         "@node-boot/express-server": "1.0.0",
         "@node-boot/authorization": "1.0.0",
         "@node-boot/di": "1.0.0",
+        "@node-boot/error": "1.0.0",
         "@node-boot/starter-actuator": "1.0.0",
         "@node-boot/starter-persistence": "1.0.0",
         "@node-boot/extension": "1.0.0",
-        "routing-controllers": "^0.10.4",
-        "routing-controllers-openapi": "^4.0.0",
         "reflect-metadata": "^0.1.13",
         "typeorm": "^0.3.17",
         "express": "^4.18.2",
@@ -55,6 +55,9 @@
         "hpp": "^0.2.3",
         "minimist": "^1.2.8",
         "multer": "^1.4.5-lts.1",
+        "cookie": "^0.6.0",
+        "express-session": "^1.17.3",
+        "swagger-ui-express": "^5.0.0",
         "typedi": "^0.10.0",
         "winston": "^3.10.0"
     },

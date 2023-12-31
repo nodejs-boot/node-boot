@@ -15,8 +15,8 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "main": "src/index.js",
+    "types": "src/index.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -29,9 +29,7 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/context": "1.0.0"
-    },
-    "peerDependencies": {
-        "routing-controllers": ">=0.10.4"
+        "@node-boot/context": "1.0.0",
+        "@node-boot/engine": "1.0.0"
     }
 }

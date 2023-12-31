@@ -1,27 +1,16 @@
 import {Logger} from "winston";
-import {FastifyMiddlewareInterface, Middleware} from "@node-boot/core";
+import {Middleware} from "@node-boot/core";
 import {Inject} from "@node-boot/di";
 import {FastifyReply, FastifyRequest} from "fastify";
 import {HookHandlerDoneFunction} from "fastify/types/hooks";
+import {Action, MiddlewareInterface} from "@node-boot/context";
 
 @Middleware({type: "before"})
-export class LoggingMiddleware
-    implements
-        FastifyMiddlewareInterface<
-            FastifyRequest,
-            FastifyReply,
-            HookHandlerDoneFunction
-        >
-{
+export class LoggingMiddleware implements MiddlewareInterface<FastifyRequest, FastifyReply, HookHandlerDoneFunction> {
     @Inject()
     private logger: Logger;
 
-    use(
-        request: FastifyRequest,
-        reply: FastifyReply,
-        done: HookHandlerDoneFunction,
-        payload?: any,
-    ): void {
+    use(_: Action<FastifyRequest, FastifyReply, HookHandlerDoneFunction>): void {
         this.logger.info(`Logging Middleware: Incoming request`);
         //done();
     }

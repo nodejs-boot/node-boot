@@ -24,24 +24,16 @@ export function getVoidLogger(): winston.Logger {
  *
  * @public
  */
-export function createRootLogger(
-    options: winston.LoggerOptions = {},
-    env = process.env,
-): winston.Logger {
+export function createRootLogger(options: winston.LoggerOptions = {}, env = process.env): winston.Logger {
     return winston
         .createLogger(
             merge<LoggerOptions, LoggerOptions>(
                 {
                     level: env["LOG_LEVEL"] || "info",
-                    format:
-                        env["NODE_ENV"] === "production"
-                            ? winston.format.json()
-                            : colorFormat(),
+                    format: env["NODE_ENV"] === "production" ? winston.format.json() : colorFormat(),
                     transports: [
                         new winston.transports.Console({
-                            silent:
-                                env["JEST_WORKER_ID"] !== undefined &&
-                                !env["LOG_LEVEL"],
+                            silent: env["JEST_WORKER_ID"] !== undefined && !env["LOG_LEVEL"],
                         }),
                     ],
                 },
@@ -68,17 +60,13 @@ function colorFormat(): Format {
             },
         }),
         format.printf((info: TransformableInfo) => {
-            const {timestamp, level, message, plugin, service, ...fields} =
-                info;
+            const {timestamp, level, message, plugin, service, ...fields} = info;
             const prefix = plugin || service;
             const timestampColor = colorizer.colorize("timestamp", timestamp);
             const prefixColor = colorizer.colorize("prefix", prefix);
 
             const extraFields = Object.entries(fields)
-                .map(
-                    ([key, value]) =>
-                        `${colorizer.colorize("field", `${key}`)}=${value}`,
-                )
+                .map(([key, value]) => `${colorizer.colorize("field", `${key}`)}=${value}`)
                 .join(" ");
 
             return `${timestampColor} ${prefixColor} ${level} ${message} ${extraFields}`;
@@ -88,11 +76,7 @@ function colorFormat(): Format {
 
 export const createLogger = (service: string, platform: string) => {
     const logger = createRootLogger();
-    logger.format = winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.splat(),
-        logger.format,
-    );
+    logger.format = winston.format.combine(winston.format.timestamp(), winston.format.splat(), logger.format);
 
     logger.defaultMeta = {
         service,

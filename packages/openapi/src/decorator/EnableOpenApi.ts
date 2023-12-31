@@ -1,8 +1,4 @@
-import {
-    ApplicationContext,
-    OpenApiAdapter,
-    OpenApiBridgeAdapter,
-} from "@node-boot/context";
+import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@node-boot/context";
 import * as oa from "openapi3-ts";
 import {ExpressOpenApi} from "../adapter";
 import {KoaOpenApi} from "../adapter/KoaOpenApi";
@@ -11,15 +7,11 @@ import {FastifyOpenApi} from "../adapter/FastifyOpenApi";
 /**
  * Defines the configurations to enable Swagger Open API
  *
- * @param openApi The OpenAPI definitions and base config
+ * @param _ The OpenAPI definitions and base config
  */
-export function EnableOpenApi(
-    openApi: Partial<oa.OpenAPIObject> = {},
-): Function {
-    return function (object: Function) {
-        ApplicationContext.get().openApi = new (class
-            implements OpenApiBridgeAdapter
-        {
+export function EnableOpenApi(_: Partial<oa.OpenAPIObject> = {}): Function {
+    return function () {
+        ApplicationContext.get().openApi = new (class implements OpenApiBridgeAdapter {
             bind(serverType: string): OpenApiAdapter {
                 switch (serverType) {
                     case "express":

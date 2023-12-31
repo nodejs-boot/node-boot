@@ -1,9 +1,11 @@
 import {ActuatorAdapter, ActuatorOptions} from "@node-boot/context";
-import express from "express";
+import {Router, Application, Response} from "express";
 import {InfoService} from "../service/InfoService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
 import {ConfigService} from "@node-boot/config";
+
+type ResWithEpoch = Response & {locals: {startEpoch: number}};
 
 export class ExpressActuatorAdapter implements ActuatorAdapter {
     constructor(
@@ -13,21 +15,16 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
         private readonly configService?: ConfigService,
     ) {}
 
-    bind(
-        options: ActuatorOptions,
-        server: express.Application,
-        router: express.Application,
-    ): void {
-        router.use((req, res, next) => {
+    bind(_options: ActuatorOptions, _server: Application, router: Router): void {
+        router.use((req, res: ResWithEpoch, next) => {
             // Start a timer for every request made
             res.locals.startEpoch = Date.now();
 
             res.once("finish", () => {
-                const responseTimeInMilliseconds =
-                    Date.now() - res.locals.startEpoch;
+                const responseTimeInMilliseconds = Date.now() - res.locals.startEpoch;
 
                 this.context.http_request_duration_milliseconds
-                    .labels(req.method, req.path, res.statusCode)
+                    .labels(req.method, req.path, res.statusCode.toString())
                     .observe(responseTimeInMilliseconds);
             });
 
@@ -42,46 +39,40 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
             next();
         });
 
-        router.get("/actuator", (req, res) => {
+        router.get("/actuator", (_, res) => {
             res.status(200).json(this.metadataService.getActuatorEndpoints());
         });
 
-        router.get("/actuator/info", (req, res) => {
+        router.get("/actuator/info", (_, res) => {
             this.infoService.getInfo().then(data => res.status(200).json(data));
         });
 
-        router.get("/actuator/config", (req, res) => {
+        router.get("/actuator/config", (_, res) => {
             res.status(200).json(this.configService?.get() ?? {});
         });
 
-        router.get("/actuator/memory", (req, res) => {
-            this.infoService
-                .getMemory()
-                .then(data => res.status(200).json(data));
+        router.get("/actuator/memory", (_, res) => {
+            this.infoService.getMemory().then(data => res.status(200).json(data));
         });
 
-        router.get("/actuator/metrics", (req, res) => {
-            this.context.register
-                .getMetricsAsJSON()
-                .then(data => res.status(200).json(data));
+        router.get("/actuator/metrics", (_, res) => {
+            this.context.register.getMetricsAsJSON().then(data => res.status(200).json(data));
         });
 
-        router.get("/actuator/prometheus", (req, res) => {
+        router.get("/actuator/prometheus", (_, res) => {
             res.setHeader("Content-Type", this.context.register.contentType);
-            this.context.register
-                .metrics()
-                .then(data => res.status(200).send(data));
+            this.context.register.metrics().then(data => res.status(200).send(data));
         });
 
-        router.get("/actuator/controllers", (req, res) => {
+        router.get("/actuator/controllers", (_, res) => {
             res.status(200).json(this.metadataService.getControllers());
         });
 
-        router.get("/actuator/interceptors", (req, res) => {
+        router.get("/actuator/interceptors", (_, res) => {
             res.status(200).json(this.metadataService.getInterceptors());
         });
 
-        router.get("/actuator/middlewares", (req, res) => {
+        router.get("/actuator/middlewares", (_, res) => {
             res.status(200).json(this.metadataService.getMiddlewares());
         });
     }

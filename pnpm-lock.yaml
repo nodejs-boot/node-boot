@@ -57,8 +57,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       turbo:
-        specifier: ^1.10.12
-        version: 1.10.12
+        specifier: ^1.11.2
+        version: 1.11.2
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -68,9 +68,9 @@ importers:
       '@node-boot/context':
         specifier: 1.0.0
         version: link:../context
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../engine
 
   packages/config:
     dependencies:
@@ -102,12 +102,12 @@ importers:
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.0
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       winston:
         specifier: '>=3.10.0'
         version: 3.10.0
@@ -123,9 +123,15 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../di
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../engine
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.0
       glob:
         specifier: ^10.3.3
         version: 10.3.3
@@ -138,9 +144,6 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       winston:
         specifier: '>=3.10.0'
         version: 3.10.0
@@ -157,6 +160,26 @@ importers:
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
+
+  packages/engine:
+    dependencies:
+      '@node-boot/context':
+        specifier: 1.0.0
+        version: link:../context
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../extension
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.0
+
+  packages/error: {}
 
   packages/extension: {}
 
@@ -217,6 +240,9 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../../packages/di
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
       '@node-boot/express-server':
         specifier: 1.0.0
         version: link:../../servers/express-server
@@ -244,12 +270,18 @@ importers:
       class-validator:
         specifier: ^0.14.0
         version: 0.14.0
+      cookie:
+        specifier: ^0.6.0
+        version: 0.6.0
       cors:
         specifier: ^2.8.5
         version: 2.8.5
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      express-session:
+        specifier: ^1.17.3
+        version: 1.17.3
       helmet:
         specifier: ^7.0.0
         version: 7.0.0
@@ -265,12 +297,9 @@ importers:
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: ^0.10.4
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      routing-controllers-openapi:
-        specifier: ^4.0.0
-        version: 4.0.0(routing-controllers@0.10.4)
+      swagger-ui-express:
+        specifier: ^5.0.0
+        version: 5.0.0(express@4.18.2)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
@@ -308,6 +337,27 @@ importers:
 
   samples/sample-fastify:
     dependencies:
+      '@fastify/cookie':
+        specifier: ^9.0.4
+        version: 9.0.4
+      '@fastify/cors':
+        specifier: ^8.4.1
+        version: 8.4.1
+      '@fastify/multipart':
+        specifier: ^7.7.3
+        version: 7.7.3
+      '@fastify/session':
+        specifier: ^10.4.0
+        version: 10.4.0
+      '@fastify/swagger':
+        specifier: ^8.10.0
+        version: 8.10.0
+      '@fastify/swagger-ui':
+        specifier: ^1.9.3
+        version: 1.9.3
+      '@fastify/view':
+        specifier: ^8.0.0
+        version: 8.0.0
       '@node-boot/authorization':
         specifier: 1.0.0
         version: link:../../packages/authorization
@@ -323,6 +373,12 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../../packages/di
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       '@node-boot/fastify-server':
         specifier: 1.0.0
         version: link:../../servers/fastify-server
@@ -332,61 +388,34 @@ importers:
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
-      body-parser:
-        specifier: ^1.20.2
-        version: 1.20.2
+      '@node-boot/starter-persistence':
+        specifier: 1.0.0
+        version: link:../../starters/persistence
+      better-sqlite3:
+        specifier: ^9.1.1
+        version: 9.1.1
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
       class-validator:
         specifier: ^0.14.0
         version: 0.14.0
-      cors:
-        specifier: ^2.8.5
-        version: 2.8.5
       fastify:
         specifier: ^4.21.0
         version: 4.21.0
-      fastify-multer:
-        specifier: ^2.0.3
-        version: 2.0.3
-      helmet:
-        specifier: ^7.0.0
-        version: 7.0.0
-      hpp:
-        specifier: ^0.2.3
-        version: 0.2.3
-      middie:
-        specifier: ^7.1.0
-        version: 7.1.0
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: ^0.10.4
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      routing-controllers-openapi:
-        specifier: ^4.0.0
-        version: 4.0.0(routing-controllers@0.10.4)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
+      typeorm:
+        specifier: ^0.3.17
+        version: 0.3.17(better-sqlite3@9.1.1)
       winston:
         specifier: ^3.10.0
         version: 3.10.0
     devDependencies:
-      '@types/body-parser':
-        specifier: ^1.19.2
-        version: 1.19.2
-      '@types/cors':
-        specifier: ^2.8.13
-        version: 2.8.13
-      '@types/hpp':
-        specifier: ^0.2.2
-        version: 0.2.2
       '@types/jest':
         specifier: ^28.1.6
         version: 28.1.6
@@ -423,6 +452,12 @@ importers:
       '@node-boot/di':
         specifier: 1.0.0
         version: link:../../packages/di
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       '@node-boot/koa-server':
         specifier: 1.0.0
         version: link:../../servers/koa-server
@@ -432,6 +467,9 @@ importers:
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
+      '@node-boot/starter-persistence':
+        specifier: 1.0.0
+        version: link:../../starters/persistence
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -447,24 +485,27 @@ importers:
       koa-bodyparser:
         specifier: ^4.4.1
         version: 4.4.1
+      koa-cookies:
+        specifier: ^4.0.2
+        version: 4.0.2
       koa-helmet:
         specifier: ^7.0.2
         version: 7.0.2
+      koa-session:
+        specifier: ^6.4.0
+        version: 6.4.0
       koa2-swagger-ui:
         specifier: ^5.8.0
         version: 5.8.0
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      routing-controllers:
-        specifier: ^0.10.4
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
+      typeorm:
+        specifier: ^0.3.17
+        version: 0.3.17(better-sqlite3@9.1.1)
       winston:
         specifier: ^3.10.0
         version: 3.10.0
@@ -502,25 +543,52 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       body-parser:
-        specifier: ^1.20.2
+        specifier: '>=1.20.2'
         version: 1.20.2
+      cookie:
+        specifier: '>=0.6.0'
+        version: 0.6.0
+      cors:
+        specifier: '>=2.8.5'
+        version: 2.8.5
       express:
         specifier: '>=4.18.2'
         version: 4.18.2
+      express-session:
+        specifier: '>=1.17.3'
+        version: 1.17.3
       multer:
-        specifier: ^1.4.5-lts.1
+        specifier: '>=1.4.5-lts.1'
         version: 1.4.5-lts.1
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
+      template-url:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
         version: 1.19.2
+      '@types/cookie':
+        specifier: ^0.6.0
+        version: 0.6.0
+      '@types/cors':
+        specifier: ^2.8.17
+        version: 2.8.17
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.17
+      '@types/express-session':
+        specifier: ^1.17.10
+        version: 1.17.10
       '@types/multer':
         specifier: ^1.4.7
         version: 1.4.7
@@ -528,16 +596,19 @@ importers:
   servers/fastify-server:
     dependencies:
       '@fastify/cookie':
-        specifier: ^9.0.4
+        specifier: '>=9.0.4'
         version: 9.0.4
+      '@fastify/cors':
+        specifier: '>=8.4.1'
+        version: 8.4.1
       '@fastify/multipart':
-        specifier: ^7.7.3
+        specifier: '>=7.7.3'
         version: 7.7.3
       '@fastify/session':
-        specifier: ^10.4.0
+        specifier: '>=10.4.0'
         version: 10.4.0
       '@fastify/view':
-        specifier: ^8.0.0
+        specifier: '>=8.0.0'
         version: 8.0.0
       '@node-boot/context':
         specifier: 1.0.0
@@ -545,21 +616,27 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       fastify:
         specifier: '>=4.21.0'
         version: 4.21.0
-      handlebars:
-        specifier: ^4.7.8
-        version: 4.7.8
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
       template-url:
         specifier: ^1.0.0
         version: 1.0.0
 
   servers/koa-server:
     dependencies:
+      '@koa/cors':
+        specifier: ^5.0.0
+        version: 5.0.0
       '@koa/multer':
         specifier: ^3.0.2
         version: 3.0.2(multer@1.4.5-lts.1)
@@ -572,19 +649,46 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      '@node-boot/error':
+        specifier: 1.0.0
+        version: link:../../packages/error
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       koa:
-        specifier: '>=2.14.2'
+        specifier: ^2.14.2
         version: 2.14.2
       koa-bodyparser:
         specifier: ^4.4.1
         version: 4.4.1
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
+      koa-cookies:
+        specifier: ^4.0.2
+        version: 4.0.2
+      koa-session:
+        specifier: ^6.4.0
+        version: 6.4.0
+      template-url:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@types/koa':
-        specifier: ^2.13.8
-        version: 2.13.8
+        specifier: ^2.13.12
+        version: 2.13.12
+      '@types/koa-session':
+        specifier: ^6.4.5
+        version: 6.4.5
+      '@types/koa__cors':
+        specifier: ^5.0.0
+        version: 5.0.0
+      '@types/koa__multer':
+        specifier: ^2.0.7
+        version: 2.0.7
+      '@types/koa__router':
+        specifier: ^12.0.4
+        version: 12.0.4
 
   starters/actuator:
     dependencies:
@@ -620,6 +724,9 @@ importers:
         specifier: '>=2.14.2'
         version: 2.14.2
     devDependencies:
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.21
       '@types/koa':
         specifier: ^2.13.11
         version: 2.13.11
@@ -638,6 +745,12 @@ importers:
       '@node-boot/core':
         specifier: 1.0.0
         version: link:../../packages/core
+      '@node-boot/di':
+        specifier: 1.0.0
+        version: link:../../packages/di
+      '@node-boot/extension':
+        specifier: 1.0.0
+        version: link:../../packages/extension
       reflect-metadata:
         specifier: '>=0.1.13'
         version: 0.1.13
@@ -1160,6 +1273,13 @@ packages:
       fastify-plugin: 4.5.1
     dev: false
 
+  /@fastify/cors@8.4.1:
+    resolution: {integrity: sha512-iYQJtrY3pFiDS5mo5zRaudzg2OcUdJ96PD6xfkKOOEilly5nnrFZx/W6Sce2T79xxlEn2qpU3t5+qS2phS369w==}
+    dependencies:
+      fastify-plugin: 4.5.1
+      mnemonist: 0.39.5
+    dev: false
+
   /@fastify/deepmerge@1.3.0:
     resolution: {integrity: sha512-J8TOSBq3SoZbDhM9+R/u77hP93gz/rajSA+K2kGyijPpORPWUXHUpTaleoj+92As0S9uPRP7Oi8IqMf0u+ro6A==}
     dev: false
@@ -1581,6 +1701,13 @@ packages:
       vary: 1.1.2
     dev: false
 
+  /@koa/cors@5.0.0:
+    resolution: {integrity: sha512-x/iUDjcS90W69PryLDIMgFyV21YLTnG9zOpPXS7Bkt2b8AsY3zZsIpOLBkYr9fBcF3HbkKaER5hOBZLfpLgYNw==}
+    engines: {node: '>= 14.0.0'}
+    dependencies:
+      vary: 1.1.2
+    dev: false
+
   /@koa/multer@3.0.2(multer@1.4.5-lts.1):
     resolution: {integrity: sha512-Q6WfPpE06mJWyZD1fzxM6zWywaoo+zocAn2YA9QYz4RsecoASr1h/kSzG0c5seDpFVKCMZM9raEfuM7XfqbRLw==}
     engines: {node: '>= 8'}
@@ -1597,6 +1724,7 @@ packages:
   /@koa/router@12.0.0:
     resolution: {integrity: sha512-cnnxeKHXlt7XARJptflGURdJaO+ITpNkOHmQu7NHmCoRinPbyvFzce/EG/E8Zy81yQ1W9MoSdtklc3nyaDReUw==}
     engines: {node: '>= 12'}
+    deprecated: '**IMPORTANT 10x+ PERFORMANCE UPGRADE**: Please upgrade to v12.0.1+ as we have fixed an issue with debuglog causing 10x slower router benchmark performance, see https://github.com/koajs/router/pull/173'
     requiresBuild: true
     dependencies:
       http-errors: 2.0.0
@@ -1844,6 +1972,10 @@ packages:
   /@types/content-disposition@0.5.5:
     resolution: {integrity: sha512-v6LCdKfK6BwcqMo+wYW05rLS12S0ZO0Fl4w1h4aaZMD7bqT3gVUns6FvLJKGZHQmYn3SX55JWGpziwJRwVgutA==}
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: true
+
   /@types/cookiejar@2.1.2:
     resolution: {integrity: sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==}
     dev: true
@@ -1852,7 +1984,7 @@ packages:
     resolution: {integrity: sha512-h7BcvPUogWbKCzBR2lY4oqaZbO3jXZksexYJVFvkrFeLgbZjQkU4x8pRq6eg2MHXQhY0McQdqmmsxRWlVAHooA==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/express': 4.17.17
+      '@types/express': 4.17.21
       '@types/keygrip': 1.0.2
       '@types/node': 18.15.3
 
@@ -1860,6 +1992,12 @@ packages:
     resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
     dependencies:
       '@types/node': 20.4.2
+    dev: true
+
+  /@types/cors@2.8.17:
+    resolution: {integrity: sha512-8CGDvrBj1zgo2qE+oS3pOCyYNqCPryMWY2bGfwA0dcfopWGgxs+78df0Rs3rc9THP4JkOhLsAa+15VdpAqkcUA==}
+    dependencies:
+      '@types/node': 18.15.3
     dev: true
 
   /@types/express-serve-static-core@4.17.35:
@@ -1870,8 +2008,23 @@ packages:
       '@types/range-parser': 1.2.4
       '@types/send': 0.17.1
 
+  /@types/express-session@1.17.10:
+    resolution: {integrity: sha512-U32bC/s0ejXijw5MAzyaV4tuZopCh/K7fPoUDyNbsRXHvPSeymygYD1RFL99YOLhF5PNOkzswvOTRaVHdL1zMw==}
+    dependencies:
+      '@types/express': 4.17.17
+    dev: true
+
   /@types/express@4.17.17:
     resolution: {integrity: sha512-Q4FmmuLGBG58btUnfS1c1r/NQdlp3DMfGDGig8WhfpA2YRUtEkxAjkZb0yvplJGYdF1fsQ81iMDcH24sSCNC/Q==}
+    dependencies:
+      '@types/body-parser': 1.19.2
+      '@types/express-serve-static-core': 4.17.35
+      '@types/qs': 6.9.7
+      '@types/serve-static': 1.15.2
+    dev: true
+
+  /@types/express@4.17.21:
+    resolution: {integrity: sha512-ejlPM315qwLpaQlQDTjPdsUFSc6ZsP4AN6AlWnogPjQ7CVi7PYF3YVz+CY3jE2pwYf7E/7HlDAN0rV2GxTG0HQ==}
     dependencies:
       '@types/body-parser': 1.19.2
       '@types/express-serve-static-core': 4.17.35
@@ -1934,7 +2087,7 @@ packages:
   /@types/koa-compose@3.2.5:
     resolution: {integrity: sha512-B8nG/OoE1ORZqCkBVsup/AKcvjdgoHnfi4pZMn5UwAPCbhk/96xyv284eBYW8JlQbQ7zDmnpFr68I/40mFoIBQ==}
     dependencies:
-      '@types/koa': 2.13.11
+      '@types/koa': 2.13.12
 
   /@types/koa-cors@0.0.2:
     resolution: {integrity: sha512-uNaDY26HUVO+2C6arK8ZFODs9mBjYprD8mlvkVe2bYdX9wzEeKtycVXPafXpUkePhMh4sffIMkhRDyedokG/QA==}
@@ -1949,6 +2102,13 @@ packages:
       helmet: 4.6.0
     dev: true
 
+  /@types/koa-session@6.4.5:
+    resolution: {integrity: sha512-Vc6+fslnPuMH2v9y80WYeo39UMo8mweuNNthKCwYU2ZE6l5vnRrzRU3BRvexKwsoI5sxsRl5CxDsBlLI8kY/XA==}
+    dependencies:
+      '@types/cookies': 0.7.7
+      '@types/koa': 2.13.12
+    dev: true
+
   /@types/koa@2.13.11:
     resolution: {integrity: sha512-0HZSGNdmLlLRvSxv0ngLSp09Hw98c+2XL3ZRYmkE6y8grqTweKEyyaj7LgxkyPUv0gQ5pNS/a7kHXo2Iwha1rA==}
     dependencies:
@@ -1960,6 +2120,19 @@ packages:
       '@types/keygrip': 1.0.2
       '@types/koa-compose': 3.2.5
       '@types/node': 20.4.2
+    dev: true
+
+  /@types/koa@2.13.12:
+    resolution: {integrity: sha512-vAo1KuDSYWFDB4Cs80CHvfmzSQWeUb909aQib0C0aFx4sw0K9UZFz2m5jaEP+b3X1+yr904iQiruS0hXi31jbw==}
+    dependencies:
+      '@types/accepts': 1.3.5
+      '@types/content-disposition': 0.5.5
+      '@types/cookies': 0.7.7
+      '@types/http-assert': 1.5.3
+      '@types/http-errors': 2.0.1
+      '@types/keygrip': 1.0.2
+      '@types/koa-compose': 3.2.5
+      '@types/node': 18.15.3
 
   /@types/koa@2.13.8:
     resolution: {integrity: sha512-Ugmxmgk/yPRW3ptBTh9VjOLwsKWJuGbymo1uGX0qdaqqL18uJiiG1ZoV0rxCOYSaDGhvEp5Ece02Amx0iwaxQQ==}
@@ -1973,10 +2146,22 @@ packages:
       '@types/koa-compose': 3.2.5
       '@types/node': 20.4.2
 
+  /@types/koa__cors@5.0.0:
+    resolution: {integrity: sha512-LCk/n25Obq5qlernGOK/2LUwa/2YJb2lxHUkkvYFDOpLXlVI6tKcdfCHRBQnOY4LwH6el5WOLs6PD/a8Uzau6g==}
+    dependencies:
+      '@types/koa': 2.13.12
+    dev: true
+
+  /@types/koa__multer@2.0.7:
+    resolution: {integrity: sha512-O7hiAEpdgW1nly93jQ8TVL2nPC7Bg1HHRf1/LGNQb7ygGBjNgZWpliCm7tswNW3MjcgYbTtz0+Sca5wHne+RyA==}
+    dependencies:
+      '@types/koa': 2.13.12
+    dev: true
+
   /@types/koa__router@12.0.4:
     resolution: {integrity: sha512-Y7YBbSmfXZpa/m5UGGzb7XadJIRBRnwNY9cdAojZGp65Cpe5MAP3mOZE7e3bImt8dfKS4UFcR16SLH8L/z7PBw==}
     dependencies:
-      '@types/koa': 2.13.11
+      '@types/koa': 2.13.12
     dev: true
 
   /@types/lodash@4.14.197:
@@ -2893,16 +3078,6 @@ packages:
       typedarray: 0.0.6
     dev: false
 
-  /concat-stream@2.0.0:
-    resolution: {integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==}
-    engines: {'0': node >= 6.0}
-    dependencies:
-      buffer-from: 1.1.2
-      inherits: 2.0.4
-      readable-stream: 3.6.2
-      typedarray: 0.0.6
-    dev: false
-
   /content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
     engines: {node: '>= 0.6'}
@@ -2934,10 +3109,14 @@ packages:
     engines: {node: '>= 0.6'}
     requiresBuild: true
     dev: false
-    optional: true
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -2966,6 +3145,12 @@ packages:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
+    dev: false
+
+  /crc@3.8.0:
+    resolution: {integrity: sha512-iX3mfgcTMIq3ZKLIsVFAbv7+Mc10kxabAGQb8HvjA1o3T1PIYprbakQ65d3I+2HGHt6nSKkM9PYjgoJO2KcFBQ==}
+    dependencies:
+      buffer: 5.7.1
     dev: false
 
   /create-require@1.1.1:
@@ -3424,7 +3609,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
-    optional: true
 
   /express@4.18.2:
     resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
@@ -3520,30 +3704,6 @@ packages:
 
   /fast-uri@2.2.0:
     resolution: {integrity: sha512-cIusKBIt/R/oI6z/1nyfe2FvGKVTohVRfvkOhvx0nCEW+xf5NoCXjAHcWp93uOUBchzYcsvPlrapAdX1uW+YGg==}
-    dev: false
-
-  /fastify-multer@2.0.3:
-    resolution: {integrity: sha512-QnFqrRgxmUwWHTgX9uyQSu0C/hmVCfcxopqjApZ4uaZD5W9MJ+nHUlW4+9q7Yd3BRxDIuHvgiM5mjrh6XG8cAA==}
-    engines: {node: '>=10.17.0'}
-    dependencies:
-      '@fastify/busboy': 1.2.1
-      append-field: 1.0.0
-      concat-stream: 2.0.0
-      fastify-plugin: 2.3.4
-      mkdirp: 1.0.4
-      on-finished: 2.4.1
-      type-is: 1.6.18
-      xtend: 4.0.2
-    dev: false
-
-  /fastify-plugin@2.3.4:
-    resolution: {integrity: sha512-I+Oaj6p9oiRozbam30sh39BiuiqBda7yK2nmSPVwDCfIBlKnT8YB3MY+pRQc2Fcd07bf6KPGklHJaQ2Qu81TYQ==}
-    dependencies:
-      semver: 7.5.4
-    dev: false
-
-  /fastify-plugin@3.0.1:
-    resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
     dev: false
 
   /fastify-plugin@4.5.1:
@@ -4066,6 +4226,10 @@ packages:
     dependencies:
       binary-extensions: 2.2.0
 
+  /is-class-hotfix@0.0.6:
+    resolution: {integrity: sha512-0n+pzCC6ICtVr/WXnN2f03TK/3BfXY7me4cjCAqT8TYXEl0+JBRoqBo94JJHXcyDSLUeWbNX8Fvy5g5RJdAstQ==}
+    dev: false
+
   /is-core-module@2.11.0:
     resolution: {integrity: sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==}
     dependencies:
@@ -4121,6 +4285,14 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
+  /is-type-of@1.4.0:
+    resolution: {integrity: sha512-EddYllaovi5ysMLMEN7yzHEKh8A850cZ7pykrY1aNRQGn/CDjRDE9qEWbIdt7xGEVJmjBXzU/fNnC4ABTm8tEQ==}
+    dependencies:
+      core-util-is: 1.0.3
+      is-class-hotfix: 0.0.6
+      isstream: 0.1.2
+    dev: false
+
   /isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
     requiresBuild: true
@@ -4128,6 +4300,10 @@ packages:
 
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+
+  /isstream@0.1.2:
+    resolution: {integrity: sha512-Yljz7ffyPbrLpLngrMtZ7NduUgVvi6wG9RJ9IUcyCd59YQ911PBJphODUcbOVbqYfxe1wuYf/LJ8PauMRwsM/g==}
+    dev: false
 
   /istanbul-lib-coverage@3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
@@ -4744,11 +4920,28 @@ packages:
       koa-compose: 4.1.0
     dev: false
 
+  /koa-cookies@4.0.2:
+    resolution: {integrity: sha512-5V4LBrIgBUyVRUL1z7cG2nkQQMIvdJtxZMTC40ztoXKNgKgpttBVQHXB/dgQfODPggmlVZ5/9bii4qCcl0dgjQ==}
+    engines: {node: '>=18.0.0'}
+    dev: false
+
   /koa-helmet@7.0.2:
     resolution: {integrity: sha512-AvzS6VuEfFgbAm0mTUnkk/BpMarMcs5A56g+f0sfrJ6m63wII48d2GDrnUQGp0Nj+RR950vNtgqXm9UJSe7GOg==}
     engines: {node: '>= 14.0.0'}
     dependencies:
       helmet: 6.2.0
+    dev: false
+
+  /koa-session@6.4.0:
+    resolution: {integrity: sha512-h/dxmSOvNEXpHQPRs4TV03TZVFyZIjmYQiTAW5JBFTYBOZ0VdpZ8QEE6Dud75g8z9JNGXi3m++VqRmqToB+c2A==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      crc: 3.8.0
+      debug: 4.3.4
+      is-type-of: 1.4.0
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /koa2-swagger-ui@5.8.0:
@@ -4995,21 +5188,6 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /middie@7.0.0:
-    resolution: {integrity: sha512-gAX1DrlTOMsDW6MskZrCJQW1j56I7VHqKFdwGSMtZuIbymye2j89R1juPLLCyEMrx0sZR9EZ+VqnWqOh9KH4PQ==}
-    dependencies:
-      fastify-plugin: 3.0.1
-      path-to-regexp: 6.2.1
-      reusify: 1.0.4
-    dev: false
-
-  /middie@7.1.0:
-    resolution: {integrity: sha512-1Fq0i+nGYlPyVv5pBbnXSdkcQ4in1d9pNv2DMwTKGztsqyAng9PN/PNl4PMhccScEWOvj+HT5QtANsA0AuYHFw==}
-    dependencies:
-      middie-deprecated: /middie@7.0.0
-      process-warning: 1.0.0
-    dev: false
-
   /mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -5115,6 +5293,12 @@ packages:
     resolution: {integrity: sha512-+hEnITedc8LAtIP9u3HJDFIdcLV2vXP33sqLLIzkv1Db1zO/1OxbvYf0Y1OC/S/Qo5dxHXepofhmxL02PsKe+A==}
     engines: {node: '>=10'}
     hasBin: true
+    dev: false
+
+  /mnemonist@0.39.5:
+    resolution: {integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==}
+    dependencies:
+      obliterator: 2.0.4
     dev: false
 
   /ms@2.0.0:
@@ -5265,6 +5449,10 @@ packages:
   /object-inspect@1.12.3:
     resolution: {integrity: sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==}
 
+  /obliterator@2.0.4:
+    resolution: {integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==}
+    dev: false
+
   /on-exit-leak-free@2.1.0:
     resolution: {integrity: sha512-VuCaZZAjReZ3vUwgOB8LxAosIurDiAW0s13rI1YwmaP++jvcxP77AWoQvenZebpCA2m8WC1/EosPYPMjnRAp/w==}
     dev: false
@@ -5282,7 +5470,6 @@ packages:
     engines: {node: '>= 0.8'}
     requiresBuild: true
     dev: false
-    optional: true
 
   /once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -5584,10 +5771,6 @@ packages:
     requiresBuild: true
     dev: false
 
-  /process-warning@1.0.0:
-    resolution: {integrity: sha512-du4wfLyj4yCZq1VupnVSZmRsPJsNuxoDQFdCFHLaYiEbFBD7QE0a+I4D7hOxrVnh78QE/YipFAj9lXHiXocV+Q==}
-    dev: false
-
   /process-warning@2.2.0:
     resolution: {integrity: sha512-/1WZ8+VQjR6avWOgHeEPd7SDQmFQ1B5mC1eRXsCm5TarlNmx/wCsa5GEaxGm05BORRtyG/Ex/3xq3TuRvq57qg==}
     dev: false
@@ -5680,7 +5863,6 @@ packages:
     engines: {node: '>= 0.8'}
     requiresBuild: true
     dev: false
-    optional: true
 
   /range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
@@ -6333,7 +6515,6 @@ packages:
     resolution: {integrity: sha512-NZ8YDKqf58+bWbD3v1NnF9QCveqtovT8e/4fJoc/ZgafJdFSqVEYiXM+OnS6rg9Yrb8z6bwpJ4H6hLk7mMs36Q==}
     requiresBuild: true
     dev: false
-    optional: true
 
   /swagger-ui-express@5.0.0(express@4.18.2):
     resolution: {integrity: sha512-tsU9tODVvhyfkNSvf03E6FAk+z+5cU3lXAzMy6Pv4av2Gt2xA0++fogwC4qo19XuFf6hdxevPuVCSKFuMHJhFA==}
@@ -6345,7 +6526,6 @@ packages:
       express: 4.18.2
       swagger-ui-dist: 5.3.2
     dev: false
-    optional: true
 
   /tar-fs@2.1.1:
     resolution: {integrity: sha512-V0r2Y9scmbDRLCNex/+hYzvp/zyYjvFbHPNgVTKfQvVrb6guiE/fxP+XblDNR011utopbkex2nM4dHNV6GDsng==}
@@ -6527,65 +6707,64 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /turbo-darwin-64@1.10.12:
-    resolution: {integrity: sha512-vmDfGVPl5/aFenAbOj3eOx3ePNcWVUyZwYr7taRl0ZBbmv2TzjRiFotO4vrKCiTVnbqjQqAFQWY2ugbqCI1kOQ==}
+  /turbo-darwin-64@1.11.2:
+    resolution: {integrity: sha512-toFmRG/adriZY3hOps7nYCfqHAS+Ci6xqgX3fbo82kkLpC6OBzcXnleSwuPqjHVAaRNhVoB83L5njcE9Qwi2og==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-darwin-arm64@1.10.12:
-    resolution: {integrity: sha512-3JliEESLNX2s7g54SOBqqkqJ7UhcOGkS0ywMr5SNuvF6kWVTbuUq7uBU/sVbGq8RwvK1ONlhPvJne5MUqBCTCQ==}
+  /turbo-darwin-arm64@1.11.2:
+    resolution: {integrity: sha512-FCsEDZ8BUSFYEOSC3rrARQrj7x2VOrmVcfrMUIhexTxproRh4QyMxLfr6LALk4ymx6jbDCxWa6Szal8ckldFbA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-64@1.10.12:
-    resolution: {integrity: sha512-siYhgeX0DidIfHSgCR95b8xPee9enKSOjCzx7EjTLmPqPaCiVebRYvbOIYdQWRqiaKh9yfhUtFmtMOMScUf1gg==}
+  /turbo-linux-64@1.11.2:
+    resolution: {integrity: sha512-Vzda/o/QyEske5CxLf0wcu7UUS+7zB90GgHZV4tyN+WZtoouTvbwuvZ3V6b5Wgd3OJ/JwWR0CXDK7Sf4VEMr7A==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-linux-arm64@1.10.12:
-    resolution: {integrity: sha512-K/ZhvD9l4SslclaMkTiIrnfcACgos79YcAo4kwc8bnMQaKuUeRpM15sxLpZp3xDjDg8EY93vsKyjaOhdFG2UbA==}
+  /turbo-linux-arm64@1.11.2:
+    resolution: {integrity: sha512-bRLwovQRz0yxDZrM4tQEAYV0fBHEaTzUF0JZ8RG1UmZt/CqtpnUrJpYb1VK8hj1z46z9YehARpYCwQ2K0qU4yw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-64@1.10.12:
-    resolution: {integrity: sha512-7FSgSwvktWDNOqV65l9AbZwcoueAILeE4L7JvjauNASAjjbuzXGCEq5uN8AQU3U5BOFj4TdXrVmO2dX+lLu8Zg==}
+  /turbo-windows-64@1.11.2:
+    resolution: {integrity: sha512-LgTWqkHAKgyVuLYcEPxZVGPInTjjeCnN5KQMdJ4uQZ+xMDROvMFS2rM93iQl4ieDJgidwHCxxCxaU9u8c3d/Kg==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo-windows-arm64@1.10.12:
-    resolution: {integrity: sha512-gCNXF52dwom1HLY9ry/cneBPOKTBHhzpqhMylcyvJP0vp9zeMQQkt6yjYv+6QdnmELC92CtKNp2FsNZo+z0pyw==}
+  /turbo-windows-arm64@1.11.2:
+    resolution: {integrity: sha512-829aVBU7IX0c/B4G7g1VI8KniAGutHhIupkYMgF6xPkYVev2G3MYe6DMS/vsLt9GGM9ulDtdWxWrH5P2ngK8IQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /turbo@1.10.12:
-    resolution: {integrity: sha512-WM3+jTfQWnB9W208pmP4oeehZcC6JQNlydb/ZHMRrhmQa+htGhWLCzd6Q9rLe0MwZLPpSPFV2/bN5egCLyoKjQ==}
+  /turbo@1.11.2:
+    resolution: {integrity: sha512-jPC7LVQJzebs5gWf8FmEvsvXGNyKbN+O9qpvv98xpNaM59aS0/Irhd0H0KbcqnXfsz7ETlzOC3R+xFWthC4Z8A==}
     hasBin: true
-    requiresBuild: true
     optionalDependencies:
-      turbo-darwin-64: 1.10.12
-      turbo-darwin-arm64: 1.10.12
-      turbo-linux-64: 1.10.12
-      turbo-linux-arm64: 1.10.12
-      turbo-windows-64: 1.10.12
-      turbo-windows-arm64: 1.10.12
+      turbo-darwin-64: 1.11.2
+      turbo-darwin-arm64: 1.11.2
+      turbo-linux-64: 1.11.2
+      turbo-linux-arm64: 1.11.2
+      turbo-windows-64: 1.11.2
+      turbo-windows-arm64: 1.11.2
     dev: true
 
   /type-check@0.4.0:
@@ -6775,7 +6954,6 @@ packages:
     dependencies:
       random-bytes: 1.0.0
     dev: false
-    optional: true
 
   /undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
@@ -6816,6 +6994,11 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
     requiresBuild: true
+    dev: false
+
+  /uuid@8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
     dev: false
 
   /uuid@9.0.1:

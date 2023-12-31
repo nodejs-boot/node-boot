@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "src/index.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -32,14 +32,15 @@
         "@node-boot/context": "1.0.0",
         "@node-boot/config": "1.0.0",
         "@node-boot/di": "1.0.0",
-        "class-transformer": "^0.5.1",
+        "@node-boot/engine": "1.0.0",
         "reflect-metadata": "^0.1.13",
         "lodash": "^4.17.21",
         "logform": "^2.5.1",
         "glob": "^10.3.3"
     },
     "peerDependencies": {
-        "routing-controllers": ">=0.10.4",
-        "winston": ">=3.10.0"
+        "winston": ">=3.10.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0"
     }
 }

@@ -5,6 +5,6 @@ import {ConfigurationProperties} from "@node-boot/config";
     configName: "backend-config",
 })
 export class BackendConfigProperties {
-    baseUrl: string;
-    allowInsecureCookie: boolean;
+    baseUrl!: string;
+    allowInsecureCookie!: boolean;
 }

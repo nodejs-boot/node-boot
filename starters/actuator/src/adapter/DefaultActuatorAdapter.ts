@@ -1,8 +1,4 @@
-import {
-    ActuatorAdapter,
-    ActuatorOptions,
-    ApplicationContext,
-} from "@node-boot/context";
+import {ActuatorAdapter, ActuatorOptions, ApplicationContext} from "@node-boot/context";
 import Prometheus from "prom-client";
 import {ExpressActuatorAdapter} from "./ExpressActuatorAdapter";
 import {InfoService} from "../service/InfoService";
@@ -13,8 +9,6 @@ import {ConfigService} from "@node-boot/config";
 import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
 
 export class DefaultActuatorAdapter implements ActuatorAdapter {
-    private metricsContext: MetricsContext;
-
     constructor(
         private readonly register = new Prometheus.Registry(),
         private readonly infoService: InfoService = new InfoService(),
@@ -47,7 +41,6 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
             http_request_duration_milliseconds,
             http_request_counter,
         };
-        this.metricsContext = context;
         return context;
     }
 
@@ -55,8 +48,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
         const context = this.setupMetrics(options);
         const metadataService = new MetadataService();
 
-        const configService =
-            ApplicationContext.get().diOptions?.iocContainer.get(ConfigService);
+        const configService = ApplicationContext.get().diOptions?.iocContainer.get(ConfigService);
 
         let frameworkAdapter: ActuatorAdapter;
         switch (options.serverType) {
@@ -69,12 +61,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
                 );
                 break;
             case "koa":
-                frameworkAdapter = new KoaActuatorAdapter(
-                    context,
-                    this.infoService,
-                    metadataService,
-                    configService,
-                );
+                frameworkAdapter = new KoaActuatorAdapter(context, this.infoService, metadataService, configService);
                 break;
             case "fastify":
                 frameworkAdapter = new FastifyActuatorAdapter(

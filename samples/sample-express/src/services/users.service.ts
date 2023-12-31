@@ -1,17 +1,12 @@
-import {HttpException} from "../exceptions/httpException";
 import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {Logger} from "winston";
-import {ConfigService} from "@node-boot/config";
 import {Service} from "@node-boot/core";
-import {NotFoundError} from "routing-controllers";
 import {User, UserRepository} from "../persistence";
 import {UserModel} from "../models/users.model";
 import {Optional} from "@node-boot/extension";
-import {
-    runOnTransactionCommit,
-    runOnTransactionRollback,
-    Transactional,
-} from "@node-boot/starter-persistence";
+import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
+import {HttpError, NotFoundError} from "@node-boot/error";
+import {ConfigService} from "@node-boot/config";
 
 @Service()
 export class UserService {
@@ -25,11 +20,15 @@ export class UserService {
 
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
-        const baseUrl = this.configService.getString("backend.baseUrl");
-        this.logger.info(
-            `Reading backend.baseUrl from app-config.yam: ${baseUrl}`,
-        );
-        return await this.userRepository.find();
+        const appName = this.configService.getString("node-boot.app.name");
+        this.logger.info(`Reading node-boot.app.name from app-config.yam: ${appName}`);
+
+        return this.userRepository.find();
+    }
+
+    public async findWithCustomQuery(): Promise<User[]> {
+        this.logger.info("Getting all users with a custom query");
+        return this.userRepository.findByQueryIn();
     }
 
     public async findUserById(userId: number): Promise<User> {
@@ -51,28 +50,19 @@ export class UserService {
             this.logger.info("Transaction was successfully committed");
         });
 
-        return await Optional.of(existingUser)
-            .ifPresentThrow(
-                () =>
-                    new HttpException(
-                        409,
-                        `This email ${userData.email} already exists`,
-                    ),
-            )
-            .elseAsync(async () => await this.userRepository.save(userData));
+        return Optional.of(existingUser)
+            .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
+            .elseAsync(() => this.userRepository.save(userData));
     }
 
     @Transactional()
-    public async updateUser(
-        userId: number,
-        userData: UpdateUserDto,
-    ): Promise<User> {
+    public async updateUser(userId: number, userData: UpdateUserDto): Promise<User> {
         const user = await this.userRepository.findOneBy({
             id: userId,
         });
 
-        return await Optional.of(user)
-            .orElseThrow(() => new HttpException(409, "User doesn't exist"))
+        return Optional.of(user)
+            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .map(user => {
                 return {
                     ...user,
@@ -89,20 +79,13 @@ export class UserService {
         });
 
         runOnTransactionRollback(error => {
-            this.logger.warn(
-                "Transactions was rolled back due to error:",
-                error,
-            );
+            this.logger.warn("Transactions was rolled back due to error:", error);
         });
 
         await Optional.of(user)
-            .orElseThrow(() => new HttpException(409, "User doesn't exist"))
-            .runAsync(
-                async user => await this.userRepository.delete({id: userId}),
-            );
+            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
+            .runAsync(() => this.userRepository.delete({id: userId}));
 
-        throw new Error(
-            "Error after deleting that should rollback transaction",
-        );
+        throw new Error("Error after deleting that should rollback transaction");
     }
 }

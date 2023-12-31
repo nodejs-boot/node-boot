@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "src/index.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -29,12 +29,11 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "reflect-metadata": "^0.1.13",
-        "class-transformer": "^0.5.1"
+        "reflect-metadata": "^0.1.13"
     },
-    "devDependencies": {},
     "peerDependencies": {
-        "routing-controllers": ">=0.10.4",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
         "winston": ">=3.10.0"
     }
 }

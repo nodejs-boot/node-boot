@@ -1,6 +1,6 @@
-# Typescript example #2
+# Node-Boot Persistence
 
-The second typescript example for the Monorepo example
+Based on TypeORM: https://orkhan.gitbook.io/typeorm/docs
 
 ## License
 

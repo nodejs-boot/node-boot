@@ -1,15 +1,8 @@
-import type {CurrentUserChecker} from "routing-controllers/types/CurrentUserChecker";
-import type {AuthorizationChecker} from "routing-controllers/types/AuthorizationChecker";
 import type {ClassTransformOptions} from "class-transformer";
 import type {ApplicationOptions, DependencyInjectionOptions} from "./options";
-import type {
-    ApplicationAdapter,
-    ConfigurationAdapter,
-    ConfigurationPropertiesAdapter,
-} from "./adapters";
-import {ActuatorAdapter, OpenApiBridgeAdapter} from "./adapters";
-import {RepositoriesAdapter} from "./adapters";
-import {RepositoryMetadata} from "./metadata";
+import type {ApplicationAdapter, ConfigurationAdapter, ConfigurationPropertiesAdapter} from "./adapters";
+import {ActuatorAdapter, OpenApiBridgeAdapter, RepositoriesAdapter} from "./adapters";
+import {AuthorizationChecker, CurrentUserChecker} from "./checkers";
 
 export class ApplicationContext {
     private static context: ApplicationContext;
@@ -25,7 +18,6 @@ export class ApplicationContext {
     controllerClasses: Function[] = [];
     interceptorClasses: Function[] = [];
     globalMiddlewares: Function[] = [];
-    repositories: RepositoryMetadata[] = [];
 
     /**
      * Indicates if class-transformer should be used to perform serialization / deserialization.

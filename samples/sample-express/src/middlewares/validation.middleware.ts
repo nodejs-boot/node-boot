@@ -1,7 +1,7 @@
 import {plainToInstance} from "class-transformer";
 import {validateOrReject, ValidationError} from "class-validator";
 import {NextFunction, Request, Response} from "express";
-import {HttpException} from "../exceptions/httpException";
+import {HttpError} from "@node-boot/error";
 
 /**
  * @name ValidationMiddleware
@@ -17,7 +17,7 @@ export const ValidationMiddleware = (
     whitelist = false,
     forbidNonWhitelisted = false,
 ) => {
-    return (req: Request, res: Response, next: NextFunction) => {
+    return (req: Request, _: Response, next: NextFunction) => {
         const dto = plainToInstance(type, req.body);
         validateOrReject(dto, {
             skipMissingProperties,
@@ -30,11 +30,9 @@ export const ValidationMiddleware = (
             })
             .catch((errors: ValidationError[]) => {
                 const message = errors
-                    .map((error: ValidationError) =>
-                        Object.values(error.constraints ?? {}),
-                    )
+                    .map((error: ValidationError) => Object.values(error.constraints ?? {}))
                     .join(", ");
-                next(new HttpException(400, message));
+                next(new HttpError(400, message));
             });
     };
 };

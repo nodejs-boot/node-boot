@@ -1,4 +1,14 @@
-export type ComponentOptions = {
+import {Constructable, ServiceIdentifier} from "../ioc";
+
+export type ComponentOptions<Type = unknown> = {
+    /** Unique identifier of the referenced service. */
+    id?: ServiceIdentifier;
+    /**
+     * Class definition of the service what is used to initialize given service.
+     * This property maybe null if the value of the service is set manually.
+     * If id is not set then it serves as service id.
+     */
+    type?: Constructable<Type>;
     /**
      * Indicates if this component must be global and same instance must be used across all containers.
      */
@@ -17,4 +27,14 @@ export type ComponentOptions = {
      * By default the registered classes are only instantiated when they are requested from the container.
      */
     eager?: boolean;
+    /**
+     * Factory function used to initialize this service.
+     * Can be regular function ("createCar" for example),
+     * or other service which produces this instance ([CarFactory, "createCar"] for example).
+     */
+    factory?: [Constructable<unknown>, string] | CallableFunction | undefined;
+    /**
+     * Instance of the target class.
+     */
+    value?: unknown | Symbol;
 };

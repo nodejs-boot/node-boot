@@ -1,19 +1,9 @@
-import {
-    Body,
-    Delete,
-    Get,
-    HttpCode,
-    Param,
-    Post,
-    Put,
-    UseBefore,
-} from "routing-controllers";
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "@node-boot/core";
 import {UserService} from "../services/users.service";
 import {ValidationMiddleware} from "../middlewares/validation.middleware";
 import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
-import {BackendConfigProperties} from "../config/BackendConfigProperties";
+import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
-import {Controller} from "@node-boot/core";
 import {Inject} from "@node-boot/di";
 import {OpenAPI} from "@node-boot/openapi";
 import {Authorized} from "@node-boot/authorization";
@@ -24,20 +14,23 @@ export class UserController {
     constructor(
         private readonly user: UserService,
         private readonly logger: Logger,
-        @Inject("backend-config")
-        private readonly backendConfigProperties: BackendConfigProperties,
+        @Inject("app-config")
+        private readonly appConfigProperties: AppConfigProperties,
     ) {}
 
     @Get("/")
     @OpenAPI({summary: "Return a list of users"})
     async getUsers() {
-        this.logger.info(
-            `Injected backend configuration properties: ${JSON.stringify(
-                this.backendConfigProperties,
-            )}`,
-        );
+        this.logger.info(`Injected backend configuration properties: ${JSON.stringify(this.appConfigProperties)}`);
         const findAllUsersData: User[] = await this.user.findAllUser();
         return {data: findAllUsersData, message: "findAll"};
+    }
+
+    @Get("/query/")
+    @OpenAPI({summary: "Return a list of users using a custom query"})
+    async getWithCustomQuery() {
+        const data: User[] = await this.user.findWithCustomQuery();
+        return {data: data, message: "findWithCustomQuery"};
     }
 
     @Get("/:id")
@@ -61,10 +54,7 @@ export class UserController {
     @UseBefore(ValidationMiddleware(UpdateUserDto))
     @OpenAPI({summary: "Update a user"})
     async updateUser(@Param("id") userId: number, @Body() userData: User) {
-        const updateUserData: User = await this.user.updateUser(
-            userId,
-            userData,
-        );
+        const updateUserData: User = await this.user.updateUser(userId, userData);
         return {data: updateUserData, message: "updated"};
     }
 

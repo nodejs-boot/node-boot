@@ -13,12 +13,8 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
         private readonly configService?: ConfigService,
     ) {}
 
-    bind(
-        options: ActuatorOptions,
-        server: FastifyInstance,
-        router: FastifyInstance,
-    ): void {
-        router.addHook("onRequest", (request, reply, done) => {
+    bind(_: ActuatorOptions, _instance: FastifyInstance, router: FastifyInstance): void {
+        router.addHook("onRequest", (request, _reply, done) => {
             // Start a timer for every request made
             request.log.info({event: "onRequest"}, "Request received");
             request["locals"].startEpoch = Date.now();
@@ -27,16 +23,11 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
 
         router.addHook("onSend", (request, reply, payload, done) => {
             // Retrieve data from the request context
-            const responseTimeInMilliseconds =
-                Date.now() - request["locals"].startEpoch;
+            const responseTimeInMilliseconds = Date.now() - request["locals"].startEpoch;
 
             // Observe response time
             this.context.http_request_duration_milliseconds
-                .labels(
-                    request.method,
-                    request.url,
-                    reply.statusCode.toString(),
-                )
+                .labels(request.method, request.url, reply.statusCode.toString())
                 .observe(responseTimeInMilliseconds);
 
             done(null, payload);
@@ -55,38 +46,38 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
             done();
         });
 
-        router.get("/actuator", (req, res) => {
+        router.get("/actuator", (_, res) => {
             res.status(200);
             res.send(this.metadataService.getActuatorEndpoints());
         });
 
-        router.get("/actuator/info", (req, res) => {
+        router.get("/actuator/info", (_, res) => {
             this.infoService.getInfo().then(data => {
                 res.status(200);
                 res.send(data);
             });
         });
 
-        router.get("/actuator/config", (req, res) => {
+        router.get("/actuator/config", (_, res) => {
             res.status(200);
             res.send(this.configService?.get() ?? {});
         });
 
-        router.get("/actuator/memory", (req, res) => {
+        router.get("/actuator/memory", (_, res) => {
             this.infoService.getMemory().then(data => {
                 res.status(200);
                 res.send(data);
             });
         });
 
-        router.get("/actuator/metrics", (req, res) => {
+        router.get("/actuator/metrics", (_, res) => {
             this.context.register.getMetricsAsJSON().then(data => {
                 res.status(200);
                 res.send(data);
             });
         });
 
-        router.get("/actuator/prometheus", (req, res) => {
+        router.get("/actuator/prometheus", (_, res) => {
             res.type(this.context.register.contentType);
             this.context.register.metrics().then(data => {
                 res.status(200);
@@ -94,17 +85,17 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
             });
         });
 
-        router.get("/actuator/controllers", (req, res) => {
+        router.get("/actuator/controllers", (_, res) => {
             res.status(200);
             res.send(this.metadataService.getControllers());
         });
 
-        router.get("/actuator/interceptors", (req, res) => {
+        router.get("/actuator/interceptors", (_, res) => {
             res.status(200);
             res.send(this.metadataService.getInterceptors());
         });
 
-        router.get("/actuator/middlewares", (req, res) => {
+        router.get("/actuator/middlewares", (_, res) => {
             res.status(200);
             res.send(this.metadataService.getMiddlewares());
         });

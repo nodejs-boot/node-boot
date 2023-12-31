@@ -1,1 +1,1 @@
-export {FastifyServer} from "./FastifyServer";
+export {FastifyServer} from "./server";

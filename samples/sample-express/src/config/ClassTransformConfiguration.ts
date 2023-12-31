@@ -1,11 +1,5 @@
-import {
-    ClassToPlainTransform,
-    Configuration,
-    EnableClassTransformer,
-    PlainToClassTransform,
-} from "@node-boot/core";
+import {ClassToPlainTransform, EnableClassTransformer, PlainToClassTransform} from "@node-boot/core";
 
-@Configuration()
 @EnableClassTransformer({enabled: false})
 @ClassToPlainTransform({
     strategy: "exposeAll",

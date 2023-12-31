@@ -1,2 +1,3 @@
 export * from "./decorator";
-export * from "./hooks";
+export * from "./hook";
+export * from "./types";

@@ -1,12 +1,13 @@
 {
     "name": "@node-boot/express-server",
     "version": "1.0.0",
-    "description": "The first typescript example for the Monorepo example",
+    "description": "Express server for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "monorepo",
-        "typescript"
+        "express",
+        "server",
+        "engine"
     ],
     "repository": {
         "type": "git",
@@ -16,7 +17,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "types": "src/index.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -31,16 +32,25 @@
     "dependencies": {
         "@node-boot/context": "1.0.0",
         "@node-boot/core": "1.0.0",
-        "body-parser": "^1.20.2",
-        "multer": "^1.4.5-lts.1"
+        "@node-boot/error": "1.0.0",
+        "@node-boot/engine": "1.0.0",
+        "@node-boot/extension": "1.0.0",
+        "template-url": "^1.0.0"
     },
     "peerDependencies": {
-        "routing-controllers": ">=0.10.4",
-        "express": ">=4.18.2"
+        "express": ">=4.18.2",
+        "body-parser": ">=1.20.2",
+        "multer": ">=1.4.5-lts.1",
+        "cors": ">=2.8.5",
+        "cookie": ">=0.6.0",
+        "express-session": ">=1.17.3"
     },
     "devDependencies": {
         "@types/express": "^4.17.17",
         "@types/body-parser": "^1.19.2",
-        "@types/multer": "^1.4.7"
+        "@types/multer": "^1.4.7",
+        "@types/cookie": "^0.6.0",
+        "@types/cors": "^2.8.17",
+        "@types/express-session": "^1.17.10"
     }
 }

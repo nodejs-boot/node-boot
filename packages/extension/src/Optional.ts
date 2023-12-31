@@ -70,6 +70,22 @@ export class Optional<T> {
         return this;
     }
 
+    ifThrow(predicate: (value: T) => boolean, errorProvider: () => Error): Optional<T> {
+        this.ifEmptyThrow(() => new Error("'ifThrow' can only be called for non empty optionals"));
+        if (predicate(this.value!)) {
+            throw errorProvider();
+        }
+        return this;
+    }
+
+    if<U>(predicate: (value: T) => boolean, mapper: (value: T) => U): Optional<U | T> {
+        this.ifEmptyThrow(() => new Error("'if' can only be called for non empty optionals"));
+        if (predicate(this.value!)) {
+            return Optional.of(mapper(this.value!));
+        }
+        return this;
+    }
+
     /**
      * The get method  is used to retrieve the value inside the Optional object. If the Optional
      * object is empty, it throws an error indicating that the value is not present.
@@ -124,15 +140,21 @@ export class Optional<T> {
     }
 
     /**
-     * The map method is used to transform the value inside the Optional object using a provided mapper function.
+     * The map method is used to transform the value inside the Optional object using a provided mapper function,
+     * or return a default value if the Optional is empty.
      *
      * @param mapper - A function that takes the current value of type T and returns a new value of type U.
+     * @param defaultValue - default value when the optional is empty
      * @return Returns a new Optional object with the mapped value.
+     * returns a new Optional object with the mapped value or the default Optional value.
      * Throws an error if the original Optional object is empty.
      * */
-    map<U>(mapper: (value: T) => U): Optional<U> {
+    map<U>(mapper: (value: T) => U, defaultValue?: U): Optional<U> {
         if (this.isPresent()) {
             return Optional.of(mapper(this.value!));
+        }
+        if (defaultValue) {
+            return Optional.of(defaultValue);
         }
         throw new Error("Map operation cannot be called on an empty Optional");
     }
@@ -151,9 +173,7 @@ export class Optional<T> {
         if (this.isPresent()) {
             return mapper(this.value!);
         }
-        throw new Error(
-            "FlatMap operation cannot be called on an empty Optional",
-        );
+        throw new Error("FlatMap operation cannot be called on an empty Optional");
     }
 
     /**
@@ -176,15 +196,11 @@ export class Optional<T> {
             return Optional.of(this.value.filter(predicate) as T);
         } else if (this.value instanceof Map || this.value instanceof Set) {
             // Filter map or set
-            const filteredEntries = Array.from(this.value.entries()).filter(
-                ([key, value]) => predicate(value),
-            );
+            const filteredEntries = Array.from(this.value.entries()).filter(([, value]) => predicate(value));
             if (this.value instanceof Map) {
                 return Optional.of(new Map(filteredEntries) as T);
             } else {
-                return Optional.of(
-                    new Set(filteredEntries.map(([key, value]) => value)) as T,
-                );
+                return Optional.of(new Set(filteredEntries.map(([, value]) => value)) as T);
             }
         } else {
             // Filter single value
@@ -201,9 +217,7 @@ export class Optional<T> {
      * Returns an empty Optional object if the original Optional object is not present.
      * */
     convert<U>(converter: (value: T) => U): Optional<U | undefined> {
-        return this.isPresent()
-            ? Optional.of(converter(this.value!))
-            : Optional.empty();
+        return this.isPresent() ? Optional.of(converter(this.value!)) : Optional.empty();
     }
 
     /**
@@ -236,11 +250,13 @@ export class Optional<T> {
      * The ifEmpty method  executes a specified action if the value inside the Optional object is empty.
      *
      * @param action A callback function that performs an action when the value inside the Optional object is empty.
+     * @return Returns the Optional object itself.
      * */
-    ifEmpty(action: () => void): void {
+    ifEmpty(action: () => void): Optional<T> {
         if (this.isEmpty()) {
             action();
         }
+        return this;
     }
 
     /**
@@ -319,9 +335,7 @@ export class Optional<T> {
             const result = callback(this.value as T);
             return Optional.of(result);
         }
-        throw new Error(
-            "Running operations in empty/undefined objects is not possible",
-        );
+        throw new Error("Running operations in empty/undefined objects is not possible");
     }
 
     /**

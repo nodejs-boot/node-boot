@@ -14,7 +14,7 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
         private readonly configService?: ConfigService,
     ) {}
 
-    bind(options: ActuatorOptions, server: Koa, router: Router): void {
+    bind(_options: ActuatorOptions, _server: Koa, router: Router): void {
         router.use(async (ctx, next) => {
             // Start a timer for every request made
             // Start a timer for every request made
@@ -22,8 +22,7 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
 
             await next();
 
-            const responseTimeInMilliseconds =
-                Date.now() - ctx.state["startEpoch"];
+            const responseTimeInMilliseconds = Date.now() - ctx.state["startEpoch"];
 
             this.context.http_request_duration_milliseconds
                 .labels(ctx.method, ctx.path, ctx.status.toString())

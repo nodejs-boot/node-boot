@@ -3,3 +3,4 @@ export * from "./ComponentOptions";
 export * from "./ApplicationOptions";
 export * from "./TransformerOptions";
 export * from "./DependencyInjectionOptions";
+export * from "./NodeBootEngineOptions";

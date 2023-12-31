@@ -1,35 +1,22 @@
-import {ApplicationContext, RequestContext} from "@node-boot/context";
-import {AuthorizationResolver, CurrentUserResolver} from "../resolver";
-import {Action} from "routing-controllers/types/Action";
+import {ApplicationContext, AuthorizationChecker, CurrentUserChecker} from "@node-boot/context";
 
 /**
  * Enable Authorization features by providing an Authorization and current user resolvers.
  *
- * @param CurrentUserResolverClass class implementing CurrentUserResolver interface
- * @param AuthorizationResolverClass class implementing AuthorizationResolver interface
+ * @param CurrentUserCheckerClass class implementing CurrentUserResolver interface
+ * @param AuthorizationCheckerClass class implementing AuthorizationResolver interface
  */
 export function EnableAuthorization(
-    CurrentUserResolverClass?: new () => CurrentUserResolver,
-    AuthorizationResolverClass?: new () => AuthorizationResolver,
+    CurrentUserCheckerClass?: new () => CurrentUserChecker,
+    AuthorizationCheckerClass?: new () => AuthorizationChecker,
 ): Function {
-    return function (object: Function) {
-        if (AuthorizationResolverClass) {
-            const authResolver = new AuthorizationResolverClass();
-            ApplicationContext.get().authorizationChecker = async (
-                context: RequestContext,
-                roles: any[],
-            ) => {
-                return authResolver.authorize(context, roles);
-            };
+    return function () {
+        if (AuthorizationCheckerClass) {
+            ApplicationContext.get().authorizationChecker = new AuthorizationCheckerClass();
         }
 
-        if (CurrentUserResolverClass) {
-            const userResolver = new CurrentUserResolverClass();
-            ApplicationContext.get().currentUserChecker = async (
-                action: Action,
-            ) => {
-                return userResolver.getCurrentUser(action);
-            };
+        if (CurrentUserCheckerClass) {
+            ApplicationContext.get().currentUserChecker = new CurrentUserCheckerClass();
         }
     };
 }

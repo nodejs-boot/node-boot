@@ -7,10 +7,7 @@ export class ConfigService implements Config {
 
     private readonly subscribers: (() => void)[] = [];
 
-    constructor(
-        private readonly parent?: ConfigService,
-        private parentKey?: string,
-    ) {
+    constructor(private readonly parent?: ConfigService, private parentKey?: string) {
         if (parent && !parentKey) {
             throw new Error("parentKey is required if parent is set");
         }

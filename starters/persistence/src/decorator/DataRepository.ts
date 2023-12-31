@@ -1,5 +1,5 @@
-import "reflect-metadata";
-import {ApplicationContext, RepositoryType} from "@node-boot/context";
+import {PersistenceContext} from "../PersistenceContext";
+import {RepositoryType} from "../types";
 
 function getRepositoryType(prototype: any): RepositoryType | undefined {
     while (prototype) {
@@ -28,7 +28,7 @@ export const DataRepository = (entity: Function): ClassDecorator => {
 
         Reflect.defineMetadata("custom:repotype", repoType, target.prototype);
 
-        ApplicationContext.get().repositories.push({
+        PersistenceContext.get().repositories.push({
             target,
             entity,
             type: repoType,
