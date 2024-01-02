@@ -60,8 +60,7 @@ export function getPaths(routes: IRoute[], schemas: {[p: string]: oa.SchemaObjec
             [route.action.type]: getOperation(route, schemas),
         },
     }));
-
-    // FIXME remove this ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: array spread
     return _merge(...routePaths);
 }
