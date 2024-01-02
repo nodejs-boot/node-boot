@@ -18,7 +18,7 @@
     "main": "dist/index.js",
     "types": "src/index.ts",
     "scripts": {
-        "start": "pnpm run build && ts-node src/server.ts",
+        "start": "pnpm run build && node dist/server.js",
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "build": "tsc -p tsconfig.build.json",

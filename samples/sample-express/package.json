@@ -1,12 +1,12 @@
 {
     "name": "@node-boot/express-sample",
     "version": "1.0.0",
-    "description": "The first typescript example for the Monorepo example",
+    "description": "Node-Boot sample project using Express as application server",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "monorepo",
-        "typescript"
+        "node-boot",
+        "express"
     ],
     "repository": {
         "type": "git",
@@ -19,7 +19,7 @@
     "types": "src/index.ts",
     "scripts": {
         "create:migration": "typeorm migration:create ./src/persistence/migrations/migration",
-        "start": "pnpm run build && ts-node src/server.ts",
+        "start": "pnpm run build && node dist/server.js",
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "build": "tsc -p tsconfig.build.json",
