@@ -5,7 +5,7 @@ import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
 import {Inject} from "@node-boot/di";
-import {OpenAPI} from "@node-boot/openapi";
+import {OpenAPI, ResponseSchema} from "@node-boot/openapi";
 import {Authorized} from "@node-boot/authorization";
 import {User} from "../persistence";
 
@@ -19,43 +19,42 @@ export class UserController {
     ) {}
 
     @Get("/")
-    @OpenAPI({summary: "Return a list of users"})
+    @ResponseSchema(User, {isArray: true, description: "Return a list of users"})
     async getUsers() {
         this.logger.info(`Injected backend configuration properties: ${JSON.stringify(this.appConfigProperties)}`);
-        const findAllUsersData: User[] = await this.user.findAllUser();
-        return {data: findAllUsersData, message: "findAll"};
+        return this.user.findAllUser();
     }
 
     @Get("/query/")
     @OpenAPI({summary: "Return a list of users using a custom query"})
+    @ResponseSchema(User, {isArray: true})
     async getWithCustomQuery() {
-        const data: User[] = await this.user.findWithCustomQuery();
-        return {data: data, message: "findWithCustomQuery"};
+        return this.user.findWithCustomQuery();
     }
 
     @Get("/:id")
     @OpenAPI({summary: "Return find a user"})
+    @ResponseSchema(User)
     async getUserById(@Param("id") userId: number) {
-        const findOneUserData: User = await this.user.findUserById(userId);
-        return {data: findOneUserData, message: "findOne"};
+        return this.user.findUserById(userId);
     }
 
     @Post("/")
     @HttpCode(201)
+    @Authorized()
     @UseBefore(ValidationMiddleware(CreateUserDto))
     @OpenAPI({summary: "Create a new user"})
-    @Authorized()
+    @ResponseSchema(User)
     async createUser(@Body() userData: User) {
-        const createUserData: User = await this.user.createUser(userData);
-        return {data: createUserData, message: "created"};
+        return this.user.createUser(userData);
     }
 
     @Put("/:id")
     @UseBefore(ValidationMiddleware(UpdateUserDto))
     @OpenAPI({summary: "Update a user"})
+    @ResponseSchema(User)
     async updateUser(@Param("id") userId: number, @Body() userData: User) {
-        const updateUserData: User = await this.user.updateUser(userId, userData);
-        return {data: updateUserData, message: "updated"};
+        return this.user.updateUser(userId, userData);
     }
 
     @Delete("/:id")

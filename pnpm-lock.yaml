@@ -191,18 +191,30 @@ importers:
       '@node-boot/context':
         specifier: 1.0.0
         version: link:../context
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../engine
       class-validator-jsonschema:
         specifier: ^4.0.0
         version: 4.0.0(class-transformer@0.5.1)(class-validator@0.14.0)
+      lodash.capitalize:
+        specifier: ^4.2.1
+        version: 4.2.1
+      lodash.merge:
+        specifier: ^4.6.2
+        version: 4.6.2
+      lodash.startcase:
+        specifier: ^4.4.0
+        version: 4.4.0
       openapi3-ts:
-        specifier: ^3.0.0
-        version: 3.2.0
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      routing-controllers-openapi:
-        specifier: ^4.0.0
-        version: 4.0.0(routing-controllers@0.10.4)
+        specifier: ^2.0.2
+        version: 2.0.2
+      path-to-regexp:
+        specifier: ^6.2.1
+        version: 6.2.1
+      reflect-metadata:
+        specifier: ^0.1.13
+        version: 0.1.13
     optionalDependencies:
       '@fastify/swagger':
         specifier: ^8.10.0
@@ -225,6 +237,25 @@ importers:
       swagger-ui-express:
         specifier: ^5.0.0
         version: 5.0.0(express@4.18.2)
+    devDependencies:
+      '@types/lodash.capitalize':
+        specifier: ^4.2.6
+        version: 4.2.9
+      '@types/lodash.merge':
+        specifier: ^4.6.6
+        version: 4.6.9
+      '@types/lodash.startcase':
+        specifier: ^4.4.6
+        version: 4.4.9
+      '@types/reflect-metadata':
+        specifier: ^0.1.0
+        version: 0.1.0
+      '@types/swagger-ui-express':
+        specifier: ^4.1.6
+        version: 4.1.6
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
 
   samples/sample-express:
     dependencies:
@@ -1349,7 +1380,7 @@ packages:
       fastify-plugin: 4.5.1
       openapi-types: 12.1.3
       rfdc: 1.3.0
-      yaml: 2.3.1
+      yaml: 2.3.4
     dev: false
 
   /@fastify/swagger@8.10.0:
@@ -1359,7 +1390,7 @@ packages:
       json-schema-resolver: 2.0.0
       openapi-types: 12.1.3
       rfdc: 1.3.0
-      yaml: 2.3.1
+      yaml: 2.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2142,6 +2173,7 @@ packages:
       '@types/keygrip': 1.0.2
       '@types/koa-compose': 3.2.5
       '@types/node': 20.4.2
+    dev: true
 
   /@types/koa__cors@5.0.0:
     resolution: {integrity: sha512-LCk/n25Obq5qlernGOK/2LUwa/2YJb2lxHUkkvYFDOpLXlVI6tKcdfCHRBQnOY4LwH6el5WOLs6PD/a8Uzau6g==}
@@ -2161,9 +2193,26 @@ packages:
       '@types/koa': 2.13.12
     dev: true
 
+  /@types/lodash.capitalize@4.2.9:
+    resolution: {integrity: sha512-SV1dav/WbuI816SVig4trFz8ID/m5maVzC8I/E/DejPvmlXvIhw7Y0GWxJ03UhU6qaZOj6qQnR1xxC0mP7ZXoQ==}
+    dependencies:
+      '@types/lodash': 4.14.197
+    dev: true
+
+  /@types/lodash.merge@4.6.9:
+    resolution: {integrity: sha512-23sHDPmzd59kUgWyKGiOMO2Qb9YtqRO/x4IhkgNUiPQ1+5MUVqi6bCZeq9nBJ17msjIMbEIO5u+XW4Kz6aGUhQ==}
+    dependencies:
+      '@types/lodash': 4.14.197
+    dev: true
+
+  /@types/lodash.startcase@4.4.9:
+    resolution: {integrity: sha512-C0M4DlN1pnn2vEEhLHkTHxiRZ+3GlTegpoAEHHGXnuJkSOXyJMHGiSc+SLRzBlFZWHsBkixe6FqvEAEU04g14g==}
+    dependencies:
+      '@types/lodash': 4.14.197
+    dev: true
+
   /@types/lodash@4.14.197:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
-    dev: false
 
   /@types/mime@1.3.2:
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
@@ -2206,6 +2255,13 @@ packages:
   /@types/range-parser@1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
 
+  /@types/reflect-metadata@0.1.0:
+    resolution: {integrity: sha512-bXltFLY3qhzCnVYP5iUpeSICagQ8rc9K2liS+8M0lBcz54BHs3O6W5UvqespVSuebo1BXLi+/y9ioELAW9SC2A==}
+    deprecated: This is a stub types definition for reflect-metadata (https://github.com/rbuckton/ReflectDecorators). reflect-metadata provides its own type definitions, so you don't need @types/reflect-metadata installed!
+    dependencies:
+      reflect-metadata: 0.1.13
+    dev: true
+
   /@types/semver@7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
     dev: true
@@ -2238,6 +2294,13 @@ packages:
     resolution: {integrity: sha512-X3HPWTwXRerBZS7Mo1k6vMVR1Z6zmJcDVn5O/31whe0tnjE4te6ZJSJGq1RiqHPjzPdMTfjCFogDJmwng9xHaQ==}
     dependencies:
       '@types/superagent': 4.1.18
+    dev: true
+
+  /@types/swagger-ui-express@4.1.6:
+    resolution: {integrity: sha512-UVSiGYXa5IzdJJG3hrc86e8KdZWLYxyEsVoUI4iPXc7CO4VZ3AfNP8d/8+hrDRIqz+HAaSMtZSqAsF3Nq2X/Dg==}
+    dependencies:
+      '@types/express': 4.17.17
+      '@types/serve-static': 1.15.2
     dev: true
 
   /@types/triple-beam@1.3.2:
@@ -4942,7 +5005,7 @@ packages:
     resolution: {integrity: sha512-uVHh2hajX5Q/6+BkRrK0Rrf84Duc6dB73WIU1mb3cLfellMR1klAIYEX1p1bOsNjB97uqCwyn/cz3Sfi1/IxcQ==}
     requiresBuild: true
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.12
       handlebars: 4.7.8
       lodash: 4.17.21
       read-pkg-up: 7.0.1
@@ -5496,18 +5559,11 @@ packages:
 
   /openapi-types@12.1.3:
     resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
-    dev: false
 
   /openapi3-ts@2.0.2:
     resolution: {integrity: sha512-TxhYBMoqx9frXyOgnRHufjQfPXomTIHYKhSKJ6jHfj13kS8OEIhvmE8CTuQyKtjjWttAjX5DPxM1vmalEpo8Qw==}
     dependencies:
       yaml: 1.10.2
-    dev: false
-
-  /openapi3-ts@3.2.0:
-    resolution: {integrity: sha512-/ykNWRV5Qs0Nwq7Pc0nJ78fgILvOT/60OxEmB3v7yQ8a8Bwcm43D4diaYazG/KBn6czA+52XYy931WFLMCUeSg==}
-    dependencies:
-      yaml: 2.3.1
     dev: false
 
   /optionator@0.9.1:
@@ -5966,7 +6022,6 @@ packages:
 
   /reflect-metadata@0.1.13:
     resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
-    dev: false
 
   /regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
@@ -6050,21 +6105,6 @@ packages:
     dependencies:
       glob: 9.2.1
     dev: true
-
-  /routing-controllers-openapi@4.0.0(routing-controllers@0.10.4):
-    resolution: {integrity: sha512-rObiqX3nLN63ARMj/uf1YKr3WYR8mmny0YR68U70EU5IH3MLe+2uA3r//EkPBj+kKrnOtL2NcfQwhlLiJsQlMg==}
-    peerDependencies:
-      routing-controllers: ^0.10.0
-    dependencies:
-      lodash.capitalize: 4.2.1
-      lodash.merge: 4.6.2
-      lodash.startcase: 4.4.0
-      openapi3-ts: 2.0.2
-      path-to-regexp: 6.2.1
-      reflect-metadata: 0.1.13
-      routing-controllers: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.0)
-      tslib: 2.5.0
-    dev: false
 
   /routing-controllers@0.10.4(class-transformer@0.5.1)(class-validator@0.14.0):
     resolution: {integrity: sha512-o7EANDC78u/Hh8mLyPbc5noJYf/hOruk0CIcuMdpZM/jvlrgMTGObpcPNfm6HBi/lLhRlI3/ma/I6hCPKpucBQ==}
@@ -7208,8 +7248,8 @@ packages:
     resolution: {integrity: sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==}
     engines: {node: '>= 14'}
 
-  /yaml@2.3.1:
-    resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
+  /yaml@2.3.4:
+    resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
     dev: false
 

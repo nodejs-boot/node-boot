@@ -14,7 +14,7 @@ export interface ParamMetadataArgs {
     /**
      * Method on which's parameter is attached.
      */
-    method?: string;
+    method: string;
 
     /**
      * Index (# number) of the parameter in the method signature.

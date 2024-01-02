@@ -38,7 +38,10 @@
         "prepack": "pinst --disable",
         "postpack": "pinst --enable",
         "format:check": "prettier --check '{packages,plugins}/**/{package.json,*.tsx,*.ts}'",
-        "format:fix": "prettier --write '{packages,plugins}/**/{package.json,*.tsx,*.ts}'"
+        "format:fix": "prettier --write '{packages,plugins}/**/{package.json,*.tsx,*.ts}'",
+        "git:prune": "git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done",
+        "npm:prune": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+        "dist:prune": "find . -name 'dist' -type d -prune -exec rm -rf '{}' +"
     },
     "devDependencies": {
         "@jest/globals": "^29.5.0",

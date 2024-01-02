@@ -10,6 +10,7 @@ export class ApplicationContext {
     applicationOptions: ApplicationOptions = {};
     diOptions?: DependencyInjectionOptions;
     openApi?: OpenApiBridgeAdapter;
+    swaggerUI = false;
     applicationAdapter?: ApplicationAdapter;
     actuatorAdapter?: ActuatorAdapter;
     repositoriesAdapter?: RepositoriesAdapter;

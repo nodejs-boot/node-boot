@@ -6,3 +6,4 @@ export * from "./OpenApiAdapter";
 export * from "./OpenApiBridgeAdapter";
 export * from "./ActuatorAdapter";
 export * from "./RepositoriesAdapter";
+export * from "./SwaggerUiAdapter";
