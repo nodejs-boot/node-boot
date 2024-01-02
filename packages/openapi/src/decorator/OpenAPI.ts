@@ -11,7 +11,7 @@ export type OpenAPIParam = Partial<OperationObject> | ((source: OperationObject,
  * Supplement action with additional OpenAPI Operation keywords.
  *
  * @param spec OpenAPI Operation object that is merged into the schema derived
- * from routing-controllers decorators. In case of conflicts, keywords defined
+ * from Node-Boot decorators. In case of conflicts, keywords defined
  * here overwrite the existing ones. Alternatively you can supply a function
  * that receives as parameters the existing Operation and target route,
  * returning an updated Operation.

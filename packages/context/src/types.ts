@@ -41,7 +41,7 @@ export type BeansContext<TApplication = any> = {
 export interface CustomParameterDecorator {
     /**
      * Indicates if this parameter is required or not.
-     * If parameter is required and value provided by it is not set then routing-controllers will throw an error.
+     * If parameter is required and value provided by it is not set then Node-Boot will throw an error.
      */
     required?: boolean;
 

@@ -2,7 +2,7 @@ import {NodeBootToolkit} from "@node-boot/engine";
 
 /**
  * Injects currently authorized user.
- * Authorization logic must be defined in routing-controllers settings.
+ * Authorization logic must be defined in Node-Boot settings.
  */
 export function CurrentUser(options?: {required?: boolean}) {
     return function (object: Object, methodName: string, index: number) {

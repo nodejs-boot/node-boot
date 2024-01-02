@@ -5,7 +5,7 @@ import {NodeBootToolkit} from "@node-boot/engine";
  * Marks given class as a middleware.
  * Allows to create global middlewares and control order of middleware execution.
  *
- * @param options Arguments for routing-controllers @Middleware decorator:
+ * @param options Arguments for Node-Boot @Middleware decorator:
  *  <br/>- <b>type</b> Type of decorator. <i>before</i> for inbound and <i>after</i> for outbound middleware.
  *  <br/>- <b>priority</b> Middleware priority in the chain
  */
