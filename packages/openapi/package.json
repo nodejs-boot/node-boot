@@ -1,12 +1,13 @@
 {
     "name": "@node-boot/openapi",
     "version": "1.0.0",
-    "description": "The first typescript example for the Monorepo example",
+    "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "monorepo",
-        "typescript"
+        "openapi",
+        "swagger",
+        "swagger-ui"
     ],
     "repository": {
         "type": "git",
@@ -30,12 +31,22 @@
     },
     "dependencies": {
         "@node-boot/context": "1.0.0",
-        "openapi3-ts": "^3.0.0",
-        "routing-controllers-openapi": "^4.0.0",
+        "@node-boot/engine": "1.0.0",
+        "openapi3-ts": "^2.0.2",
+        "lodash.capitalize": "^4.2.1",
+        "lodash.merge": "^4.6.2",
+        "lodash.startcase": "^4.4.0",
+        "path-to-regexp": "^6.2.1",
+        "reflect-metadata": "^0.1.13",
         "class-validator-jsonschema": "^4.0.0"
     },
-    "peerDependencies": {
-        "routing-controllers": ">=0.10.4"
+    "devDependencies": {
+        "@types/lodash.capitalize": "^4.2.6",
+        "@types/lodash.merge": "^4.6.6",
+        "@types/lodash.startcase": "^4.4.6",
+        "openapi-types": "^12.1.3",
+        "@types/reflect-metadata": "^0.1.0",
+        "@types/swagger-ui-express": "^4.1.6"
     },
     "optionalDependencies": {
         "koa": "^2.14.2",

@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import {Container} from "typedi";
 import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
-import {EnableOpenApi} from "@node-boot/openapi";
+import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/openapi";
 import {AppConfigProperties} from "./config/AppConfigProperties";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
@@ -17,6 +17,7 @@ import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
 
 @EnableDI(Container)
 @EnableOpenApi()
+@EnableSwaggerUI()
 @Configurations([AppConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
 @GlobalMiddlewares([LoggingMiddleware, ErrorMiddleware])

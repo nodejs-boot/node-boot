@@ -1,4 +1,4 @@
-import {OpenApiAdapter, OpenApiOptions} from "@node-boot/context";
+import {ApplicationContext, OpenApiAdapter, OpenApiOptions} from "@node-boot/context";
 import {FastifyInstance} from "fastify";
 import {OpenApiSpecAdapter} from "./OpenApiSpecAdapter";
 
@@ -9,24 +9,27 @@ export class FastifyOpenApi implements OpenApiAdapter {
         router.get(options.swaggerOptions.url, async (_, reply) => {
             reply.send(spec);
         });
-        server.register(require("@fastify/swagger"), {
-            mode: "static",
-            specification: {
-                document: spec,
-            },
-            exposeRoute: false,
-        });
-        server.register(require("@fastify/swagger-ui"), {
-            routePrefix: "/api-docs",
-            uiConfig: {
-                // FIXME - Move to configuration
-                docExpansion: "list",
-                deepLinking: false,
-                displayOperationId: true,
-                defaultModelsExpandDepth: 1,
-                filter: true,
-                defaultModelRendering: "example",
-            },
-        });
+
+        if (ApplicationContext.get().swaggerUI) {
+            server.register(require("@fastify/swagger"), {
+                mode: "static",
+                specification: {
+                    document: spec,
+                },
+                exposeRoute: false,
+            });
+            server.register(require("@fastify/swagger-ui"), {
+                routePrefix: "/api-docs",
+                uiConfig: {
+                    // FIXME - Move to configuration
+                    docExpansion: "list",
+                    deepLinking: false,
+                    displayOperationId: true,
+                    defaultModelsExpandDepth: 1,
+                    filter: true,
+                    defaultModelRendering: "example",
+                },
+            });
+        }
     }
 }

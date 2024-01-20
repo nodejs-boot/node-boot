@@ -1,15 +1,13 @@
 import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@node-boot/context";
-import * as oa from "openapi3-ts";
-import {ExpressOpenApi} from "../adapter";
-import {KoaOpenApi} from "../adapter/KoaOpenApi";
-import {FastifyOpenApi} from "../adapter/FastifyOpenApi";
+import {ExpressOpenApi, FastifyOpenApi, KoaOpenApi} from "../adapter";
 
 /**
- * Defines the configurations to enable Swagger Open API
+ * Enables OenAPI auto-generation.
+ * By decorating your application class with it, Node-Boot will automatically generate OpenAPI spec for registered controllers
+ * and expose it through '/api-docs/swagger.json' path.
  *
- * @param _ The OpenAPI definitions and base config
  */
-export function EnableOpenApi(_: Partial<oa.OpenAPIObject> = {}): Function {
+export function EnableOpenApi(): Function {
     return function () {
         ApplicationContext.get().openApi = new (class implements OpenApiBridgeAdapter {
             bind(serverType: string): OpenApiAdapter {
@@ -22,7 +20,7 @@ export function EnableOpenApi(_: Partial<oa.OpenAPIObject> = {}): Function {
                         return new FastifyOpenApi();
                     default:
                         throw new Error(
-                            "OpenAPI feature is only allowed for express and koa servers. " +
+                            "OpenAPI feature is only allowed for 'express', 'koa' and 'fastify' servers. " +
                                 "Please remove @EnableOpenApi from your application",
                         );
                 }

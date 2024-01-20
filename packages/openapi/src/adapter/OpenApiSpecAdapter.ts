@@ -1,8 +1,7 @@
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
-import {getMetadataArgsStorage} from "routing-controllers";
-import {routingControllersToSpec} from "routing-controllers-openapi";
 import {OpenAPIObject} from "openapi3-ts";
 import {OpenApiOptions} from "@node-boot/context";
+import {controllersToSpec} from "../spec";
 
 type OpenApiSpec = {
     spec: OpenAPIObject;
@@ -16,7 +15,6 @@ type OpenApiSpec = {
 export class OpenApiSpecAdapter {
     static adapt(openApiOptions: OpenApiOptions): OpenApiSpec {
         const schemas = validationMetadatasToSchemas({
-            // classTransformerMetadataStorage: defaultMetadataStorage,
             refPointerPrefix: "#/components/schemas/",
         });
 
@@ -25,9 +23,7 @@ export class OpenApiSpecAdapter {
             routePrefix: openApiOptions.basePath,
         };
 
-        const storage = getMetadataArgsStorage();
-        const openApiSpec = routingControllersToSpec(
-            storage,
+        const openApiSpec = controllersToSpec(
             routingControllersOptions,
             // FIXME - Move to configuration
             {

@@ -7,7 +7,7 @@ import {MultipleConfigurations} from "./config/MultipleConfigurations";
 import {EnableAuthorization} from "@node-boot/authorization";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {KoaServer} from "@node-boot/koa-server";
-import {EnableOpenApi} from "@node-boot/openapi";
+import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/openapi";
 import {EnableActuator} from "@node-boot/starter-actuator";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
 import {EnableDI} from "@node-boot/di";
@@ -16,6 +16,7 @@ import {EnableRepositories} from "@node-boot/starter-persistence";
 
 @EnableDI(Container)
 @EnableOpenApi()
+@EnableSwaggerUI()
 @Configurations([AppConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
 @GlobalMiddlewares([LoggingMiddleware])

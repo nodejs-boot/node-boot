@@ -14,10 +14,10 @@ import {GreetingService} from "../../services/greeting.service";
 @EntityEventSubscriber()
 export class UserEntityEventListener implements EntitySubscriberInterface<User> {
     @Inject()
-    private logger?: Logger;
+    private logger: Logger;
 
     @Inject()
-    private greetingService?: GreetingService;
+    private greetingService: GreetingService;
 
     /**
      * Indicates that this subscriber only listen to User events.
@@ -30,11 +30,11 @@ export class UserEntityEventListener implements EntitySubscriberInterface<User> 
      * Called before user insertion.
      */
     beforeInsert(event: InsertEvent<User>) {
-        this.logger?.info(`BEFORE USER INSERTED: `, event.entity);
+        this.logger.info(`BEFORE USER INSERTED: `, event.entity);
     }
 
     afterInsert(event: InsertEvent<User>): Promise<any> | void {
-        this.logger?.info(`AFTER USER INSERTED: `, event.entity);
-        this.greetingService?.sayHello(event.entity);
+        this.logger.info(`AFTER USER INSERTED: `, event.entity);
+        this.greetingService.sayHello(event.entity);
     }
 }

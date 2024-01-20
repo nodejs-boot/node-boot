@@ -46,7 +46,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
                 configurationPropertiesAdapter.bind(context.diOptions.iocContainer);
             }
 
-            // it's important to set container before any operation you do with routing-controllers,
+            // it's important to set container before any operation you do with Node-Boot,
             // including importing controllers
             this.logger.info(`Setting DI container`);
             useContainer(context.diOptions.iocContainer, context.diOptions.options);

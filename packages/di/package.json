@@ -1,12 +1,13 @@
 {
     "name": "@node-boot/di",
     "version": "1.0.0",
-    "description": "The first typescript example for the Monorepo example",
+    "description": "Dependency Injection plugin for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "monorepo",
-        "typescript"
+        "di",
+        "typedi",
+        "inversify"
     ],
     "repository": {
         "type": "git",
