@@ -6,7 +6,6 @@ import {UserModel} from "../models/users.model";
 import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
 import {HttpError, NotFoundError} from "@node-boot/error";
 import {ConfigService} from "@node-boot/config";
-import {Optional, Range} from "katxupa";
 
 @Service()
 export class UserService {
@@ -36,56 +35,6 @@ export class UserService {
             id: userId,
         });
 
-        (1)
-            .letIt(it => {
-                return it;
-            })
-            .runIt(function* () {});
-
-        const person = {name: "Manuel", email: "ney.br.santos@gmail.com", age: 35};
-        person
-            .letIt(it => {
-                console.log(it);
-                it.age < 30 ? console.log("Young Man") : console.log("Old Man");
-                return it.age;
-            })
-            .alsoIt(it => {
-                console.log(`Actual Age is ${it}`);
-            });
-
-        durationOf(1000)
-            .inWholeSeconds()
-            .letIt(it => {
-                console.log(`1000 milliseconds are the same as ${it} seconds`);
-            });
-        const xpto = 1;
-        xpto.letIt(it => {
-            it++;
-            it = it * 100;
-            return it;
-        });
-
-        user?.letIt(it => it.email);
-
-        user?.runIt(function () {
-            this.email;
-        });
-
-        runIt(() => {
-            return 10;
-        });
-
-        rangeTo(1, 5, 2).runIt(function () {
-            console.log(`multiplying the following sequence of numbers: ${this}`);
-            this.map(it => it * 2).forEach(it => console.log(it));
-        });
-
-        optionalOf(null);
-        inRange(1, 1, 5);
-        Range.inRange(1, 1, 5);
-
-        (1).years().add((6).months()).toString(); // Output: 548d 0h 0m 0s 0ns
-
         return optionalOf(user)
             .orElseThrow(() => new NotFoundError("User doesn't exist"))
             .get();
@@ -101,7 +50,7 @@ export class UserService {
             this.logger.info("Transaction was successfully committed");
         });
 
-        return Optional.of(existingUser)
+        return optionalOf(existingUser)
             .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
             .elseAsync(() => this.userRepository.save(userData));
     }
@@ -112,7 +61,7 @@ export class UserService {
             id: userId,
         });
 
-        return Optional.of(user)
+        return optionalOf(user)
             .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .map(user => {
                 return {
@@ -133,7 +82,7 @@ export class UserService {
             this.logger.warn("Transactions was rolled back due to error:", error);
         });
 
-        await Optional.of(user)
+        await optionalOf(user)
             .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .runAsync(() => this.userRepository.delete({id: userId}));
 
