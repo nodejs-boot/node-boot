@@ -1,6 +1,6 @@
 import {plainToInstance} from "class-transformer";
 import {validateOrReject as validate, ValidationError} from "class-validator";
-import {isPromiseLike} from "../util";
+import {isPromiseLike, Param} from "../util";
 import {
     AuthorizationRequiredError,
     BadRequestError,
@@ -9,7 +9,6 @@ import {
     ParameterParseJsonError,
     ParamRequiredError,
 } from "@node-boot/error";
-import {Optional, Param} from "@node-boot/extension";
 import {NodeBootDriver} from "../core";
 import {Action, ParamMetadata} from "@node-boot/context";
 
@@ -44,7 +43,7 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
 
         // if its current-user decorator then get its value
         if (param.type === "current-user") {
-            value = Optional.of(this.driver.currentUserChecker)
+            value = optionalOf(this.driver.currentUserChecker)
                 .orElseThrow(() => new CurrentUserCheckerNotDefinedError())
                 .map(userChecker => userChecker.check(action))
                 .get();

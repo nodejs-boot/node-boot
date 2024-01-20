@@ -1,4 +1,4 @@
-import {Optional} from "./Optional";
+import {Optional} from "katxupa";
 
 export type MaybeOptions<OptionsType> = {
     enabled?: boolean;

@@ -1,4 +1,4 @@
-import {ForbiddenError} from "../http-error/ForbiddenError";
+import {ForbiddenError} from "../http-error";
 
 /**
  * Thrown when route is guarded by @Authorized decorator.

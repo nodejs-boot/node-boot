@@ -1,4 +1,4 @@
-import {InternalServerError} from "../http-error/InternalServerError";
+import {InternalServerError} from "../http-error";
 
 /**
  * Thrown when currentUserChecker function is not defined in routing-controllers options.

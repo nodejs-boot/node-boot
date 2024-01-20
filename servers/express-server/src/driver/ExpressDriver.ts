@@ -1,4 +1,4 @@
-import {isPromiseLike, NodeBootDriver} from "@node-boot/engine";
+import {isPromiseLike, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -20,7 +20,6 @@ import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
 import cookie, {CookieParseOptions, CookieSerializeOptions} from "cookie";
 import cors, {CorsOptions} from "cors";
 import session, {SessionOptions} from "express-session";
-import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
 import {Options as MulterOptions} from "multer";
 import {DependenciesLoader} from "../loader";
 

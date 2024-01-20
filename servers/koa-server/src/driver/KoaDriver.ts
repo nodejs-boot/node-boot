@@ -1,4 +1,4 @@
-import {isPromiseLike, NodeBootDriver} from "@node-boot/engine";
+import {isPromiseLike, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -17,7 +17,6 @@ import {
 import Koa from "koa";
 import Router from "@koa/router";
 import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
-import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
 import {DependenciesLoader} from "../loader";
 import session, {opts as SessionOptions} from "koa-session";
 import {parseCookie} from "koa-cookies";

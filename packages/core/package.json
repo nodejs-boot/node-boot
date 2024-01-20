@@ -33,7 +33,7 @@
         "@node-boot/config": "1.0.0",
         "@node-boot/di": "1.0.0",
         "@node-boot/engine": "1.0.0",
-        "reflect-metadata": "^0.1.13",
+        "reflect-metadata": "^0.2.1",
         "lodash": "^4.17.21",
         "logform": "^2.5.1",
         "glob": "^10.3.3"

@@ -37,7 +37,7 @@
         "lodash.merge": "^4.6.2",
         "lodash.startcase": "^4.4.0",
         "path-to-regexp": "^6.2.1",
-        "reflect-metadata": "^0.1.13",
+        "reflect-metadata": "^0.2.1",
         "class-validator-jsonschema": "^4.0.0"
     },
     "devDependencies": {

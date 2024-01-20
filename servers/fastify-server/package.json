@@ -33,7 +33,6 @@
         "@node-boot/core": "1.0.0",
         "@node-boot/engine": "1.0.0",
         "@node-boot/error": "1.0.0",
-        "@node-boot/extension": "1.0.0",
         "template-url": "^1.0.0"
     },
     "peerDependencies": {

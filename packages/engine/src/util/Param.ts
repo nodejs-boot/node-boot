@@ -1,5 +1,20 @@
-import {Optional} from "./Optional";
-import {OfParamMetadata} from "./types";
+import {Optional} from "katxupa";
+
+export type OfParamMetadata = {
+    /**
+     * Parameter type.
+     */
+    type: string;
+    /**
+     * Parameter name.
+     */
+    name: string;
+
+    /**
+     * Parameter target type's name in lowercase.
+     */
+    targetName: string;
+};
 
 /**
  *

@@ -32,13 +32,12 @@
         "@node-boot/config": "1.0.0",
         "@node-boot/context": "1.0.0",
         "@node-boot/core": "1.0.0",
-        "@node-boot/extension": "1.0.0",
         "@node-boot/di": "1.0.0",
         "typeorm-transactional": "^0.5.0",
-        "winston": "^3.10.0"
+        "winston": "^3.10.0",
+        "reflect-metadata": "^0.2.1"
     },
     "peerDependencies": {
-        "reflect-metadata": ">=0.1.13",
         "typeorm": ">=0.3.17",
         "winston": ">=3.10.0"
     },

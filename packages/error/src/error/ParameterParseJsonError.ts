@@ -1,4 +1,4 @@
-import {BadRequestError} from "../http-error/BadRequestError";
+import {BadRequestError} from "../http-error";
 
 /**
  * Caused when user parameter is invalid json string and cannot be parsed.

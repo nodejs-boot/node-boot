@@ -3,7 +3,7 @@ import {BeansConfigurationAdapter} from "../adapters";
 
 export const IS_CONFIGURATION_KEY = Symbol("isConfiguration");
 
-export function Configuration(): Function {
+export function Configuration(): ClassDecorator {
     return function (target: Function) {
         Reflect.defineMetadata(IS_CONFIGURATION_KEY, true, target);
 

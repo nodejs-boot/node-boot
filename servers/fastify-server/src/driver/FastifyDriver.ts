@@ -1,4 +1,4 @@
-import {isPromiseLike, NodeBootDriver} from "@node-boot/engine";
+import {isPromiseLike, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -28,7 +28,6 @@ import {
     NotFoundError,
 } from "@node-boot/error";
 import {DependenciesLoader} from "../loader";
-import {ServerConfig, ServerConfigOptions} from "@node-boot/extension";
 
 const actionToHttpMethodMap = {
     delete: "DELETE",
@@ -367,7 +366,6 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     getParamFromRequest(action: Action<FastifyRequest, FastifyReply>, param: ParamMetadata): any {
         const request = action.request;
         switch (param.type) {
-            // TODO - https://www.npmjs.com/package/@fastify/session
             case "session-param":
                 return request.session[param.name];
 

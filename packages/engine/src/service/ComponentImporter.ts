@@ -1,5 +1,5 @@
-import {ClassFiles} from "@node-boot/extension";
 import {NodeBootEngineOptions} from "@node-boot/context";
+import {ClassFiles} from "../util";
 
 export class ComponentImporter {
     static importInterceptors(options: NodeBootEngineOptions) {

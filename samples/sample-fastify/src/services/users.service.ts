@@ -4,7 +4,6 @@ import {ConfigService} from "@node-boot/config";
 import {Service} from "@node-boot/core";
 import {User, UserRepository} from "../persistence";
 import {UserModel} from "../models/users.model";
-import {Optional} from "@node-boot/extension";
 import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
 import {HttpError, NotFoundError} from "@node-boot/error";
 
@@ -34,7 +33,7 @@ export class UserService {
         const user = await this.userRepository.findOneBy({
             id: userId,
         });
-        return Optional.of(user)
+        return optionalOf(user)
             .orElseThrow(() => new NotFoundError("User doesn't exist"))
             .get();
     }
@@ -49,7 +48,7 @@ export class UserService {
             this.logger.info("Transaction was successfully committed");
         });
 
-        return Optional.of(existingUser)
+        return optionalOf(existingUser)
             .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
             .elseAsync(() => this.userRepository.save(userData));
     }
@@ -60,7 +59,7 @@ export class UserService {
             id: userId,
         });
 
-        return Optional.of(user)
+        return optionalOf(user)
             .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .map(user => {
                 return {
@@ -81,7 +80,7 @@ export class UserService {
             this.logger.warn("Transactions was rolled back due to error:", error);
         });
 
-        await Optional.of(user)
+        await optionalOf(user)
             .orElseThrow(() => new HttpError(409, "User doesn't exist"))
             .runAsync(() => this.userRepository.delete({id: userId}));
 

@@ -1,4 +1,4 @@
-import {MetadataBuilder} from "../metadata/MetadataBuilder";
+import {MetadataBuilder} from "../metadata";
 import {
     Action,
     ActionMetadata,
