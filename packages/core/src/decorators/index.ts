@@ -51,3 +51,5 @@ export * from "./UploadedFiles";
 export * from "./UseAfter";
 export * from "./UseBefore";
 export * from "./UseInterceptor";
+export * from "./Model";
+export * from "./Property";

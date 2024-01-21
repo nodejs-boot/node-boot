@@ -1,7 +1,7 @@
 import * as winston from "winston";
 import {format, LoggerOptions} from "winston";
 import {Format, TransformableInfo} from "logform";
-import {merge} from "lodash";
+import merge from "lodash.merge";
 
 /**
  * A logger that just throws away all messages.

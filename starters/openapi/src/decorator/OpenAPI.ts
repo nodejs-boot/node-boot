@@ -17,7 +17,6 @@ export type OpenAPIParam = Partial<OperationObject> | ((source: OperationObject,
  * returning an updated Operation.
  */
 export function OpenAPI(spec: OpenAPIParam) {
-    // tslint:disable-next-line:ban-types
     return (...args: [Function] | [object, string, PropertyDescriptor]) => {
         if (args.length === 1) {
             const [target] = args;

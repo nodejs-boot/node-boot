@@ -3,3 +3,4 @@ export {ControllerOptions} from "./ControllerOptions";
 export {HandlerOptions} from "./HandlerOptions";
 export {ParamOptions} from "./ParamOptions";
 export {UploadOptions} from "./UploadOptions";
+export {PropertyOptions} from "./PropertyOptions";

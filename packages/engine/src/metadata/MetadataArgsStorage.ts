@@ -3,7 +3,9 @@ import {
     ControllerMetadataArgs,
     InterceptorMetadataArgs,
     MiddlewareMetadataArgs,
+    ModelMetadataArgs,
     ParamMetadataArgs,
+    PropertyMetadataArgs,
     ResponseHandlerMetadataArgs,
     UseInterceptorMetadataArgs,
     UseMetadataArgs,
@@ -27,6 +29,16 @@ export class MetadataArgsStorage {
      * Registered interceptor metadata args.
      */
     interceptors: InterceptorMetadataArgs[] = [];
+
+    /**
+     * Registered models (data-classes) metadata args.
+     */
+    models: ModelMetadataArgs[] = [];
+
+    /**
+     * Registered data-classes properties metadata args.
+     */
+    modelProperties: PropertyMetadataArgs[] = [];
 
     /**
      * Registered "use middleware" metadata args.
@@ -130,6 +142,20 @@ export class MetadataArgsStorage {
         return this.responseHandlers.filter(property => {
             return property.target === target && property.method === methodName;
         });
+    }
+
+    /**
+     * Filters Models (Data classes) by a given target class.
+     */
+    filterModelsByTarget(target: Function): ModelMetadataArgs[] {
+        return this.models.filter(data => data.target === target);
+    }
+
+    /**
+     * Filters Models (Data classes) properties by a given target class.
+     */
+    filterPropertyByTarget(target: Function): PropertyMetadataArgs[] {
+        return this.modelProperties.filter(property => property.target === target);
     }
 
     /**

@@ -246,7 +246,7 @@ export function getResponses(route: IRoute): oa.ResponsesObject {
 export function getSpec(routes: IRoute[], schemas: {[p: string]: oa.SchemaObject}): oa.OpenAPIObject {
     return {
         components: {schemas: {}},
-        info: {title: "", version: "1.0.0"},
+        info: {title: "", version: "1.0.0"}, // FIXME get this info from configs
         openapi: "3.0.0",
         paths: getPaths(routes, schemas),
     };

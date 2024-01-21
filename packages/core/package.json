@@ -34,9 +34,12 @@
         "@node-boot/di": "1.0.0",
         "@node-boot/engine": "1.0.0",
         "reflect-metadata": "^0.2.1",
-        "lodash": "^4.17.21",
+        "lodash.merge": "^4.6.2",
         "logform": "^2.5.1",
         "glob": "^10.3.3"
+    },
+    "devDependencies": {
+        "@types/lodash.merge": "^4.6.9"
     },
     "peerDependencies": {
         "winston": ">=3.10.0",

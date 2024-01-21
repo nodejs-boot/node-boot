@@ -7,3 +7,5 @@ export {ParamMetadataArgs} from "./ParamMetadataArgs";
 export {ResponseHandlerMetadataArgs} from "./ResponseHandleMetadataArgs";
 export {UseInterceptorMetadataArgs} from "./UseInterceptorMetadataArgs";
 export {UseMetadataArgs} from "./UseMetadataArgs";
+export {ModelMetadataArgs} from "./ModelMetadataArgs";
+export {PropertyMetadataArgs} from "./PropertyMetadataArgs";
