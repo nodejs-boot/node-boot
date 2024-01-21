@@ -1,6 +1,6 @@
-import {User} from "../persistence";
+import {User} from "./entities";
 
-export const UserModel: User[] = [
+export const Users: User[] = [
     {
         id: 1,
         email: "example1@email.com",

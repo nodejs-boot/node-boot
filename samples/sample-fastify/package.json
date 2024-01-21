@@ -28,7 +28,8 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "rebuild:sqlite": "npm rebuild better-sqlite3"
     },
     "dependencies": {
         "@node-boot/config": "1.0.0",

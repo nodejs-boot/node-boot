@@ -1,11 +1,11 @@
-import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
+import {CreateUserDto, UpdateUserDto} from "../models";
 import {Logger} from "winston";
 import {Service} from "@node-boot/core";
 import {User, UserRepository} from "../persistence";
-import {UserModel} from "../models/users.model";
 import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
 import {HttpError, NotFoundError} from "@node-boot/error";
 import {ConfigService} from "@node-boot/config";
+import {Users} from "../persistence/users.init";
 
 @Service()
 export class UserService {
@@ -14,7 +14,7 @@ export class UserService {
         private readonly configService: ConfigService,
         private readonly userRepository: UserRepository,
     ) {
-        UserModel.forEach(user => this.userRepository.save(user));
+        Users.forEach(user => this.userRepository.save(user));
     }
 
     public async findAllUser(): Promise<User[]> {

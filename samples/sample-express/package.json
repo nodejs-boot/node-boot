@@ -29,6 +29,7 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest",
+        "rebuild:sqlite": "npm rebuild better-sqlite3",
         "typecheck": "tsc"
     },
     "dependencies": {
