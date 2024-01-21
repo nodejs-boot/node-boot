@@ -187,77 +187,6 @@ importers:
 
   packages/error: {}
 
-  packages/openapi:
-    dependencies:
-      '@node-boot/context':
-        specifier: 1.0.0
-        version: link:../context
-      '@node-boot/engine':
-        specifier: 1.0.0
-        version: link:../engine
-      class-validator-jsonschema:
-        specifier: ^4.0.0
-        version: 4.0.0(class-transformer@0.5.1)(class-validator@0.14.1)
-      lodash.capitalize:
-        specifier: ^4.2.1
-        version: 4.2.1
-      lodash.merge:
-        specifier: ^4.6.2
-        version: 4.6.2
-      lodash.startcase:
-        specifier: ^4.4.0
-        version: 4.4.0
-      openapi3-ts:
-        specifier: ^2.0.2
-        version: 2.0.2
-      path-to-regexp:
-        specifier: ^6.2.1
-        version: 6.2.1
-      reflect-metadata:
-        specifier: ^0.2.1
-        version: 0.2.1
-    optionalDependencies:
-      '@fastify/swagger':
-        specifier: ^8.10.0
-        version: 8.14.0
-      '@fastify/swagger-ui':
-        specifier: ^1.9.3
-        version: 1.10.2
-      express:
-        specifier: ^4.18.2
-        version: 4.18.2
-      fastify:
-        specifier: '>=4.21.0'
-        version: 4.25.2
-      koa:
-        specifier: ^2.14.2
-        version: 2.15.0
-      koa2-swagger-ui:
-        specifier: ^5.8.0
-        version: 5.10.0(@types/koa@2.14.0)
-      swagger-ui-express:
-        specifier: ^5.0.0
-        version: 5.0.0(express@4.18.2)
-    devDependencies:
-      '@types/lodash.capitalize':
-        specifier: ^4.2.6
-        version: 4.2.9
-      '@types/lodash.merge':
-        specifier: ^4.6.6
-        version: 4.6.9
-      '@types/lodash.startcase':
-        specifier: ^4.4.6
-        version: 4.4.9
-      '@types/reflect-metadata':
-        specifier: ^0.1.0
-        version: 0.1.0
-      '@types/swagger-ui-express':
-        specifier: ^4.1.6
-        version: 4.1.6
-      openapi-types:
-        specifier: ^12.1.3
-        version: 12.1.3
-
   samples/sample-express:
     dependencies:
       '@node-boot/authorization':
@@ -281,12 +210,12 @@ importers:
       '@node-boot/express-server':
         specifier: 1.0.0
         version: link:../../servers/express-server
-      '@node-boot/openapi':
-        specifier: 1.0.0
-        version: link:../../packages/openapi
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
+      '@node-boot/starter-openapi':
+        specifier: 1.0.0
+        version: link:../../starters/openapi
       '@node-boot/starter-persistence':
         specifier: 1.0.0
         version: link:../../starters/persistence
@@ -414,12 +343,12 @@ importers:
       '@node-boot/fastify-server':
         specifier: 1.0.0
         version: link:../../servers/fastify-server
-      '@node-boot/openapi':
-        specifier: 1.0.0
-        version: link:../../packages/openapi
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
+      '@node-boot/starter-openapi':
+        specifier: 1.0.0
+        version: link:../../starters/openapi
       '@node-boot/starter-persistence':
         specifier: 1.0.0
         version: link:../../starters/persistence
@@ -493,12 +422,12 @@ importers:
       '@node-boot/koa-server':
         specifier: 1.0.0
         version: link:../../servers/koa-server
-      '@node-boot/openapi':
-        specifier: 1.0.0
-        version: link:../../packages/openapi
       '@node-boot/starter-actuator':
         specifier: 1.0.0
         version: link:../../starters/actuator
+      '@node-boot/starter-openapi':
+        specifier: 1.0.0
+        version: link:../../starters/openapi
       '@node-boot/starter-persistence':
         specifier: 1.0.0
         version: link:../../starters/persistence
@@ -759,6 +688,77 @@ importers:
       '@types/koa__router':
         specifier: ^12.0.4
         version: 12.0.4
+
+  starters/openapi:
+    dependencies:
+      '@node-boot/context':
+        specifier: 1.0.0
+        version: link:../../packages/context
+      '@node-boot/engine':
+        specifier: 1.0.0
+        version: link:../../packages/engine
+      class-validator-jsonschema:
+        specifier: ^4.0.0
+        version: 4.0.0(class-transformer@0.5.1)(class-validator@0.14.1)
+      lodash.capitalize:
+        specifier: ^4.2.1
+        version: 4.2.1
+      lodash.merge:
+        specifier: ^4.6.2
+        version: 4.6.2
+      lodash.startcase:
+        specifier: ^4.4.0
+        version: 4.4.0
+      openapi3-ts:
+        specifier: ^2.0.2
+        version: 2.0.2
+      path-to-regexp:
+        specifier: ^6.2.1
+        version: 6.2.1
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.1
+    optionalDependencies:
+      '@fastify/swagger':
+        specifier: ^8.10.0
+        version: 8.14.0
+      '@fastify/swagger-ui':
+        specifier: ^1.9.3
+        version: 1.10.2
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+      fastify:
+        specifier: '>=4.21.0'
+        version: 4.25.2
+      koa:
+        specifier: ^2.14.2
+        version: 2.15.0
+      koa2-swagger-ui:
+        specifier: ^5.8.0
+        version: 5.10.0(@types/koa@2.14.0)
+      swagger-ui-express:
+        specifier: ^5.0.0
+        version: 5.0.0(express@4.18.2)
+    devDependencies:
+      '@types/lodash.capitalize':
+        specifier: ^4.2.6
+        version: 4.2.9
+      '@types/lodash.merge':
+        specifier: ^4.6.6
+        version: 4.6.9
+      '@types/lodash.startcase':
+        specifier: ^4.4.6
+        version: 4.4.9
+      '@types/reflect-metadata':
+        specifier: ^0.1.0
+        version: 0.1.0
+      '@types/swagger-ui-express':
+        specifier: ^4.1.6
+        version: 4.1.6
+      openapi-types:
+        specifier: ^12.1.3
+        version: 12.1.3
 
   starters/persistence:
     dependencies:

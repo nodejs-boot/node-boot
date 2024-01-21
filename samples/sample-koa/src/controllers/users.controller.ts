@@ -5,7 +5,7 @@ import {CreateUserDto, UpdateUserDto} from "../dtos/users.dto";
 import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
 import {Inject} from "@node-boot/di";
-import {OpenAPI} from "@node-boot/openapi";
+import {OpenAPI} from "@node-boot/starter-openapi";
 import {Authorized} from "@node-boot/authorization";
 import {User} from "../persistence";
 

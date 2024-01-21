@@ -1,5 +1,5 @@
 {
-    "name": "@node-boot/openapi",
+    "name": "@node-boot/starter-openapi",
     "version": "1.0.0",
     "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
