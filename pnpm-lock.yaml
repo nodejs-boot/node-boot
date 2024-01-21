@@ -32,6 +32,9 @@ importers:
       eslint:
         specifier: ^8.31.0
         version: 8.56.0
+      eslint-config-katxupa:
+        specifier: ^1.0.0
+        version: 1.0.0(eslint@8.56.0)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.56.0)
@@ -179,8 +182,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.1
       katxupa:
-        specifier: ^1.7.1
-        version: 1.7.1
+        specifier: ^1.8.2
+        version: 1.8.2
 
   packages/error: {}
 
@@ -318,8 +321,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.7.1
-        version: 1.7.1
+        specifier: ^1.8.2
+        version: 1.8.2
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -433,8 +436,8 @@ importers:
         specifier: ^4.21.0
         version: 4.25.2
       katxupa:
-        specifier: ^1.7.1
-        version: 1.7.1
+        specifier: ^1.8.2
+        version: 1.8.2
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.1
@@ -509,8 +512,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.7.1
-        version: 1.7.1
+        specifier: ^1.8.2
+        version: 1.8.2
       koa:
         specifier: '>=2.14.2'
         version: 2.15.0
@@ -3367,6 +3370,14 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /eslint-config-katxupa@1.0.0(eslint@8.56.0):
+    resolution: {integrity: sha512-x911Sieah6r4L/M7g4k8iV1a16ezSh1Srljs20e6Pc3LMUK8FKnMR5hqiziarCLyGmrNN5SkF+mgrrkVtqyWWw==}
+    peerDependencies:
+      eslint: '>= 3'
+    dependencies:
+      eslint: 8.56.0
+    dev: true
+
   /eslint-config-prettier@9.1.0(eslint@8.56.0):
     resolution: {integrity: sha512-NSWl5BFQWEPi1j4TjVNItzYV7dZXZ+wP6I6ZhrBGpChQhZRUaElihE9uRRkcbRnNb76UMKDF3r+WTmNcGPKsqw==}
     hasBin: true
@@ -4869,8 +4880,8 @@ packages:
       graceful-fs: 4.2.11
     dev: false
 
-  /katxupa@1.7.1:
-    resolution: {integrity: sha512-4Q6DE7RI/5TgfnXQqqSHQ4+B2xDwiZyHRxeeCE0EC0Aat1Mr9rBfBfPuo5Aq51bN/OqiPNuvFKWLjV6y8IqATA==}
+  /katxupa@1.8.2:
+    resolution: {integrity: sha512-JnwX4+srtONeAQrlOuTwX4+HcPPCIok298lN/rf30OqrouUADm230uBcDhgqrBbJqcfjv7YtEJSCsgGzdLFZbA==}
     dev: false
 
   /keygrip@1.1.0:

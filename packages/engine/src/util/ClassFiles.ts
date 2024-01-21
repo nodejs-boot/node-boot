@@ -13,6 +13,8 @@ export class ClassFiles {
         } else if (dirs instanceof Object || typeof dirs === "object") {
             Object.keys(dirs).forEach(key => ClassFiles.load(dirs[key], allLoaded));
         }
+
+        "".letIt(it => it.trim());
         return allLoaded;
     }
 

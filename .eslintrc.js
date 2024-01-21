@@ -2,7 +2,7 @@
 module.exports = {
     root: true,
     env: {node: true},
-    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier", "katxupa"],
     plugins: ["@typescript-eslint"],
     parser: "@typescript-eslint/parser",
     parserOptions: {
