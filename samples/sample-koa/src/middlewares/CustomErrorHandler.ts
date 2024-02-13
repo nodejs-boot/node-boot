@@ -16,8 +16,8 @@ export class CustomErrorHandler implements ErrorHandlerInterface<HttpError, Requ
         const message: string = error.message || "Something went wrong";
 
         this.logger.error(`[${request.method}] ${request.path} >> StatusCode:: ${status}, Message:: ${message}`);
-        // FIXME Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-        // FIXME Fix this after refactoring routing-controllers library
-        // res.status(status).json({message});
+        action.context.set("Content-Type", "Application/json");
+        action.context.status = status;
+        action.context.body = {message};
     }
 }

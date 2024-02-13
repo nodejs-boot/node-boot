@@ -8,6 +8,7 @@ import {
 import {
     Action,
     ActionMetadata,
+    ErrorHandlerInterface,
     getFromContainer,
     MiddlewareMetadata,
     ParamMetadata,
@@ -49,6 +50,7 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
     private readonly configs?: KoaServerConfigs;
     private readonly globalErrorHandler: GlobalErrorHandler;
     private readonly resultTransformer: ResultTransformer;
+    private customErrorHandler: ErrorHandlerInterface;
 
     constructor(serverOptions: KoaServerOptions) {
         super();
@@ -93,8 +95,12 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
      * Registers middleware that run before controller actions.
      */
     registerMiddleware(middleware: MiddlewareMetadata): void {
+        // if its an error handler then register it with proper signature in express
+        if ((middleware.instance as ErrorHandlerInterface).onError) {
+            this.customErrorHandler = middleware.instance as ErrorHandlerInterface;
+        }
         // if its a regular middleware then register it as koa middleware
-        if ((middleware.instance as MiddlewareInterface).use) {
+        else if ((middleware.instance as MiddlewareInterface).use) {
             const middlewareWrapper = async (context: any, next: any) => {
                 try {
                     await (middleware.instance as MiddlewareInterface).use({
@@ -105,7 +111,7 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
                     });
                     return next();
                 } catch (error) {
-                    this.handleError(error, {
+                    await this.handleError(error, {
                         request: context.request,
                         response: context.response,
                         context,
@@ -152,12 +158,13 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
                             actionMetadata.authorizedRoles.length === 0
                                 ? new AuthorizationRequiredError(action.request.name, action.request.url)
                                 : new AccessDeniedError(action.request.name, action.request.url);
-                        this.handleError(error, action, actionMetadata);
+                        await this.handleError(error, action, actionMetadata);
+                    } else {
+                        return next();
                     }
                 } catch (error) {
-                    this.handleError(error, action, actionMetadata);
+                    await this.handleError(error, action, actionMetadata);
                 }
-                return next();
             });
         }
 
@@ -345,22 +352,31 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
     /**
      * Handles result of failed executed controller actionMetadata.
      */
-    handleError(error: any, action: Action<Request, Response>, actionMetadata?: ActionMetadata) {
-        // apply http headers
-        if (actionMetadata) {
-            Object.keys(actionMetadata.headers).forEach(name => {
-                action.response.set(name, actionMetadata.headers[name]);
-            });
-        }
+    async handleError(error: any, action: Action<Request, Response>, actionMetadata?: ActionMetadata) {
+        try {
+            // apply http headers
+            if (actionMetadata) {
+                Object.keys(actionMetadata.headers).forEach(name => {
+                    action.response.set(name, actionMetadata.headers[name]);
+                });
+            }
 
-        // set http status
-        if (error instanceof HttpError && error.httpCode) {
-            action.response.status = error.httpCode;
-        } else {
-            action.response.status = 500;
-        }
+            // set http status
+            if (error instanceof HttpError && error.httpCode) {
+                action.response.status = error.httpCode;
+            } else {
+                action.response.status = 500;
+            }
 
-        action.response.body = this.globalErrorHandler.handleError(error);
+            if (this.customErrorHandler) {
+                await this.customErrorHandler.onError(error, action, actionMetadata);
+            } else {
+                action.response.body = this.globalErrorHandler.handleError(error);
+            }
+        } catch (e) {
+            // Continue processing un-cough errors
+            action.next?.(error);
+        }
     }
 
     /**

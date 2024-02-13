@@ -22,7 +22,6 @@ export interface MiddlewareInterface<TRequest = any, TResponse = any, TNext = Fu
  *
  * Given that it is not possible to process all uncaught errors sensibly, the best way to deal with them is to crash.
  *
- * Important: action parameter is not available for Koa server. Koa doesn't provide contextualized error. So, in case of Koa, only error is filled
  */
 export interface ErrorHandlerInterface<
     TError extends Error = Error,
@@ -30,5 +29,5 @@ export interface ErrorHandlerInterface<
     TResponse = any,
     TNext = Function,
 > {
-    onError(error: TError, action?: Action<TRequest, TResponse, TNext>, metadata?: ActionMetadata): Promise<void>;
+    onError(error: TError, action: Action<TRequest, TResponse, TNext>, metadata?: ActionMetadata): Promise<void>;
 }

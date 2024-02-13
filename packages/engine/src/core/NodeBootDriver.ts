@@ -96,7 +96,12 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
     /**
      * Defines an algorithm of how to handle error during executing controller actionMetadata.
      */
-    abstract handleError(error: any, action: TAction, actionMetadata?: ActionMetadata, useGlobalHandler?: boolean): any;
+    abstract handleError(
+        error: any,
+        action: TAction,
+        actionMetadata?: ActionMetadata,
+        useGlobalHandler?: boolean,
+    ): Promise<any>;
 
     /**
      * Defines an algorithm of how to handle success result of executing controller actionMetadata.

@@ -53,7 +53,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     private readonly configs?: ExpressServerConfigs;
     private readonly globalErrorHandler: GlobalErrorHandler;
     private readonly resultTransformer: ResultTransformer;
-    private custormErrorHandler: boolean;
+    private customErrorHandler: ErrorHandlerInterface;
 
     constructor(serverOptions: ExpressServerOptions) {
         super();
@@ -62,7 +62,6 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         this.configs = serverOptions.configs;
         this.globalErrorHandler = new GlobalErrorHandler(this);
         this.resultTransformer = new ResultTransformer(this);
-        this.custormErrorHandler = false;
     }
 
     /**
@@ -86,18 +85,8 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     registerMiddleware(middleware: MiddlewareMetadata, options: NodeBootEngineOptions): void {
         // if its an error handler then register it with proper signature in express
         if ((middleware.instance as ErrorHandlerInterface).onError) {
-            this.custormErrorHandler = true;
-            const middlewareWrapper = async (error: any, request: any, response: any, next: (err?: any) => any) => {
-                try {
-                    await (middleware.instance as ErrorHandlerInterface).onError(error, {request, response});
-                    next();
-                } catch (e) {
-                    this.handleError(e, {request, response, next}, undefined, true);
-                }
-            };
-            this.nameMiddleware(middlewareWrapper, middleware, options);
+            this.customErrorHandler = middleware.instance as ErrorHandlerInterface;
         }
-
         // if its a regular middleware then register it as express middleware
         else if ((middleware.instance as MiddlewareInterface).use) {
             const middlewareWrapper = async (request: any, response: any, next: (err?: any) => any) => {
@@ -149,12 +138,12 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                             actionMetadata.authorizedRoles.length === 0
                                 ? new AuthorizationRequiredError(action.request.method, action.request.url)
                                 : new AccessDeniedError(action.request.method, action.request.url);
-                        this.handleError(error, action, actionMetadata, true);
+                        await this.handleError(error, action, actionMetadata);
                     } else {
                         next();
                     }
                 } catch (error) {
-                    this.handleError(error, action, actionMetadata, true);
+                    await this.handleError(error, action, actionMetadata);
                 }
             });
         }
@@ -368,13 +357,15 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     /**
      * Handles result of failed executed controller action.
      */
-    handleError(
-        error: any,
-        action: Action<Request, Response>,
-        actionMetadata?: ActionMetadata,
-        useGlobalHandler?: boolean,
-    ): any {
+    async handleError(error: any, action: Action<Request, Response>, actionMetadata?: ActionMetadata) {
         const response = action.response;
+
+        // apply http headers
+        if (actionMetadata) {
+            Object.keys(actionMetadata.headers).forEach(name => {
+                response.header(name, actionMetadata.headers[name]);
+            });
+        }
 
         // set http code
         // note that we can't use error instanceof HttpError properly anymore because of new typescript emit process
@@ -384,20 +375,14 @@ export class ExpressDriver extends NodeBootDriver<Application> {
             response.status(500);
         }
 
-        // apply http headers
-        if (actionMetadata) {
-            Object.keys(actionMetadata.headers).forEach(name => {
-                response.header(name, actionMetadata.headers[name]);
-            });
-        }
-
-        if (useGlobalHandler || !this.custormErrorHandler) {
+        if (this.customErrorHandler) {
+            await this.customErrorHandler.onError(error, action, actionMetadata);
+        } else {
             const parsedError = this.globalErrorHandler.handleError(error);
             // send error content
             response.json(parsedError);
-        } else {
-            action.next?.(error);
         }
+        action.next?.(error);
     }
 
     /**

@@ -56,6 +56,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     private readonly logger: LoggerService;
     private readonly configs?: FastifyServerConfigs;
     private readonly globalErrorHandler: GlobalErrorHandler;
+    private customErrorHandler: ErrorHandlerInterface;
 
     constructor(options: FastifyServerOptions) {
         super();
@@ -110,13 +111,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     registerMiddleware(middleware: MiddlewareMetadata, options: NodeBootEngineOptions): void {
         // Register a custom error Handler
         if ((middleware.instance as ErrorHandlerInterface).onError) {
-            const errorHandler = async (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
-                await (middleware.instance as ErrorHandlerInterface).onError(error, {request, response: reply});
-            };
-
-            // Name the function for better debugging
-            this.nameGlobalMiddlewareFunction(errorHandler, middleware);
-            this.app.setErrorHandler(errorHandler);
+            this.customErrorHandler = middleware.instance as ErrorHandlerInterface;
         }
         // if its a regular middleware then register it as fastify preHandler hook
         else if ((middleware.instance as MiddlewareInterface).use) {
@@ -246,10 +241,10 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                         ? new AuthorizationRequiredError(action.request.method, action.request.url)
                         : new AccessDeniedError(action.request.method, action.request.url);
 
-                this.handleError(error, action, actionMetadata);
+                await this.handleError(error, action, actionMetadata);
             }
         } catch (error: any) {
-            this.handleError(error, action, actionMetadata);
+            await this.handleError(error, action, actionMetadata);
         }
     }
 
@@ -268,7 +263,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                             payload,
                         );
                     } catch (error) {
-                        this.handleError(error as Error, {
+                        await this.handleError(error as Error, {
                             request,
                             response: reply,
                         });
@@ -303,10 +298,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         return middlewareFunctions;
     }
 
-    registerRoutes() {
-        // Register all routes in Fastify
-        // You will need to implement route registration for Fastify
-    }
+    registerRoutes() {}
 
     getParamFromRequest(action: Action<FastifyRequest, FastifyReply>, param: ParamMetadata): any {
         const request = action.request;
@@ -364,7 +356,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    handleError(error: Error, action: Action<FastifyRequest, FastifyReply>, actionMetadata?: ActionMetadata) {
+    async handleError(error: Error, action: Action<FastifyRequest, FastifyReply>, actionMetadata?: ActionMetadata) {
         // Handle error using Fastify's reply
         if (actionMetadata) {
             Object.keys(actionMetadata.headers).forEach(name => {
@@ -378,8 +370,13 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         } else {
             action.response.code(500);
         }
-        const parsedError = this.globalErrorHandler.handleError(error);
-        action.response.send(parsedError);
+
+        if (this.customErrorHandler) {
+            await this.customErrorHandler.onError(error, action, actionMetadata);
+        } else {
+            const parsedError = this.globalErrorHandler.handleError(error);
+            action.response.send(parsedError);
+        }
     }
 
     handleSuccess(result: any, action: Action<FastifyRequest, FastifyReply>, actionMetadata: ActionMetadata) {

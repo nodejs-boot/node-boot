@@ -16,8 +16,9 @@ export class ErrorMiddleware implements ErrorHandlerInterface<HttpError, Request
         const message: string = error.message || "Something went wrong";
 
         this.logger.error(`[${request.method}] ${request.path} >> StatusCode:: ${status}, Message:: ${message}`);
-        // FIXME Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-        // FIXME Fix this after refactoring routing-controllers library
-        response.status(status).json({message});
+        response.status(status).json({
+            message: error.message,
+            statusCode: error.httpCode,
+        });
     }
 }
