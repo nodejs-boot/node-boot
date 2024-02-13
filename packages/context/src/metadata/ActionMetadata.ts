@@ -219,10 +219,10 @@ export class ActionMetadata {
      * Calls action method.
      * Action method is an action defined in a user controller.
      */
-    callMethod(params: any[], action: Action) {
+    async callMethod(params: any[], action: Action): Promise<any> {
         const controllerInstance = this.controllerMetadata.getInstance(action);
         // eslint-disable-next-line prefer-spread
-        return controllerInstance[this.method].apply(controllerInstance, params);
+        return await controllerInstance[this.method].apply(controllerInstance, params);
     }
 
     /**

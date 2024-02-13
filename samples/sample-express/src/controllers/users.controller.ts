@@ -40,7 +40,7 @@ export class UserController {
 
     @Post("/")
     @HttpCode(201)
-    @Authorized("SUPER")
+    @Authorized()
     @UseBefore(ValidationMiddleware(CreateUserDto))
     @OpenAPI({summary: "Create a new user"})
     @ResponseSchema(UserModel)

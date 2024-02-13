@@ -7,7 +7,7 @@ import {
     InterceptorMetadata,
     NodeBootEngineOptions,
 } from "@node-boot/context";
-import {isPromiseLike, runInSequence} from "../util";
+import {runInSequence} from "../util";
 import {NodeBootDriver} from "./NodeBootDriver";
 import {ActionParameterHandler} from "../handler";
 
@@ -68,7 +68,7 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
                     ...actionMetadata.interceptors,
                 ]);
                 this.driver.registerAction(actionMetadata, async (action: Action) => {
-                    return this.executeAction(actionMetadata, action, interceptorFns);
+                    return await this.executeAction(actionMetadata, action, interceptorFns);
                 });
             });
         });
@@ -99,20 +99,19 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
             .map(param => this.parameterHandler.handle(action, param));
 
         // after all parameters are computed
-        return Promise.all(paramsPromises)
-            .then(params => {
-                return this.handleCallMethodResult(params, action, actionMetadata, interceptorFns);
-            })
-            .catch(error => {
-                // otherwise simply handle error without action execution
-                return this.driver.handleError(error, action, actionMetadata);
-            });
+        try {
+            const params = await Promise.all(paramsPromises);
+            return await this.handleCallMethodResult(params, action, actionMetadata, interceptorFns);
+        } catch (e) {
+            // otherwise simply handle error without action execution
+            return this.driver.handleError(error, action, actionMetadata);
+        }
     }
 
     /**
      * Handles result of the actionMetadata method execution.
      */
-    protected handleCallMethodResult(
+    protected async handleCallMethodResult(
         params: any[],
         action: Action,
         actionMetadata: ActionMetadata,
@@ -121,32 +120,29 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
         // execute action and handle result
         const allParams = actionMetadata.appendParams ? actionMetadata.appendParams(action).concat(params) : params;
 
-        const result = actionMetadata.callMethod(allParams, action);
-
-        if (isPromiseLike(result)) {
-            return result
-                .then((resultData: any) => {
-                    return this.handleResult(resultData, action, actionMetadata, interceptorFns);
-                })
-                .catch((error: any) => {
-                    return this.driver.handleError(error, action, actionMetadata);
-                });
-        } else {
-            return this.handleResult(result, action, actionMetadata, interceptorFns);
+        try {
+            const result = await actionMetadata.callMethod(allParams, action);
+            return await this.handleResult(result, action, actionMetadata, interceptorFns);
+        } catch (e) {
+            return this.driver.handleError(e, action, actionMetadata);
         }
     }
 
-    private handleResult(result: any, action: Action, actionMetadata: ActionMetadata, interceptorFns: Function[]) {
-        if (interceptorFns.length > 0) {
-            const awaitPromise = runInSequence(interceptorFns, async interceptorFn => {
-                result = await interceptorFn(action, result);
-            });
-
-            return awaitPromise
-                .then(() => this.driver.handleSuccess(result, action, actionMetadata))
-                .catch(error => this.driver.handleError(error, action, actionMetadata));
-        } else {
-            return this.driver.handleSuccess(result, action, actionMetadata);
+    private async handleResult(
+        result: any,
+        action: Action,
+        actionMetadata: ActionMetadata,
+        interceptorFns: Function[],
+    ) {
+        try {
+            if (interceptorFns.length > 0) {
+                await runInSequence(interceptorFns, async interceptorFn => {
+                    result = await interceptorFn(action, result);
+                });
+            }
+            this.driver.handleSuccess(result, action, actionMetadata);
+        } catch (e) {
+            this.driver.handleError(e, action, actionMetadata);
         }
     }
 
