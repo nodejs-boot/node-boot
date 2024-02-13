@@ -1,6 +1,6 @@
 import {plainToInstance} from "class-transformer";
-import {validateOrReject as validate, ValidationError} from "class-validator";
-import {isPromiseLike, Param} from "../util";
+import {validateOrReject as validate} from "class-validator";
+import {Param} from "../util";
 import {
     AuthorizationRequiredError,
     BadRequestError,
@@ -21,29 +21,28 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     /**
      * Handles action parameter.
      */
-    handle(action: Action, param: ParamMetadata): Promise<any> | any {
+    async handle(action: Action, param: ParamMetadata): Promise<any> {
         if (param.type === "request") return action.request;
         if (param.type === "response") return action.response;
         if (param.type === "context") return action.context;
 
         // get parameter value from request and normalize it
-        const value = this.normalizeParamValue(this.driver.getParamFromRequest(action, param), param);
-        if (isPromiseLike(value)) {
-            return value.then(value => this.handleValue(value, action, param));
-        }
+        const value = await this.normalizeParamValue(this.driver.getParamFromRequest(action, param), param);
         return this.handleValue(value, action, param);
     }
 
     /**
      * Handles non-promise value.
      */
-    protected handleValue(value: any, action: Action, param: ParamMetadata): Promise<any> | any {
+    protected async handleValue(value: any, action: Action, param: ParamMetadata): Promise<any> {
         // if transform function is given for this param then apply it
-        if (param.transform) value = param.transform(action, value);
+        if (param.transform) {
+            value = await param.transform(action, value);
+        }
 
         // if its current-user decorator then get its value
         if (param.type === "current-user") {
-            value = optionalOf(this.driver.currentUserChecker)
+            value = await optionalOf(this.driver.currentUserChecker)
                 .orElseThrow(() => new CurrentUserCheckerNotDefinedError())
                 .map(userChecker => userChecker.check(action))
                 .get();
@@ -56,42 +55,24 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
 
             if (param.type === "body" && !param.name && (isValueEmpty || isValueEmptyObject)) {
                 // body has a special check and error message
-                return Promise.reject(
-                    new ParamRequiredError(
-                        {
-                            method: action.request.method,
-                            url: action.request.url,
-                        },
-                        param,
-                    ),
+                throw new ParamRequiredError(
+                    {
+                        method: action.request.method,
+                        url: action.request.url,
+                    },
+                    param,
                 );
-            } else if (param.type === "current-user") {
+            } else if (param.type === "current-user" && !value) {
                 // current user has a special check as well
-                if (isPromiseLike(value)) {
-                    return value.then(currentUser => {
-                        if (!currentUser) {
-                            return Promise.reject(
-                                new AuthorizationRequiredError(action.request.method, action.request.url),
-                            );
-                        }
-                        return currentUser;
-                    });
-                } else {
-                    if (!value)
-                        return Promise.reject(
-                            new AuthorizationRequiredError(action.request.method, action.request.url),
-                        );
-                }
+                return Promise.reject(new AuthorizationRequiredError(action.request.method, action.request.url));
             } else if (param.name && isValueEmpty) {
                 // regular check for all other parameters // todo: figure out something with param.name usage and multiple things params (query params, upload files etc.)
-                return Promise.reject(
-                    new ParamRequiredError(
-                        {
-                            method: action.request.method,
-                            url: action.request.url,
-                        },
-                        param,
-                    ),
+                throw new ParamRequiredError(
+                    {
+                        method: action.request.method,
+                        url: action.request.url,
+                    },
+                    param,
                 );
             }
         }
@@ -159,8 +140,8 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
 
         // if target type is not primitive, transform and validate it
         if (!isTargetPrimitive && isTransformationNeeded) {
-            value = this.parseValue(value, param);
-            value = this.transformValue(value, param);
+            value = await this.parseValue(value, param);
+            value = await this.transformValue(value, param);
             value = await this.validateValue(value, param);
         }
 
@@ -170,7 +151,7 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     /**
      * Parses string value into a JSON object.
      */
-    protected parseValue(value: any, paramMetadata: ParamMetadata): any {
+    protected async parseValue(value: any, paramMetadata: ParamMetadata): Promise<any> {
         if (typeof value === "string") {
             if (["queries", "query"].includes(paramMetadata.type) && paramMetadata.targetName === "array") {
                 return [value];
@@ -188,7 +169,7 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     /**
      * Perform class-transformation if enabled.
      */
-    protected transformValue(value: any, paramMetadata: ParamMetadata): any {
+    protected async transformValue(value: any, paramMetadata: ParamMetadata): Promise<any> {
         if (
             this.driver.useClassTransformer &&
             paramMetadata.actionMetadata.options?.transformRequest !== false &&
@@ -205,7 +186,7 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     /**
      * Perform class-validation if enabled.
      */
-    protected validateValue(value: any, paramMetadata: ParamMetadata): Promise<any> | any {
+    protected async validateValue(value: any, paramMetadata: ParamMetadata): Promise<any> {
         // Validate only if validations is enabled globally via configurations
         if (this.driver.enableValidation) {
             const shouldValidate =
@@ -220,16 +201,17 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
                     this.driver.validationOptions,
                     paramMetadata.validate,
                 );
-                return validate(value, options)
-                    .then(() => value)
-                    .catch((validationErrors: ValidationError[]) => {
-                        const error: any = new BadRequestError(
-                            `Invalid ${paramMetadata.type}, check 'errors' property for more info.`,
-                        );
-                        error.errors = validationErrors;
-                        error.paramName = paramMetadata.name;
-                        throw error;
-                    });
+
+                try {
+                    await validate(value, options);
+                } catch (validationErrors) {
+                    const error: any = new BadRequestError(
+                        `Invalid ${paramMetadata.type}, check 'errors' property for more info.`,
+                    );
+                    error.errors = validationErrors;
+                    error.paramName = paramMetadata.name;
+                    throw error;
+                }
             }
         }
         return value;

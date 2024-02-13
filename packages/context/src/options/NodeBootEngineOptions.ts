@@ -56,17 +56,6 @@ export interface NodeBootEngineOptions {
     development?: boolean;
 
     /**
-     * Indicates if default routing-controller's error handler is enabled or not.
-     * Enabled by default.
-     */
-    defaultErrorHandler?: boolean;
-
-    /**
-     * Map of error overrides.
-     */
-    errorOverridingMap?: {[key: string]: any};
-
-    /**
      * Special function used to check user authorization roles per request.
      * Must return true or promise with boolean true resolved for authorization to succeed.
      */

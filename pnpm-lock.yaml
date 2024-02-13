@@ -33,8 +33,8 @@ importers:
         specifier: ^8.31.0
         version: 8.56.0
       eslint-config-katxupa:
-        specifier: ^1.0.0
-        version: 1.0.0(eslint@8.56.0)
+        specifier: ^1.0.1
+        version: 1.0.1(eslint@8.56.0)
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.56.0)
@@ -3374,8 +3374,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-config-katxupa@1.0.0(eslint@8.56.0):
-    resolution: {integrity: sha512-x911Sieah6r4L/M7g4k8iV1a16ezSh1Srljs20e6Pc3LMUK8FKnMR5hqiziarCLyGmrNN5SkF+mgrrkVtqyWWw==}
+  /eslint-config-katxupa@1.0.1(eslint@8.56.0):
+    resolution: {integrity: sha512-U3/ysNVS6MVyi1lQdGxuMwtVt2K+mEkx2Xbw3MN52TJz97143bKzk2r0VgRHdf1Z2wL//dAySrE3qu4Wsui/jA==}
     peerDependencies:
       eslint: '>= 3'
     dependencies:

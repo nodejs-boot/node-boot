@@ -9,11 +9,11 @@ export interface InterceptorInterface<TRequest = any, TResponse = any, TNext = F
      * Called before success response is being sent to the request.
      * Returned result will be sent to the user.
      */
-    intercept(action: Action<TRequest, TResponse, TNext>, result: any): any | Promise<any>;
+    intercept(action: Action<TRequest, TResponse, TNext>, result: any): Promise<any>;
 }
 
 export interface MiddlewareInterface<TRequest = any, TResponse = any, TNext = Function> {
-    use(action: Action<TRequest, TResponse, TNext>, payload?: unknown): any;
+    use(action: Action<TRequest, TResponse, TNext>, payload?: unknown): Promise<void>;
 }
 
 /**
@@ -28,5 +28,5 @@ export interface ErrorHandlerInterface<
     TResponse = any,
     TNext = Function,
 > {
-    onError(error: TError, action: Action<TRequest, TResponse, TNext>, metadata?: ActionMetadata): any;
+    onError(error: TError, action: Action<TRequest, TResponse, TNext>, metadata?: ActionMetadata): Promise<void>;
 }

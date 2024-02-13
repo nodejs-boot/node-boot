@@ -1,4 +1,4 @@
-import {isPromiseLike, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -13,7 +13,6 @@ import {
 } from "@node-boot/context";
 import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {HTTPMethods} from "fastify/types/utils";
-import {DoneFuncWithErrOrRes, HookHandlerDoneFunction} from "fastify/types/hooks";
 import {FastifyCookieOptions} from "@fastify/cookie";
 import {FastifySessionOptions} from "@fastify/session";
 import {FastifyMultipartOptions} from "@fastify/multipart";
@@ -28,6 +27,7 @@ import {
     NotFoundError,
 } from "@node-boot/error";
 import {DependenciesLoader} from "../loader";
+import {AsyncFunction} from "fastify/types/instance";
 
 const actionToHttpMethodMap = {
     delete: "DELETE",
@@ -55,12 +55,14 @@ type FastifyServerOptions = {
 export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<FastifyRequest, FastifyReply>> {
     private readonly logger: LoggerService;
     private readonly configs?: FastifyServerConfigs;
+    private readonly globalErrorHandler: GlobalErrorHandler;
 
     constructor(options: FastifyServerOptions) {
         super();
         this.logger = options.logger;
         this.configs = options.configs;
         this.app = options.fastify ?? this.loadFastify();
+        this.globalErrorHandler = new GlobalErrorHandler(this);
     }
 
     initialize() {
@@ -108,8 +110,8 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     registerMiddleware(middleware: MiddlewareMetadata, options: NodeBootEngineOptions): void {
         // Register a custom error Handler
         if ((middleware.instance as ErrorHandlerInterface).onError) {
-            const errorHandler = (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
-                (middleware.instance as ErrorHandlerInterface).onError(error, {request, response: reply});
+            const errorHandler = async (error: FastifyError, request: FastifyRequest, reply: FastifyReply) => {
+                await (middleware.instance as ErrorHandlerInterface).onError(error, {request, response: reply});
             };
 
             // Name the function for better debugging
@@ -120,21 +122,16 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         else if ((middleware.instance as MiddlewareInterface).use) {
             let fastifyHook;
             if (middleware.type === "before") {
-                fastifyHook = (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) => {
-                    this.callGlobalMiddleware(request, options, middleware, reply, done, undefined);
+                fastifyHook = async (request: FastifyRequest, reply: FastifyReply) => {
+                    await this.callGlobalMiddleware(request, options, middleware, reply, undefined);
                 };
 
                 // Name the function for better debugging
                 this.nameGlobalMiddlewareFunction(fastifyHook, middleware);
                 this.app.addHook("preHandler", fastifyHook);
             } else {
-                fastifyHook = (
-                    request: FastifyRequest,
-                    reply: FastifyReply,
-                    payload: any,
-                    done: DoneFuncWithErrOrRes,
-                ) => {
-                    this.callGlobalMiddleware(request, options, middleware, reply, done, payload);
+                fastifyHook = async (request: FastifyRequest, reply: FastifyReply, payload: any) => {
+                    await this.callGlobalMiddleware(request, options, middleware, reply, payload);
                 };
 
                 // Name the function for better debugging
@@ -144,48 +141,28 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    private callGlobalMiddleware(
+    private async callGlobalMiddleware(
         request: FastifyRequest,
         options: NodeBootEngineOptions,
         middleware: MiddlewareMetadata,
         reply: FastifyReply,
-        done: DoneFuncWithErrOrRes,
         payload: any,
     ) {
         if (request.url.startsWith(options.routePrefix || "/")) {
             try {
-                const useResult = (middleware.instance as MiddlewareInterface).use(
+                await (middleware.instance as MiddlewareInterface).use(
                     {
                         request,
                         response: reply,
-                        next: done,
                     },
                     payload,
                 );
-                if (isPromiseLike(useResult)) {
-                    useResult
-                        .then(() => done())
-                        .catch((error: any) => {
-                            this.handleError(error, undefined, {
-                                request,
-                                response: reply,
-                                next: done,
-                            });
-                            return error;
-                        });
-                } else {
-                    done();
-                }
             } catch (error: any) {
-                this.handleError(error, undefined, {
+                this.handleError(error, {
                     request,
                     response: reply,
-                    next: done,
                 });
             }
-        } else {
-            // For routes without the prefix, simply call done() to continue
-            done();
         }
     }
 
@@ -199,16 +176,14 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
 
     registerAction(
         actionMetadata: ActionMetadata,
-        executeAction: (action: Action<FastifyRequest, FastifyReply>) => any,
+        executeAction: (action: Action<FastifyRequest, FastifyReply>) => Promise<any>,
     ) {
-        const defaultMiddlewares: any[] = [];
+        const defaultMiddlewares: AsyncFunction[] = [];
 
         if (actionMetadata.isAuthorizedUsed) {
-            defaultMiddlewares.push(
-                async (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction) => {
-                    await this.checkAuthorization(request, reply, done, actionMetadata);
-                },
-            );
+            defaultMiddlewares.push(async (request: FastifyRequest, reply: FastifyReply) => {
+                await this.checkAuthorization(request, reply, actionMetadata);
+            });
         }
 
         // TODO Make sure nothing is required if @fastify/multipart is registered
@@ -226,22 +201,16 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
             await executeAction({request, response: reply});
         };
 
-        const afterMiddlewaresAdapter = async (
-            request: FastifyRequest,
-            reply: FastifyReply,
-            payload: any,
-            done: DoneFuncWithErrOrRes,
-        ) => {
-            afterMiddlewares.forEach(middleware => middleware(request, reply, payload, done));
+        const afterMiddlewaresAdapter = async (request: FastifyRequest, reply: FastifyReply, payload: any) => {
+            for (const afterMiddleware of afterMiddlewares) {
+                await afterMiddleware(request, reply, payload);
+            }
         };
 
-        const errorMiddlewaresAdapter = async (
-            request: FastifyRequest,
-            reply: FastifyReply,
-            error: Error,
-            done: () => void,
-        ) => {
-            errorMiddlewares.forEach(middleware => middleware(request, reply, error, done));
+        const errorMiddlewaresAdapter = async (request: FastifyRequest, reply: FastifyReply, error: Error) => {
+            for (const errorMiddleware of errorMiddlewares) {
+                await errorMiddleware(request, reply, error);
+            }
         };
 
         // Register route and hooks
@@ -264,15 +233,10 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         return httpMethod;
     }
 
-    async checkAuthorization(
-        request: FastifyRequest,
-        reply: FastifyReply,
-        done: HookHandlerDoneFunction,
-        actionMetadata: ActionMetadata,
-    ) {
+    async checkAuthorization(request: FastifyRequest, reply: FastifyReply, actionMetadata: ActionMetadata) {
         if (!this.authorizationChecker) throw new AuthorizationCheckerNotDefinedError();
 
-        const action: Action = {request, response: reply, next: done};
+        const action = {request, response: reply};
         try {
             const checkResult = await this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
 
@@ -281,10 +245,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                     actionMetadata.authorizedRoles.length === 0
                         ? new AuthorizationRequiredError(action.request.method, action.request.url)
                         : new AccessDeniedError(action.request.method, action.request.url);
-                this.handleError(error, actionMetadata, action);
+
+                this.handleError(error, action, actionMetadata);
             }
         } catch (error: any) {
-            this.handleError(error, actionMetadata, action);
+            this.handleError(error, action, actionMetadata);
         }
     }
 
@@ -292,43 +257,23 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
      * Creates middlewares from the given "use"-s.
      */
     protected prepareUseMiddlewares(uses: UseMetadata[]) {
-        const middlewareFunctions: Function[] = [];
+        const middlewareFunctions: AsyncFunction[] = [];
         uses.forEach((use: UseMetadata) => {
             if (use.isCustomMiddleware()) {
                 // if this is function instance of MiddlewareInterface
-                middlewareFunctions.push(
-                    (
-                        request: FastifyRequest,
-                        reply: FastifyReply,
-                        done: HookHandlerDoneFunction | DoneFuncWithErrOrRes,
-                        payload?: any,
-                    ) => {
-                        try {
-                            const useResult = getFromContainer<MiddlewareInterface>(use.middleware).use(
-                                {request, response: reply, next: done},
-                                payload,
-                            );
-
-                            if (isPromiseLike(useResult)) {
-                                useResult.catch((error: any) => {
-                                    this.handleError(error, undefined, {
-                                        request,
-                                        response: reply,
-                                        next: done,
-                                    });
-                                    return error;
-                                });
-                            }
-                            return useResult;
-                        } catch (error: any) {
-                            this.handleError(error, undefined, {
-                                request,
-                                response: reply,
-                                next: done,
-                            });
-                        }
-                    },
-                );
+                middlewareFunctions.push(async (request: FastifyRequest, reply: FastifyReply, payload?: any) => {
+                    try {
+                        return await getFromContainer<MiddlewareInterface>(use.middleware).use(
+                            {request, response: reply},
+                            payload,
+                        );
+                    } catch (error) {
+                        this.handleError(error as Error, {
+                            request,
+                            response: reply,
+                        });
+                    }
+                });
             } else if (!use.isErrorMiddleware()) {
                 // NOT a custom middleware
                 // FIXME - Check if we can support use middleware using @fastify/middie
@@ -342,11 +287,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
      * Creates error middlewares from the given "use"-s.
      */
     prepareUseErrorMiddlewares(uses: UseMetadata[]) {
-        const middlewareFunctions: Function[] = [];
+        const middlewareFunctions: AsyncFunction[] = [];
         uses.filter((use: UseMetadata) => use.isErrorMiddleware()).forEach((use: UseMetadata) => {
             // if this is function instance of ErrorMiddlewareInterface
             middlewareFunctions.push(
-                (request: FastifyRequest, reply: FastifyReply, error: FastifyError, done: () => void) => {
+                async (request: FastifyRequest, reply: FastifyReply, error: FastifyError, done: () => void) => {
                     return getFromContainer<ErrorHandlerInterface>(use.middleware).onError(error, {
                         request,
                         response: reply,
@@ -419,11 +364,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    handleError(
-        error: Error,
-        actionMetadata: ActionMetadata | undefined,
-        action: Action<FastifyRequest, FastifyReply>,
-    ) {
+    handleError(error: Error, action: Action<FastifyRequest, FastifyReply>, actionMetadata?: ActionMetadata) {
         // Handle error using Fastify's reply
         if (actionMetadata) {
             Object.keys(actionMetadata.headers).forEach(name => {
@@ -437,10 +378,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         } else {
             action.response.code(500);
         }
-        action.response.send(error);
+        const parsedError = this.globalErrorHandler.handleError(error);
+        action.response.send(parsedError);
     }
 
-    handleSuccess(result: any, actionMetadata: ActionMetadata, action: Action<FastifyRequest, FastifyReply>) {
+    handleSuccess(result: any, action: Action<FastifyRequest, FastifyReply>, actionMetadata: ActionMetadata) {
         // Handle success using Fastify's reply
         // if the actionMetadata returned the response object itself, short-circuits
         if (result && result === action.response) {
@@ -448,7 +390,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
 
         // set http status code
-        this.applyResponseStatus(result, actionMetadata, action);
+        this.applyResponseStatus(result, action, actionMetadata);
 
         // apply http headers
         Object.keys(actionMetadata.headers).forEach(name => {
@@ -505,7 +447,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         action.response.view(actionMetadata.renderedTemplate, renderOptions);
     }
 
-    private applyRedirect(result: any, options: Action, action: ActionMetadata) {
+    private applyRedirect(result: any, options: Action<FastifyRequest, FastifyReply>, action: ActionMetadata) {
         // if redirect is set then do it
         if (typeof result === "string") {
             options.response.redirect(result);
@@ -518,23 +460,21 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    private applyResponseStatus(result: any, action: ActionMetadata, options: Action) {
-        if (result === undefined && action.undefinedResultCode) {
-            if (action.undefinedResultCode instanceof Function) {
-                throw new (action.undefinedResultCode as any)(options);
-            }
-            options.response.code(action.undefinedResultCode);
+    private applyResponseStatus(
+        result: any,
+        action: Action<FastifyRequest, FastifyReply>,
+        actionMetadata: ActionMetadata,
+    ) {
+        if (result === undefined && actionMetadata.undefinedResultCode) {
+            action.response.code(actionMetadata.undefinedResultCode);
         } else if (result === null) {
-            if (action.nullResultCode) {
-                if (action.nullResultCode instanceof Function) {
-                    throw new (action.nullResultCode as any)(options);
-                }
-                options.response.code(action.nullResultCode);
+            if (actionMetadata.nullResultCode) {
+                action.response.code(actionMetadata.nullResultCode);
             } else {
-                options.response.code(204);
+                action.response.code(204);
             }
-        } else if (action.successHttpCode) {
-            options.response.code(action.successHttpCode);
+        } else if (actionMetadata.successHttpCode) {
+            action.response.code(actionMetadata.successHttpCode);
         }
     }
 

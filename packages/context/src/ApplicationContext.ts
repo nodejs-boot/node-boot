@@ -3,6 +3,7 @@ import type {ApplicationOptions, DependencyInjectionOptions} from "./options";
 import type {ApplicationAdapter, ConfigurationAdapter, ConfigurationPropertiesAdapter} from "./adapters";
 import {ActuatorAdapter, OpenApiBridgeAdapter, RepositoriesAdapter} from "./adapters";
 import {AuthorizationChecker, CurrentUserChecker} from "./checkers";
+import {ClassConstructor} from "./ioc";
 
 export class ApplicationContext {
     private static context: ApplicationContext;
@@ -35,11 +36,11 @@ export class ApplicationContext {
      */
     plainToClassTransformOptions?: ClassTransformOptions;
 
-    authorizationChecker?: AuthorizationChecker;
+    authorizationChecker?: ClassConstructor<AuthorizationChecker>;
     /**
      * Special function used to get currently authorized user.
      */
-    currentUserChecker?: CurrentUserChecker;
+    currentUserChecker?: ClassConstructor<CurrentUserChecker>;
     /**
      * Indicates if cors are enabled.
      * This requires installation of additional module (cors for express and @koa/cors for koa).

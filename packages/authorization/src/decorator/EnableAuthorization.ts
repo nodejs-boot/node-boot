@@ -3,20 +3,20 @@ import {ApplicationContext, AuthorizationChecker, CurrentUserChecker} from "@nod
 /**
  * Enable Authorization features by providing an Authorization and current user resolvers.
  *
- * @param CurrentUserCheckerClass class implementing CurrentUserResolver interface
- * @param AuthorizationCheckerClass class implementing AuthorizationResolver interface
+ * @param currentUserCheckerClass class implementing CurrentUserResolver interface
+ * @param authorizationCheckerClass class implementing AuthorizationResolver interface
  */
 export function EnableAuthorization(
-    CurrentUserCheckerClass?: new () => CurrentUserChecker,
-    AuthorizationCheckerClass?: new () => AuthorizationChecker,
+    currentUserCheckerClass?: new () => CurrentUserChecker,
+    authorizationCheckerClass?: new () => AuthorizationChecker,
 ): Function {
     return function () {
-        if (AuthorizationCheckerClass) {
-            ApplicationContext.get().authorizationChecker = new AuthorizationCheckerClass();
+        if (authorizationCheckerClass) {
+            ApplicationContext.get().authorizationChecker = authorizationCheckerClass;
         }
 
-        if (CurrentUserCheckerClass) {
-            ApplicationContext.get().currentUserChecker = new CurrentUserCheckerClass();
+        if (currentUserCheckerClass) {
+            ApplicationContext.get().currentUserChecker = currentUserCheckerClass;
         }
     };
 }

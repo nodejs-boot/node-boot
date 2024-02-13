@@ -2,7 +2,7 @@ import {MetadataArgsStorage} from "../metadata";
 import {NodeBootEngine} from "./NodeBootEngine";
 import {ValidationOptions} from "class-validator";
 import {NodeBootDriver} from "./NodeBootDriver";
-import {ComponentImporter} from "../service/ComponentImporter";
+import {ComponentImporter} from "../handler";
 import {CustomParameterDecorator, NodeBootEngineOptions} from "@node-boot/context";
 
 export class NodeBootToolkit {
@@ -58,12 +58,6 @@ export class NodeBootToolkit {
             driver.developmentMode = process.env["NODE_ENV"] !== "production";
         }
 
-        if (options.defaultErrorHandler !== undefined) {
-            driver.isDefaultErrorHandlingEnabled = options.defaultErrorHandler;
-        } else {
-            driver.isDefaultErrorHandlingEnabled = true;
-        }
-
         if (options.classTransformer !== undefined) {
             driver.useClassTransformer = options.classTransformer;
         } else {
@@ -82,7 +76,6 @@ export class NodeBootToolkit {
         driver.classToPlainTransformOptions = options.classToPlainTransformOptions;
         driver.plainToClassTransformOptions = options.plainToClassTransformOptions;
 
-        optionalOf(options.errorOverridingMap).ifPresent(it => (driver.errorOverridingMap = it));
         optionalOf(options.routePrefix).ifPresent(it => (driver.routePrefix = it));
         optionalOf(options.currentUserChecker).ifPresent(it => (driver.currentUserChecker = it));
         optionalOf(options.authorizationChecker).ifPresent(it => (driver.authorizationChecker = it));

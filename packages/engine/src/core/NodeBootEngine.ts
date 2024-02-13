@@ -9,7 +9,7 @@ import {
 } from "@node-boot/context";
 import {isPromiseLike, runInSequence} from "../util";
 import {NodeBootDriver} from "./NodeBootDriver";
-import {ActionParameterHandler} from "../service/ActionParameterHandler";
+import {ActionParameterHandler} from "../handler";
 
 /**
  * Registers controllers and middlewares in the given server framework.
@@ -67,7 +67,7 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
                     ...actionMetadata.controllerMetadata.interceptors,
                     ...actionMetadata.interceptors,
                 ]);
-                this.driver.registerAction(actionMetadata, (action: Action) => {
+                this.driver.registerAction(actionMetadata, async (action: Action) => {
                     return this.executeAction(actionMetadata, action, interceptorFns);
                 });
             });
@@ -92,7 +92,7 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
     /**
      * Executes given controller action.
      */
-    protected executeAction(actionMetadata: ActionMetadata, action: Action, interceptorFns: Function[]) {
+    protected async executeAction(actionMetadata: ActionMetadata, action: Action, interceptorFns: Function[]) {
         // compute all parameters
         const paramsPromises = actionMetadata.params
             .sort((param1, param2) => param1.index - param2.index)
@@ -101,53 +101,52 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
         // after all parameters are computed
         return Promise.all(paramsPromises)
             .then(params => {
-                // execute action and handle result
-                const allParams = actionMetadata.appendParams
-                    ? actionMetadata.appendParams(action).concat(params)
-                    : params;
-                const result = actionMetadata.methodOverride
-                    ? actionMetadata.methodOverride(actionMetadata, action, allParams)
-                    : actionMetadata.callMethod(allParams, action);
-                return this.handleCallMethodResult(result, actionMetadata, action, interceptorFns);
+                return this.handleCallMethodResult(params, action, actionMetadata, interceptorFns);
             })
             .catch(error => {
                 // otherwise simply handle error without action execution
-                return this.driver.handleError(error, actionMetadata, action);
+                return this.driver.handleError(error, action, actionMetadata);
             });
     }
 
     /**
-     * Handles result of the action method execution.
+     * Handles result of the actionMetadata method execution.
      */
-    protected handleCallMethodResult(result: any, action: ActionMetadata, options: Action, interceptorFns: Function[]) {
+    protected handleCallMethodResult(
+        params: any[],
+        action: Action,
+        actionMetadata: ActionMetadata,
+        interceptorFns: Function[],
+    ) {
+        // execute action and handle result
+        const allParams = actionMetadata.appendParams ? actionMetadata.appendParams(action).concat(params) : params;
+
+        const result = actionMetadata.callMethod(allParams, action);
+
         if (isPromiseLike(result)) {
             return result
-                .then((data: any) => {
-                    return this.handleCallMethodResult(data, action, options, interceptorFns);
+                .then((resultData: any) => {
+                    return this.handleResult(resultData, action, actionMetadata, interceptorFns);
                 })
                 .catch((error: any) => {
-                    return this.driver.handleError(error, action, options);
+                    return this.driver.handleError(error, action, actionMetadata);
                 });
         } else {
-            if (interceptorFns) {
-                const awaitPromise = runInSequence(interceptorFns, interceptorFn => {
-                    const interceptedResult = interceptorFn(options, result);
-                    if (isPromiseLike(interceptedResult)) {
-                        return interceptedResult.then((resultFromPromise: any) => {
-                            result = resultFromPromise;
-                        });
-                    } else {
-                        result = interceptedResult;
-                        return Promise.resolve();
-                    }
-                });
+            return this.handleResult(result, action, actionMetadata, interceptorFns);
+        }
+    }
 
-                return awaitPromise
-                    .then(() => this.driver.handleSuccess(result, action, options))
-                    .catch(error => this.driver.handleError(error, action, options));
-            } else {
-                return this.driver.handleSuccess(result, action, options);
-            }
+    private handleResult(result: any, action: Action, actionMetadata: ActionMetadata, interceptorFns: Function[]) {
+        if (interceptorFns.length > 0) {
+            const awaitPromise = runInSequence(interceptorFns, async interceptorFn => {
+                result = await interceptorFn(action, result);
+            });
+
+            return awaitPromise
+                .then(() => this.driver.handleSuccess(result, action, actionMetadata))
+                .catch(error => this.driver.handleError(error, action, actionMetadata));
+        } else {
+            return this.driver.handleSuccess(result, action, actionMetadata);
         }
     }
 

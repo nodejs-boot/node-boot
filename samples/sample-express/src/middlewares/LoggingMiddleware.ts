@@ -9,9 +9,7 @@ export class LoggingMiddleware implements MiddlewareInterface<Request, Response>
     @Inject()
     private logger: Logger;
 
-    use(action: Action<Request, Response, Function>): any {
-        const {next} = action;
+    async use(_: Action<Request, Response, Function>): Promise<void> {
         this.logger.info(`Logging Middleware: Incoming request`);
-        next?.();
     }
 }

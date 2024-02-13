@@ -9,7 +9,7 @@ export class CustomErrorHandler implements ErrorHandlerInterface<FastifyError, F
     @Inject()
     private logger: Logger;
 
-    onError(error: FastifyError, action: Action<FastifyRequest, FastifyReply>): void {
+    async onError(error: FastifyError, action: Action<FastifyRequest, FastifyReply>): Promise<void> {
         const {response} = action;
         if (error instanceof errorCodes.FST_ERR_BAD_STATUS_CODE) {
             // Log error

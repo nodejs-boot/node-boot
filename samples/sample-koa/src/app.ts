@@ -9,17 +9,18 @@ import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {KoaServer} from "@node-boot/koa-server";
 import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/starter-openapi";
 import {EnableActuator} from "@node-boot/starter-actuator";
-import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
 import {EnableDI} from "@node-boot/di";
 import {AppConfigProperties} from "./config/AppConfigProperties";
 import {EnableRepositories} from "@node-boot/starter-persistence";
+import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
+import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @Configurations([AppConfigProperties, MultipleConfigurations])
 @Controllers([UserController])
-@GlobalMiddlewares([LoggingMiddleware])
+@GlobalMiddlewares([LoggingMiddleware, CustomErrorHandler])
 //@EnableComponentScan()
 /*
 * @EnableComponentScan({

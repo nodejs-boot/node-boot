@@ -8,18 +8,6 @@ export interface ApplicationOptions {
     port?: number;
 
     /**
-     * Indicates if default routing-controller's error handler is enabled or not.
-     * Enabled by default.
-     */
-    defaultErrorHandler?: boolean;
-
-    /**
-     * Indicates if a custom error handler was implemented by the application.
-     * Disabled by default.
-     */
-    customErrorHandler?: boolean;
-
-    /**
      * Global Options for exposed REST endpoints
      * */
     apiOptions?: ApiOptions;

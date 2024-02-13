@@ -97,12 +97,12 @@ export class ActionMetadata {
     /**
      * Http code to be used on undefined action returned content.
      */
-    undefinedResultCode: number | Function;
+    undefinedResultCode: number;
 
     /**
      * Http code to be used on null action returned content.
      */
-    nullResultCode: number | Function;
+    nullResultCode: number;
 
     /**
      * Http code to be set on successful response.
@@ -139,11 +139,6 @@ export class ActionMetadata {
      */
     appendParams?: (action: Action) => any[];
 
-    /**
-     * Special function that will be called instead of orignal method of the target.
-     */
-    methodOverride?: (actionMetadata: ActionMetadata, action: Action, params: any[]) => Promise<any> | any;
-
     constructor(
         controllerMetadata: ControllerMetadata,
         args: ActionMetadataArgs,
@@ -156,7 +151,6 @@ export class ActionMetadata {
         this.options = args.options;
         this.type = args.type;
         this.appendParams = args.appendParams;
-        this.methodOverride = args.methodOverride;
     }
 
     /**
@@ -168,7 +162,7 @@ export class ActionMetadata {
 
         if (!baseRoute || baseRoute === "") return route;
 
-        const fullPath = `^${prefix}${route.toString().substr(1)}?$`;
+        const fullPath = `^${prefix}${route.toString().substring(1)}?$`;
 
         return new RegExp(fullPath, route.flags);
     }
@@ -240,12 +234,14 @@ export class ActionMetadata {
                 return ActionMetadata.appendBaseRoute(this.controllerMetadata.route, this.route);
             }
             return this.route;
+        } else {
+            let path = "";
+            if (this.controllerMetadata.route) {
+                path += this.controllerMetadata.route;
+            }
+            if (this.route) path += this.route;
+            return path;
         }
-
-        let path = "";
-        if (this.controllerMetadata.route) path += this.controllerMetadata.route;
-        if (this.route && typeof this.route === "string") path += this.route;
-        return path;
     }
 
     /**

@@ -1,4 +1,10 @@
-import {isPromiseLike, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
+import {
+    GlobalErrorHandler,
+    NodeBootDriver,
+    ResultTransformer,
+    ServerConfig,
+    ServerConfigOptions,
+} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -38,18 +44,25 @@ type ExpressServerOptions = {
     configs?: ExpressServerConfigs;
     express?: Application;
 };
+
 /**
  * Integration with express framework.
  */
 export class ExpressDriver extends NodeBootDriver<Application> {
     private readonly logger: LoggerService;
     private readonly configs?: ExpressServerConfigs;
+    private readonly globalErrorHandler: GlobalErrorHandler;
+    private readonly resultTransformer: ResultTransformer;
+    private custormErrorHandler: boolean;
 
     constructor(serverOptions: ExpressServerOptions) {
         super();
         this.app = serverOptions.express ?? DependenciesLoader.loadExpress();
         this.logger = serverOptions.logger;
         this.configs = serverOptions.configs;
+        this.globalErrorHandler = new GlobalErrorHandler(this);
+        this.resultTransformer = new ResultTransformer(this);
+        this.custormErrorHandler = false;
     }
 
     /**
@@ -75,24 +88,25 @@ export class ExpressDriver extends NodeBootDriver<Application> {
 
         // if its an error handler then register it with proper signature in express
         if ((middleware.instance as ErrorHandlerInterface).onError) {
-            middlewareWrapper = (error: any, request: any, response: any, next: (err?: any) => any) => {
-                (middleware.instance as ErrorHandlerInterface).onError(error, {request, response, next});
+            this.custormErrorHandler = true;
+            middlewareWrapper = async (error: any, request: any, response: any, next: (err?: any) => any) => {
+                try {
+                    await (middleware.instance as ErrorHandlerInterface).onError(error, {request, response});
+                    next();
+                } catch (e) {
+                    this.handleError(e, {request, response, next}, undefined, true);
+                }
             };
         }
 
         // if its a regular middleware then register it as express middleware
         else if ((middleware.instance as MiddlewareInterface).use) {
-            middlewareWrapper = (request: any, response: any, next: (err: any) => any) => {
+            middlewareWrapper = async (request: any, response: any, next: (err?: any) => any) => {
                 try {
-                    const useResult = (middleware.instance as MiddlewareInterface).use({request, response, next});
-                    if (isPromiseLike(useResult)) {
-                        useResult.catch((error: any) => {
-                            this.handleError(error, undefined, {request, response, next});
-                            return error;
-                        });
-                    }
+                    await (middleware.instance as MiddlewareInterface).use({request, response});
+                    next();
                 } catch (error) {
-                    this.handleError(error, undefined, {request, response, next});
+                    this.handleError(error, {request, response, next});
                 }
             };
         }
@@ -111,7 +125,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     /**
      * Registers action in the driver.
      */
-    registerAction(actionMetadata: ActionMetadata, executeCallback: (options: Action) => any): void {
+    registerAction(actionMetadata: ActionMetadata, executeCallback: (options: Action) => Promise<any>): void {
         // middlewares required for this action
         const defaultMiddlewares: any[] = [];
 
@@ -124,34 +138,23 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         }
 
         if (actionMetadata.isAuthorizedUsed) {
-            defaultMiddlewares.push((request: Request, response: Response, next: Function) => {
+            defaultMiddlewares.push(async (request: Request, response: Response, next: Function) => {
                 if (!this.authorizationChecker) throw new AuthorizationCheckerNotDefinedError();
 
-                const action: Action = {request, response, next};
+                const action = {request, response, next};
                 try {
-                    const checkResult = this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
-
-                    const handleError = (result: any) => {
-                        if (!result) {
-                            const error =
-                                actionMetadata.authorizedRoles.length === 0
-                                    ? new AuthorizationRequiredError(action.request.method, action.request.url)
-                                    : new AccessDeniedError(action.request.method, action.request.url);
-                            this.handleError(error, actionMetadata, action);
-                        } else {
-                            next();
-                        }
-                    };
-
-                    if (isPromiseLike(checkResult)) {
-                        checkResult
-                            .then(result => handleError(result))
-                            .catch(error => this.handleError(error, actionMetadata, action));
+                    const authorized = await this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
+                    if (!authorized) {
+                        const error =
+                            actionMetadata.authorizedRoles.length === 0
+                                ? new AuthorizationRequiredError(action.request.method, action.request.url)
+                                : new AccessDeniedError(action.request.method, action.request.url);
+                        this.handleError(error, action, actionMetadata, true);
                     } else {
-                        handleError(checkResult);
+                        next();
                     }
                 } catch (error) {
-                    this.handleError(error, actionMetadata, action);
+                    this.handleError(error, action, actionMetadata, true);
                 }
             });
         }
@@ -177,8 +180,8 @@ export class ExpressDriver extends NodeBootDriver<Application> {
 
         // prepare route and route handler function
         const route = ActionMetadata.appendBaseRoute(this.routePrefix, actionMetadata.fullRoute);
-        const routeHandler = function routeHandler(request: any, response: any, next: Function) {
-            return executeCallback({request, response, next});
+        const routeHandler = async (request: any, response: any, next: Function) => {
+            return await executeCallback({request, response, next});
         };
 
         // This ensures that a request is only processed once to prevent unhandled rejections saying
@@ -269,7 +272,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     /**
      * Handles result of successfully executed controller actionMetadata.
      */
-    handleSuccess(result: any, actionMetadata: ActionMetadata, action: Action<Request, Response>): void {
+    handleSuccess(result: any, action: Action<Request, Response>, actionMetadata: ActionMetadata): void {
         // if the actionMetadata returned the response object itself, short-circuits
         if (result && result === action.response) {
             action.next?.();
@@ -277,19 +280,13 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         }
 
         // transform result if needed
-        result = this.transformResult(result, actionMetadata);
+        result = this.resultTransformer.transformResult(result, actionMetadata);
 
         // set http status code
         if (result === undefined && actionMetadata.undefinedResultCode) {
-            if (actionMetadata.undefinedResultCode instanceof Function) {
-                throw new (actionMetadata.undefinedResultCode as any)(action);
-            }
             action.response.status(actionMetadata.undefinedResultCode);
         } else if (result === null) {
             if (actionMetadata.nullResultCode) {
-                if (actionMetadata.nullResultCode instanceof Function) {
-                    throw new (actionMetadata.nullResultCode as any)(action);
-                }
                 action.response.status(actionMetadata.nullResultCode);
             } else {
                 action.response.status(204);
@@ -371,33 +368,36 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     /**
      * Handles result of failed executed controller action.
      */
-    handleError(error: any, action: ActionMetadata | undefined, options: Action): any {
-        if (this.isDefaultErrorHandlingEnabled) {
-            const response: any = options.response;
+    handleError(
+        error: any,
+        action: Action<Request, Response>,
+        actionMetadata?: ActionMetadata,
+        useGlobalHandler?: boolean,
+    ): any {
+        const response = action.response;
 
-            // set http code
-            // note that we can't use error instanceof HttpError properly anymore because of new typescript emit process
-            if (error.httpCode) {
-                response.status(error.httpCode);
-            } else {
-                response.status(500);
-            }
-
-            // apply http headers
-            if (action) {
-                Object.keys(action.headers).forEach(name => {
-                    response.header(name, action.headers[name]);
-                });
-            }
-
-            // send error content
-            if (action && action.isJsonTyped) {
-                response.json(this.processJsonError(error));
-            } else {
-                response.send(this.processTextError(error)); // todo: no need to do it because express by default does it
-            }
+        // set http code
+        // note that we can't use error instanceof HttpError properly anymore because of new typescript emit process
+        if (error.httpCode) {
+            response.status(error.httpCode);
+        } else {
+            response.status(500);
         }
-        options.next?.(error);
+
+        // apply http headers
+        if (actionMetadata) {
+            Object.keys(actionMetadata.headers).forEach(name => {
+                response.header(name, actionMetadata.headers[name]);
+            });
+        }
+
+        if (useGlobalHandler || !this.custormErrorHandler) {
+            const parsedError = this.globalErrorHandler.handleError(error);
+            // send error content
+            response.json(parsedError);
+        } else {
+            action.next?.(error);
+        }
     }
 
     /**
@@ -408,28 +408,20 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         uses.forEach((use: UseMetadata) => {
             if (use.middleware.prototype && use.middleware.prototype.use) {
                 // if this is function instance of MiddlewareInterface
-                middlewareFunctions.push((request: any, response: any, next: (err: any) => any) => {
+                middlewareFunctions.push(async (request: any, response: any, next: (err: any) => any) => {
                     try {
-                        const useResult = getFromContainer<MiddlewareInterface>(use.middleware).use({
+                        return getFromContainer<MiddlewareInterface>(use.middleware).use({
                             request,
                             response,
                             next,
                         });
-                        if (isPromiseLike(useResult)) {
-                            useResult.catch((error: any) => {
-                                this.handleError(error, undefined, {request, response, next});
-                                return error;
-                            });
-                        }
-
-                        return useResult;
                     } catch (error) {
-                        this.handleError(error, undefined, {request, response, next});
+                        this.handleError(error, {request, response, next});
                     }
                 });
             } else if (use.middleware.prototype && use.middleware.prototype.error) {
                 // if this is function instance of ErrorMiddlewareInterface
-                middlewareFunctions.push(function (error: any, request: any, response: any, next: (err: any) => any) {
+                middlewareFunctions.push(async (error: any, request: any, response: any, next: (err: any) => any) => {
                     return getFromContainer<ErrorHandlerInterface>(use.middleware).onError(error, {
                         request,
                         response,
