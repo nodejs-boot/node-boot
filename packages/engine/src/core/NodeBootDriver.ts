@@ -1,6 +1,5 @@
 import {ValidatorOptions} from "class-validator";
-import {ClassTransformOptions, instanceToPlain} from "class-transformer";
-import {HttpError} from "@node-boot/error";
+import {ClassTransformOptions} from "class-transformer";
 import {
     Action,
     ActionMetadata,
@@ -49,11 +48,6 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
     plainToClassTransformOptions?: ClassTransformOptions;
 
     /**
-     * Indicates if default routing-controllers error handler should be used or not.
-     */
-    isDefaultErrorHandlingEnabled: boolean;
-
-    /**
      * Indicates if routing-controllers should operate in development mode.
      */
     developmentMode: boolean;
@@ -62,11 +56,6 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
      * Global application prefix.
      */
     routePrefix = "";
-
-    /**
-     * Map of error overrides.
-     */
-    errorOverridingMap: {[key: string]: any};
 
     /**
      * Special function used to check user authorization roles per request.
@@ -78,87 +67,6 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
      * Special function used to get currently authorized user.
      */
     currentUserChecker?: CurrentUserChecker;
-
-    protected transformResult<T = unknown>(result: any, actionMetadata: ActionMetadata): T {
-        // check if we need to transform result
-        const shouldTransform =
-            this.useClassTransformer && // transform only if class-transformer is enabled
-            actionMetadata.options?.transformResponse !== false && // don't transform if actionMetadata response transform is disabled
-            result instanceof Object && // don't transform primitive types (string/number/boolean)
-            !(
-                (result instanceof Uint8Array || result.pipe instanceof Function) // don't transform binary data // don't transform streams
-            );
-
-        // transform result if needed
-        if (shouldTransform) {
-            const options = actionMetadata.responseClassTransformOptions || this.classToPlainTransformOptions;
-            result = instanceToPlain(result, options);
-        }
-
-        return result;
-    }
-
-    protected processJsonError(error: any) {
-        if (!this.isDefaultErrorHandlingEnabled) return error;
-
-        if (typeof error.toJSON === "function") return error.toJSON();
-
-        let processedError: any = {};
-        if (error instanceof Error) {
-            const name = error.name && error.name !== "Error" ? error.name : error.constructor.name;
-            processedError.name = name;
-
-            if (error.message) processedError.message = error.message;
-            if (error.stack && this.developmentMode) processedError.stack = error.stack;
-
-            Object.keys(error)
-                .filter(
-                    key =>
-                        key !== "stack" &&
-                        key !== "name" &&
-                        key !== "message" &&
-                        (!(error instanceof HttpError) || key !== "httpCode"),
-                )
-                .forEach(key => (processedError[key] = (error as any)[key]));
-
-            if (this.errorOverridingMap)
-                Object.keys(this.errorOverridingMap)
-                    .filter(key => name === key)
-                    .forEach(key => (processedError = this.merge(processedError, this.errorOverridingMap[key])));
-
-            return Object.keys(processedError).length > 0 ? processedError : undefined;
-        }
-
-        return error;
-    }
-
-    protected processTextError(error: any) {
-        if (!this.isDefaultErrorHandlingEnabled) return error;
-
-        if (error instanceof Error) {
-            if (this.developmentMode && error.stack) {
-                return error.stack;
-            } else if (error.message) {
-                return error.message;
-            }
-        }
-        return error;
-    }
-
-    protected merge(obj1: any, obj2: any): any {
-        const result: any = {};
-        for (const i in obj1) {
-            if (i in obj2 && typeof obj1[i] === "object" && i !== null) {
-                result[i] = this.merge(obj1[i], obj2[i]);
-            } else {
-                result[i] = obj1[i];
-            }
-        }
-        for (const i in obj2) {
-            result[i] = obj2[i];
-        }
-        return result;
-    }
 
     /**
      * Initializes the things driver needs before routes and middleware registration.
@@ -173,7 +81,7 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
     /**
      * Registers actionMetadata in the driver.
      */
-    abstract registerAction(actionMetadata: ActionMetadata, executeCallback: (action: TAction) => any): void;
+    abstract registerAction(actionMetadata: ActionMetadata, executeCallback: (action: TAction) => Promise<any>): void;
 
     /**
      * Registers all routes in the framework.
@@ -188,10 +96,15 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
     /**
      * Defines an algorithm of how to handle error during executing controller actionMetadata.
      */
-    abstract handleError(error: any, actionMetadata: ActionMetadata, action: TAction): any;
+    abstract handleError(
+        error: any,
+        action: TAction,
+        actionMetadata?: ActionMetadata,
+        useGlobalHandler?: boolean,
+    ): Promise<any>;
 
     /**
      * Defines an algorithm of how to handle success result of executing controller actionMetadata.
      */
-    abstract handleSuccess(result: any, actionMetadata: ActionMetadata, action: TAction): void;
+    abstract handleSuccess(result: any, action: TAction, actionMetadata: ActionMetadata): void;
 }

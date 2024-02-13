@@ -1,7 +1,14 @@
-import {isPromiseLike, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
+import {
+    GlobalErrorHandler,
+    NodeBootDriver,
+    ResultTransformer,
+    ServerConfig,
+    ServerConfigOptions,
+} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
+    ErrorHandlerInterface,
     getFromContainer,
     MiddlewareMetadata,
     ParamMetadata,
@@ -14,7 +21,7 @@ import {
     HttpError,
     NotFoundError,
 } from "@node-boot/error";
-import Koa from "koa";
+import Koa, {Context, Request, Response} from "koa";
 import Router from "@koa/router";
 import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
 import {DependenciesLoader} from "../loader";
@@ -37,10 +44,13 @@ type KoaServerOptions = {
 /**
  * Integration with koa framework.
  */
-export class KoaDriver extends NodeBootDriver<Koa> {
+export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
     private readonly logger: LoggerService;
     private readonly router: Router;
     private readonly configs?: KoaServerConfigs;
+    private readonly globalErrorHandler: GlobalErrorHandler;
+    private readonly resultTransformer: ResultTransformer;
+    private customErrorHandler: ErrorHandlerInterface;
 
     constructor(serverOptions: KoaServerOptions) {
         super();
@@ -48,6 +58,8 @@ export class KoaDriver extends NodeBootDriver<Koa> {
         this.configs = serverOptions.configs;
         this.app = serverOptions.koa ?? DependenciesLoader.loadKoa();
         this.router = serverOptions.router ?? DependenciesLoader.loadRouter();
+        this.globalErrorHandler = new GlobalErrorHandler(this);
+        this.resultTransformer = new ResultTransformer(this);
     }
 
     /**
@@ -83,54 +95,75 @@ export class KoaDriver extends NodeBootDriver<Koa> {
      * Registers middleware that run before controller actions.
      */
     registerMiddleware(middleware: MiddlewareMetadata): void {
-        if ((middleware.instance as MiddlewareInterface).use) {
-            this.app.use(function (context: any, next: any) {
-                return (middleware.instance as MiddlewareInterface).use({
-                    request: context.request,
-                    response: context.response,
-                    context,
-                    next,
-                });
-            });
+        // if its an error handler then register it with proper signature in express
+        if ((middleware.instance as ErrorHandlerInterface).onError) {
+            this.customErrorHandler = middleware.instance as ErrorHandlerInterface;
         }
+        // if its a regular middleware then register it as koa middleware
+        else if ((middleware.instance as MiddlewareInterface).use) {
+            const middlewareWrapper = async (context: any, next: any) => {
+                try {
+                    await (middleware.instance as MiddlewareInterface).use({
+                        request: context.request,
+                        response: context.response,
+                        context,
+                        next,
+                    });
+                    return next();
+                } catch (error) {
+                    await this.handleError(error, {
+                        request: context.request,
+                        response: context.response,
+                        context,
+                        next,
+                    });
+                }
+            };
+            this.nameMiddleware(middlewareWrapper, middleware);
+        }
+    }
+
+    private nameMiddleware(
+        middlewareWrapper: (context: any, next: any) => Promise<any>,
+        middleware: MiddlewareMetadata,
+    ) {
+        // Name the function for better debugging
+        Object.defineProperty(middlewareWrapper, "name", {
+            value: middleware.instance.constructor.name,
+            writable: true,
+        });
+
+        this.app.use(middlewareWrapper);
     }
 
     /**
      * Registers action in the driver.
      */
-    registerAction(actionMetadata: ActionMetadata, executeCallback: (options: Action) => any): void {
+    registerAction(
+        actionMetadata: ActionMetadata,
+        executeCallback: (options: Action<Request, Response>) => Promise<any>,
+    ): void {
         // middlewares required for this action
         const defaultMiddlewares: any[] = [];
 
         if (actionMetadata.isAuthorizedUsed) {
-            defaultMiddlewares.push((context: any, next: Function) => {
+            defaultMiddlewares.push(async (context: any, next: Function) => {
                 if (!this.authorizationChecker) throw new AuthorizationCheckerNotDefinedError();
 
-                const action: Action = {request: context.request, response: context.response, context, next};
+                const action = {request: context.request, response: context.response, context, next};
                 try {
-                    const checkResult = this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
-
-                    const handleError = (result: any) => {
-                        if (!result) {
-                            const error =
-                                actionMetadata.authorizedRoles.length === 0
-                                    ? new AuthorizationRequiredError(action.request.name, action.request.url)
-                                    : new AccessDeniedError(action.request.name, action.request.url);
-                            return this.handleError(error, actionMetadata, action);
-                        } else {
-                            return next();
-                        }
-                    };
-
-                    if (isPromiseLike(checkResult)) {
-                        return checkResult
-                            .then(result => handleError(result))
-                            .catch(error => this.handleError(error, actionMetadata, action));
+                    const checkResult = await this.authorizationChecker.check(action, actionMetadata.authorizedRoles);
+                    if (!checkResult) {
+                        const error =
+                            actionMetadata.authorizedRoles.length === 0
+                                ? new AuthorizationRequiredError(action.request.name, action.request.url)
+                                : new AccessDeniedError(action.request.name, action.request.url);
+                        await this.handleError(error, action, actionMetadata);
                     } else {
-                        return handleError(checkResult);
+                        return next();
                     }
                 } catch (error) {
-                    return this.handleError(error, actionMetadata, action);
+                    await this.handleError(error, action, actionMetadata);
                 }
             });
         }
@@ -162,16 +195,22 @@ export class KoaDriver extends NodeBootDriver<Koa> {
             route = route.substring(0, route.length - 1);
         }
 
-        const routeHandler = (context: any, next: () => Promise<any>) => {
-            const options: Action = {request: context.request, response: context.response, context, next};
-            return executeCallback(options);
+        const routeHandler = async (context: Context, next: () => Promise<any>) => {
+            const options: Action<Request, Response> = {
+                request: context.request,
+                response: context.response,
+                context,
+                next,
+            };
+            await executeCallback(options);
+            return next();
         };
 
         // This ensures that a request is only processed once. Multiple routes may match a request
         // e.g. GET /users/me matches both @All(/users/me) and @Get(/users/:id)), only the first matching route should
         // be called.
         // The following middleware only starts an action processing if the request has not been processed before.
-        const routeGuard = (context: any, next: () => Promise<any>) => {
+        const routeGuard = async (context: any, next: () => Promise<any>) => {
             if (!context.request.routingControllersStarted) {
                 context.request.routingControllersStarted = true;
                 return next();
@@ -191,10 +230,6 @@ export class KoaDriver extends NodeBootDriver<Koa> {
     registerRoutes() {
         this.app.use(this.router.routes());
         this.app.use(this.router.allowedMethods());
-        // FIXME Bind Error handler here
-        //this.app.onerror = err => {
-        //    console.log(err);
-        //}
     }
 
     /**
@@ -255,105 +290,93 @@ export class KoaDriver extends NodeBootDriver<Koa> {
     }
 
     /**
-     * Handles result of successfully executed controller action.
+     * Handles result of successfully executed controller actionMetadata.
      */
-    handleSuccess(result: any, action: ActionMetadata, options: Action): void {
-        // if the action returned the context or the response object itself, short-circuits
-        if (result && (result === options.response || result === options.context)) {
-            return options.next?.();
+    handleSuccess(result: any, action: Action<Request, Response>, actionMetadata: ActionMetadata): void {
+        // if the actionMetadata returned the context or the response object itself, short-circuits
+        if (result && (result === action.response || result === action.context)) {
+            return;
         }
 
         // transform result if needed
-        result = this.transformResult(result, action);
+        result = this.resultTransformer.transformResult(result, actionMetadata);
 
-        if (action.redirect) {
+        if (actionMetadata.redirect) {
             // if redirect is set then do it
             if (typeof result === "string") {
-                options.response.redirect(result);
+                action.response.redirect(result);
             } else if (result instanceof Object) {
-                options.response.redirect(templateUrl(action.redirect, result));
+                action.response.redirect(templateUrl(actionMetadata.redirect, result));
             } else {
-                options.response.redirect(action.redirect);
+                action.response.redirect(actionMetadata.redirect);
             }
-        } else if (action.renderedTemplate) {
+        } else if (actionMetadata.renderedTemplate) {
             // if template is set then render it
             // FIXME: not working in koa
             throw new Error("'renderedTemplate' is not supported for Koa yet");
             /* const renderOptions = result && result instanceof Object ? result : {};
 
              this.app.use(async function(ctx: any, next: any) {
-                 await ctx.render(action.renderedTemplate, renderOptions);
+                 await ctx.render(actionMetadata.renderedTemplate, renderOptions);
              });*/
         } else if (result === undefined) {
             // throw NotFoundError on undefined response
-            if (action.undefinedResultCode instanceof Function) {
-                throw new (action.undefinedResultCode as any)(options);
-            } else if (!action.undefinedResultCode) {
-                throw new NotFoundError();
-            }
+            throw new NotFoundError();
         } else if (result === null) {
-            // send null response
-            if (action.nullResultCode instanceof Function) throw new (action.nullResultCode as any)(options);
-
-            options.response.body = null;
+            action.response.body = null;
         } else if (result instanceof Uint8Array) {
             // check if it's binary data (typed array)
-            options.response.body = Buffer.from(result as any);
+            action.response.body = Buffer.from(result as any);
         } else {
             // send regular result
-            options.response.body = result;
+            action.response.body = result;
         }
 
         // set http status code
-        if (result === undefined && action.undefinedResultCode) {
-            options.response.status = action.undefinedResultCode;
-        } else if (result === null && action.nullResultCode) {
-            options.response.status = action.nullResultCode;
-        } else if (action.successHttpCode) {
-            options.response.status = action.successHttpCode;
-        } else if (options.response.body === null) {
-            options.response.status = 204;
+        if (result === undefined && actionMetadata.undefinedResultCode) {
+            action.response.status = actionMetadata.undefinedResultCode;
+        } else if (result === null && actionMetadata.nullResultCode) {
+            action.response.status = actionMetadata.nullResultCode;
+        } else if (actionMetadata.successHttpCode) {
+            action.response.status = actionMetadata.successHttpCode;
+        } else if (action.response.body === null) {
+            action.response.status = 204;
         }
 
         // apply http headers
-        Object.keys(action.headers).forEach(name => {
-            options.response.set(name, action.headers[name]);
+        Object.keys(actionMetadata.headers).forEach(name => {
+            action.response.set(name, actionMetadata.headers[name]);
         });
-
-        return options.next?.();
     }
 
     /**
-     * Handles result of failed executed controller action.
+     * Handles result of failed executed controller actionMetadata.
      */
-    handleError(error: any, action: ActionMetadata | undefined, options: Action) {
-        return new Promise<void>((resolve, reject) => {
-            if (this.isDefaultErrorHandlingEnabled) {
-                // apply http headers
-                if (action) {
-                    Object.keys(action.headers).forEach(name => {
-                        options.response.set(name, action.headers[name]);
-                    });
-                }
-
-                // send error content
-                if (action && action.isJsonTyped) {
-                    options.response.body = this.processJsonError(error);
-                } else {
-                    options.response.body = this.processTextError(error);
-                }
-
-                // set http status
-                if (error instanceof HttpError && error.httpCode) {
-                    options.response.status = error.httpCode;
-                } else {
-                    options.response.status = 500;
-                }
-
-                return resolve();
+    async handleError(error: any, action: Action<Request, Response>, actionMetadata?: ActionMetadata) {
+        try {
+            // apply http headers
+            if (actionMetadata) {
+                Object.keys(actionMetadata.headers).forEach(name => {
+                    action.response.set(name, actionMetadata.headers[name]);
+                });
             }
-            return reject(error);
-        });
+
+            // set http status
+            if (error instanceof HttpError && error.httpCode) {
+                action.response.status = error.httpCode;
+            } else {
+                action.response.status = 500;
+            }
+
+            if (this.customErrorHandler) {
+                await this.customErrorHandler.onError(error, action, actionMetadata);
+            } else {
+                action.response.body = this.globalErrorHandler.handleError(error);
+            }
+        } catch (e) {
+            // Continue processing un-cough errors
+            action.next?.(error);
+        }
     }
 
     /**
@@ -366,14 +389,15 @@ export class KoaDriver extends NodeBootDriver<Koa> {
                 // if this is function instance of MiddlewareInterface
                 middlewareFunctions.push(async (context: any, next: (err?: any) => Promise<any>) => {
                     try {
-                        return await getFromContainer<MiddlewareInterface>(use.middleware).use({
+                        await getFromContainer<MiddlewareInterface>(use.middleware).use({
                             request: context.request,
                             response: context.response,
                             context,
                             next,
                         });
+                        return next();
                     } catch (error) {
-                        return await this.handleError(error, undefined, {
+                        return this.handleError(error, {
                             request: context.request,
                             response: context.response,
                             context,

@@ -1,6 +1,5 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "@node-boot/core";
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from "@node-boot/core";
 import {UserService} from "../services/users.service";
-import {ValidationMiddleware} from "../middlewares/validation.middleware";
 import {CreateUserDto, UpdateUserDto, UserModel} from "../models";
 import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
@@ -21,7 +20,7 @@ export class UserController {
     @ResponseSchema(UserModel, {isArray: true, description: "Return a list of users"})
     async getUsers(): Promise<UserModel[]> {
         this.logger.info(`Injected backend configuration properties: ${JSON.stringify(this.appConfigProperties)}`);
-        return this.user.findAllUser();
+        return await this.user.findAllUser();
     }
 
     @Get("/query/")
@@ -40,8 +39,7 @@ export class UserController {
 
     @Post("/")
     @HttpCode(201)
-    @Authorized()
-    @UseBefore(ValidationMiddleware(CreateUserDto))
+    @Authorized("SUPER")
     @OpenAPI({summary: "Create a new user"})
     @ResponseSchema(UserModel)
     async createUser(@Body() userData: CreateUserDto): Promise<UserModel> {
@@ -49,7 +47,6 @@ export class UserController {
     }
 
     @Put("/:id")
-    @UseBefore(ValidationMiddleware(UpdateUserDto))
     @OpenAPI({summary: "Update a user"})
     @ResponseSchema(UserModel)
     async updateUser(@Param("id") userId: number, @Body() userData: UpdateUserDto): Promise<UserModel> {

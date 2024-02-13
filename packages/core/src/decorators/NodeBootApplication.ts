@@ -1,4 +1,10 @@
-import {ApplicationAdapter, ApplicationContext, ApplicationOptions, NodeBootEngineOptions} from "@node-boot/context";
+import {
+    ApplicationAdapter,
+    ApplicationContext,
+    ApplicationOptions,
+    IocContainer,
+    NodeBootEngineOptions,
+} from "@node-boot/context";
 import {BeansConfigurationAdapter} from "../adapters";
 
 /**
@@ -21,14 +27,8 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
 
         // Bind Application Adapter
         context.applicationAdapter = new (class implements ApplicationAdapter {
-            bind(): NodeBootEngineOptions {
+            bind(iocContainer: IocContainer): NodeBootEngineOptions {
                 const context = ApplicationContext.get();
-
-                if (context.applicationOptions.customErrorHandler && context.applicationOptions.defaultErrorHandler) {
-                    throw new Error(
-                        `Invalid configurations: 'defaultErrorHandler' cannot be enabled if an @ErrorHandler is provided. Please disable defaultErrorHandler or delete the custom @ErrorHandler.`,
-                    );
-                }
                 return {
                     /* cors: {
                                            origin: ORIGIN,
@@ -45,9 +45,12 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
                     plainToClassTransformOptions: context.plainToClassTransformOptions,
                     controllers: context.controllerClasses,
                     middlewares: context.globalMiddlewares,
-                    defaultErrorHandler: options?.defaultErrorHandler,
-                    currentUserChecker: context.currentUserChecker,
-                    authorizationChecker: context.authorizationChecker,
+                    currentUserChecker: context.currentUserChecker
+                        ? iocContainer.get(context.currentUserChecker)
+                        : undefined,
+                    authorizationChecker: context.authorizationChecker
+                        ? iocContainer.get(context.authorizationChecker)
+                        : undefined,
                 };
             }
         })();

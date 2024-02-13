@@ -1,5 +1,5 @@
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
-import {OpenAPIObject, SchemaObject} from "openapi3-ts";
+import {OpenAPIObject} from "openapi3-ts";
 import {OpenApiOptions} from "@node-boot/context";
 import {controllersToSpec} from "../spec";
 import {NodeBootToolkit} from "@node-boot/engine";
@@ -62,25 +62,5 @@ export class OpenApiSpecAdapter {
             options,
             spec: openApiSpec,
         };
-    }
-
-    static mergeSchemaObjects(
-        obj1: Record<string, SchemaObject>,
-        obj2: Record<string, SchemaObject>,
-    ): Record<string, SchemaObject> {
-        const result: Record<string, SchemaObject> = {...obj1};
-
-        for (const key in obj2) {
-            if (key in obj2) {
-                if (key in result) {
-                    // If the key already exists in result, merge the SchemaObjects
-                    result[key] = {...result[key], ...obj2[key]};
-                } else {
-                    // If the key doesn't exist in result, add it
-                    result[key] = {...obj2[key]};
-                }
-            }
-        }
-        return result;
     }
 }

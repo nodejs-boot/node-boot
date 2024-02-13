@@ -9,16 +9,7 @@ export class LoggingMiddleware implements MiddlewareInterface<Request, Response>
     @Inject()
     private logger: Logger;
 
-    async use(action: Action<Application.Request, Response>): Promise<any> {
+    async use(_: Action<Application.Request, Response>): Promise<void> {
         this.logger.info(`Logging Middleware: Incoming request`);
-        action.context;
-        return action
-            .next?.()
-            .then(() => {
-                console.log("do something after execution");
-            })
-            .catch(error => {
-                console.log("error handling is also here", error);
-            });
     }
 }

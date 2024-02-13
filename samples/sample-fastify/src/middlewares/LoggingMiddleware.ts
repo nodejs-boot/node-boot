@@ -10,8 +10,7 @@ export class LoggingMiddleware implements MiddlewareInterface<FastifyRequest, Fa
     @Inject()
     private logger: Logger;
 
-    use(_: Action<FastifyRequest, FastifyReply, HookHandlerDoneFunction>): void {
+    async use(_: Action<FastifyRequest, FastifyReply, HookHandlerDoneFunction>): Promise<void> {
         this.logger.info(`Logging Middleware: Incoming request`);
-        //done();
     }
 }
