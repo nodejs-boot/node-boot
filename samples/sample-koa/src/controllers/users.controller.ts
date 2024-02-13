@@ -39,7 +39,7 @@ export class UserController {
 
     @Post("/")
     @HttpCode(201)
-    @Authorized()
+    @Authorized("SUPER")
     @OpenAPI({summary: "Create a new user"})
     @ResponseSchema(UserModel)
     async createUser(@Body() userData: CreateUserDto): Promise<UserModel> {

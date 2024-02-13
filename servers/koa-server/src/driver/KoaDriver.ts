@@ -8,7 +8,6 @@ import {
 import {
     Action,
     ActionMetadata,
-    ErrorHandlerInterface,
     getFromContainer,
     MiddlewareMetadata,
     ParamMetadata,
@@ -94,11 +93,8 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
      * Registers middleware that run before controller actions.
      */
     registerMiddleware(middleware: MiddlewareMetadata): void {
-        // if its an error handler then register it with proper signature in express
-        if ((middleware.instance as ErrorHandlerInterface).onError) {
-        }
-        // if its a regular middleware then register it as express middleware
-        else if ((middleware.instance as MiddlewareInterface).use) {
+        // if its a regular middleware then register it as koa middleware
+        if ((middleware.instance as MiddlewareInterface).use) {
             const middlewareWrapper = async (context: any, next: any) => {
                 try {
                     await (middleware.instance as MiddlewareInterface).use({
@@ -121,7 +117,10 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         }
     }
 
-    private nameMiddleware(middlewareWrapper, middleware: MiddlewareMetadata) {
+    private nameMiddleware(
+        middlewareWrapper: (context: any, next: any) => Promise<any>,
+        middleware: MiddlewareMetadata,
+    ) {
         // Name the function for better debugging
         Object.defineProperty(middlewareWrapper, "name", {
             value: middleware.instance.constructor.name,
@@ -224,10 +223,6 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
     registerRoutes() {
         this.app.use(this.router.routes());
         this.app.use(this.router.allowedMethods());
-        // FIXME Bind Error handler here
-        //this.app.onerror = err => {
-        //    console.log(err);
-        //}
     }
 
     /**
