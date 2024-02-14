@@ -94,7 +94,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                     await (middleware.instance as MiddlewareInterface).use({request, response});
                     next();
                 } catch (error) {
-                    this.handleError(error, {request, response, next});
+                    await this.handleError(error, {request, response, next});
                 }
             };
             this.nameMiddleware(middlewareWrapper, middleware, options);
@@ -401,7 +401,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                             next,
                         });
                     } catch (error) {
-                        this.handleError(error, {request, response, next});
+                        await this.handleError(error, {request, response, next});
                     }
                 });
             } else if (use.middleware.prototype && use.middleware.prototype.error) {
