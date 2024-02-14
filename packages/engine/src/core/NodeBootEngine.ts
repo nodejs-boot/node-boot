@@ -142,7 +142,7 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
             }
             this.driver.handleSuccess(result, action, actionMetadata);
         } catch (e) {
-            this.driver.handleError(e, action, actionMetadata);
+            await this.driver.handleError(e, action, actionMetadata);
         }
     }
 
