@@ -5,8 +5,8 @@ module.exports = {
             tsConfig: {
                 target: "ESNext",
                 strict: false,
-            }
-        }
+            },
+        },
     },
-    setupFilesAfterEnv: ["<rootDir>/src/jest.setup.ts"]
+    setupFilesAfterEnv: ["<rootDir>/src/jest.setup.ts"],
 };

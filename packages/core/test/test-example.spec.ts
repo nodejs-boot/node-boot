@@ -1,30 +1,17 @@
 import {IocContainer} from "@node-boot/context";
 
 nodeBootTest(ApplicationClass, (iocContainer: IocContainer) => {
-
     describe(`Test name`, () => {
-        beforeAll(done => {
-        });
+        beforeAll(done => {});
 
-        afterAll(done => {
+        afterAll(done => {});
 
-        });
+        beforeEach(() => {});
 
-        beforeEach(() => {
+        it("test-case 1", async () => {});
 
-        });
+        it("test-case 2", async () => {});
 
-        it("test-case 1", async () => {
-
-        });
-
-        it("test-case 2", async () => {
-
-        });
-
-        it("test-case 3", async () => {
-
-        });
+        it("test-case 3", async () => {});
     });
-
 });

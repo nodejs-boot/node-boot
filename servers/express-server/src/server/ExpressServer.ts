@@ -46,7 +46,6 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
             const context = ApplicationContext.get();
 
             try {
-
                 this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
                     this.logger.info(`=================================`);
                     this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);

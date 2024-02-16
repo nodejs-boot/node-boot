@@ -6,7 +6,7 @@ import {Body, Controller, Post} from "../src";
 describe(``, () => {
     let expressApp: any;
     let initializedUser: any;
-    let user: any = {firstName: "Manuel", lastName: "Santos"};
+    const user: any = {firstName: "Manuel", lastName: "Santos"};
 
     @Exclude()
     class UserModel {

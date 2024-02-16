@@ -153,7 +153,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                     payload,
                 );
             } catch (error: any) {
-               await this.handleError(error, {
+                await this.handleError(error, {
                     request,
                     response: reply,
                 });

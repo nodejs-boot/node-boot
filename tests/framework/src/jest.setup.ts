@@ -19,8 +19,6 @@ _global.xpto = async (
     measureMethod: string,
     timeout?: number,
 ) => {
-    console.log(
-        `Running scenario ${name}: ${times} times, measuring with ${measureMethod}`,
-    );
+    console.log(`Running scenario ${name}: ${times} times, measuring with ${measureMethod}`);
     return test(name, fn, timeout);
 };

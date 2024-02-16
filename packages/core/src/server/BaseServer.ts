@@ -16,7 +16,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         await this.initLogger(context);
     }
 
-    abstract listen():  Promise<void>;
+    abstract listen(): Promise<void>;
     abstract close();
 
     abstract getFramework(): TFramework;

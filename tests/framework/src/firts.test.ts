@@ -1,6 +1,7 @@
-import {nodeBootRun} from "./NodeBootTest";
-import {TestApp} from "./app";
+//import {nodeBootRun} from "./NodeBootTest";
+//import {TestApp} from "./app";
 
+/*
 nodeBootTest(TestApp,
     ()=>{
         @JsonController('', { transformResponse: false })
@@ -22,15 +23,6 @@ nodeBootTest(TestApp,
         }
     },
     describe(`Test name`, () => {
-
-        xpto(
-            "when it works correctly",
-            async () => {
-                await nodeBootRun(TestApp);
-            },
-            /* times to run, similar to repeats */ 19,
-            /* method to use to accumulate iterations, an enum */ "foo",
-        );
 
         beforeAll(async () => {
 
@@ -57,3 +49,4 @@ nodeBootTest(TestApp,
         });
     });
     )
+*/

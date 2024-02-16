@@ -4,7 +4,6 @@ import {NodeBoot, NodeBootApp, NodeBootApplication} from "@node-boot/core";
 import {ExpressServer} from "@node-boot/express-server";
 import {EnableDI} from "@node-boot/di";
 
-
 @EnableDI(Container)
 @NodeBootApplication()
 export class TestApp implements NodeBootApp {
