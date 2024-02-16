@@ -23,6 +23,7 @@ describe(``, () => {
             // reset metadata args storage
             NodeBootToolkit.getMetadataArgsStorage().reset();
 
+            /*
             function handler(user: UserModel) {
                 initializedUser = user;
                 const ret = new UserModel();
@@ -31,7 +32,7 @@ describe(``, () => {
                 return ret;
             }
 
-            /* @Controller("")
+             @Controller("")
             class NoTransformResponseController {
                 @Post("/default")
                 default(@Body() user: UserModel) {
