@@ -1,3 +1,5 @@
+import {BaseServer} from "./BaseServer";
+
 export interface NodeBootApp {
-    start(): void;
+    start(port?: number): Promise<BaseServer>;
 }

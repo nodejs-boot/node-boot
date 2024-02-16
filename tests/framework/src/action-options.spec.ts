@@ -1,10 +1,12 @@
 import {Exclude, Expose} from "class-transformer";
 import {defaultMetadataStorage} from "class-transformer/cjs/storage";
 import {NodeBootToolkit} from "@node-boot/engine";
-import {Body, Controller, Post} from "../src";
+import {BaseServer, Body, Controller, Post} from "@node-boot/core";
+import {axios} from "./axios";
+import {TestApp} from "./app";
 
 describe(``, () => {
-    let expressApp: any;
+    let server: BaseServer;
     let initializedUser: any;
     const user: any = {firstName: "Manuel", lastName: "Santos"};
 
@@ -16,42 +18,53 @@ describe(``, () => {
         lastName: string;
     }
 
-    beforeAll(done => {
-        // reset metadata args storage
-        NodeBootToolkit.getMetadataArgsStorage().reset();
+    beforeAll(() => {
+        return new Promise((resolve, reject) => {
+            // reset metadata args storage
+            NodeBootToolkit.getMetadataArgsStorage().reset();
 
-        function handler(user: UserModel) {
-            initializedUser = user;
-            const ret = new UserModel();
-            ret.firstName = user.firstName;
-            ret.lastName = user.lastName || "default";
-            return ret;
-        }
-
-        @Controller("")
-        class NoTransformResponseController {
-            @Post("/default")
-            default(@Body() user: UserModel) {
-                return handler(user);
+            function handler(user: UserModel) {
+                initializedUser = user;
+                const ret = new UserModel();
+                ret.firstName = user.firstName;
+                ret.lastName = user.lastName || "default";
+                return ret;
             }
 
-            @Post("/transformRequestOnly", {transformRequest: true, transformResponse: false})
-            transformRequestOnly(@Body() user: UserModel) {
-                return handler(user);
+            @Controller("")
+            class NoTransformResponseController {
+                @Post("/default")
+                default(@Body() user: UserModel) {
+                    return handler(user);
+                }
+
+                @Post("/transformRequestOnly", {transformRequest: true, transformResponse: false})
+                transformRequestOnly(@Body() user: UserModel) {
+                    return handler(user);
+                }
+
+                @Post("/transformResponseOnly", {transformRequest: false, transformResponse: true})
+                transformResponseOnly(@Body() user: UserModel) {
+                    return handler(user);
+                }
             }
 
-            @Post("/transformResponseOnly", {transformRequest: false, transformResponse: true})
-            transformResponseOnly(@Body() user: UserModel) {
-                return handler(user);
-            }
-        }
-
-        expressApp = createExpressServer().listen(3001, done);
+            // Start the application
+            new TestApp()
+                .start(3001)
+                .then(app => {
+                    server = app;
+                    resolve(app);
+                }).catch(error => reject(error));
+        });
     });
 
-    afterAll(done => {
-        defaultMetadataStorage.clear();
-        expressApp.close(done);
+    afterAll(() => {
+        return new Promise((resolve) => {
+            defaultMetadataStorage.clear();
+            server.close()
+                .then(() => resolve(server));
+        });
     });
 
     beforeEach(() => {

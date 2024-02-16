@@ -38,9 +38,11 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         return this;
     }
 
-    public async listen(): Promise<void> {
+    public async listen(port?: number): Promise<void> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
+            // Force application port at runtime
+            if (port) context.applicationOptions.port = port;
 
             this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
                 if (err) {
@@ -59,7 +61,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         });
     }
 
-    public async close() {
+    public async close(): Promise<void> {
         await this.framework?.close();
     }
 

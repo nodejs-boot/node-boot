@@ -35,6 +35,7 @@
         "@node-boot/context": "1.0.0",
         "@node-boot/core": "1.0.0",
         "@node-boot/config": "1.0.0",
+        "@node-boot/engine": "1.0.0",
         "@node-boot/di": "1.0.0",
         "@node-boot/express-server": "1.0.0",
         "express": "^4.18.2",
@@ -50,7 +51,9 @@
         "cookie": "^0.6.0",
         "express-session": "^1.17.3",
         "typedi": "^0.10.0",
-        "winston": "^3.10.0"
+        "winston": "^3.10.0",
+        "axios": "^1.6.2",
+        "reflect-metadata": "^0.2.1"
     },
     "devDependencies": {}
 }

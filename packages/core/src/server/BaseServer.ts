@@ -7,7 +7,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
     protected config: ConfigService;
 
-    protected constructor(private readonly serverType: string) {}
+    protected constructor(private readonly serverType: string) {
+    }
 
     protected async init() {
         const context = ApplicationContext.get();
@@ -16,8 +17,9 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         await this.initLogger(context);
     }
 
-    abstract listen(): Promise<void>;
-    abstract close();
+    abstract listen(port?: number): Promise<void>;
+
+    abstract close(): Promise<void>;
 
     abstract getFramework(): TFramework;
 

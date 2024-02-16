@@ -41,10 +41,11 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         return this;
     }
 
-    public async listen(): Promise<void> {
+    async listen(port?: number): Promise<void> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-
+            // Force application port at runtime
+            if (port) context.applicationOptions.port = port;
             try {
                 this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
                     this.logger.info(`=================================`);
@@ -62,7 +63,7 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         });
     }
 
-    override close() {
+    async close(): Promise<void> {
         this.serverInstance?.close();
     }
 

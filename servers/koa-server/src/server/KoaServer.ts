@@ -43,10 +43,11 @@ export class KoaServer extends BaseServer<Koa, Router> {
         return this;
     }
 
-    public listen(): Promise<void> {
+    public listen(port?: number): Promise<void> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-
+            // Force application port at runtime
+            if (port) context.applicationOptions.port = port;
             try {
                 this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
                     this.logger.info(`=================================`);
@@ -63,7 +64,7 @@ export class KoaServer extends BaseServer<Koa, Router> {
         });
     }
 
-    public close() {
+    public async close(): Promise<void> {
         this.serverInstance.close();
     }
 
