@@ -23,36 +23,9 @@ describe(``, () => {
             // reset metadata args storage
             NodeBootToolkit.getMetadataArgsStorage().reset();
 
-            /*
-            function handler(user: UserModel) {
-                initializedUser = user;
-                const ret = new UserModel();
-                ret.firstName = user.firstName;
-                ret.lastName = user.lastName || "default";
-                return ret;
-            }
-
-             @Controller("")
-            class NoTransformResponseController {
-                @Post("/default")
-                default(@Body() user: UserModel) {
-                    return handler(user);
-                }
-
-                @Post("/transformRequestOnly", {transformRequest: true, transformResponse: false})
-                transformRequestOnly(@Body() user: UserModel) {
-                    return handler(user);
-                }
-
-                @Post("/transformResponseOnly", {transformRequest: false, transformResponse: true})
-                transformResponseOnly(@Body() user: UserModel) {
-                    return handler(user);
-                }
-            }*/
-
             // Start the application
             new TestApp()
-                .start(3001)
+                .start(3000)
                 .then(app => {
                     server = app;
                     resolve(app);
@@ -74,7 +47,7 @@ describe(``, () => {
 
     it("should use controller options when action transform options are not set", async () => {
         expect.assertions(4);
-        const response = await axios.post("/default", user);
+        const response = await axios.post("/api/v1/user/default", user);
         expect(initializedUser).toBeInstanceOf(UserModel);
         expect(initializedUser.lastName).toBeUndefined();
         expect(response.status).toBe(200);
