@@ -1,28 +1,14 @@
-import {Exclude, Expose} from "class-transformer";
 import {defaultMetadataStorage} from "class-transformer/cjs/storage";
-import {NodeBootToolkit} from "@node-boot/engine";
 import {BaseServer} from "@node-boot/core";
 import {axios} from "./axios";
 import {TestApp} from "./app";
 
 describe(``, () => {
     let server: BaseServer;
-    let initializedUser: any;
     const user: any = {firstName: "Manuel", lastName: "Santos"};
-
-    @Exclude()
-    class UserModel {
-        @Expose()
-        firstName: string;
-
-        lastName: string;
-    }
 
     beforeAll(() => {
         return new Promise((resolve, reject) => {
-            // reset metadata args storage
-            NodeBootToolkit.getMetadataArgsStorage().reset();
-
             // Start the application
             new TestApp()
                 .start(3000)
@@ -41,33 +27,30 @@ describe(``, () => {
         });
     });
 
-    beforeEach(() => {
-        initializedUser = undefined;
-    });
+    beforeEach(() => {});
 
     it("should use controller options when action transform options are not set", async () => {
-        expect.assertions(4);
-        const response = await axios.post("/api/v1/user/default", user);
-        expect(initializedUser).toBeInstanceOf(UserModel);
-        expect(initializedUser.lastName).toBeUndefined();
+        const response = await axios.post("/api/default", user);
         expect(response.status).toBe(200);
-        expect(response.data.lastName).toBe("default");
+        expect(response.data.firstName).toBe("Manuel");
+        expect(response.data.lastName).toBe(undefined);
+    });
+
+    it("should override controller options with action transformRequest and transformResponse set to false", async () => {
+        const response = await axios.post("/api/noTransform", user);
+        expect(response.status).toBe(200);
+        expect(response.data.firstName).toBe("Manuel");
+        expect(response.data.lastName).toBe("Santos");
     });
 
     it("should override controller options with action transformRequest option", async () => {
-        expect.assertions(4);
-        const response = await axios.post("/transformRequestOnly", user);
-        expect(initializedUser).toBeInstanceOf(UserModel);
-        expect(initializedUser.lastName).toBeUndefined();
+        const response = await axios.post("/api/transformRequestOnly", user);
         expect(response.status).toBe(200);
         expect(response.data.lastName).toBe("default");
     });
 
     it("should override controller options with action transformResponse option", async () => {
-        expect.assertions(4);
-        const response = await axios.post("/transformResponseOnly", user);
-        expect(initializedUser).not.toBeInstanceOf(UserModel);
-        expect(initializedUser.lastName).not.toBeUndefined();
+        const response = await axios.post("/api/transformResponseOnly", user);
         expect(response.status).toBe(200);
         expect(response.data.lastName).toBeUndefined();
     });

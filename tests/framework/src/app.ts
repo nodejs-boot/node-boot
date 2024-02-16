@@ -29,10 +29,15 @@ function handler(user: UserModel) {
     return ret;
 }
 
-@Controller("/user", "v1")
+@Controller("")
 class NoTransformResponseController {
     @Post("/default")
     default(@Body() user: UserModel) {
+        return handler(user);
+    }
+
+    @Post("/noTransform", {transformRequest: false, transformResponse: false})
+    noTransform(@Body() user: UserModel) {
         return handler(user);
     }
 
