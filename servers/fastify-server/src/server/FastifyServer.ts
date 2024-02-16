@@ -38,20 +38,29 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         return this;
     }
 
-    public listen() {
-        const context = ApplicationContext.get();
+    public async listen(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const context = ApplicationContext.get();
 
-        this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
-            if (err) {
-                this.logger.error(err);
-                process.exit(1);
-            } else {
-                this.logger.info(`=================================`);
-                this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-                this.logger.info(`🚀 App listening on ${address}`);
-                this.logger.info(`=================================`);
-            }
+            this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
+                if (err) {
+                    this.logger.error(err);
+                    reject(err);
+                    process.exit(1);
+                } else {
+                    this.logger.info(`=================================`);
+                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                    this.logger.info(`🚀 App listening on ${address}`);
+                    this.logger.info(`=================================`);
+                    // Server initialized
+                    resolve();
+                }
+            });
         });
+    }
+
+    public async close() {
+        await this.framework?.close();
     }
 
     getFramework(): FastifyInstance {

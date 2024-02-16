@@ -4,9 +4,11 @@ import {BaseServer} from "@node-boot/core";
 import {ExpressDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {ExpressServerConfigs} from "../driver/ExpressDriver";
+import http from "http";
 
 export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
+    private serverInstance: http.Server;
 
     constructor() {
         super("express");
@@ -39,15 +41,30 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         return this;
     }
 
-    public listen() {
-        const context = ApplicationContext.get();
+    public async listen(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const context = ApplicationContext.get();
 
-        this.framework.listen(context.applicationOptions.port, () => {
-            this.logger.info(`=================================`);
-            this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-            this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
-            this.logger.info(`=================================`);
+            try {
+
+                this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
+                    this.logger.info(`=================================`);
+                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                    this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
+                    this.logger.info(`=================================`);
+
+                    // Server initialized
+                    resolve();
+                });
+            } catch (error) {
+                this.logger.error(error);
+                reject(error);
+            }
         });
+    }
+
+    override close() {
+        this.serverInstance?.close();
     }
 
     getFramework(): express.Application {

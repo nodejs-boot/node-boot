@@ -1,6 +1,13 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
+import {
+    Configurations,
+    Controllers,
+    GlobalMiddlewares,
+    NodeBoot,
+    NodeBootApp,
+    NodeBootApplication,
+} from "@node-boot/core";
 import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/starter-openapi";
 import {AppConfigProperties} from "./config/AppConfigProperties";
 import {UserController} from "./controllers/users.controller";
@@ -36,8 +43,8 @@ import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
 @EnableActuator()
 @EnableRepositories()
 @NodeBootApplication()
-export class FactsServiceApp {
-    static start() {
+export class FactsServiceApp implements NodeBootApp {
+    start() {
         NodeBoot.run(ExpressServer)
             .then(app => {
                 app.listen();

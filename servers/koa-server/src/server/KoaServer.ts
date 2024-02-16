@@ -5,10 +5,12 @@ import {BaseServer} from "@node-boot/core";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {KoaDriver} from "../driver";
 import {KoaServerConfigs} from "../driver/KoaDriver";
+import http from "http";
 
 export class KoaServer extends BaseServer<Koa, Router> {
     private readonly framework: Koa;
     private readonly router: Router;
+    private serverInstance: http.Server;
 
     constructor() {
         super("koa");
@@ -41,15 +43,28 @@ export class KoaServer extends BaseServer<Koa, Router> {
         return this;
     }
 
-    public listen() {
-        const context = ApplicationContext.get();
+    public listen(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const context = ApplicationContext.get();
 
-        this.framework.listen(context.applicationOptions.port, () => {
-            this.logger.info(`=================================`);
-            this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-            this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
-            this.logger.info(`=================================`);
+            try {
+                this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
+                    this.logger.info(`=================================`);
+                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                    this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
+                    this.logger.info(`=================================`);
+                    // Server initialized
+                    resolve();
+                });
+            } catch (error) {
+                this.logger.error(error);
+                reject(error);
+            }
         });
+    }
+
+    public close() {
+        this.serverInstance.close();
     }
 
     getFramework(): Koa {
