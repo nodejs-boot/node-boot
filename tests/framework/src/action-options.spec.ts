@@ -1,7 +1,7 @@
 import {Exclude, Expose} from "class-transformer";
 import {defaultMetadataStorage} from "class-transformer/cjs/storage";
 import {NodeBootToolkit} from "@node-boot/engine";
-import {BaseServer, Body, Controller, Post} from "@node-boot/core";
+import {BaseServer} from "@node-boot/core";
 import {axios} from "./axios";
 import {TestApp} from "./app";
 
@@ -31,7 +31,7 @@ describe(``, () => {
                 return ret;
             }
 
-            @Controller("")
+            /* @Controller("")
             class NoTransformResponseController {
                 @Post("/default")
                 default(@Body() user: UserModel) {
@@ -47,7 +47,7 @@ describe(``, () => {
                 transformResponseOnly(@Body() user: UserModel) {
                     return handler(user);
                 }
-            }
+            }*/
 
             // Start the application
             new TestApp()
