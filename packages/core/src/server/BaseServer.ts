@@ -7,8 +7,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
     protected config: ConfigService;
 
-    protected constructor(private readonly serverType: string) {
-    }
+    protected constructor(private readonly serverType: string) {}
 
     protected async init() {
         const context = ApplicationContext.get();

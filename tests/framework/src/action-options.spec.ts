@@ -55,15 +55,15 @@ describe(``, () => {
                 .then(app => {
                     server = app;
                     resolve(app);
-                }).catch(error => reject(error));
+                })
+                .catch(error => reject(error));
         });
     });
 
     afterAll(() => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             defaultMetadataStorage.clear();
-            server.close()
-                .then(() => resolve(server));
+            server.close().then(() => resolve(server));
         });
     });
 

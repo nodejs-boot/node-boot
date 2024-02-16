@@ -23,7 +23,7 @@ module.exports = {
         "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unsafe-call": "off",
-        "@typescript-eslint/no-unused-vars": "warning",
+        "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-cond-assign": "off",
     },
 };

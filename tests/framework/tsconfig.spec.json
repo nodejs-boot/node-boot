@@ -1,14 +1,13 @@
-  
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "strict": false,
-    "strictPropertyInitialization": false,
-    "sourceMap": true,
-    "removeComments": true,
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedLocals": false
-  },
-  "exclude": ["node_modules"]
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "strict": false,
+        "strictPropertyInitialization": false,
+        "sourceMap": true,
+        "removeComments": true,
+        "noImplicitAny": false,
+        "allowSyntheticDefaultImports": true,
+        "noUnusedLocals": false
+    },
+    "exclude": ["node_modules"]
 }
