@@ -1,6 +1,13 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
+import {
+    Configurations,
+    Controllers,
+    GlobalMiddlewares,
+    NodeBoot,
+    NodeBootApp,
+    NodeBootApplication,
+} from "@node-boot/core";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
 import {MultipleConfigurations} from "./config/MultipleConfigurations";
@@ -14,6 +21,7 @@ import {AppConfigProperties} from "./config/AppConfigProperties";
 import {EnableRepositories} from "@node-boot/starter-persistence";
 import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -36,15 +44,8 @@ import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationChecker)
 @EnableRepositories()
 @NodeBootApplication()
-export class FactsServiceApp {
-    static start() {
-        NodeBoot.run(KoaServer)
-            .then(app => {
-                app.listen();
-                console.info("Node-Boot application started successfully");
-            })
-            .catch(error => {
-                console.error("Error starting Node-Boot application.", error);
-            });
+export class FactsServiceApp implements NodeBootApp {
+    start(port?: number): Promise<NodeBootAppView> {
+        return NodeBoot.run(KoaServer, port);
     }
 }

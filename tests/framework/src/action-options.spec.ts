@@ -1,10 +1,10 @@
 import {defaultMetadataStorage} from "class-transformer/cjs/storage";
-import {BaseServer} from "@node-boot/core";
+import {NodeBootAppView} from "@node-boot/core";
 import {axios} from "./axios";
 import {TestApp} from "./app";
 
 describe(``, () => {
-    let server: BaseServer;
+    let bootAppView: NodeBootAppView;
     const user: any = {firstName: "Manuel", lastName: "Santos"};
 
     beforeAll(() => {
@@ -13,7 +13,7 @@ describe(``, () => {
             new TestApp()
                 .start(3000)
                 .then(app => {
-                    server = app;
+                    bootAppView = app;
                     resolve(app);
                 })
                 .catch(error => reject(error));
@@ -23,7 +23,7 @@ describe(``, () => {
     afterAll(() => {
         return new Promise(resolve => {
             defaultMetadataStorage.clear();
-            server.close().then(() => resolve(server));
+            bootAppView.framework.close().then(() => resolve(bootAppView));
         });
     });
 

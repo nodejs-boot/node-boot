@@ -4,6 +4,7 @@ import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {FastifyServerConfigs} from "../driver/FastifyDriver";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> {
     private readonly framework: FastifyInstance;
@@ -14,8 +15,10 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         this.framework.decorateRequest("locals", {});
     }
 
-    async run(): Promise<FastifyServer> {
+    async run(port?: number): Promise<FastifyServer> {
         const context = ApplicationContext.get();
+        // Force application port at runtime
+        if (port) context.applicationOptions.port = port;
 
         await super.configure(this.framework, this.framework);
 
@@ -38,12 +41,9 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         return this;
     }
 
-    public async listen(port?: number): Promise<void> {
+    public async listen(): Promise<NodeBootAppView> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-            // Force application port at runtime
-            if (port) context.applicationOptions.port = port;
-
             this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
                 if (err) {
                     this.logger.error(err);
@@ -55,7 +55,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
                     this.logger.info(`🚀 App listening on ${address}`);
                     this.logger.info(`=================================`);
                     // Server initialized
-                    resolve();
+                    resolve(this.appView());
                 }
             });
         });

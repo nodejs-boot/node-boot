@@ -1,18 +1,10 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {
-    BaseServer,
-    Body,
-    Controller,
-    Controllers,
-    NodeBoot,
-    NodeBootApp,
-    NodeBootApplication,
-    Post,
-} from "@node-boot/core";
+import {Body, Controller, Controllers, NodeBoot, NodeBootApp, NodeBootApplication, Post} from "@node-boot/core";
 import {ExpressServer} from "@node-boot/express-server";
 import {EnableDI} from "@node-boot/di";
 import {Exclude, Expose} from "class-transformer";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 @Exclude()
 class UserModel {
@@ -56,24 +48,7 @@ class NoTransformResponseController {
 @NodeBootApplication()
 @Controllers([NoTransformResponseController])
 export class TestApp implements NodeBootApp {
-    start(port?: number): Promise<BaseServer> {
-        return new Promise((resolve, reject) => {
-            NodeBoot.run(ExpressServer)
-                .then(app => {
-                    app.listen(port)
-                        .then(() => {
-                            console.info("Node-Boot application started successfully");
-                            resolve(app);
-                        })
-                        .catch(error => {
-                            console.error("Error starting Node-Boot application.", error);
-                            reject(error);
-                        });
-                })
-                .catch(error => {
-                    console.error("Error starting Node-Boot application.", error);
-                    reject(error);
-                });
-        });
+    start(port?: number): Promise<NodeBootAppView> {
+        return NodeBoot.run(ExpressServer, port);
     }
 }

@@ -5,6 +5,7 @@ import {ExpressDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {ExpressServerConfigs} from "../driver/ExpressDriver";
 import http from "http";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
@@ -17,8 +18,10 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         this.framework.use(express.urlencoded({extended: true}));
     }
 
-    async run(): Promise<ExpressServer> {
+    async run(port?: number): Promise<ExpressServer> {
         const context = ApplicationContext.get();
+        // Force application port at runtime
+        if (port) context.applicationOptions.port = port;
 
         await this.configure(this.getFramework(), this.getRouter());
 
@@ -41,11 +44,9 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         return this;
     }
 
-    async listen(port?: number): Promise<void> {
+    async listen(): Promise<NodeBootAppView> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-            // Force application port at runtime
-            if (port) context.applicationOptions.port = port;
             try {
                 this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
                     this.logger.info(`=================================`);
@@ -54,7 +55,7 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
                     this.logger.info(`=================================`);
 
                     // Server initialized
-                    resolve();
+                    resolve(this.appView());
                 });
             } catch (error) {
                 this.logger.error(error);

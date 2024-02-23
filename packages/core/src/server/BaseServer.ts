@@ -2,6 +2,7 @@ import {ApiOptions, ApplicationContext, ApplicationOptions, useContainer} from "
 import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
+import {NodeBootAppView} from "./NodeBootApp";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
@@ -16,7 +17,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         await this.initLogger(context);
     }
 
-    abstract listen(port?: number): Promise<void>;
+    abstract listen(): Promise<NodeBootAppView>;
 
     abstract close(): Promise<void>;
 
@@ -24,7 +25,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
 
     abstract getRouter(): TRouter;
 
-    abstract run(): Promise<BaseServer>;
+    abstract run(port?: number): Promise<BaseServer>;
 
     protected async configure(framework: TFramework, router: TRouter) {
         // Initialize configuration and logging
@@ -78,6 +79,16 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
                 router,
             );
         }
+    }
+
+    appView(): NodeBootAppView {
+        return {
+            appOptions: ApplicationContext.get().applicationOptions,
+            framework: this.getFramework(),
+            router: this.getRouter(),
+            config: this.config,
+            logger: this.logger,
+        };
     }
 
     private setupAppConfigs(context: ApplicationContext) {

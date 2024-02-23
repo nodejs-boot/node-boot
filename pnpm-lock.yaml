@@ -192,8 +192,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.1
       katxupa:
-        specifier: ^1.8.2
-        version: 1.8.2
+        specifier: ^1.9.1
+        version: 1.9.1
 
   packages/error: {}
 
@@ -260,8 +260,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.8.2
-        version: 1.8.2
+        specifier: ^1.9.1
+        version: 1.9.1
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -317,6 +317,9 @@ importers:
       '@fastify/cors':
         specifier: ^8.4.1
         version: 8.5.0
+      '@fastify/helmet':
+        specifier: ^11.1.1
+        version: 11.1.1
       '@fastify/multipart':
         specifier: ^7.7.3
         version: 7.7.3
@@ -375,8 +378,8 @@ importers:
         specifier: ^4.21.0
         version: 4.25.2
       katxupa:
-        specifier: ^1.8.2
-        version: 1.8.2
+        specifier: ^1.9.1
+        version: 1.9.1
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.1
@@ -451,8 +454,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.8.2
-        version: 1.8.2
+        specifier: ^1.9.1
+        version: 1.9.1
       koa:
         specifier: '>=2.14.2'
         version: 2.15.0
@@ -1368,6 +1371,13 @@ packages:
     resolution: {integrity: sha512-aZAXGYo6m22Fk1zZzEUKBvut/CIIQe/BapEORnxiD5Qr0kPHqqI69NtEMCme74h+at72sPhbkb4ZrLd1W3KRLA==}
     dependencies:
       fast-json-stringify: 5.10.0
+    dev: false
+
+  /@fastify/helmet@11.1.1:
+    resolution: {integrity: sha512-pjJxjk6SLEimITWadtYIXt6wBMfFC1I6OQyH/jYVCqSAn36sgAIFjeNiibHtifjCd+e25442pObis3Rjtame6A==}
+    dependencies:
+      fastify-plugin: 4.5.1
+      helmet: 7.1.0
     dev: false
 
   /@fastify/multipart@7.7.3:
@@ -4911,8 +4921,8 @@ packages:
       graceful-fs: 4.2.11
     dev: false
 
-  /katxupa@1.8.2:
-    resolution: {integrity: sha512-JnwX4+srtONeAQrlOuTwX4+HcPPCIok298lN/rf30OqrouUADm230uBcDhgqrBbJqcfjv7YtEJSCsgGzdLFZbA==}
+  /katxupa@1.9.1:
+    resolution: {integrity: sha512-xcmk/IsZIDnqeAYg6ZEDtf22Grex8ChOgNQ1ag9weQX26HazD+tkKTp4sVGUI8cwhhSzCa/N1zB6Zl68XLGzqw==}
     dev: false
 
   /keygrip@1.1.0:

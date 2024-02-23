@@ -6,6 +6,7 @@ import {NodeBootToolkit} from "@node-boot/engine";
 import {KoaDriver} from "../driver";
 import {KoaServerConfigs} from "../driver/KoaDriver";
 import http from "http";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 export class KoaServer extends BaseServer<Koa, Router> {
     private readonly framework: Koa;
@@ -18,8 +19,10 @@ export class KoaServer extends BaseServer<Koa, Router> {
         this.router = new Router();
     }
 
-    async run(): Promise<KoaServer> {
+    async run(port?: number): Promise<KoaServer> {
         const context = ApplicationContext.get();
+        // Force application port at runtime
+        if (port) context.applicationOptions.port = port;
 
         await this.configure(this.framework, this.router);
 
@@ -43,11 +46,9 @@ export class KoaServer extends BaseServer<Koa, Router> {
         return this;
     }
 
-    public listen(port?: number): Promise<void> {
+    public listen(): Promise<NodeBootAppView> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-            // Force application port at runtime
-            if (port) context.applicationOptions.port = port;
             try {
                 this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
                     this.logger.info(`=================================`);
@@ -55,7 +56,7 @@ export class KoaServer extends BaseServer<Koa, Router> {
                     this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
                     this.logger.info(`=================================`);
                     // Server initialized
-                    resolve();
+                    resolve(this.appView());
                 });
             } catch (error) {
                 this.logger.error(error);

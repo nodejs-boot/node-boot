@@ -21,6 +21,7 @@ import {EnableActuator} from "@node-boot/starter-actuator";
 import {EnableRepositories} from "@node-boot/starter-persistence";
 import {EnableDI} from "@node-boot/di";
 import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -44,14 +45,7 @@ import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
 @EnableRepositories()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
-    start() {
-        NodeBoot.run(ExpressServer)
-            .then(app => {
-                app.listen();
-                console.info("Node-Boot application started successfully");
-            })
-            .catch(error => {
-                console.error("Error starting Node-Boot application.", error);
-            });
+    start(port?: number): Promise<NodeBootAppView> {
+        return NodeBoot.run(ExpressServer, port);
     }
 }
