@@ -1,5 +1,5 @@
 import {ApplicationContext} from "@node-boot/context";
-import {BaseServer, SERVER_CONFIGURATIONS} from "@node-boot/core";
+import {BaseServer} from "@node-boot/core";
 import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
@@ -25,7 +25,13 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         // Bind application container through adapter
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
-            const serverConfigs = context.diOptions?.iocContainer.get<FastifyServerConfigs>(SERVER_CONFIGURATIONS);
+
+            const serverConfigs = this.getServerConfigurations<FastifyServerConfigs>();
+            if (!serverConfigs) {
+                this.logger.warn(
+                    `No Server configurations provided for Fastify . To enable server configurations for CORS, Session, Multipart, Cookie and Templating, consider creating a @Bean(SERVER_CONFIGURATIONS) that returns an "FastifyServerConfigs" object`,
+                );
+            }
 
             const driver = new FastifyDriver({
                 configs: serverConfigs,

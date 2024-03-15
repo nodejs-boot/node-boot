@@ -3,6 +3,7 @@ import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
 import {NodeBootAppView} from "./NodeBootApp";
+import {SERVER_CONFIGURATIONS} from "../constants";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
@@ -89,6 +90,13 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             config: this.config,
             logger: this.logger,
         };
+    }
+
+    protected getServerConfigurations<TServerConfigs>(): TServerConfigs | undefined {
+        const iocContainer = ApplicationContext.get().diOptions?.iocContainer;
+        return iocContainer?.has(SERVER_CONFIGURATIONS)
+            ? ApplicationContext.get().diOptions?.iocContainer.get<TServerConfigs>(SERVER_CONFIGURATIONS)
+            : undefined;
     }
 
     private setupAppConfigs(context: ApplicationContext) {

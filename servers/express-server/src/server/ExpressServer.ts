@@ -1,6 +1,6 @@
 import {ApplicationContext} from "@node-boot/context";
 import express from "express";
-import {BaseServer, SERVER_CONFIGURATIONS} from "@node-boot/core";
+import {BaseServer} from "@node-boot/core";
 import {ExpressDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
 import http from "http";
@@ -29,7 +29,12 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const serverConfig = context.diOptions?.iocContainer.get<ExpressServerConfigs>(SERVER_CONFIGURATIONS);
+            const serverConfig = this.getServerConfigurations<ExpressServerConfigs>();
+            if (!serverConfig) {
+                this.logger.warn(
+                    `No Server configurations provided for Express . To enable server configurations for CORS, Session, Multipart, Cookie and Templating, consider creating a @Bean(SERVER_CONFIGURATIONS) that returns an "ExpressServerConfigs" object`,
+                );
+            }
 
             const driver = new ExpressDriver({
                 configs: serverConfig,
@@ -40,7 +45,6 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         } else {
             throw new Error("Error stating Application. Please enable NodeBoot application using @NodeBootApplication");
         }
-
         return this;
     }
 

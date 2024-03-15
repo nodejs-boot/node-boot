@@ -1,7 +1,7 @@
 import {ApplicationContext} from "@node-boot/context";
 import Koa from "koa";
 import Router from "@koa/router";
-import {BaseServer, SERVER_CONFIGURATIONS} from "@node-boot/core";
+import {BaseServer} from "@node-boot/core";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {KoaDriver} from "../driver";
 import http from "http";
@@ -30,7 +30,12 @@ export class KoaServer extends BaseServer<Koa, Router> {
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const serverConfigs = context.diOptions?.iocContainer.get<KoaServerConfigs>(SERVER_CONFIGURATIONS);
+            const serverConfigs = this.getServerConfigurations<KoaServerConfigs>();
+            if (!serverConfigs) {
+                this.logger.warn(
+                    `No Server configurations provided for Koa . To enable server configurations for CORS, Session, Multipart, Cookie and Templating, consider creating a @Bean(SERVER_CONFIGURATIONS) that returns an "KoaServerConfigs" object`,
+                );
+            }
 
             const driver = new KoaDriver({
                 configs: serverConfigs,
