@@ -1,12 +1,12 @@
 import {ApplicationContext} from "@node-boot/context";
 import Koa from "koa";
 import Router from "@koa/router";
-import {BaseServer} from "@node-boot/core";
+import {BaseServer, SERVER_CONFIGURATIONS} from "@node-boot/core";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {KoaDriver} from "../driver";
-import {KoaServerConfigs} from "../driver/KoaDriver";
 import http from "http";
 import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {KoaServerConfigs} from "../types";
 
 export class KoaServer extends BaseServer<Koa, Router> {
     private readonly framework: Koa;
@@ -30,7 +30,7 @@ export class KoaServer extends BaseServer<Koa, Router> {
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const serverConfigs: KoaServerConfigs = {};
+            const serverConfigs = context.diOptions?.iocContainer.get<KoaServerConfigs>(SERVER_CONFIGURATIONS);
 
             const driver = new KoaDriver({
                 configs: serverConfigs,

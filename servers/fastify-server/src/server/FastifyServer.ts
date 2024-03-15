@@ -1,10 +1,10 @@
 import {ApplicationContext} from "@node-boot/context";
-import {BaseServer} from "@node-boot/core";
+import {BaseServer, SERVER_CONFIGURATIONS} from "@node-boot/core";
 import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
-import {FastifyServerConfigs} from "../driver/FastifyDriver";
 import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {FastifyServerConfigs} from "../types";
 
 export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> {
     private readonly framework: FastifyInstance;
@@ -25,7 +25,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         // Bind application container through adapter
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
-            const serverConfigs: FastifyServerConfigs = {};
+            const serverConfigs = context.diOptions?.iocContainer.get<FastifyServerConfigs>(SERVER_CONFIGURATIONS);
 
             const driver = new FastifyDriver({
                 configs: serverConfigs,

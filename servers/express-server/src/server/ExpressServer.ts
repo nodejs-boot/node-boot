@@ -1,11 +1,11 @@
 import {ApplicationContext} from "@node-boot/context";
 import express from "express";
-import {BaseServer} from "@node-boot/core";
+import {BaseServer, SERVER_CONFIGURATIONS} from "@node-boot/core";
 import {ExpressDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
-import {ExpressServerConfigs} from "../driver/ExpressDriver";
 import http from "http";
 import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {ExpressServerConfigs} from "../types";
 
 export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
@@ -29,10 +29,10 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const serverConfigs: ExpressServerConfigs = {}; // TODO pass express server configs
+            const serverConfig = context.diOptions?.iocContainer.get<ExpressServerConfigs>(SERVER_CONFIGURATIONS);
 
             const driver = new ExpressDriver({
-                configs: serverConfigs,
+                configs: serverConfig,
                 logger: this.logger,
                 express: this.framework,
             });
