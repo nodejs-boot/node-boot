@@ -1,4 +1,4 @@
-import {GlobalErrorHandler, NodeBootDriver, ServerConfig, ServerConfigOptions} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ServerConfig} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -13,12 +13,7 @@ import {
 } from "@node-boot/context";
 import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {HTTPMethods} from "fastify/types/utils";
-import {FastifyCookieOptions} from "@fastify/cookie";
-import {FastifySessionOptions} from "@fastify/session";
-import {FastifyMultipartOptions} from "@fastify/multipart";
-import {FastifyViewOptions} from "@fastify/view";
 import templateUrl from "template-url";
-import {FastifyCorsOptions} from "@fastify/cors";
 import {
     AccessDeniedError,
     AuthorizationCheckerNotDefinedError,
@@ -28,6 +23,7 @@ import {
 } from "@node-boot/error";
 import {DependenciesLoader} from "../loader";
 import {AsyncFunction} from "fastify/types/instance";
+import {FastifyServerConfigs} from "../types";
 
 const actionToHttpMethodMap = {
     delete: "DELETE",
@@ -38,18 +34,10 @@ const actionToHttpMethodMap = {
     post: "POST",
 };
 
-export type FastifyServerConfigs = ServerConfigOptions<
-    FastifyCookieOptions,
-    FastifyCorsOptions,
-    FastifySessionOptions,
-    FastifyMultipartOptions,
-    FastifyViewOptions
->;
-
 type FastifyServerOptions = {
     logger: LoggerService;
+    fastify: FastifyInstance;
     configs?: FastifyServerConfigs;
-    fastify?: FastifyInstance;
 };
 
 export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<FastifyRequest, FastifyReply>> {
@@ -62,7 +50,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         super();
         this.logger = options.logger;
         this.configs = options.configs;
-        this.app = options.fastify ?? this.loadFastify();
+        this.app = options.fastify;
         this.globalErrorHandler = new GlobalErrorHandler(this);
     }
 
@@ -153,7 +141,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
                     payload,
                 );
             } catch (error: any) {
-                this.handleError(error, {
+                await this.handleError(error, {
                     request,
                     response: reply,
                 });
@@ -440,6 +428,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     ) {
         // if template is set then render it
         // Check doc https://www.npmjs.com/package/@fastify/view
+        // Issue 41: https://github.com/nodejs-boot/node-boot/issues/41
         const renderOptions = result && result instanceof Object ? result : {};
         action.response.view(actionMetadata.renderedTemplate, renderOptions);
     }
@@ -472,25 +461,6 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
             }
         } else if (actionMetadata.successHttpCode) {
             action.response.code(actionMetadata.successHttpCode);
-        }
-    }
-
-    /**
-     * Dynamically loads fastify module.
-     */
-    private loadFastify(): FastifyInstance {
-        if (require) {
-            try {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                const fastify = require("fastify")();
-                return fastify();
-            } catch (e) {
-                throw new Error(
-                    "fastify package was not found installed. Try to install it: npm install fastify --save",
-                );
-            }
-        } else {
-            throw new Error("Cannot load fastify. Try to install all required dependencies.");
         }
     }
 }

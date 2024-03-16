@@ -19,6 +19,20 @@ export type ServerConfigOptions<
     template?: MaybeOptions<TemplateOptions>;
 };
 
+export type ServerConfigProperties<
+    TCookieProperties = unknown,
+    TCorsProperties = unknown,
+    TSessionProperties = unknown,
+    TMultipartProperties = unknown,
+    TTemplateProperties = unknown,
+> = {
+    cookie?: TCookieProperties;
+    cors?: TCorsProperties;
+    session?: TSessionProperties;
+    multipart?: TMultipartProperties;
+    template?: TTemplateProperties;
+};
+
 export class ServerConfig<T extends ServerConfigOptions> {
     private readonly value: T | undefined | null;
 
@@ -35,15 +49,12 @@ export class ServerConfig<T extends ServerConfigOptions> {
     }
 
     configured<C>(optionsName: string): Optional<C | boolean | undefined> {
-        if (this.value?.[optionsName]) {
-            if (this.value[optionsName]?.enabled !== undefined) {
-                // If is configured set up the configuration
-                if (this.value[optionsName].enabled) {
-                    return Optional.of(this.value[optionsName].options);
-                }
-            } else {
-                // By default, set up with default configs
-                return Optional.of(true);
+        const options = this.value?.[optionsName];
+        if (options) {
+            if (options.enabled !== undefined) {
+                return options.enabled ? Optional.of(options.options) : Optional.empty();
+            } else if (options.options) {
+                return Optional.of(options.options);
             }
         }
         return Optional.empty();

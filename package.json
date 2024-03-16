@@ -55,6 +55,8 @@
         "eslint-config-katxupa": "^1.0.1",
         "husky": "^8.0.0",
         "jest": "^29.5.0",
+        "@types/jest": "^29.5.11",
+        "ts-jest": "^29.1.1",
         "lint-staged": "^13.1.2",
         "nodemon": "^2.0.21",
         "prettier": "^2.8.3",

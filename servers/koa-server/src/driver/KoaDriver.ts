@@ -1,10 +1,4 @@
-import {
-    GlobalErrorHandler,
-    NodeBootDriver,
-    ResultTransformer,
-    ServerConfig,
-    ServerConfigOptions,
-} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ResultTransformer, ServerConfig} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -24,21 +18,21 @@ import {
 import Koa, {Context, Request, Response} from "koa";
 import Router from "@koa/router";
 import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
-import {DependenciesLoader} from "../loader";
-import session, {opts as SessionOptions} from "koa-session";
+import session from "koa-session";
 import {parseCookie} from "koa-cookies";
-import cors, {Options as CorsOptions} from "@koa/cors";
+import cors from "@koa/cors";
+import multer from "@koa/multer";
+
+import {KoaServerConfigs} from "../types";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
 
-export type KoaServerConfigs = ServerConfigOptions<unknown, CorsOptions, SessionOptions, unknown, unknown>;
-
 type KoaServerOptions = {
     logger: LoggerService;
+    koa: Koa;
+    router: Router;
     configs?: KoaServerConfigs;
-    koa?: Koa;
-    router?: Router;
 };
 
 /**
@@ -56,8 +50,8 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         super();
         this.logger = serverOptions.logger;
         this.configs = serverOptions.configs;
-        this.app = serverOptions.koa ?? DependenciesLoader.loadKoa();
-        this.router = serverOptions.router ?? DependenciesLoader.loadRouter();
+        this.app = serverOptions.koa;
+        this.router = serverOptions.router;
         this.globalErrorHandler = new GlobalErrorHandler(this);
         this.resultTransformer = new ResultTransformer(this);
     }
@@ -169,16 +163,19 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         }
 
         if (actionMetadata.isFileUsed || actionMetadata.isFilesUsed) {
-            const multer = DependenciesLoader.loadMulter();
             actionMetadata.params
                 .filter(param => param.type === "file")
                 .forEach(param => {
-                    defaultMiddlewares.push(multer(param.extraOptions).single(param.name));
+                    defaultMiddlewares.push(
+                        multer({...this.configs?.multipart, ...param.extraOptions}).single(param.name),
+                    );
                 });
             actionMetadata.params
                 .filter(param => param.type === "files")
                 .forEach(param => {
-                    defaultMiddlewares.push(multer(param.extraOptions).array(param.name));
+                    defaultMiddlewares.push(
+                        multer({...this.configs?.multipart, ...param.extraOptions}).array(param.name),
+                    );
                 });
         }
 
@@ -313,12 +310,8 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         } else if (actionMetadata.renderedTemplate) {
             // if template is set then render it
             // FIXME: not working in koa
+            // Issue 41: https://github.com/nodejs-boot/node-boot/issues/41
             throw new Error("'renderedTemplate' is not supported for Koa yet");
-            /* const renderOptions = result && result instanceof Object ? result : {};
-
-             this.app.use(async function(ctx: any, next: any) {
-                 await ctx.render(actionMetadata.renderedTemplate, renderOptions);
-             });*/
         } else if (result === undefined) {
             // throw NotFoundError on undefined response
             throw new NotFoundError();

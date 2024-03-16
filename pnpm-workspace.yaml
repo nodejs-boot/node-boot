@@ -3,3 +3,4 @@ packages:
   - "servers/*"
   - "starters/*"
   - "samples/*"
+  - "tests/*"

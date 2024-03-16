@@ -8,6 +8,7 @@ import {ClassConstructor} from "./ioc";
 export class ApplicationContext {
     private static context: ApplicationContext;
 
+    serverType: string;
     applicationOptions: ApplicationOptions = {};
     diOptions?: DependencyInjectionOptions;
     openApi?: OpenApiBridgeAdapter;

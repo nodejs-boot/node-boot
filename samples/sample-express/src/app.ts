@@ -1,6 +1,13 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {Configurations, Controllers, GlobalMiddlewares, NodeBoot, NodeBootApplication} from "@node-boot/core";
+import {
+    Configurations,
+    Controllers,
+    GlobalMiddlewares,
+    NodeBoot,
+    NodeBootApp,
+    NodeBootApplication,
+} from "@node-boot/core";
 import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/starter-openapi";
 import {AppConfigProperties} from "./config/AppConfigProperties";
 import {UserController} from "./controllers/users.controller";
@@ -14,6 +21,7 @@ import {EnableActuator} from "@node-boot/starter-actuator";
 import {EnableRepositories} from "@node-boot/starter-persistence";
 import {EnableDI} from "@node-boot/di";
 import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -36,15 +44,8 @@ import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
 @EnableActuator()
 @EnableRepositories()
 @NodeBootApplication()
-export class FactsServiceApp {
-    static start() {
-        NodeBoot.run(ExpressServer)
-            .then(app => {
-                app.listen();
-                console.info("Node-Boot application started successfully");
-            })
-            .catch(error => {
-                console.error("Error starting Node-Boot application.", error);
-            });
+export class FactsServiceApp implements NodeBootApp {
+    start(port?: number): Promise<NodeBootAppView> {
+        return NodeBoot.run(ExpressServer, port);
     }
 }

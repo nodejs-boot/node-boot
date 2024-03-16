@@ -3,10 +3,13 @@ import express from "express";
 import {BaseServer} from "@node-boot/core";
 import {ExpressDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
-import {ExpressServerConfigs} from "../driver/ExpressDriver";
+import http from "http";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {ExpressServerConfigs} from "../types";
 
 export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
+    private serverInstance: http.Server;
 
     constructor() {
         super("express");
@@ -15,8 +18,10 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         this.framework.use(express.urlencoded({extended: true}));
     }
 
-    async run(): Promise<ExpressServer> {
+    async run(port?: number): Promise<ExpressServer> {
         const context = ApplicationContext.get();
+        // Force application port at runtime
+        if (port) context.applicationOptions.port = port;
 
         await this.configure(this.getFramework(), this.getRouter());
 
@@ -24,10 +29,15 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const serverConfigs: ExpressServerConfigs = {}; // TODO pass express server configs
+            const serverConfig = this.getServerConfigurations<ExpressServerConfigs>();
+            if (!serverConfig) {
+                this.logger.warn(
+                    `No Server configurations provided for Express . To enable server configurations for CORS, Session, Multipart, Cookie and Templating, consider creating a @Bean(SERVER_CONFIGURATIONS) that returns an "ExpressServerConfigs" object`,
+                );
+            }
 
             const driver = new ExpressDriver({
-                configs: serverConfigs,
+                configs: serverConfig,
                 logger: this.logger,
                 express: this.framework,
             });
@@ -35,19 +45,31 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         } else {
             throw new Error("Error stating Application. Please enable NodeBoot application using @NodeBootApplication");
         }
-
         return this;
     }
 
-    public listen() {
-        const context = ApplicationContext.get();
+    async listen(): Promise<NodeBootAppView> {
+        return new Promise((resolve, reject) => {
+            const context = ApplicationContext.get();
+            try {
+                this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
+                    this.logger.info(`=================================`);
+                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                    this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
+                    this.logger.info(`=================================`);
 
-        this.framework.listen(context.applicationOptions.port, () => {
-            this.logger.info(`=================================`);
-            this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-            this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
-            this.logger.info(`=================================`);
+                    // Server initialized
+                    resolve(this.appView());
+                });
+            } catch (error) {
+                this.logger.error(error);
+                reject(error);
+            }
         });
+    }
+
+    async close(): Promise<void> {
+        this.serverInstance?.close();
     }
 
     getFramework(): express.Application {

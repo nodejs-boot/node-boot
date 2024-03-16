@@ -1,28 +1,36 @@
-import {ApiOptions, ApplicationContext, ApplicationOptions, useContainer} from "@node-boot/context";
+import {ApiOptions, ApplicationContext, ApplicationOptions, CoreInfoService, useContainer} from "@node-boot/context";
 import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
+import {NodeBootAppView} from "./NodeBootApp";
+import {SERVER_CONFIGURATIONS} from "../constants";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
     protected config: ConfigService;
+    protected infoService: CoreInfoService;
 
     protected constructor(private readonly serverType: string) {}
 
     protected async init() {
         const context = ApplicationContext.get();
+        context.serverType = this.serverType;
         await this.loadConfig(context);
         this.setupAppConfigs(context);
         await this.initLogger(context);
+        await this.initInfoService(context);
+        await this.printBanner();
     }
 
-    abstract listen();
+    abstract listen(): Promise<NodeBootAppView>;
+
+    abstract close(): Promise<void>;
 
     abstract getFramework(): TFramework;
 
     abstract getRouter(): TRouter;
 
-    abstract run(): Promise<BaseServer>;
+    abstract run(port?: number): Promise<BaseServer>;
 
     protected async configure(framework: TFramework, router: TRouter) {
         // Initialize configuration and logging
@@ -78,6 +86,23 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         }
     }
 
+    appView(): NodeBootAppView {
+        return {
+            appOptions: ApplicationContext.get().applicationOptions,
+            framework: this.getFramework(),
+            router: this.getRouter(),
+            config: this.config,
+            logger: this.logger,
+        };
+    }
+
+    protected getServerConfigurations<TServerConfigs>(): TServerConfigs | undefined {
+        const iocContainer = ApplicationContext.get().diOptions?.iocContainer;
+        return iocContainer?.has(SERVER_CONFIGURATIONS)
+            ? ApplicationContext.get().diOptions?.iocContainer.get<TServerConfigs>(SERVER_CONFIGURATIONS)
+            : undefined;
+    }
+
     private setupAppConfigs(context: ApplicationContext) {
         const appConfigs = this.config.getOptional<ApplicationOptions>("node-boot.app");
         const apiConfigs = this.config.getOptional<ApiOptions>("node-boot.api");
@@ -106,5 +131,29 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         this.logger.info(`Initializing Node-Boot logger`);
         context.diOptions?.iocContainer.set(Logger, this.logger);
         context.diOptions?.iocContainer.set("logger", this.logger);
+    }
+
+    private async initInfoService(context: ApplicationContext) {
+        this.logger.info(`Initializing Node-Boot Info Service`);
+        this.infoService = new CoreInfoService(this.logger);
+        context.diOptions?.iocContainer.set(CoreInfoService, this.infoService);
+    }
+
+    private async printBanner() {
+        const banner =
+            "_____   __     _________           ________            _____ \n" +
+            "___  | / /___________  /____       ___  __ )_____________  /_\n" +
+            "__   |/ /_  __ \\  __  /_  _ \\________  __  |  __ \\  __ \\  __/\n" +
+            "_  /|  / / /_/ / /_/ / /  __//_____/  /_/ // /_/ / /_/ / /_  \n" +
+            "/_/ |_/  \\____/\\__,_/  \\___/       /_____/ \\____/\\____/\\__/  \n" +
+            "                                                             \n";
+
+        const appConfig = this.config.getOptionalConfig("node-boot.app");
+        const info = await this.infoService.getInfo();
+        const appName = appConfig?.getOptionalString("name") ?? info.build?.name ?? "Un-named App";
+        const separator = "============================================================\n";
+        this.logger.info(
+            `\n${banner}${separator}Host: "${info.host}" Running Node "${info.nodeVersion}"\nWith App: "${appName}" version "${info.build?.version}"\nPowered by Node-Boot "${info.build?.nodeBoot}" (Running ${info.build?.serverFramework} version "${info.build?.serverVersion}")\n${separator}`,
+        );
     }
 }

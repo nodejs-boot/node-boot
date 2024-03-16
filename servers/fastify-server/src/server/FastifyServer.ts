@@ -3,7 +3,8 @@ import {BaseServer} from "@node-boot/core";
 import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "../driver";
 import {NodeBootToolkit} from "@node-boot/engine";
-import {FastifyServerConfigs} from "../driver/FastifyDriver";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {FastifyServerConfigs} from "../types";
 
 export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> {
     private readonly framework: FastifyInstance;
@@ -14,15 +15,23 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         this.framework.decorateRequest("locals", {});
     }
 
-    async run(): Promise<FastifyServer> {
+    async run(port?: number): Promise<FastifyServer> {
         const context = ApplicationContext.get();
+        // Force application port at runtime
+        if (port) context.applicationOptions.port = port;
 
         await super.configure(this.framework, this.framework);
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
-            const serverConfigs: FastifyServerConfigs = {};
+
+            const serverConfigs = this.getServerConfigurations<FastifyServerConfigs>();
+            if (!serverConfigs) {
+                this.logger.warn(
+                    `No Server configurations provided for Fastify . To enable server configurations for CORS, Session, Multipart, Cookie and Templating, consider creating a @Bean(SERVER_CONFIGURATIONS) that returns an "FastifyServerConfigs" object`,
+                );
+            }
 
             const driver = new FastifyDriver({
                 configs: serverConfigs,
@@ -38,20 +47,28 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         return this;
     }
 
-    public listen() {
-        const context = ApplicationContext.get();
-
-        this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
-            if (err) {
-                this.logger.error(err);
-                process.exit(1);
-            } else {
-                this.logger.info(`=================================`);
-                this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-                this.logger.info(`🚀 App listening on ${address}`);
-                this.logger.info(`=================================`);
-            }
+    public async listen(): Promise<NodeBootAppView> {
+        return new Promise((resolve, reject) => {
+            const context = ApplicationContext.get();
+            this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
+                if (err) {
+                    this.logger.error(err);
+                    reject(err);
+                    process.exit(1);
+                } else {
+                    this.logger.info(`=================================`);
+                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                    this.logger.info(`🚀 App listening on ${address}`);
+                    this.logger.info(`=================================`);
+                    // Server initialized
+                    resolve(this.appView());
+                }
+            });
         });
+    }
+
+    public async close(): Promise<void> {
+        await this.framework?.close();
     }
 
     getFramework(): FastifyInstance {

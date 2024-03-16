@@ -1,5 +1,5 @@
-import {ActuatorAdapter, ActuatorOptions} from "@node-boot/context";
-import {InfoService} from "../service/InfoService";
+import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@node-boot/context";
+import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
 import {FastifyInstance} from "fastify";
@@ -8,9 +8,10 @@ import {ConfigService} from "@node-boot/config";
 export class FastifyActuatorAdapter implements ActuatorAdapter {
     constructor(
         private readonly context: MetricsContext,
-        private readonly infoService: InfoService,
+        private readonly gitService: GitService,
         private readonly metadataService: MetadataService,
-        private readonly configService?: ConfigService,
+        private readonly configService: ConfigService,
+        private readonly infoService: CoreInfoService,
     ) {}
 
     bind(_: ActuatorOptions, _instance: FastifyInstance, router: FastifyInstance): void {
@@ -53,6 +54,13 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
 
         router.get("/actuator/info", (_, res) => {
             this.infoService.getInfo().then(data => {
+                res.status(200);
+                res.send(data);
+            });
+        });
+
+        router.get("/actuator/git", (_, res) => {
+            this.gitService.getGit("simple").then(data => {
                 res.status(200);
                 res.send(data);
             });

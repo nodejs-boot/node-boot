@@ -1,10 +1,4 @@
-import {
-    GlobalErrorHandler,
-    NodeBootDriver,
-    ResultTransformer,
-    ServerConfig,
-    ServerConfigOptions,
-} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ResultTransformer, ServerConfig} from "@node-boot/engine";
 import {
     Action,
     ActionMetadata,
@@ -23,26 +17,20 @@ import {
 } from "@node-boot/error";
 import {Application, Request, Response} from "express";
 import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
-import cookie, {CookieParseOptions, CookieSerializeOptions} from "cookie";
-import cors, {CorsOptions} from "cors";
-import session, {SessionOptions} from "express-session";
-import {Options as MulterOptions} from "multer";
-import {DependenciesLoader} from "../loader";
+import cookie from "cookie";
+import cors from "cors";
+import multer from "multer";
+import session from "express-session";
+import bodyParser from "body-parser";
+import {ExpressServerConfigs} from "../types";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
 
-export type ExpressServerConfigs = ServerConfigOptions<
-    CookieParseOptions & CookieSerializeOptions,
-    CorsOptions,
-    SessionOptions,
-    MulterOptions
->;
-
 type ExpressServerOptions = {
     logger: LoggerService;
     configs?: ExpressServerConfigs;
-    express?: Application;
+    express: Application;
 };
 
 /**
@@ -57,7 +45,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
 
     constructor(serverOptions: ExpressServerOptions) {
         super();
-        this.app = serverOptions.express ?? DependenciesLoader.loadExpress();
+        this.app = serverOptions.express;
         this.logger = serverOptions.logger;
         this.configs = serverOptions.configs;
         this.globalErrorHandler = new GlobalErrorHandler(this);
@@ -94,7 +82,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                     await (middleware.instance as MiddlewareInterface).use({request, response});
                     next();
                 } catch (error) {
-                    this.handleError(error, {request, response, next});
+                    await this.handleError(error, {request, response, next});
                 }
             };
             this.nameMiddleware(middlewareWrapper, middleware, options);
@@ -120,9 +108,9 @@ export class ExpressDriver extends NodeBootDriver<Application> {
 
         if (actionMetadata.isBodyUsed) {
             if (actionMetadata.isJsonTyped) {
-                defaultMiddlewares.push(DependenciesLoader.loadBodyParser().json(actionMetadata.bodyExtraOptions));
+                defaultMiddlewares.push(bodyParser.json(actionMetadata.bodyExtraOptions));
             } else {
-                defaultMiddlewares.push(DependenciesLoader.loadBodyParser().text(actionMetadata.bodyExtraOptions));
+                defaultMiddlewares.push(bodyParser.text(actionMetadata.bodyExtraOptions));
             }
         }
 
@@ -149,16 +137,19 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         }
 
         if (actionMetadata.isFileUsed || actionMetadata.isFilesUsed) {
-            const multer = DependenciesLoader.loadMulter();
             actionMetadata.params
                 .filter(param => param.type === "file")
                 .forEach(param => {
-                    defaultMiddlewares.push(multer(param.extraOptions).single(param.name));
+                    defaultMiddlewares.push(
+                        multer({...this.configs?.multipart, ...param.extraOptions}).single(param.name),
+                    );
                 });
             actionMetadata.params
                 .filter(param => param.type === "files")
                 .forEach(param => {
-                    defaultMiddlewares.push(multer(param.extraOptions).array(param.name));
+                    defaultMiddlewares.push(
+                        multer({...this.configs?.multipart, ...param.extraOptions}).array(param.name),
+                    );
                 });
         }
 
@@ -304,6 +295,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
             // if template is set then render it
             const renderOptions = result && result instanceof Object ? result : {};
 
+            // Issue 41: https://github.com/nodejs-boot/node-boot/issues/41
             action.response.render(actionMetadata.renderedTemplate, renderOptions, (err: any, html: string) => {
                 if (err && actionMetadata.isJsonTyped) {
                     return action.next?.(err);
@@ -401,7 +393,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                             next,
                         });
                     } catch (error) {
-                        this.handleError(error, {request, response, next});
+                        await this.handleError(error, {request, response, next});
                     }
                 });
             } else if (use.middleware.prototype && use.middleware.prototype.error) {

@@ -4,11 +4,14 @@ import Router from "@koa/router";
 import {BaseServer} from "@node-boot/core";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {KoaDriver} from "../driver";
-import {KoaServerConfigs} from "../driver/KoaDriver";
+import http from "http";
+import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {KoaServerConfigs} from "../types";
 
 export class KoaServer extends BaseServer<Koa, Router> {
     private readonly framework: Koa;
     private readonly router: Router;
+    private serverInstance: http.Server;
 
     constructor() {
         super("koa");
@@ -16,8 +19,10 @@ export class KoaServer extends BaseServer<Koa, Router> {
         this.router = new Router();
     }
 
-    async run(): Promise<KoaServer> {
+    async run(port?: number): Promise<KoaServer> {
         const context = ApplicationContext.get();
+        // Force application port at runtime
+        if (port) context.applicationOptions.port = port;
 
         await this.configure(this.framework, this.router);
 
@@ -25,7 +30,12 @@ export class KoaServer extends BaseServer<Koa, Router> {
         if (context.applicationAdapter) {
             const engineOptions = context.applicationAdapter.bind(context.diOptions?.iocContainer);
 
-            const serverConfigs: KoaServerConfigs = {};
+            const serverConfigs = this.getServerConfigurations<KoaServerConfigs>();
+            if (!serverConfigs) {
+                this.logger.warn(
+                    `No Server configurations provided for Koa . To enable server configurations for CORS, Session, Multipart, Cookie and Templating, consider creating a @Bean(SERVER_CONFIGURATIONS) that returns an "KoaServerConfigs" object`,
+                );
+            }
 
             const driver = new KoaDriver({
                 configs: serverConfigs,
@@ -41,15 +51,27 @@ export class KoaServer extends BaseServer<Koa, Router> {
         return this;
     }
 
-    public listen() {
-        const context = ApplicationContext.get();
-
-        this.framework.listen(context.applicationOptions.port, () => {
-            this.logger.info(`=================================`);
-            this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-            this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
-            this.logger.info(`=================================`);
+    public listen(): Promise<NodeBootAppView> {
+        return new Promise((resolve, reject) => {
+            const context = ApplicationContext.get();
+            try {
+                this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
+                    this.logger.info(`=================================`);
+                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                    this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
+                    this.logger.info(`=================================`);
+                    // Server initialized
+                    resolve(this.appView());
+                });
+            } catch (error) {
+                this.logger.error(error);
+                reject(error);
+            }
         });
+    }
+
+    public async close(): Promise<void> {
+        this.serverInstance.close();
     }
 
     getFramework(): Koa {
