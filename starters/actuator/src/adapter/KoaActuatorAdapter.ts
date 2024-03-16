@@ -1,5 +1,5 @@
-import {ActuatorAdapter, ActuatorOptions} from "@node-boot/context";
-import {InfoService} from "../service/InfoService";
+import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@node-boot/context";
+import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
 import {ConfigService} from "@node-boot/config";
@@ -9,9 +9,10 @@ import Router from "@koa/router";
 export class KoaActuatorAdapter implements ActuatorAdapter {
     constructor(
         private readonly context: MetricsContext,
-        private readonly infoService: InfoService,
+        private readonly gitService: GitService,
         private readonly metadataService: MetadataService,
-        private readonly configService?: ConfigService,
+        private readonly configService: ConfigService,
+        private readonly infoService: CoreInfoService,
     ) {}
 
     bind(_options: ActuatorOptions, _server: Koa, router: Router): void {
@@ -48,6 +49,12 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
             const data = await this.infoService.getInfo();
             ctx.status = 200;
             ctx.body = data;
+        });
+
+        router.get("/actuator/git", async ctx => {
+            const gitInfo = await this.gitService.getGit("simple");
+            ctx.status = 200;
+            ctx.body = gitInfo;
         });
 
         router.get("/actuator/config", async ctx => {

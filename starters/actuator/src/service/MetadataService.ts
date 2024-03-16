@@ -40,6 +40,7 @@ export class MetadataService {
             context: "Available actuator endpoints",
             endpoints: [
                 "/actuator/info",
+                "/actuator/git",
                 "/actuator/config",
                 "/actuator/memory",
                 "/actuator/metrics",

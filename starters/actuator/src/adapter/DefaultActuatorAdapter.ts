@@ -1,7 +1,7 @@
-import {ActuatorAdapter, ActuatorOptions, ApplicationContext} from "@node-boot/context";
+import {ActuatorAdapter, ActuatorOptions, ApplicationContext, CoreInfoService} from "@node-boot/context";
 import Prometheus from "prom-client";
 import {ExpressActuatorAdapter} from "./ExpressActuatorAdapter";
-import {InfoService} from "../service/InfoService";
+import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
 import {FastifyActuatorAdapter} from "./FastifyActuatorAdapter";
@@ -11,7 +11,7 @@ import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
 export class DefaultActuatorAdapter implements ActuatorAdapter {
     constructor(
         private readonly register = new Prometheus.Registry(),
-        private readonly infoService: InfoService = new InfoService(),
+        private readonly gitService: GitService = new GitService(),
     ) {}
 
     private setupMetrics(options: ActuatorOptions) {
@@ -48,27 +48,42 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
         const context = this.setupMetrics(options);
         const metadataService = new MetadataService();
 
-        const configService = ApplicationContext.get().diOptions?.iocContainer.get(ConfigService);
+        const iocContainer = ApplicationContext.get().diOptions?.iocContainer;
+        if (!iocContainer) {
+            throw new Error(
+                `IOC Container is required for Actuator module. Please @EnableDI(Container) in your Application class.`,
+            );
+        }
+        const configService = iocContainer.get(ConfigService);
+        const infoService = iocContainer.get(CoreInfoService);
 
         let frameworkAdapter: ActuatorAdapter;
         switch (options.serverType) {
             case "express":
                 frameworkAdapter = new ExpressActuatorAdapter(
                     context,
-                    this.infoService,
+                    this.gitService,
                     metadataService,
                     configService,
+                    infoService,
                 );
                 break;
             case "koa":
-                frameworkAdapter = new KoaActuatorAdapter(context, this.infoService, metadataService, configService);
+                frameworkAdapter = new KoaActuatorAdapter(
+                    context,
+                    this.gitService,
+                    metadataService,
+                    configService,
+                    infoService,
+                );
                 break;
             case "fastify":
                 frameworkAdapter = new FastifyActuatorAdapter(
                     context,
-                    this.infoService,
+                    this.gitService,
                     metadataService,
                     configService,
+                    infoService,
                 );
                 break;
             default:
