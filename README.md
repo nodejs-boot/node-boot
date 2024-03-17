@@ -7,6 +7,9 @@
 </div>
 <br />
 
+## Node-Boot Architecture
+![node-boot-arch drawio](https://github.com/nodejs-boot/node-boot/assets/12997676/bdd5ccec-da9f-42bc-8619-eec74b986dc8)
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
