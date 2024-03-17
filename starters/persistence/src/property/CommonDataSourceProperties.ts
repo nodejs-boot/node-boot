@@ -1,5 +1,6 @@
 import {DatabaseType, LoggerOptions} from "typeorm";
 import {QueryCacheProperties} from "./QueryCacheProperties";
+import {PrepareLogMessagesOptions} from "typeorm/logger/Logger";
 
 /**
  * CommonDataSourceProperties is set of DataSource properties shared by all database types.
@@ -31,6 +32,8 @@ export interface CommonDataSourceProperties {
      * Logging options.
      */
     readonly logging?: LoggerOptions;
+
+    readonly logFormat?: PrepareLogMessagesOptions;
 
     /**
      * Maximum number of milliseconds query should be executed before logger log a warning.

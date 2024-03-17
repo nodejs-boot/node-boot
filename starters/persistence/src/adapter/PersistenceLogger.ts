@@ -1,8 +1,9 @@
 import {AbstractLogger, LogLevel, LogMessage} from "typeorm";
 import {Logger} from "winston";
+import {PersistenceProperties} from "../property/PersistenceProperties";
 
 export class PersistenceLogger extends AbstractLogger {
-    constructor(private readonly logger: Logger) {
+    constructor(private readonly logger: Logger, private readonly configs: PersistenceProperties) {
         super();
     }
 
@@ -10,9 +11,7 @@ export class PersistenceLogger extends AbstractLogger {
      * Write log to specific output.
      */
     protected writeLog(level: LogLevel, logMessage: LogMessage | LogMessage[]) {
-        const messages = this.prepareLogMessages(logMessage, {
-            highlightSql: false,
-        });
+        const messages = this.prepareLogMessages(logMessage, this.configs.logFormat);
 
         for (const message of messages) {
             switch (message.type ?? level) {

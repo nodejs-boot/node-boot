@@ -18,7 +18,7 @@ export class DataSourceConfiguration {
             the @EnableRepositories from your application.`);
         }
 
-        const persistenceLogger = new PersistenceLogger(logger);
+        const persistenceLogger = new PersistenceLogger(logger, persistenceProperties);
         const {databaseConnectionOverrides, eventSubscribers, migrations, namingStrategy} = PersistenceContext.get();
 
         const strategy = namingStrategy ? new namingStrategy() : undefined;
