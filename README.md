@@ -8,7 +8,8 @@
 <br />
 
 ## Node-Boot Architecture
-![node-boot-arch drawio](https://github.com/nodejs-boot/node-boot/assets/12997676/bdd5ccec-da9f-42bc-8619-eec74b986dc8)
+![node-boot-arch drawio](https://github.com/nodejs-boot/node-boot/assets/12997676/7397061e-f2b1-4328-922c-9aaec5afe8c8)
+
 
 ## Table of Contents
 
