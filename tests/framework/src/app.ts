@@ -1,10 +1,18 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {Body, Controller, Controllers, NodeBoot, NodeBootApp, NodeBootApplication, Post} from "@node-boot/core";
+import {
+    Body,
+    Controller,
+    Controllers,
+    NodeBoot,
+    NodeBootApp,
+    NodeBootApplication,
+    NodeBootAppView,
+    Post,
+} from "@node-boot/core";
 import {ExpressServer} from "@node-boot/express-server";
 import {EnableDI} from "@node-boot/di";
 import {Exclude, Expose} from "class-transformer";
-import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 
 @Exclude()
 class UserModel {
