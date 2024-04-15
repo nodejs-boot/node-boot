@@ -28,7 +28,7 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "test": "jest",
+        "test": "jest --passWithNoTests",
         "rebuild:sqlite": "npm rebuild better-sqlite3",
         "typecheck": "tsc"
     },

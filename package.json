@@ -40,7 +40,8 @@
         "format:check": "prettier --check '{packages,plugins}/**/{package.json,src/*.tsx,src/*.ts}'",
         "format:fix": "prettier --write '{packages,plugins}/**/{package.json,src/*.tsx,src/*.ts}'",
         "git:prune": "git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done",
-        "npm:prune": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+        "npm:prune": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+        "release": "pnpm build && pnpm test && pnpm publish --no-git-checks"
     },
     "devDependencies": {
         "@jest/globals": "^29.5.0",
