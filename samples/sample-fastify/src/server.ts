@@ -1,10 +1,7 @@
 import {FactsServiceApp} from "./app";
 
-// Creates an application instance
-const factsService = new FactsServiceApp();
-
 // Starts the Node-Boot server with the application deployed
-factsService
+new FactsServiceApp()
     .start()
     .then(app => {
         console.debug(`FactsService started successfully at port ${app.appOptions.port}`);

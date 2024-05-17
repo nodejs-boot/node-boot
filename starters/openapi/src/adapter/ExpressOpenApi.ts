@@ -1,11 +1,15 @@
-import {ApplicationContext, OpenApiAdapter, OpenApiOptions} from "@node-boot/context";
+import {ApplicationContext, OpenApiOptions} from "@node-boot/context";
 import swaggerUi from "swagger-ui-express";
-import {OpenApiSpecAdapter} from "./OpenApiSpecAdapter";
+import {BaseOpenApiAdapter} from "./BaseOpenApiAdapter";
 import {Response} from "express";
 
-export class ExpressOpenApi implements OpenApiAdapter {
+export class ExpressOpenApi extends BaseOpenApiAdapter {
+    constructor() {
+        super("express");
+    }
+
     bind(openApiOptions: OpenApiOptions, server: any, router: any): void {
-        const {spec, options} = OpenApiSpecAdapter.adapt(openApiOptions);
+        const {spec, options} = super.buildSpec(openApiOptions);
 
         router.get(options.swaggerOptions.url, (_: never, res: Response) => res.json(spec));
 

@@ -1,6 +1,6 @@
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import {OpenAPIObject} from "openapi3-ts";
-import {OpenApiOptions} from "@node-boot/context";
+import {OpenApiAdapter, OpenApiOptions} from "@node-boot/context";
 import {controllersToSpec} from "../spec";
 import {NodeBootToolkit} from "@node-boot/engine";
 import {parseDataClasses} from "../spec/dataClassParser";
@@ -15,8 +15,12 @@ type OpenApiSpec = {
     };
 };
 
-export class OpenApiSpecAdapter {
-    static adapt(openApiOptions: OpenApiOptions): OpenApiSpec {
+export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
+    protected constructor(readonly name: string) {}
+
+    abstract bind(options: OpenApiOptions, server: any, router: any): void;
+
+    protected buildSpec(openApiOptions: OpenApiOptions): OpenApiSpec {
         const validationSchemas = validationMetadatasToSchemas({
             refPointerPrefix: "#/components/schemas/",
         });

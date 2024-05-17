@@ -1,10 +1,14 @@
-import {ApplicationContext, OpenApiAdapter, OpenApiOptions} from "@node-boot/context";
+import {ApplicationContext, OpenApiOptions} from "@node-boot/context";
 import {FastifyInstance} from "fastify";
-import {OpenApiSpecAdapter} from "./OpenApiSpecAdapter";
+import {BaseOpenApiAdapter} from "./BaseOpenApiAdapter";
 
-export class FastifyOpenApi implements OpenApiAdapter {
+export class FastifyOpenApi extends BaseOpenApiAdapter {
+    constructor() {
+        super("fastify");
+    }
+
     bind(openApiOptions: OpenApiOptions, server: FastifyInstance, router: FastifyInstance): void {
-        const {spec, options} = OpenApiSpecAdapter.adapt(openApiOptions);
+        const {spec, options} = super.buildSpec(openApiOptions);
 
         router.get(options.swaggerOptions.url, async (_, reply) => {
             reply.send(spec);
