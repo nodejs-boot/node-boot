@@ -11,6 +11,7 @@ import {SapConnectionProperties} from "./SapConnectionProperties";
 import {SpannerConnectionProperties} from "./SpannerConnectionProperties";
 import {SqliteConnectionProperties} from "./SqliteConnectionProperties";
 import {SqlServerConnectionProperties} from "./SqlServerConnectionProperties";
+import {TransactionConfigProperties} from "./TransactionConfigProperties";
 
 export type PersistenceProperties = CommonDataSourceProperties & {
     "aurora-mysql": AuroraMysqlConnectionProperties;
@@ -26,4 +27,5 @@ export type PersistenceProperties = CommonDataSourceProperties & {
     spanner: SpannerConnectionProperties;
     sqlite: SqliteConnectionProperties;
     mssql: SqlServerConnectionProperties;
+    transactions?: TransactionConfigProperties;
 };

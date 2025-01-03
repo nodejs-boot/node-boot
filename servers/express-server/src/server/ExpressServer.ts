@@ -1,4 +1,4 @@
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext, JsonObject} from "@node-boot/context";
 import express from "express";
 import {BaseServer} from "@node-boot/core";
 import {ExpressDriver} from "../driver";
@@ -18,12 +18,10 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         this.framework.use(express.urlencoded({extended: true}));
     }
 
-    async run(port?: number): Promise<ExpressServer> {
+    async run(additionalConfig?: JsonObject): Promise<ExpressServer> {
         const context = ApplicationContext.get();
-        // Force application port at runtime
-        if (port) context.applicationOptions.port = port;
 
-        await this.configure(this.getFramework(), this.getRouter());
+        await this.configure(this.getFramework(), this.getRouter(), additionalConfig);
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
@@ -69,7 +67,22 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
     }
 
     async close(): Promise<void> {
-        this.serverInstance?.close();
+        if (!this.serverInstance) {
+            console.warn("Server instance is not initialized or already stopped.");
+            return Promise.resolve();
+        }
+
+        return await new Promise<void>((resolve, reject) => {
+            this.serverInstance.close(err => {
+                if (err) {
+                    console.error("Error stopping the server:", err);
+                    reject(err);
+                } else {
+                    console.log("Server has been stopped.");
+                    resolve();
+                }
+            });
+        });
     }
 
     getFramework(): express.Application {

@@ -19,7 +19,7 @@ export class UserService {
 
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
-        const appName = this.configService.getString("node-boot.app.name");
+        const appName = this.configService.getString("app.name");
         this.logger.info(`Reading node-boot.app.name from app-config.yam: ${appName}`);
 
         return this.userRepository.find();

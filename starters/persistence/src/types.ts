@@ -1,4 +1,4 @@
-export const PERSISTENCE_CONFIG_PATH = "node-boot.persistence";
+export const PERSISTENCE_CONFIG_PATH = "persistence";
 
 export enum RepositoryType {
     SQL = "sql",

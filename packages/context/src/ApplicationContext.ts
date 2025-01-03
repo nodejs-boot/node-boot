@@ -3,7 +3,7 @@ import type {ApplicationOptions, DependencyInjectionOptions} from "./options";
 import type {ApplicationAdapter, ConfigurationAdapter, ConfigurationPropertiesAdapter} from "./adapters";
 import {ActuatorAdapter, OpenApiBridgeAdapter, RepositoriesAdapter} from "./adapters";
 import {AuthorizationChecker, CurrentUserChecker} from "./checkers";
-import {ClassConstructor} from "./ioc";
+import {ClassConstructor, IocContainer} from "./ioc";
 
 export class ApplicationContext {
     private static context: ApplicationContext;
@@ -53,5 +53,9 @@ export class ApplicationContext {
             ApplicationContext.context = new ApplicationContext();
         }
         return ApplicationContext.context;
+    }
+
+    static getIocContainer(): IocContainer | undefined {
+        return this.get().diOptions?.iocContainer;
     }
 }

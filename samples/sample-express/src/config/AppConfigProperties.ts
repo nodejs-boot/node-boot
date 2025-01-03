@@ -1,7 +1,7 @@
 import {ConfigurationProperties} from "@node-boot/config";
 
 @ConfigurationProperties({
-    configPath: "node-boot.app",
+    configPath: "app",
     configName: "app-config",
 })
 export class AppConfigProperties {

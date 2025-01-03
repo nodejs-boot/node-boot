@@ -1,4 +1,11 @@
-import {ApiOptions, ApplicationContext, ApplicationOptions, CoreInfoService, useContainer} from "@node-boot/context";
+import {
+    ApiOptions,
+    ApplicationContext,
+    ApplicationOptions,
+    CoreInfoService,
+    JsonObject,
+    useContainer,
+} from "@node-boot/context";
 import {Logger} from "winston";
 import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
@@ -12,10 +19,10 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
 
     protected constructor(private readonly serverType: string) {}
 
-    protected async init() {
+    protected async init(additionalConfigData?: JsonObject) {
         const context = ApplicationContext.get();
         context.serverType = this.serverType;
-        await this.loadConfig(context);
+        await this.loadConfig(context, additionalConfigData);
         this.setupAppConfigs(context);
         await this.initLogger(context);
         await this.initInfoService(context);
@@ -30,11 +37,11 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
 
     abstract getRouter(): TRouter;
 
-    abstract run(port?: number): Promise<BaseServer>;
+    abstract run(additionalConfig?: JsonObject): Promise<BaseServer>;
 
-    protected async configure(framework: TFramework, router: TRouter) {
+    protected async configure(framework: TFramework, router: TRouter, additionalConfigData?: JsonObject) {
         // Initialize configuration and logging
-        await this.init();
+        await this.init(additionalConfigData);
 
         this.logger.info(`Running Node-Boot application with '${this.serverType.toUpperCase()}'`);
         const context = ApplicationContext.get();
@@ -89,8 +96,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     appView(): NodeBootAppView {
         return {
             appOptions: ApplicationContext.get().applicationOptions,
-            framework: this.getFramework(),
-            router: this.getRouter(),
+            server: this,
             config: this.config,
             logger: this.logger,
         };
@@ -104,8 +110,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     }
 
     private setupAppConfigs(context: ApplicationContext) {
-        const appConfigs = this.config.getOptional<ApplicationOptions>("node-boot.app");
-        const apiConfigs = this.config.getOptional<ApiOptions>("node-boot.api");
+        const appConfigs = this.config.getOptional<ApplicationOptions>("app");
+        const apiConfigs = this.config.getOptional<ApiOptions>("api");
 
         context.applicationOptions = {
             environment: context.applicationOptions?.environment ?? appConfigs?.environment ?? "development",
@@ -116,10 +122,11 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         };
     }
 
-    private async loadConfig(context: ApplicationContext) {
+    private async loadConfig(context: ApplicationContext, additionalConfigData?: JsonObject) {
         this.config = (
             await loadNodeBootConfig({
                 argv: process.argv,
+                additionalConfigData,
             })
         ).config;
         context.diOptions?.iocContainer.set(ConfigService, this.config);
@@ -148,7 +155,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             "/_/ |_/  \\____/\\__,_/  \\___/       /_____/ \\____/\\____/\\__/  \n" +
             "                                                             \n";
 
-        const appConfig = this.config.getOptionalConfig("node-boot.app");
+        const appConfig = this.config.getOptionalConfig("app");
         const info = await this.infoService.getInfo();
         const appName = appConfig?.getOptionalString("name") ?? info.build?.name ?? "Un-named App";
         const separator = "============================================================\n";

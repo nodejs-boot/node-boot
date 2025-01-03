@@ -10,6 +10,7 @@ export function Service(token: Token<unknown>): Function;
 export function Service(config: ComponentOptions): Function;
 export function Service(options?: DiOptions): Function {
     return <TFunction extends Function>(target: TFunction) => {
+        Reflect.defineMetadata("__isService", true, target); // Add a runtime marker
         decorateDi(target, options);
     };
 }

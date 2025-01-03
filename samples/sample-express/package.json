@@ -1,7 +1,7 @@
 {
     "name": "@node-boot/express-sample",
     "version": "1.0.0",
-    "description": "Node-Boot sample project using Express as application server",
+    "description": "Node-Boot sample project using Express",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
@@ -18,7 +18,6 @@
     "main": "dist/index.js",
     "types": "src/index.ts",
     "scripts": {
-        "create:migration": "typeorm migration:create ./src/persistence/migrations/migration",
         "start": "pnpm run build && node dist/server.js",
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
@@ -30,19 +29,20 @@
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
         "rebuild:sqlite": "npm rebuild better-sqlite3",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
     },
     "dependencies": {
-        "@node-boot/config": "1.0.0",
-        "@node-boot/context": "1.0.0",
-        "@node-boot/core": "1.0.0",
-        "@node-boot/starter-openapi": "1.0.0",
-        "@node-boot/express-server": "1.0.0",
-        "@node-boot/authorization": "1.0.0",
-        "@node-boot/di": "1.0.0",
-        "@node-boot/error": "1.0.0",
-        "@node-boot/starter-actuator": "1.0.0",
-        "@node-boot/starter-persistence": "1.0.0",
+        "@node-boot/config": "workspace:*",
+        "@node-boot/context": "workspace:*",
+        "@node-boot/core": "workspace:*",
+        "@node-boot/starter-openapi": "workspace:*",
+        "@node-boot/express-server": "workspace:*",
+        "@node-boot/authorization": "workspace:*",
+        "@node-boot/di": "workspace:*",
+        "@node-boot/error": "workspace:*",
+        "@node-boot/starter-actuator": "workspace:*",
+        "@node-boot/starter-persistence": "workspace:*",
         "katxupa": "^1.9.1",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^0.3.17",

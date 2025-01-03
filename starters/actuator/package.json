@@ -29,8 +29,8 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/config": "1.0.0",
-        "@node-boot/context": "1.0.0",
+        "@node-boot/config": "workspace:*",
+        "@node-boot/context": "workspace:*",
         "dayjs": "^1.11.9",
         "prom-client": "^14.2.0",
         "properties-reader": "^2.3.0"

@@ -195,8 +195,8 @@ export class PersistenceConfiguration {
                 logger.error(
                     `Inconsistent persistence layer: There are ${entities.length} entities registered but ${existingEntities.length} are in the database.`,
                 );
-                logger.warn(`Please enable database sync through "node-boot.persistence.synchronize: true" 
-                or activate migrations through "node-boot.persistence.migrationsRun: true" to properly setup the database. This is important in order to avoid runtime errors in the application`);
+                logger.warn(`Please enable database sync through "persistence.synchronize: true" 
+                or activate migrations through "persistence.migrationsRun: true" to properly setup the database. This is important in order to avoid runtime errors in the application`);
                 process.exit(1);
             }
             logger.info(`Basic database consistency validation passed`);

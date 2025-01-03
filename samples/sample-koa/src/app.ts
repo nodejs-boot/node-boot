@@ -45,7 +45,7 @@ import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 @EnableRepositories()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
-    start(port?: number): Promise<NodeBootAppView> {
-        return NodeBoot.run(KoaServer, port);
+    start(): Promise<NodeBootAppView> {
+        return NodeBoot.run(KoaServer);
     }
 }

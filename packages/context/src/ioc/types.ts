@@ -48,7 +48,7 @@ export interface UseContainerOptions {
 }
 
 /**
- * Allows routing controllers to resolve objects using your IoC container
+ * Allows Node-Boot to resolve objects using your IoC container
  */
 export interface IocContainer<TContainer = unknown> {
     get<T>(someClass: ClassConstructor<T>, action?: Action): T;
@@ -65,4 +65,6 @@ export interface IocContainer<TContainer = unknown> {
     has<T>(type: ClassConstructor<T>): boolean;
 
     has(id: string): boolean;
+
+    reset(): void;
 }

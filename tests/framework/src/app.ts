@@ -4,15 +4,19 @@ import {
     Body,
     Controller,
     Controllers,
+    Get,
     NodeBoot,
     NodeBootApp,
     NodeBootApplication,
     NodeBootAppView,
     Post,
+    Service,
 } from "@node-boot/core";
 import {ExpressServer} from "@node-boot/express-server";
 import {EnableDI} from "@node-boot/di";
 import {Exclude, Expose} from "class-transformer";
+import {Logger} from "winston";
+import {JsonObject} from "@node-boot/context";
 
 @Exclude()
 class UserModel {
@@ -29,25 +33,64 @@ function handler(user: UserModel) {
     return ret;
 }
 
+@Service()
+export class ServiceA {
+    doSomething() {
+        return "Real ServiceA result";
+    }
+}
+
+@Service()
+export class ServiceN {
+    doSomethingElse() {
+        return "Real ServiceN result";
+    }
+}
+
+export class NotService {
+    doSomething() {
+        return "Real NotService result";
+    }
+}
+
 @Controller("")
 class NoTransformResponseController {
+    constructor(
+        private readonly serviceA: ServiceA,
+        private readonly serviceN: ServiceN,
+        private readonly logger: Logger,
+    ) {}
+
+    @Get("/ping")
+    ping() {
+        this.logger.info("Ping to services");
+        return {
+            serviceA: this.serviceA.doSomething(),
+            serviceN: this.serviceN.doSomethingElse(),
+        };
+    }
+
     @Post("/default")
     default(@Body() user: UserModel) {
+        this.logger.info("Getting default");
         return handler(user);
     }
 
     @Post("/noTransform", {transformRequest: false, transformResponse: false})
     noTransform(@Body() user: UserModel) {
+        this.logger.info("call noTransform");
         return handler(user);
     }
 
     @Post("/transformRequestOnly", {transformRequest: true, transformResponse: false})
     transformRequestOnly(@Body() user: UserModel) {
+        this.logger.info("call transformRequestOnly");
         return handler(user);
     }
 
     @Post("/transformResponseOnly", {transformRequest: false, transformResponse: true})
     transformResponseOnly(@Body() user: UserModel) {
+        this.logger.info("call transformResponseOnly");
         return handler(user);
     }
 }
@@ -56,7 +99,7 @@ class NoTransformResponseController {
 @NodeBootApplication()
 @Controllers([NoTransformResponseController])
 export class TestApp implements NodeBootApp {
-    start(port?: number): Promise<NodeBootAppView> {
-        return NodeBoot.run(ExpressServer, port);
+    start(additionalConfig?: JsonObject): Promise<NodeBootAppView> {
+        return NodeBoot.run(ExpressServer, additionalConfig);
     }
 }

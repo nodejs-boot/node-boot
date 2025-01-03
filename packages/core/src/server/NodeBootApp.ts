@@ -1,13 +1,13 @@
-import {ApplicationOptions, Config, LoggerService} from "@node-boot/context";
+import {ApplicationOptions, Config, JsonObject, LoggerService} from "@node-boot/context";
+import {BaseServer} from "./BaseServer";
 
 export type NodeBootAppView = {
     appOptions: ApplicationOptions;
     logger: LoggerService;
     config: Config;
-    framework: any;
-    router: any;
+    server: BaseServer;
 };
 
 export interface NodeBootApp {
-    start(port?: number): Promise<NodeBootAppView>;
+    start(additionalConfig?: JsonObject): Promise<NodeBootAppView>;
 }

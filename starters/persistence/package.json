@@ -29,10 +29,10 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/config": "1.0.0",
-        "@node-boot/context": "1.0.0",
-        "@node-boot/core": "1.0.0",
-        "@node-boot/di": "1.0.0",
+        "@node-boot/config": "workspace:*",
+        "@node-boot/context": "workspace:*",
+        "@node-boot/core": "workspace:*",
+        "@node-boot/di": "workspace:*",
         "typeorm-transactional": "^0.5.0",
         "winston": "^3.10.0",
         "reflect-metadata": "^0.2.1"

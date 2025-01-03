@@ -45,7 +45,7 @@ import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/starter-openapi";
 @EnableRepositories()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
-    start(port?: number): Promise<NodeBootAppView> {
-        return NodeBoot.run(FastifyServer, port);
+    start(): Promise<NodeBootAppView> {
+        return NodeBoot.run(FastifyServer);
     }
 }

@@ -1,4 +1,4 @@
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext, JsonObject} from "@node-boot/context";
 import {BaseServer} from "@node-boot/core";
 import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "../driver";
@@ -15,12 +15,10 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
         this.framework.decorateRequest("locals", {});
     }
 
-    async run(port?: number): Promise<FastifyServer> {
+    async run(additionalConfig?: JsonObject): Promise<FastifyServer> {
         const context = ApplicationContext.get();
-        // Force application port at runtime
-        if (port) context.applicationOptions.port = port;
 
-        await super.configure(this.framework, this.framework);
+        await super.configure(this.framework, this.framework, additionalConfig);
 
         // Bind application container through adapter
         if (context.applicationAdapter) {

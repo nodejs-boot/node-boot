@@ -30,7 +30,7 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/context": "1.0.0"
+        "@node-boot/context": "workspace:*"
     },
     "optionalDependencies": {
         "typedi": "^0.10.0",

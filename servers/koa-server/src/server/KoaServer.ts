@@ -1,4 +1,4 @@
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext, JsonObject} from "@node-boot/context";
 import Koa from "koa";
 import Router from "@koa/router";
 import {BaseServer} from "@node-boot/core";
@@ -19,12 +19,10 @@ export class KoaServer extends BaseServer<Koa, Router> {
         this.router = new Router();
     }
 
-    async run(port?: number): Promise<KoaServer> {
+    async run(additionalConfig?: JsonObject): Promise<KoaServer> {
         const context = ApplicationContext.get();
-        // Force application port at runtime
-        if (port) context.applicationOptions.port = port;
 
-        await this.configure(this.framework, this.router);
+        await this.configure(this.framework, this.router, additionalConfig);
 
         // Bind application container through adapter
         if (context.applicationAdapter) {
@@ -71,7 +69,22 @@ export class KoaServer extends BaseServer<Koa, Router> {
     }
 
     public async close(): Promise<void> {
-        this.serverInstance.close();
+        if (!this.serverInstance) {
+            console.warn("Server instance is not initialized or already stopped.");
+            return Promise.resolve();
+        }
+
+        return await new Promise<void>((resolve, reject) => {
+            this.serverInstance.close(err => {
+                if (err) {
+                    console.error("Error stopping the server:", err);
+                    reject(err);
+                } else {
+                    console.log("Server has been stopped.");
+                    resolve();
+                }
+            });
+        });
     }
 
     getFramework(): Koa {

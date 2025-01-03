@@ -30,8 +30,8 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/context": "1.0.0",
-        "@node-boot/engine": "1.0.0",
+        "@node-boot/context": "workspace:*",
+        "@node-boot/engine": "workspace:*",
         "openapi3-ts": "^2.0.2",
         "lodash.capitalize": "^4.2.1",
         "lodash.merge": "^4.6.2",

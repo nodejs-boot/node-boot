@@ -2,9 +2,9 @@ import {resolve as resolvePath} from "path";
 import parseArgs from "minimist";
 import {findPaths} from "@backstage/cli-common";
 import {ConfigTarget, loadConfig, LoadConfigOptionsRemote} from "@backstage/config-loader";
-import type {AppConfig} from "@backstage/config";
-import {ConfigReader} from "@backstage/config";
+import {AppConfig, ConfigReader} from "@backstage/config";
 import {ConfigService} from "./ConfigService";
+import {JsonObject} from "@node-boot/context";
 
 export function isValidUrl(url: string): boolean {
     try {
@@ -26,7 +26,7 @@ export function isValidUrl(url: string): boolean {
 export async function loadNodeBootConfig(options: {
     remote?: LoadConfigOptionsRemote;
     argv: string[];
-    additionalConfigs?: AppConfig[];
+    additionalConfigData?: JsonObject;
 }): Promise<{config: ConfigService}> {
     const args = parseArgs(options.argv);
 
@@ -41,6 +41,12 @@ export async function loadNodeBootConfig(options: {
 
     const config = new ConfigService();
 
+    const additionalConfigs: AppConfig[] = [];
+
+    if (options.additionalConfigData) {
+        additionalConfigs.push({context: "runtime-configs", data: options.additionalConfigData});
+    }
+
     const {appConfigs} = await loadConfig({
         configRoot: paths.targetRoot,
         configTargets: configTargets,
@@ -49,9 +55,7 @@ export async function loadNodeBootConfig(options: {
             onChange(newConfigs) {
                 console.info(`Reloaded config from ${newConfigs.map(c => c.context).join(", ")}`);
                 const configsToMerge = [...newConfigs];
-                if (options.additionalConfigs) {
-                    configsToMerge.push(...options.additionalConfigs);
-                }
+                configsToMerge.push(...additionalConfigs);
                 config.setConfig(ConfigReader.fromConfigs(configsToMerge));
             },
             stopSignal: new Promise(resolve => {
@@ -66,9 +70,7 @@ export async function loadNodeBootConfig(options: {
     console.info(`Loaded config from ${appConfigs.map(c => c.context).join(", ")}`);
 
     const finalAppConfigs = [...appConfigs];
-    if (options.additionalConfigs) {
-        finalAppConfigs.push(...options.additionalConfigs);
-    }
+    finalAppConfigs.push(...additionalConfigs);
     config.setConfig(ConfigReader.fromConfigs(finalAppConfigs));
 
     return {config};
