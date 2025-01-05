@@ -1,0 +1,64 @@
+{
+    "name": "@node-boot/jest-demo",
+    "version": "1.0.0",
+    "description": "Test framework for Node_Boot projects",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "tests",
+        "node-boot"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest --passWithNoTests",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "jest": "^29.5.0",
+        "@types/jest": "^29.5.11",
+        "ts-jest": "^29.1.1",
+        "@node-boot/context": "workspace:*",
+        "@node-boot/core": "workspace:*",
+        "@node-boot/config": "workspace:*",
+        "@node-boot/engine": "workspace:*",
+        "@node-boot/di": "workspace:*",
+        "@node-boot/express-server": "workspace:*",
+        "@node-boot/starter-persistence": "workspace:*",
+        "@node-boot/error": "workspace:*",
+        "@node-boot/jest": "workspace:*",
+        "express": "^4.18.2",
+        "body-parser": "^1.20.2",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "cors": "^2.8.5",
+        "helmet": "^7.0.0",
+        "hpp": "^0.2.3",
+        "minimist": "^1.2.8",
+        "multer": "^1.4.5-lts.1",
+        "cookie": "^0.6.0",
+        "express-session": "^1.17.3",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0",
+        "axios": "^1.7.9",
+        "reflect-metadata": "^0.2.1",
+        "pactum": "^3.7.6",
+        "better-sqlite3": "^9.1.1",
+        "typeorm": "^0.3.17"
+    },
+    "devDependencies": {}
+}

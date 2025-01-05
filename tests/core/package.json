@@ -1,0 +1,42 @@
+{
+    "name": "@node-boot/test",
+    "version": "1.0.0",
+    "description": "Test framework for Node_Boot projects",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "tests",
+        "node-boot"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest --passWithNoTests",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@node-boot/context": "workspace:*",
+        "@node-boot/core": "workspace:*",
+        "@node-boot/config": "workspace:*"
+    },
+    "optionalDependencies": {
+        "pactum": "^3.7.6",
+        "typeorm": "^0.3.17",
+        "axios": "^1.7.9"
+    },
+    "devDependencies": {}
+}
