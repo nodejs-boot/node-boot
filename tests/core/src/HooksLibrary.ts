@@ -10,7 +10,6 @@ import {
     PactumHook,
     RepositoryHook,
     ServiceHook,
-    TimerHook,
 } from "./hooks";
 
 export type SetUpHooks = {
@@ -27,7 +26,6 @@ export type ReturnHooks = {
     useConfig: ConfigHook["use"];
     useHttp: HttpClientHook["use"];
     useAppContext: AppContextHook["use"];
-    useTimer: TimerHook["use"];
     useMock: MockHook["use"];
     useService: ServiceHook["use"];
     useRepository: RepositoryHook["use"];
@@ -42,7 +40,6 @@ export class HooksLibrary {
     cleanupHook = new CleanupHook();
     pactumHook = new PactumHook();
     httpClientHook = new HttpClientHook();
-    timerHook = new TimerHook();
     serviceHook = new ServiceHook();
     repositoryHook = new RepositoryHook();
 
@@ -55,7 +52,6 @@ export class HooksLibrary {
         hookManager.addHook(this.cleanupHook);
         hookManager.addHook(this.pactumHook);
         hookManager.addHook(this.httpClientHook);
-        hookManager.addHook(this.timerHook);
         hookManager.addHook(this.serviceHook);
         hookManager.addHook(this.repositoryHook);
     }
@@ -77,7 +73,6 @@ export class HooksLibrary {
             useConfig: this.configHook.use.bind(this.configHook),
             useHttp: this.httpClientHook.use.bind(this.httpClientHook),
             useAppContext: this.appContextHook.use.bind(this.appContextHook),
-            useTimer: this.timerHook.use.bind(this.timerHook),
             useMock: this.mockHook.use.bind(this.mockHook),
             useService: this.serviceHook.use.bind(this.serviceHook),
             useRepository: this.repositoryHook.use.bind(this.repositoryHook),

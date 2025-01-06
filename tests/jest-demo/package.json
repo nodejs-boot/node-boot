@@ -1,7 +1,7 @@
 {
     "name": "@node-boot/jest-demo",
     "version": "1.0.0",
-    "description": "Test framework for Node_Boot projects",
+    "description": "Demo project for Node-Boot tests with Jest",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [

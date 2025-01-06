@@ -1,6 +1,6 @@
-# Node-Boot Test
+# Node-Boot Test - Jest
 
-Core Test framework for Node-Boot projects
+Node-Boot Test framework with Jest
 
 ## License
 

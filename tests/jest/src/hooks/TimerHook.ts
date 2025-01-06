@@ -1,4 +1,4 @@
-import {Hook} from "./Hook";
+import {Hook} from "@node-boot/test";
 import {jest} from "@jest/globals";
 
 // TimeControl class handles the manipulation of Jest's timers
