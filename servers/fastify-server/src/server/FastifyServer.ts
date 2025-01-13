@@ -8,11 +8,18 @@ import {FastifyServerConfigs} from "../types";
 
 export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> {
     private readonly framework: FastifyInstance;
+    private readonly activeConnections = new Set();
 
     constructor() {
         super("fastify");
-        this.framework = Fastify({logger: true});
+        this.framework = Fastify({logger: true, forceCloseConnections: true});
         this.framework.decorateRequest("locals", {});
+
+        // Track all connections
+        this.framework.server.on("connection", socket => {
+            this.activeConnections.add(socket);
+            socket.on("close", () => this.activeConnections.delete(socket));
+        });
     }
 
     async run(additionalConfig?: JsonObject): Promise<FastifyServer> {
@@ -66,6 +73,9 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
     }
 
     public async close(): Promise<void> {
+        // Forcefully close all active connections
+        this.activeConnections.forEach((socket: any) => socket.destroy());
+
         await this.framework?.close();
     }
 

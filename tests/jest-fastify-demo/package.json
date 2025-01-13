@@ -1,0 +1,70 @@
+{
+    "name": "@node-boot/jest-fastify-demo",
+    "version": "1.0.0",
+    "description": "Demo project for Node-Boot tests with Jest",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "tests",
+        "node-boot"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest --passWithNoTests",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@node-boot/config": "workspace:*",
+        "@node-boot/context": "workspace:*",
+        "@node-boot/core": "workspace:*",
+        "@node-boot/starter-openapi": "workspace:*",
+        "@node-boot/fastify-server": "workspace:*",
+        "@node-boot/authorization": "workspace:*",
+        "@node-boot/di": "workspace:*",
+        "@node-boot/error": "workspace:*",
+        "katxupa": "^1.9.1",
+        "@node-boot/starter-actuator": "workspace:*",
+        "@node-boot/starter-persistence": "workspace:*",
+        "reflect-metadata": "^0.2.1",
+        "fastify": "^4.21.0",
+        "@fastify/cookie": "^9.0.4",
+        "@fastify/session": "^10.4.0",
+        "@fastify/multipart": "^7.7.3",
+        "@fastify/view": "^8.0.0",
+        "@fastify/cors": "^8.4.1",
+        "@fastify/helmet": "^11.1.1",
+        "@fastify/swagger-ui": "^1.9.3",
+        "@fastify/swagger": "^8.10.0",
+        "typeorm": "^0.3.17",
+        "better-sqlite3": "^9.1.1",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0"
+    },
+    "devDependencies": {
+        "@node-boot/jest": "workspace:*",
+        "jest": "^29.5.0",
+        "@types/jest": "^29.5.11",
+        "ts-jest": "^29.1.1",
+        "pactum": "^3.7.6",
+        "axios": "^1.7.9",
+        "supertest": "^7.0.0",
+        "@types/supertest": "^6.0.2"
+    }
+}

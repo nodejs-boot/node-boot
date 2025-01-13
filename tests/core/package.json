@@ -36,7 +36,10 @@
     "optionalDependencies": {
         "pactum": "^3.7.6",
         "typeorm": "^0.3.17",
-        "axios": "^1.7.9"
+        "axios": "^1.7.9",
+        "supertest": "^7.0.0"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@types/supertest": "^6.0.2"
+    }
 }

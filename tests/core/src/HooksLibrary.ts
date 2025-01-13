@@ -11,6 +11,7 @@ import {
     RepositoryHook,
     ServiceHook,
 } from "./hooks";
+import {SupertestHook} from "./hooks/SupertestHook";
 
 export type SetUpHooks = {
     useAppContext: AppContextHook["call"];
@@ -29,6 +30,7 @@ export type ReturnHooks = {
     useMock: MockHook["use"];
     useService: ServiceHook["use"];
     useRepository: RepositoryHook["use"];
+    useSupertest: SupertestHook["use"];
 };
 
 export class HooksLibrary {
@@ -42,6 +44,7 @@ export class HooksLibrary {
     httpClientHook = new HttpClientHook();
     serviceHook = new ServiceHook();
     repositoryHook = new RepositoryHook();
+    supertestHook = new SupertestHook();
 
     registerHooks(hookManager: HookManager) {
         hookManager.addHook(this.appContextHook);
@@ -54,6 +57,7 @@ export class HooksLibrary {
         hookManager.addHook(this.httpClientHook);
         hookManager.addHook(this.serviceHook);
         hookManager.addHook(this.repositoryHook);
+        hookManager.addHook(this.supertestHook);
     }
 
     getSetupHooks(): SetUpHooks {
@@ -76,6 +80,7 @@ export class HooksLibrary {
             useMock: this.mockHook.use.bind(this.mockHook),
             useService: this.serviceHook.use.bind(this.serviceHook),
             useRepository: this.repositoryHook.use.bind(this.repositoryHook),
+            useSupertest: this.supertestHook.use.bind(this.supertestHook),
         };
     }
 
