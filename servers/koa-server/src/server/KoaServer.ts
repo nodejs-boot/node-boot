@@ -7,6 +7,7 @@ import {KoaDriver} from "../driver";
 import http from "http";
 import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 import {KoaServerConfigs} from "../types";
+import {Server} from "node:http";
 
 export class KoaServer extends BaseServer<Koa, Router> {
     private readonly framework: Koa;
@@ -85,6 +86,10 @@ export class KoaServer extends BaseServer<Koa, Router> {
                 }
             });
         });
+    }
+
+    override getHttpServer(): Server {
+        return this.serverInstance;
     }
 
     getFramework(): Koa {

@@ -11,6 +11,7 @@ import {createLogger} from "../logger";
 import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
 import {NodeBootAppView} from "./NodeBootApp";
 import {SERVER_CONFIGURATIONS} from "../constants";
+import {Server} from "node:http";
 
 export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
@@ -32,6 +33,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     abstract listen(): Promise<NodeBootAppView>;
 
     abstract close(): Promise<void>;
+
+    abstract getHttpServer(): Server;
 
     abstract getFramework(): TFramework;
 

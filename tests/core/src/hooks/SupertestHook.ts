@@ -29,6 +29,6 @@ export class SupertestHook extends Hook {
                 "SupertestHook: Server instance not available. Make sure the application is started and SupertestHook is properly initialized.",
             );
         }
-        return request(this.appView.server.getFramework());
+        return request(this.appView.server.getHttpServer());
     }
 }

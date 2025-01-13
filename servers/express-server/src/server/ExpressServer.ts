@@ -6,6 +6,7 @@ import {NodeBootToolkit} from "@node-boot/engine";
 import http from "http";
 import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
 import {ExpressServerConfigs} from "../types";
+import {Server} from "node:http";
 
 export class ExpressServer extends BaseServer<express.Application, express.Application> {
     public framework: express.Application;
@@ -83,6 +84,10 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
                 }
             });
         });
+    }
+
+    override getHttpServer(): Server {
+        return this.serverInstance;
     }
 
     getFramework(): express.Application {
