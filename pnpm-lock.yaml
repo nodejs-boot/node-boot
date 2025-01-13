@@ -1067,6 +1067,130 @@ importers:
         specifier: ^29.1.1
         version: 29.1.2(@babel/core@7.23.7)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.7))(jest@29.7.0(@types/node@20.11.5)(ts-node@10.9.2(@swc/core@1.3.104)(@types/node@20.11.5)(typescript@5.3.3)))(typescript@5.3.3)
 
+  tests/jest-koa-demo:
+    dependencies:
+      '@koa/cors':
+        specifier: ^4.0.0
+        version: 4.0.0
+      '@koa/multer':
+        specifier: ^3.0.2
+        version: 3.0.2(multer@1.4.5-lts.1)
+      '@koa/router':
+        specifier: ^12.0.0
+        version: 12.0.1
+      '@node-boot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@node-boot/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@node-boot/context':
+        specifier: workspace:*
+        version: link:../../packages/context
+      '@node-boot/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@node-boot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
+      '@node-boot/error':
+        specifier: workspace:*
+        version: link:../../packages/error
+      '@node-boot/koa-server':
+        specifier: workspace:*
+        version: link:../../servers/koa-server
+      '@node-boot/starter-actuator':
+        specifier: workspace:*
+        version: link:../../starters/actuator
+      '@node-boot/starter-openapi':
+        specifier: workspace:*
+        version: link:../../starters/openapi
+      '@node-boot/starter-persistence':
+        specifier: workspace:*
+        version: link:../../starters/persistence
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.1
+      hpp:
+        specifier: ^0.2.3
+        version: 0.2.3
+      katxupa:
+        specifier: ^1.9.1
+        version: 1.9.1
+      koa:
+        specifier: '>=2.14.2'
+        version: 2.15.0
+      koa-bodyparser:
+        specifier: ^4.4.1
+        version: 4.4.1
+      koa-cookies:
+        specifier: ^4.0.2
+        version: 4.0.2
+      koa-helmet:
+        specifier: ^7.0.2
+        version: 7.0.2
+      koa-session:
+        specifier: ^6.4.0
+        version: 6.4.0
+      koa2-swagger-ui:
+        specifier: ^5.8.0
+        version: 5.10.0(@types/koa@2.14.0)
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.1
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typeorm:
+        specifier: ^0.3.17
+        version: 0.3.19(better-sqlite3@9.3.0)(ts-node@10.9.2(@swc/core@1.3.104)(@types/node@20.11.5)(typescript@5.3.3))
+      winston:
+        specifier: ^3.10.0
+        version: 3.11.0
+    devDependencies:
+      '@node-boot/jest':
+        specifier: workspace:*
+        version: link:../jest
+      '@types/body-parser':
+        specifier: ^1.19.2
+        version: 1.19.5
+      '@types/jest':
+        specifier: ^29.5.11
+        version: 29.5.12
+      '@types/koa':
+        specifier: ^2.13.8
+        version: 2.14.0
+      '@types/koa-bodyparser':
+        specifier: ^4.3.10
+        version: 4.3.12
+      '@types/koa-cors':
+        specifier: ^0.0.2
+        version: 0.0.2
+      '@types/koa-helmet':
+        specifier: ^6.0.4
+        version: 6.0.8
+      '@types/supertest':
+        specifier: ^6.0.2
+        version: 6.0.2
+      axios:
+        specifier: ^1.7.9
+        version: 1.7.9
+      jest:
+        specifier: ^29.5.0
+        version: 29.7.0(@types/node@20.11.5)(ts-node@10.9.2(@swc/core@1.3.104)(@types/node@20.11.5)(typescript@5.3.3))
+      pactum:
+        specifier: ^3.7.6
+        version: 3.7.6
+      supertest:
+        specifier: ^7.0.0
+        version: 7.0.0
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.1.2(@babel/core@7.23.7)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.7))(jest@29.7.0(@types/node@20.11.5)(ts-node@10.9.2(@swc/core@1.3.104)(@types/node@20.11.5)(typescript@5.3.3)))(typescript@5.3.3)
+
 packages:
 
   '@aashutoshrathi/word-wrap@1.2.6':
