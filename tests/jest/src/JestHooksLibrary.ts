@@ -1,9 +1,7 @@
 import {HookManager, HooksLibrary, ReturnHooks, SetUpHooks} from "@node-boot/test";
 import {SpyHook, TimerHook} from "./hooks";
 
-export type JestSetUpHooks = SetUpHooks & {
-    useSpy: SpyHook["call"];
-};
+export type JestSetUpHooks = SetUpHooks & {};
 
 export type JestReturnHooks = ReturnHooks & {
     useSpy: SpyHook["use"];
@@ -24,7 +22,6 @@ export class JestHooksLibrary extends HooksLibrary {
         const baseHooks = super.getSetupHooks();
         return {
             ...baseHooks,
-            useSpy: this.spyHook.call.bind(this.spyHook),
         };
     }
 

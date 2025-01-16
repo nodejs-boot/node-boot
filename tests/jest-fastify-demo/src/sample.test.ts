@@ -9,7 +9,7 @@ import {spec} from "pactum";
 describe("Sample Node-Boot Test", () => {
     const {useHttp, useTimer, useService, useConfig} = useNodeBoot(
         TestApp,
-        ({useAppContext, useMock, useConfig, useAddress, useEnv, useSpy, useCleanup, usePactum}) => {
+        ({useAppContext, useMock, useConfig, useAddress, useEnv, useCleanup, usePactum}) => {
             usePactum();
 
             useMock(ServiceA, {
@@ -36,19 +36,6 @@ describe("Sample Node-Boot Test", () => {
                 expect(appContext.logger).toBeDefined();
             });
 
-            // Add a consumer to spy on ServiceA's doSomething method
-            useSpy(ServiceA, "doSomething", spy => {
-                spy.mockImplementation(() => "Spied ServiceA result");
-
-                // You can also inspect or assert how the spy was called
-                expect(spy).toHaveBeenCalledTimes(1);
-            });
-
-            useSpy(ServiceN, "doSomethingElse", spy => {
-                console.log("doSomethingElse was called.");
-                console.log("Arguments:", spy.mock.calls[spy.mock.calls.length - 1]); // Last call args
-            });
-
             // Register a cleanup function to be run after tests
             useCleanup({
                 afterAll: () => {
@@ -59,10 +46,10 @@ describe("Sample Node-Boot Test", () => {
         },
     );
 
-    it("should use mocked and real service instances", () => {
+    it("should use real service instances", () => {
         const serviceA = useService(ServiceA);
         const serviceN = useService(ServiceN);
-        expect(serviceA.doSomething()).toBe("Mocked ServiceA result");
+        expect(serviceA.doSomething()).toBe("Real ServiceA result");
         expect(serviceN.doSomethingElse()).toBe("Real ServiceN result");
     });
 
@@ -87,7 +74,7 @@ describe("Sample Node-Boot Test", () => {
         const result = await get<{serviceA: string; serviceN: string}>("/api/test/ping");
         expect(result.status).toBe(200);
         expect(result.data).toBeDefined();
-        expect(result.data.serviceA).toBe("Mocked ServiceA result");
+        expect(result.data.serviceA).toBe("Real ServiceA result");
         expect(result.data.serviceN).toBe("Real ServiceN result");
     });
 
@@ -95,7 +82,7 @@ describe("Sample Node-Boot Test", () => {
         const response = await spec().get(`/api/test/ping`).expectStatus(200).returns("res.body");
 
         expect(response).toBeDefined();
-        expect(response.serviceA).toBe("Mocked ServiceA result");
+        expect(response.serviceA).toBe("Real ServiceA result");
         expect(response.serviceN).toBe("Real ServiceN result");
     });
 

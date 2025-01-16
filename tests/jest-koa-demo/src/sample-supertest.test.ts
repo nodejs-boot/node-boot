@@ -5,7 +5,7 @@ import {TestAppWithPersistence, UserModel, UserRepository} from "./app-with-pers
  * A test suite demonstrating the usage of useNodeBoot framework for testing NodeBoot
  * applications with dependency injection and mocking capabilities.
  * */
-describe("Sample Node-Boot test with Koa Server :: With Supertest Hook", () => {
+describe("Sample Node-Boot est :: With Supertest Hook", () => {
     const {useSpy, useRepository, useSupertest} = useNodeBoot(TestAppWithPersistence, ({useConfig, useCleanup}) => {
         useConfig({
             app: {

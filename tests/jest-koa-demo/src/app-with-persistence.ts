@@ -34,7 +34,7 @@ import {KoaServer} from "@node-boot/koa-server";
 @Entity()
 export class UserEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
 
     @Column()
     email: string;
@@ -72,6 +72,16 @@ export class UserService {
         return this.userRepository.find();
     }
 
+    public async getUserById(id: string): Promise<UserEntity> {
+        this.logger.info(`Getting user for ID ${id}`);
+        return {
+            id,
+            name: `User ${id}`,
+            email: "user@node-boot.io",
+            password: "encrypted",
+        };
+    }
+
     @Transactional()
     public async createUser(userData: UserModel): Promise<UserEntity> {
         const existingUser = await this.userRepository.findOneBy({
@@ -84,7 +94,7 @@ export class UserService {
     }
 
     @Transactional()
-    public async deleteUser(userId: number): Promise<void> {
+    public async deleteUser(userId: string): Promise<void> {
         const user = await this.userRepository.findOneBy({
             id: userId,
         });
@@ -101,6 +111,11 @@ export class UserService {
 class UserController {
     constructor(private readonly userService: UserService) {}
 
+    @Get("/:id")
+    async getById(@Param("id") userId: string): Promise<UserEntity> {
+        return this.userService.getUserById(userId);
+    }
+
     @Get("/")
     async getUsers(): Promise<UserEntity[]> {
         return this.userService.findAllUser();
@@ -112,7 +127,7 @@ class UserController {
     }
 
     @Delete("/:id")
-    async deleteUser(@Param("id") userId: number) {
+    async deleteUser(@Param("id") userId: string) {
         await this.userService.deleteUser(userId);
         return {message: `User ${userId} successfully deleted`};
     }

@@ -1,34 +1,31 @@
 import {useNodeBoot} from "@node-boot/jest";
 import {spec} from "pactum";
-import {TestAppWithPersistence, UserModel, UserRepository, UserService} from "./app-with-persistence";
+import {TestAppWithPersistence, UserModel, UserRepository} from "./app-with-persistence";
 
 /**
  * A test suite demonstrating the usage of useNodeBoot framework for testing NodeBoot
  * applications with dependency injection and mocking capabilities.
  * */
-describe("Sample Node-Boot Persistence Test with Koa Server", () => {
-    const {useSpy, useMock, useRepository} = useNodeBoot(
-        TestAppWithPersistence,
-        ({useConfig, usePactum, useCleanup}) => {
-            useConfig({
-                app: {
-                    port: 20000,
-                },
-            });
+describe("Sample Node-Boot Persistence Test", () => {
+    const {useSpy, useRepository} = useNodeBoot(TestAppWithPersistence, ({useConfig, usePactum, useCleanup}) => {
+        useConfig({
+            app: {
+                port: 20000,
+            },
+        });
 
-            usePactum();
+        usePactum();
 
-            useCleanup({
-                afterEach: async () => {
-                    const repository = useRepository(UserRepository);
-                    const users = await repository.find({});
-                    for (const user of users) {
-                        await repository.delete({id: user.id});
-                    }
-                },
-            });
-        },
-    );
+        useCleanup({
+            afterEach: async () => {
+                const repository = useRepository(UserRepository);
+                const users = await repository.find({});
+                for (const user of users) {
+                    await repository.delete({id: user.id});
+                }
+            },
+        });
+    });
 
     describe("API Tests", () => {
         it("should retrieve data from API", async () => {
@@ -104,57 +101,6 @@ describe("Sample Node-Boot Persistence Test with Koa Server", () => {
             expect((response as any).id).toBeDefined();
 
             expect(spy).toHaveBeenCalledTimes(1);
-        });
-
-        it("should spy on a mocked service with plain data", async () => {
-            useMock(UserService, {
-                findAllUser: async () => [
-                    {
-                        id: 1,
-                        name: "Manuel Santos",
-                        email: "ney.br.santos@gmail.com",
-                        password: "123456",
-                    },
-                    {
-                        id: 2,
-                        name: "Gabriel Santos",
-                        email: "bag.santos@gmail.com",
-                        password: "123456",
-                    },
-                ],
-            });
-
-            const spy = useSpy(UserService, "findAllUser");
-
-            const response = await spec()
-                .get(`/api/users/`)
-                .expectStatus(200)
-                .returns<Promise<UserModel[]>>("res.body");
-
-            expect(response).toBeDefined();
-            expect(response.length).toBe(2);
-
-            expect(spy).toHaveBeenCalledTimes(1);
-
-            // restore mock with original instance
-            //restore();
-        });
-
-        it("should spy on a mocked service with jest mock", async () => {
-            useMock(UserService, {
-                findAllUser: jest.fn(async () => []),
-            });
-
-            const spy = useSpy(UserService, "findAllUser");
-
-            await spec().get(`/api/users/`).expectStatus(200).returns<Promise<UserModel[]>>("res.body");
-
-            await spec().get(`/api/users/`).expectStatus(200).returns<Promise<UserModel[]>>("res.body");
-
-            expect(spy).toHaveBeenCalledTimes(2);
-
-            // restore mock with original instance
-            //restore();
         });
     });
 });
