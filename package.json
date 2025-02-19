@@ -1,6 +1,6 @@
 {
     "name": "nodeboot",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Node Boot makes it easy to create stand-alone, production-grade NodeJs based Applications that you can \"just run\". We take an opinionated view of the NodeJs platform and third-party libraries so you can get started with minimum fuss.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -42,6 +42,9 @@
         "format:fix": "prettier --write '{packages,samples,servers,starters,tests}/**/{package.json,src/*.tsx,src/*.ts}'",
         "git:prune": "git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done",
         "npm:prune": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+        "build:patch": "turbo run build:patch",
+        "build:minor": "turbo run build:minor",
+        "build:major": "turbo run build:major",
         "release": "turbo run release"
     },
     "devDependencies": {

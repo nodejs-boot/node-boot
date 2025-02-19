@@ -39,6 +39,9 @@
         "format": {},
         "format:fix": {},
         "release": {},
+        "build:patch": {},
+        "build:minor": {},
+        "build:major": {},
         "test": {
             "dependsOn": ["build"]
         },

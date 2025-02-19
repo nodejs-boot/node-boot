@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/test",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Test framework for Node_Boot projects",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -27,7 +27,10 @@
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
         "typecheck": "tsc",
-        "release": "pnpm build && pnpm publish --access public --no-git-checks"
+        "build:patch": "pnpm build && pnpm version patch",
+        "build:minor": "pnpm build && pnpm version minor",
+        "build:major": "pnpm build && pnpm version major",
+        "release": "pnpm publish --access public --no-git-checks"
     },
     "dependencies": {
         "@nodeboot/context": "workspace:*",
