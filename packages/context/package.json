@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/context",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -36,5 +36,11 @@
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
         "winston": ">=3.10.0"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

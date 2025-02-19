@@ -1,0 +1,11 @@
+src/
+tsconfig.json
+tsconfig.build.json
+tsconfig.tsbuildinfo
+node_modules/
+turbo/
+.lintstagedrc.js
+.prettierignore
+jest.config.js
+nodemon.json
+

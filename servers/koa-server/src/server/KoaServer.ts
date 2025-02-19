@@ -1,11 +1,10 @@
 import {ApplicationContext, JsonObject} from "@nodeboot/context";
 import Koa from "koa";
 import Router from "@koa/router";
-import {BaseServer} from "@nodeboot/core";
+import {BaseServer, NodeBootAppView} from "@nodeboot/core";
 import {NodeBootToolkit} from "@nodeboot/engine";
 import {KoaDriver} from "../driver";
 import http from "http";
-import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 import {KoaServerConfigs} from "../types";
 import {Server} from "node:http";
 

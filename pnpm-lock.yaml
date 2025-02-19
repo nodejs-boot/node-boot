@@ -991,8 +991,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/authorization
       '@nodeboot/config':
-        specifier: 1.0.1
-        version: 1.0.1(@swc/core@1.3.104)(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)
+        specifier: workspace:*
+        version: link:../../packages/config
       '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
@@ -1640,16 +1640,6 @@ packages:
   '@lukeed/ms@2.0.2':
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
-
-  '@nodeboot/config@1.0.1':
-    resolution: {integrity: sha512-+rg10123qn1RMgNmc+32qVF6YyUBkMF700HVFAQvjf4NPmDAhkBblywDAzbSS6P3/pg/4ao5stH6cxl+UNl5cw==}
-
-  '@nodeboot/context@1.0.1':
-    resolution: {integrity: sha512-zCaXFuNL1p/eZ17tIMzK6QTypcDwl6SvUMuYvVdIyo4qHGfJs1GWjSy0RSpz97VzVF3E5BgKlRLHxI3uxY/n0Q==}
-    peerDependencies:
-      class-transformer: ^0.5.1
-      class-validator: ^0.14.0
-      winston: '>=3.10.0'
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -5495,29 +5485,6 @@ snapshots:
       - supports-color
 
   '@lukeed/ms@2.0.2': {}
-
-  '@nodeboot/config@1.0.1(@swc/core@1.3.104)(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)':
-    dependencies:
-      '@backstage/cli-common': 0.1.13
-      '@backstage/config': 1.1.1
-      '@backstage/config-loader': 1.6.1(@swc/core@1.3.104)
-      '@backstage/types': 1.1.1
-      '@nodeboot/context': 1.0.1(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)
-      minimist: 1.2.8
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@swc/wasm'
-      - class-transformer
-      - class-validator
-      - encoding
-      - winston
-
-  '@nodeboot/context@1.0.1(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)':
-    dependencies:
-      class-transformer: 0.5.1
-      class-validator: 0.14.1
-      reflect-metadata: 0.2.1
-      winston: 3.11.0
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

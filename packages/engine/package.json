@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/engine",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Node-Boot engine that enables hte node-boot magic with application server frameworks through drivers",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -39,5 +39,11 @@
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0"
     },
-    "optionalDependencies": {}
+    "optionalDependencies": {},
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

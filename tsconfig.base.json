@@ -4,6 +4,8 @@
         /* Basic Options */
         "incremental": true,
         "declaration": true,
+        "declarationMap": true,
+        "emitDeclarationOnly": false,
         "allowJs": true,
         "noEmit": true,
         "strict": true,

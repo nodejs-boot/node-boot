@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-actuator",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -49,5 +49,11 @@
         "@types/express": "^4.17.21",
         "@types/koa": "^2.13.11",
         "@types/koa__router": "^12.0.4"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/error",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Node-Boot base errors/exceptions",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -28,5 +28,11 @@
         "test": "jest --passWithNoTests",
         "typecheck": "tsc",
         "release": "pnpm build && pnpm publish --access public --no-git-checks"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

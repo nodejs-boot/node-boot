@@ -1,9 +1,8 @@
 import {ApplicationContext, JsonObject} from "@nodeboot/context";
-import {BaseServer} from "@nodeboot/core";
+import {BaseServer, NodeBootAppView} from "@nodeboot/core";
 import Fastify, {FastifyInstance} from "fastify";
 import {FastifyDriver} from "../driver";
 import {NodeBootToolkit} from "@nodeboot/engine";
-import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 import {FastifyServerConfigs} from "../types";
 import {Server} from "node:http";
 

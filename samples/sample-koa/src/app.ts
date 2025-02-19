@@ -7,6 +7,7 @@ import {
     NodeBoot,
     NodeBootApp,
     NodeBootApplication,
+    NodeBootAppView,
 } from "@nodeboot/core";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
@@ -21,7 +22,6 @@ import {AppConfigProperties} from "./config/AppConfigProperties";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
-import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 
 @EnableDI(Container)
 @EnableOpenApi()

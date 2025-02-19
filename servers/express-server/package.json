@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-server",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Express server for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -52,5 +52,11 @@
         "@types/cookie": "^0.6.0",
         "@types/cors": "^2.8.17",
         "@types/express-session": "^1.17.10"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

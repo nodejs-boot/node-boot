@@ -1,6 +1,6 @@
 {
     "name": "nodeboot",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Node Boot makes it easy to create stand-alone, production-grade NodeJs based Applications that you can \"just run\". We take an opinionated view of the NodeJs platform and third-party libraries so you can get started with minimum fuss.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -71,6 +71,8 @@
     },
     "files": [
         "dist",
+        "package.json",
+        "README.md",
         "config.d.ts"
     ],
     "configSchema": "config.d.ts",

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-openapi",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -57,5 +57,11 @@
         "koa2-swagger-ui": "^5.8.0",
         "@fastify/swagger-ui": "^1.9.3",
         "@fastify/swagger": "^8.10.0"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

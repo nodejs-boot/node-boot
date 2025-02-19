@@ -7,6 +7,7 @@ import {
     NodeBoot,
     NodeBootApp,
     NodeBootApplication,
+    NodeBootAppView,
 } from "@nodeboot/core";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
 import {AppConfigProperties} from "./config/AppConfigProperties";
@@ -21,7 +22,6 @@ import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableDI} from "@nodeboot/di";
 import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
-import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 
 @EnableDI(Container)
 @EnableOpenApi()

@@ -7,6 +7,7 @@ import {
     NodeBoot,
     NodeBootApp,
     NodeBootApplication,
+    NodeBootAppView,
 } from "@nodeboot/core";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
@@ -19,7 +20,6 @@ import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableDI} from "@nodeboot/di";
 import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
 import {AppConfigProperties} from "./config/AppConfigProperties";
-import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
 

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/di",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Dependency Injection plugin for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -36,5 +36,11 @@
     "optionalDependencies": {
         "typedi": "^0.10.0",
         "inversify": "^6.0.1"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }

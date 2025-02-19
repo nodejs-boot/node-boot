@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/test",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Test framework for Node_Boot projects",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -16,7 +16,7 @@
         "access": "public"
     },
     "main": "dist/index.js",
-    "types": "src/index.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -42,5 +42,11 @@
     },
     "devDependencies": {
         "@types/supertest": "^6.0.2"
-    }
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
 }
