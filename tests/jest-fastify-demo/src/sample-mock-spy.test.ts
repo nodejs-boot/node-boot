@@ -1,4 +1,4 @@
-import {useNodeBoot} from "@node-boot/jest";
+import {useNodeBoot} from "@nodeboot/jest";
 import {spec} from "pactum";
 import {TestAppWithPersistence, UserModel, UserService} from "./app-with-persistence";
 
@@ -34,7 +34,7 @@ describe("Sample Node-Boot Persistence Test", () => {
                 return {
                     id,
                     name: `User ${id}`,
-                    email: "user@node-boot.io",
+                    email: "user@nodeboot.io",
                     password: "encrypted",
                 };
             }),

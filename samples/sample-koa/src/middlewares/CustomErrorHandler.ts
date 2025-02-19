@@ -1,9 +1,9 @@
 import {Logger} from "winston";
-import {ErrorHandler} from "@node-boot/core";
-import {Inject} from "@node-boot/di";
-import {Action, ErrorHandlerInterface} from "@node-boot/context";
+import {ErrorHandler} from "@nodeboot/core";
+import {Inject} from "@nodeboot/di";
+import {Action, ErrorHandlerInterface} from "@nodeboot/context";
 import {Request, Response} from "koa";
-import {HttpError} from "@node-boot/error";
+import {HttpError} from "@nodeboot/error";
 
 @ErrorHandler()
 export class CustomErrorHandler implements ErrorHandlerInterface<HttpError, Request, Response> {

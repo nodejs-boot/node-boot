@@ -1,4 +1,4 @@
-import {ConfigurationProperties} from "@node-boot/config";
+import {ConfigurationProperties} from "@nodeboot/config";
 
 @ConfigurationProperties({
     configPath: "app",

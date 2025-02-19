@@ -1,4 +1,4 @@
-import {Model, Property} from "@node-boot/core";
+import {Model, Property} from "@nodeboot/core";
 import {IsEmail} from "class-validator";
 
 @Model()

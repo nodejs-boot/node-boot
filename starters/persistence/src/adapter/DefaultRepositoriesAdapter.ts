@@ -1,4 +1,4 @@
-import {IocContainer, RepositoriesAdapter} from "@node-boot/context";
+import {IocContainer, RepositoriesAdapter} from "@nodeboot/context";
 import {EntityManager} from "typeorm";
 import {Logger} from "winston";
 import {PersistenceContext} from "../PersistenceContext";

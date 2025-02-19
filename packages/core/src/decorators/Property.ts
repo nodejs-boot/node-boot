@@ -1,5 +1,5 @@
-import {PropertyOptions} from "@node-boot/context";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {PropertyOptions} from "@nodeboot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 export function Property(options: PropertyOptions = {}) {
     return function (object: Object, propertyKey: string) {

@@ -4,7 +4,7 @@ import {
     NodeBootEngineOptions,
     ParamMetadataArgs,
     ResponseHandlerMetadataArgs,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 
 /**
  * All the context for a single route.

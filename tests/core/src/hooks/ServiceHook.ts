@@ -1,5 +1,5 @@
 import {Hook} from "./Hook";
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext} from "@nodeboot/context";
 
 export class ServiceHook extends Hook {
     use<T>(serviceClass: new (...args: any[]) => T): T {

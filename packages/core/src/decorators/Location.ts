@@ -1,4 +1,4 @@
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Sets Location header with given value to the response.

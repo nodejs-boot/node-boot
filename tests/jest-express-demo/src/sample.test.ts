@@ -1,5 +1,5 @@
 import {NotService, ServiceA, ServiceN, TestApp} from "./app";
-import {useNodeBoot} from "@node-boot/jest";
+import {useNodeBoot} from "@nodeboot/jest";
 import {spec} from "pactum";
 
 /**

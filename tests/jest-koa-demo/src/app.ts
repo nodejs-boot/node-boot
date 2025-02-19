@@ -11,12 +11,12 @@ import {
     NodeBootAppView,
     Post,
     Service,
-} from "@node-boot/core";
-import {EnableDI} from "@node-boot/di";
+} from "@nodeboot/core";
+import {EnableDI} from "@nodeboot/di";
 import {Exclude, Expose} from "class-transformer";
 import {Logger} from "winston";
-import {JsonObject} from "@node-boot/context";
-import {KoaServer} from "@node-boot/koa-server";
+import {JsonObject} from "@nodeboot/context";
+import {KoaServer} from "@nodeboot/koa-server";
 
 @Exclude()
 class UserModel {

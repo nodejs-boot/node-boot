@@ -1,9 +1,9 @@
-import {Bean, Configuration} from "@node-boot/core";
+import {Bean, Configuration} from "@nodeboot/core";
 import {DataSource, EntityManager} from "typeorm";
-import {ApplicationContext, BeansContext, IocContainer} from "@node-boot/context";
+import {ApplicationContext, BeansContext, IocContainer} from "@nodeboot/context";
 import {DataSourceOptions} from "typeorm/data-source/DataSourceOptions";
 import {PersistenceContext} from "../PersistenceContext";
-import {REQUIRES_FIELD_INJECTION_KEY} from "@node-boot/di";
+import {REQUIRES_FIELD_INJECTION_KEY} from "@nodeboot/di";
 import {Logger} from "winston";
 
 /**

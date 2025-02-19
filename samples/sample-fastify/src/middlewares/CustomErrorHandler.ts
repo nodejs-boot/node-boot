@@ -1,8 +1,8 @@
 import {Logger} from "winston";
-import {ErrorHandler} from "@node-boot/core";
-import {Inject} from "@node-boot/di";
+import {ErrorHandler} from "@nodeboot/core";
+import {Inject} from "@nodeboot/di";
 import {errorCodes, FastifyError, FastifyReply, FastifyRequest} from "fastify";
-import {Action, ErrorHandlerInterface} from "@node-boot/context";
+import {Action, ErrorHandlerInterface} from "@nodeboot/context";
 
 @ErrorHandler()
 export class CustomErrorHandler implements ErrorHandlerInterface<FastifyError, FastifyRequest, FastifyReply> {

@@ -1,7 +1,7 @@
 import {Logger} from "winston";
-import {Middleware} from "@node-boot/core";
-import {Inject} from "@node-boot/di";
-import {Action, MiddlewareInterface} from "@node-boot/context";
+import {Middleware} from "@nodeboot/core";
+import {Inject} from "@nodeboot/di";
+import {Action, MiddlewareInterface} from "@nodeboot/context";
 import {Request, Response} from "express";
 
 @Middleware({type: "before"})

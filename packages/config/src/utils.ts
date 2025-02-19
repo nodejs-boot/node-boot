@@ -1,5 +1,5 @@
 import {ConfigReader} from "@backstage/config";
-import {JsonObject} from "@node-boot/context";
+import {JsonObject} from "@nodeboot/context";
 import {ConfigService} from "./service";
 
 export function loadConfig(appConfigData: JsonObject): ConfigService {

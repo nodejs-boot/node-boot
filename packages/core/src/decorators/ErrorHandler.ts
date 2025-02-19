@@ -1,5 +1,5 @@
 import {Middleware} from "./Middleware";
-import {ErrorHandlerInterface} from "@node-boot/context";
+import {ErrorHandlerInterface} from "@nodeboot/context";
 
 /**
  * Marks given class as an ErrorHandler Middleware.

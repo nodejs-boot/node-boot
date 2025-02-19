@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
-import {Migration} from "@node-boot/starter-persistence";
+import {Migration} from "@nodeboot/starter-persistence";
 
 @Migration()
 export class Migration1701774002463 implements MigrationInterface {

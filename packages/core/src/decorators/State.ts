@@ -1,4 +1,4 @@
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Injects a State object to the controller action parameter.

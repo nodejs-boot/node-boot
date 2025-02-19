@@ -1,4 +1,4 @@
-import {BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY, BeansContext, ConfigurationAdapter} from "@node-boot/context";
+import {BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY, BeansContext, ConfigurationAdapter} from "@nodeboot/context";
 
 export class BeansConfigurationAdapter implements ConfigurationAdapter {
     constructor(private readonly target: Function) {}

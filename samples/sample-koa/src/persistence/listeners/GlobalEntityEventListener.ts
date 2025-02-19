@@ -1,4 +1,4 @@
-import {EntityEventSubscriber} from "@node-boot/starter-persistence";
+import {EntityEventSubscriber} from "@nodeboot/starter-persistence";
 import {
     EntitySubscriberInterface,
     InsertEvent,
@@ -11,7 +11,7 @@ import {
     UpdateEvent,
 } from "typeorm";
 import {Logger} from "winston";
-import {Inject} from "@node-boot/di";
+import {Inject} from "@nodeboot/di";
 
 @EntityEventSubscriber()
 export class GlobalEntityEventListener implements EntitySubscriberInterface {

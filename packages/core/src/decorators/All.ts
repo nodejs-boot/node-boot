@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {ControllerOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {ControllerOptions} from "@nodeboot/context";
 
 /**
  * Registers an action to be executed when a request comes on a given route.

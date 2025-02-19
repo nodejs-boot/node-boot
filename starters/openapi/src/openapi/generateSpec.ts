@@ -4,7 +4,7 @@ import _startCase from "lodash.startcase";
 import * as oa from "openapi3-ts";
 import * as pathToRegexp from "path-to-regexp";
 import "reflect-metadata";
-import {ParamMetadataArgs} from "@node-boot/context";
+import {ParamMetadataArgs} from "@nodeboot/context";
 import {IRoute} from "../types";
 import {applyOpenAPIMetadata} from "../metadata";
 

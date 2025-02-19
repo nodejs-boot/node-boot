@@ -1,5 +1,5 @@
 import {ClassTransformOptions} from "class-transformer";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Options to be set to class-transformer for the result of the response.

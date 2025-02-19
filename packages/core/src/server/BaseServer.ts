@@ -5,10 +5,10 @@ import {
     CoreInfoService,
     JsonObject,
     useContainer,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 import {Logger} from "winston";
 import {createLogger} from "../logger";
-import {ConfigService, loadNodeBootConfig} from "@node-boot/config";
+import {ConfigService, loadNodeBootConfig} from "@nodeboot/config";
 import {NodeBootAppView} from "./NodeBootApp";
 import {SERVER_CONFIGURATIONS} from "../constants";
 import {Server} from "node:http";

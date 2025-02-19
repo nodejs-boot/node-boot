@@ -1,6 +1,6 @@
-import {Bean, Configuration, SERVER_CONFIGURATIONS, SERVER_CONFIGURATIONS_PROPERTY_PATH} from "@node-boot/core";
-import {BeansContext} from "@node-boot/context";
-import {FastifyServerConfigProperties, FastifyServerConfigs} from "@node-boot/fastify-server";
+import {Bean, Configuration, SERVER_CONFIGURATIONS, SERVER_CONFIGURATIONS_PROPERTY_PATH} from "@nodeboot/core";
+import {BeansContext} from "@nodeboot/context";
+import {FastifyServerConfigProperties, FastifyServerConfigs} from "@nodeboot/fastify-server";
 
 @Configuration()
 export class ServerConfiguration {

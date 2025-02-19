@@ -1,6 +1,6 @@
 {
-    "name": "@node-boot/di",
-    "version": "1.0.0",
+    "name": "@nodeboot/di",
+    "version": "1.0.1",
     "description": "Dependency Injection plugin for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -27,10 +27,11 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "release": "pnpm build && pnpm publish --access public --no-git-checks"
     },
     "dependencies": {
-        "@node-boot/context": "workspace:*"
+        "@nodeboot/context": "workspace:*"
     },
     "optionalDependencies": {
         "typedi": "^0.10.0",

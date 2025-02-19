@@ -1,4 +1,4 @@
-import {ApplicationContext, OpenApiOptions} from "@node-boot/context";
+import {ApplicationContext, OpenApiOptions} from "@nodeboot/context";
 import {FastifyInstance} from "fastify";
 import {BaseOpenApiAdapter} from "./BaseOpenApiAdapter";
 

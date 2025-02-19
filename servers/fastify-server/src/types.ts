@@ -1,4 +1,4 @@
-import {ServerConfigOptions, ServerConfigProperties} from "@node-boot/engine";
+import {ServerConfigOptions, ServerConfigProperties} from "@nodeboot/engine";
 import {FastifyCookieOptions} from "@fastify/cookie";
 import {FastifyCorsOptions} from "@fastify/cors";
 import {FastifySessionOptions} from "@fastify/session";

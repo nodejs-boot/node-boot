@@ -1,9 +1,10 @@
 {
-    "name": "@node-boot/jest-fastify-demo",
-    "version": "1.0.0",
+    "name": "@nodeboot/jest-fastify-demo",
+    "version": "1.0.1",
     "description": "Demo project for Node-Boot tests with Jest",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
+    "private": "true",
     "keywords": [
         "tests",
         "node-boot"
@@ -29,17 +30,17 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@node-boot/config": "workspace:*",
-        "@node-boot/context": "workspace:*",
-        "@node-boot/core": "workspace:*",
-        "@node-boot/starter-openapi": "workspace:*",
-        "@node-boot/fastify-server": "workspace:*",
-        "@node-boot/authorization": "workspace:*",
-        "@node-boot/di": "workspace:*",
-        "@node-boot/error": "workspace:*",
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/starter-openapi": "workspace:*",
+        "@nodeboot/fastify-server": "workspace:*",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/starter-actuator": "workspace:*",
+        "@nodeboot/starter-persistence": "workspace:*",
         "katxupa": "^1.9.1",
-        "@node-boot/starter-actuator": "workspace:*",
-        "@node-boot/starter-persistence": "workspace:*",
         "reflect-metadata": "^0.2.1",
         "fastify": "^4.21.0",
         "@fastify/cookie": "^9.0.4",
@@ -58,7 +59,7 @@
         "winston": "^3.10.0"
     },
     "devDependencies": {
-        "@node-boot/jest": "workspace:*",
+        "@nodeboot/jest": "workspace:*",
         "jest": "^29.5.0",
         "@types/jest": "^29.5.11",
         "ts-jest": "^29.1.1",

@@ -1,6 +1,6 @@
 {
-    "name": "@node-boot/starter-openapi",
-    "version": "1.0.0",
+    "name": "@nodeboot/starter-openapi",
+    "version": "1.0.1",
     "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -27,11 +27,12 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "release": "pnpm build && pnpm publish --access public --no-git-checks"
     },
     "dependencies": {
-        "@node-boot/context": "workspace:*",
-        "@node-boot/engine": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/engine": "workspace:*",
         "openapi3-ts": "^2.0.2",
         "lodash.capitalize": "^4.2.1",
         "lodash.merge": "^4.6.2",

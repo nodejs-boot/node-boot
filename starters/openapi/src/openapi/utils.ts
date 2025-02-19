@@ -1,9 +1,9 @@
 import _merge from "lodash.merge";
 import * as oa from "openapi3-ts";
-import {NodeBootEngineOptions} from "@node-boot/context";
+import {NodeBootEngineOptions} from "@nodeboot/context";
 import {getSpec} from "./generateSpec";
 import {parseRoutes} from "./parseRoutes";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Convert Node-Boot controllers metadata into an OpenAPI specification.

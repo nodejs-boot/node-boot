@@ -1,4 +1,4 @@
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Injects a request's route parameter value to the controller action parameter.

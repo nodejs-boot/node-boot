@@ -1,5 +1,5 @@
 import {Hook} from "./Hook";
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext} from "@nodeboot/context";
 
 /**
  * A hook for mocking services in a test environment. This class provides

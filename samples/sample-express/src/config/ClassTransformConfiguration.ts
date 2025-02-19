@@ -1,4 +1,4 @@
-import {ClassToPlainTransform, EnableClassTransformer, PlainToClassTransform} from "@node-boot/core";
+import {ClassToPlainTransform, EnableClassTransformer, PlainToClassTransform} from "@nodeboot/core";
 
 @EnableClassTransformer({enabled: false})
 @ClassToPlainTransform({

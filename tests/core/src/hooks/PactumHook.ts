@@ -1,5 +1,5 @@
 import pactum from "pactum";
-import {NodeBootAppView} from "@node-boot/core";
+import {NodeBootAppView} from "@nodeboot/core";
 import {Hook} from "./Hook";
 
 /**

@@ -1,4 +1,4 @@
-import {HttpError} from "@node-boot/error";
+import {HttpError} from "@nodeboot/error";
 import {NodeBootDriver} from "../core";
 
 export class GlobalErrorHandler {

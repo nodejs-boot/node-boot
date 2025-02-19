@@ -1,4 +1,4 @@
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Injects all request's http headers to the controller action parameter.

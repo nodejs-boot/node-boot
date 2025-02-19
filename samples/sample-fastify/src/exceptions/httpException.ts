@@ -1,4 +1,4 @@
-import {HttpError} from "@node-boot/error";
+import {HttpError} from "@nodeboot/error";
 
 export class HttpException extends HttpError {
     public status: number;

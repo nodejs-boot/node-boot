@@ -1,5 +1,5 @@
-import {Hook} from "@node-boot/test";
-import {ApplicationContext} from "@node-boot/context";
+import {Hook} from "@nodeboot/test";
+import {ApplicationContext} from "@nodeboot/context";
 import {jest} from "@jest/globals";
 import SpiedClass = jest.SpiedClass;
 import SpiedFunction = jest.SpiedFunction;

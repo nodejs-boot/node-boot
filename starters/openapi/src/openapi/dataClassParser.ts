@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import {PropertyOptions} from "@node-boot/context";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {PropertyOptions} from "@nodeboot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
 import {SchemaObject} from "openapi3-ts";
 
 const PRIMITIVE_TYPES = new Set(["string", "number", "boolean"]);

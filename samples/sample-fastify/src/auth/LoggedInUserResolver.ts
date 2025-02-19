@@ -1,8 +1,8 @@
-import {Action, CurrentUserChecker} from "@node-boot/context";
-import {Component} from "@node-boot/core";
+import {Action, CurrentUserChecker} from "@nodeboot/context";
+import {Component} from "@nodeboot/core";
 import {FastifyRequest} from "fastify/types/request";
 import {FastifyReply} from "fastify/types/reply";
-import {Inject} from "@node-boot/di";
+import {Inject} from "@nodeboot/di";
 import {Logger} from "winston";
 
 @Component()

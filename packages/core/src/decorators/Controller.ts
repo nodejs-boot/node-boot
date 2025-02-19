@@ -1,6 +1,6 @@
-import {decorateDi} from "@node-boot/di";
-import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY, ControllerOptions} from "@node-boot/context";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {decorateDi} from "@nodeboot/di";
+import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY, ControllerOptions} from "@nodeboot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Defines a class as a controller.

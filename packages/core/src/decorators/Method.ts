@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {ActionType, HandlerOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {ActionType, HandlerOptions} from "@nodeboot/context";
 
 /**
  * Registers an action to be executed when request with specified method comes on a given route.

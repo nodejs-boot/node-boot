@@ -1,9 +1,9 @@
-import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@node-boot/context";
+import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@nodeboot/context";
 import {Application, Response, Router} from "express";
 import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
-import {ConfigService} from "@node-boot/config";
+import {ConfigService} from "@nodeboot/config";
 
 type ResWithEpoch = Response & {locals: {startEpoch: number}};
 

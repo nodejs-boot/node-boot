@@ -1,6 +1,6 @@
-import {Bean, Configuration, SERVER_CONFIGURATIONS, SERVER_CONFIGURATIONS_PROPERTY_PATH} from "@node-boot/core";
-import {BeansContext} from "@node-boot/context";
-import {ExpressServerConfigProperties, ExpressServerConfigs} from "@node-boot/express-server";
+import {Bean, Configuration, SERVER_CONFIGURATIONS, SERVER_CONFIGURATIONS_PROPERTY_PATH} from "@nodeboot/core";
+import {BeansContext} from "@nodeboot/context";
+import {ExpressServerConfigProperties, ExpressServerConfigs} from "@nodeboot/express-server";
 
 @Configuration()
 export class ServerConfiguration {

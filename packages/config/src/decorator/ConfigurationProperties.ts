@@ -1,4 +1,4 @@
-import {ApplicationContext, ConfigurationPropertiesAdapter, IocContainer} from "@node-boot/context";
+import {ApplicationContext, ConfigurationPropertiesAdapter, IocContainer} from "@nodeboot/context";
 import {ConfigurationPropertiesMetadata} from "../metadata";
 import {ConfigService} from "../service";
 

@@ -1,4 +1,4 @@
-import {ApplicationOptions, Config, JsonObject, LoggerService} from "@node-boot/context";
+import {ApplicationOptions, Config, JsonObject, LoggerService} from "@nodeboot/context";
 import {BaseServer} from "./BaseServer";
 
 export type NodeBootAppView = {

@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {ControllerOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {ControllerOptions} from "@nodeboot/context";
 
 /**
  * Defines a class as a JSON controller. If JSON controller is used, then all controller actions will return

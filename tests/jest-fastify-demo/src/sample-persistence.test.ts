@@ -1,4 +1,4 @@
-import {useNodeBoot} from "@node-boot/jest";
+import {useNodeBoot} from "@nodeboot/jest";
 import {spec} from "pactum";
 import {TestAppWithPersistence, UserModel, UserRepository} from "./app-with-persistence";
 

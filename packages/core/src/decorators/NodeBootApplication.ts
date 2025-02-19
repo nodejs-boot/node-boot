@@ -4,7 +4,7 @@ import {
     ApplicationOptions,
     IocContainer,
     NodeBootEngineOptions,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 import {BeansConfigurationAdapter} from "../adapters";
 
 /**

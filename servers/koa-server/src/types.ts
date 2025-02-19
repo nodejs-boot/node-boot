@@ -1,4 +1,4 @@
-import {ServerConfigOptions, ServerConfigProperties} from "@node-boot/engine";
+import {ServerConfigOptions, ServerConfigProperties} from "@nodeboot/engine";
 import {Options as CorsOptions} from "@koa/cors";
 import {opts as SessionOptions} from "koa-session";
 import {Options as MulterOptions} from "@koa/multer";

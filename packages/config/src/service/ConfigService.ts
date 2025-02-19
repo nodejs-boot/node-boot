@@ -1,6 +1,6 @@
 import {ConfigReader} from "@backstage/config";
 import type {JsonValue} from "@backstage/types";
-import {Config} from "@node-boot/context";
+import {Config} from "@nodeboot/context";
 
 export class ConfigService implements Config {
     private config: Config = new ConfigReader({});

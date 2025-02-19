@@ -46,7 +46,7 @@ export class CoreInfoService {
                     engines: packageJson.engines,
                     license: packageJson.license,
                     keywords: packageJson.keywords,
-                    nodeBoot: dependencies["@node-boot/core"],
+                    nodeBoot: dependencies["@nodeboot/core"],
                     serverFramework: serverType.toUpperCase(),
                     serverVersion: dependencies[serverType.toLowerCase()],
                 };

@@ -1,9 +1,9 @@
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import {OpenAPIObject} from "openapi3-ts";
-import {OpenApiAdapter, OpenApiOptions} from "@node-boot/context";
-import {controllersToSpec} from "../spec";
-import {NodeBootToolkit} from "@node-boot/engine";
-import {parseDataClasses} from "../spec/dataClassParser";
+import {OpenApiAdapter, OpenApiOptions} from "@nodeboot/context";
+import {controllersToSpec} from "../openapi";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {parseDataClasses} from "../openapi/dataClassParser";
 import merge from "lodash.merge";
 
 type OpenApiSpec = {

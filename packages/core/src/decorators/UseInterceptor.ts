@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {Action} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {Action} from "@nodeboot/context";
 
 /**
  * Specifies a given interceptor middleware or interceptor function to be used for controller or controller action.

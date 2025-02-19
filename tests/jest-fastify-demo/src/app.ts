@@ -11,12 +11,12 @@ import {
     NodeBootAppView,
     Post,
     Service,
-} from "@node-boot/core";
-import {EnableDI} from "@node-boot/di";
+} from "@nodeboot/core";
+import {EnableDI} from "@nodeboot/di";
 import {Exclude, Expose} from "class-transformer";
 import {Logger} from "winston";
-import {JsonObject} from "@node-boot/context";
-import {FastifyServer} from "@node-boot/fastify-server";
+import {JsonObject} from "@nodeboot/context";
+import {FastifyServer} from "@nodeboot/fastify-server";
 
 @Exclude()
 class UserModel {

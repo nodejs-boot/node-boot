@@ -1,4 +1,4 @@
-import {ApplicationContext, AuthorizationChecker, CurrentUserChecker} from "@node-boot/context";
+import {ApplicationContext, AuthorizationChecker, CurrentUserChecker} from "@nodeboot/context";
 
 /**
  * Enable Authorization features by providing an Authorization and current user resolvers.

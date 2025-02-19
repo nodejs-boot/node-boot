@@ -1,7 +1,7 @@
 import {OperationObject, ReferenceObject, ResponsesObject, SchemaObject} from "openapi3-ts";
 import {IRoute} from "../types";
 import _merge from "lodash.merge";
-import {getContentType, getStatusCode} from "../spec";
+import {getContentType, getStatusCode} from "../openapi";
 import {OpenAPI} from "./OpenAPI";
 
 /**

@@ -1,7 +1,7 @@
-import {NodeBootApp, NodeBootAppView} from "@node-boot/core";
+import {NodeBootApp, NodeBootAppView} from "@nodeboot/core";
 import {HookManager} from "./HookManager";
 import {HooksLibrary} from "./HooksLibrary";
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext} from "@nodeboot/context";
 
 export class NodeBootTestFramework<App extends NodeBootApp, CustomLibrary extends HooksLibrary = HooksLibrary> {
     private appInstance!: App;

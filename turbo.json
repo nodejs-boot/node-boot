@@ -38,6 +38,7 @@
         "lint:fix": {},
         "format": {},
         "format:fix": {},
+        "release": {},
         "test": {
             "dependsOn": ["build"]
         },

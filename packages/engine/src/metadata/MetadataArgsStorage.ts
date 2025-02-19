@@ -9,7 +9,7 @@ import {
     ResponseHandlerMetadataArgs,
     UseInterceptorMetadataArgs,
     UseMetadataArgs,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 
 /**
  * Storage all metadata read from decorators.

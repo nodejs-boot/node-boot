@@ -1,5 +1,5 @@
 import {Hook} from "./Hook";
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext} from "@nodeboot/context";
 
 export class RepositoryHook extends Hook {
     use<T>(repositoryClass: new (...args: any[]) => T): T {

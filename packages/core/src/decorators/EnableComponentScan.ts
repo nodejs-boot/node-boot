@@ -1,4 +1,4 @@
-import {ApplicationContext, ComponentScanOptions} from "@node-boot/context";
+import {ApplicationContext, ComponentScanOptions} from "@nodeboot/context";
 import path from "path";
 
 export function EnableComponentScan(options?: ComponentScanOptions): Function {

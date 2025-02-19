@@ -1,5 +1,5 @@
-import {decorateDi} from "@node-boot/di";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {decorateDi} from "@nodeboot/di";
+import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
  * Marks given class as a middleware.

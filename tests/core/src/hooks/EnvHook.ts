@@ -1,5 +1,5 @@
 import {Hook} from "./Hook";
-import {NodeBootAppView} from "@node-boot/core";
+import {NodeBootAppView} from "@nodeboot/core";
 
 export class EnvHook extends Hook {
     override afterStart(_: NodeBootAppView): Promise<void> | void {

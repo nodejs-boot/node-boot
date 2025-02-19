@@ -1,4 +1,4 @@
-import {HookManager, HooksLibrary, ReturnHooks, SetUpHooks} from "@node-boot/test";
+import {HookManager, HooksLibrary, ReturnHooks, SetUpHooks} from "@nodeboot/test";
 import {SpyHook, TimerHook} from "./hooks";
 
 export type JestSetUpHooks = SetUpHooks & {};

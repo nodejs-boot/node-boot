@@ -1,6 +1,6 @@
 import {Hook} from "./Hook";
-import {ApplicationContext, Config, JsonObject} from "@node-boot/context";
-import {ConfigService} from "@node-boot/config";
+import {ApplicationContext, Config, JsonObject} from "@nodeboot/context";
+import {ConfigService} from "@nodeboot/config";
 
 export class ConfigHook extends Hook {
     private configs: JsonObject[] = [];

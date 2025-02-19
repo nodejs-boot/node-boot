@@ -1,10 +1,10 @@
 import {CreateUserDto, UpdateUserDto} from "../models";
 import {Logger} from "winston";
-import {Service} from "@node-boot/core";
+import {Service} from "@nodeboot/core";
 import {User, UserRepository} from "../persistence";
-import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@node-boot/starter-persistence";
-import {HttpError, NotFoundError} from "@node-boot/error";
-import {ConfigService} from "@node-boot/config";
+import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@nodeboot/starter-persistence";
+import {HttpError, NotFoundError} from "@nodeboot/error";
+import {ConfigService} from "@nodeboot/config";
 import {Users} from "../persistence/users.init";
 
 @Service()

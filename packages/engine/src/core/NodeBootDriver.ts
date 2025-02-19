@@ -8,7 +8,7 @@ import {
     MiddlewareMetadata,
     NodeBootEngineOptions,
     ParamMetadata,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 
 /**
  * Base driver functionality for all other drivers.

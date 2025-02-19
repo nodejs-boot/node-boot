@@ -1,6 +1,6 @@
 import {CorsOptions} from "cors";
 import {Options as MulterOptions} from "multer";
-import {ServerConfigOptions, ServerConfigProperties} from "@node-boot/engine";
+import {ServerConfigOptions, ServerConfigProperties} from "@nodeboot/engine";
 import {CookieParseOptions, CookieSerializeOptions} from "cookie";
 import {SessionOptions} from "express-session";
 

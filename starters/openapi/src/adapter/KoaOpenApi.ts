@@ -1,4 +1,4 @@
-import {ApplicationContext, OpenApiOptions} from "@node-boot/context";
+import {ApplicationContext, OpenApiOptions} from "@nodeboot/context";
 import {koaSwagger} from "koa2-swagger-ui";
 import {BaseOpenApiAdapter} from "./BaseOpenApiAdapter";
 

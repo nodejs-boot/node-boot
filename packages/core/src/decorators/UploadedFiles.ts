@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {UploadOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {UploadOptions} from "@nodeboot/context";
 
 /**
  * Injects all uploaded files to the controller action parameter.

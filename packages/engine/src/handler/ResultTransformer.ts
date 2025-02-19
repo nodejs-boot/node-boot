@@ -1,4 +1,4 @@
-import {ActionMetadata} from "@node-boot/context";
+import {ActionMetadata} from "@nodeboot/context";
 import {instanceToPlain} from "class-transformer";
 import {NodeBootDriver} from "../core";
 

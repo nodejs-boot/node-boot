@@ -1,4 +1,4 @@
-import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@node-boot/context";
+import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@nodeboot/context";
 import {ExpressOpenApi, FastifyOpenApi, KoaOpenApi} from "../adapter";
 
 /**

@@ -1,4 +1,4 @@
-import {Configurations} from "@node-boot/core";
+import {Configurations} from "@nodeboot/core";
 import {SecurityConfiguration} from "./SecurityConfiguration";
 import {ClassTransformConfiguration} from "./ClassTransformConfiguration";
 import {CustomNamingStrategy} from "../persistence";

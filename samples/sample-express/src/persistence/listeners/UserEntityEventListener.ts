@@ -1,7 +1,7 @@
-import {EntityEventSubscriber} from "@node-boot/starter-persistence";
+import {EntityEventSubscriber} from "@nodeboot/starter-persistence";
 import {EntitySubscriberInterface, InsertEvent} from "typeorm";
 import {User} from "../entities";
-import {Inject} from "@node-boot/di";
+import {Inject} from "@nodeboot/di";
 import {Logger} from "winston";
 import {GreetingService} from "../../services/greeting.service";
 

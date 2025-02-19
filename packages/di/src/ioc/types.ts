@@ -1,4 +1,4 @@
-import {ComponentOptions, Constructable, Token} from "@node-boot/context";
+import {ComponentOptions, Constructable, Token} from "@nodeboot/context";
 
 export type Newable<T> = (type?: never) => Constructable<T>;
 

@@ -53,6 +53,9 @@ importers:
       nodemon:
         specifier: ^2.0.21
         version: 2.0.22
+      pinst:
+        specifier: ^3.0.0
+        version: 3.0.0
       prettier:
         specifier: ^2.8.3
         version: 2.8.8
@@ -77,10 +80,10 @@ importers:
 
   packages/authorization:
     dependencies:
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../context
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../engine
 
@@ -98,7 +101,7 @@ importers:
       '@backstage/types':
         specifier: ^1.1.0
         version: 1.1.1
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../context
       minimist:
@@ -126,16 +129,16 @@ importers:
 
   packages/core:
     dependencies:
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../context
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../di
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../engine
       class-transformer:
@@ -166,7 +169,7 @@ importers:
 
   packages/di:
     dependencies:
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../context
     optionalDependencies:
@@ -179,10 +182,10 @@ importers:
 
   packages/engine:
     dependencies:
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../context
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../error
       class-transformer:
@@ -199,34 +202,34 @@ importers:
 
   samples/sample-express:
     dependencies:
-      '@node-boot/authorization':
+      '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@node-boot/express-server':
+      '@nodeboot/express-server':
         specifier: workspace:*
         version: link:../../servers/express-server
-      '@node-boot/starter-actuator':
+      '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
-      '@node-boot/starter-openapi':
+      '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
-      '@node-boot/starter-persistence':
+      '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
       better-sqlite3:
@@ -335,34 +338,34 @@ importers:
       '@fastify/view':
         specifier: ^8.0.0
         version: 8.2.0
-      '@node-boot/authorization':
+      '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@node-boot/fastify-server':
+      '@nodeboot/fastify-server':
         specifier: workspace:*
         version: link:../../servers/fastify-server
-      '@node-boot/starter-actuator':
+      '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
-      '@node-boot/starter-openapi':
+      '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
-      '@node-boot/starter-persistence':
+      '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
       better-sqlite3:
@@ -414,34 +417,34 @@ importers:
       '@koa/router':
         specifier: ^12.0.0
         version: 12.0.1
-      '@node-boot/authorization':
+      '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@node-boot/koa-server':
+      '@nodeboot/koa-server':
         specifier: workspace:*
         version: link:../../servers/koa-server
-      '@node-boot/starter-actuator':
+      '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
-      '@node-boot/starter-openapi':
+      '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
-      '@node-boot/starter-persistence':
+      '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
       class-transformer:
@@ -514,16 +517,16 @@ importers:
 
   servers/express-server:
     dependencies:
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../../packages/engine
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
       body-parser:
@@ -584,16 +587,16 @@ importers:
       '@fastify/view':
         specifier: '>=8.0.0'
         version: 8.2.0
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../../packages/engine
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
       fastify:
@@ -614,16 +617,16 @@ importers:
       '@koa/router':
         specifier: ^12.0.0
         version: 12.0.1
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../../packages/engine
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
       koa:
@@ -660,10 +663,10 @@ importers:
 
   starters/actuator:
     dependencies:
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
       dayjs:
@@ -704,10 +707,10 @@ importers:
 
   starters/openapi:
     dependencies:
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../../packages/engine
       class-validator-jsonschema:
@@ -775,16 +778,16 @@ importers:
 
   starters/persistence:
     dependencies:
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
       reflect-metadata:
@@ -806,13 +809,13 @@ importers:
 
   tests/core:
     dependencies:
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
     optionalDependencies:
@@ -838,13 +841,13 @@ importers:
       '@jest/globals':
         specifier: ^29.5.0
         version: 29.7.0
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/test':
+      '@nodeboot/test':
         specifier: workspace:*
         version: link:../core
       jest:
@@ -860,28 +863,28 @@ importers:
 
   tests/jest-express-demo:
     dependencies:
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@node-boot/engine':
+      '@nodeboot/engine':
         specifier: workspace:*
         version: link:../../packages/engine
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@node-boot/express-server':
+      '@nodeboot/express-server':
         specifier: workspace:*
         version: link:../../servers/express-server
-      '@node-boot/starter-persistence':
+      '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
       better-sqlite3:
@@ -933,7 +936,7 @@ importers:
         specifier: ^3.10.0
         version: 3.11.0
     devDependencies:
-      '@node-boot/jest':
+      '@nodeboot/jest':
         specifier: workspace:*
         version: link:../jest
       '@types/jest':
@@ -984,34 +987,34 @@ importers:
       '@fastify/view':
         specifier: ^8.0.0
         version: 8.2.0
-      '@node-boot/authorization':
+      '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
-      '@node-boot/config':
-        specifier: workspace:*
-        version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/config':
+        specifier: 1.0.1
+        version: 1.0.1(@swc/core@1.3.104)(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@node-boot/fastify-server':
+      '@nodeboot/fastify-server':
         specifier: workspace:*
         version: link:../../servers/fastify-server
-      '@node-boot/starter-actuator':
+      '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
-      '@node-boot/starter-openapi':
+      '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
-      '@node-boot/starter-persistence':
+      '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
       better-sqlite3:
@@ -1042,7 +1045,7 @@ importers:
         specifier: ^3.10.0
         version: 3.11.0
     devDependencies:
-      '@node-boot/jest':
+      '@nodeboot/jest':
         specifier: workspace:*
         version: link:../jest
       '@types/jest':
@@ -1078,34 +1081,34 @@ importers:
       '@koa/router':
         specifier: ^12.0.0
         version: 12.0.1
-      '@node-boot/authorization':
+      '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
-      '@node-boot/config':
+      '@nodeboot/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@node-boot/context':
+      '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
-      '@node-boot/core':
+      '@nodeboot/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@node-boot/di':
+      '@nodeboot/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@node-boot/error':
+      '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@node-boot/koa-server':
+      '@nodeboot/koa-server':
         specifier: workspace:*
         version: link:../../servers/koa-server
-      '@node-boot/starter-actuator':
+      '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
-      '@node-boot/starter-openapi':
+      '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
-      '@node-boot/starter-persistence':
+      '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
       class-transformer:
@@ -1151,7 +1154,7 @@ importers:
         specifier: ^3.10.0
         version: 3.11.0
     devDependencies:
-      '@node-boot/jest':
+      '@nodeboot/jest':
         specifier: workspace:*
         version: link:../jest
       '@types/body-parser':
@@ -1637,6 +1640,16 @@ packages:
   '@lukeed/ms@2.0.2':
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
+
+  '@nodeboot/config@1.0.1':
+    resolution: {integrity: sha512-+rg10123qn1RMgNmc+32qVF6YyUBkMF700HVFAQvjf4NPmDAhkBblywDAzbSS6P3/pg/4ao5stH6cxl+UNl5cw==}
+
+  '@nodeboot/context@1.0.1':
+    resolution: {integrity: sha512-zCaXFuNL1p/eZ17tIMzK6QTypcDwl6SvUMuYvVdIyo4qHGfJs1GWjSy0RSpz97VzVF3E5BgKlRLHxI3uxY/n0Q==}
+    peerDependencies:
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      winston: '>=3.10.0'
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3868,6 +3881,11 @@ packages:
     resolution: {integrity: sha512-LA6qKgeDMLr2ux2y/YiUt47EfgQ+S9LznBWOJdN3q1dx2sv0ziDLUBeVpyVv17TEcGCBuWf0zNtg3M5m1NhhWQ==}
     hasBin: true
 
+  pinst@3.0.0:
+    resolution: {integrity: sha512-cengSmBxtCyaJqtRSvJorIIZXMXg+lJ3sIljGmtBGUVonMnMsVJbnzl6jGN1HkOWwxNuJynCJ2hXxxqCQrFDdw==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+
   pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
@@ -5477,6 +5495,29 @@ snapshots:
       - supports-color
 
   '@lukeed/ms@2.0.2': {}
+
+  '@nodeboot/config@1.0.1(@swc/core@1.3.104)(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)':
+    dependencies:
+      '@backstage/cli-common': 0.1.13
+      '@backstage/config': 1.1.1
+      '@backstage/config-loader': 1.6.1(@swc/core@1.3.104)
+      '@backstage/types': 1.1.1
+      '@nodeboot/context': 1.0.1(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)
+      minimist: 1.2.8
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
+      - class-transformer
+      - class-validator
+      - encoding
+      - winston
+
+  '@nodeboot/context@1.0.1(class-transformer@0.5.1)(class-validator@0.14.1)(winston@3.11.0)':
+    dependencies:
+      class-transformer: 0.5.1
+      class-validator: 0.14.1
+      reflect-metadata: 0.2.1
+      winston: 3.11.0
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -8178,6 +8219,8 @@ snapshots:
       safe-stable-stringify: 2.4.3
       sonic-boom: 3.8.0
       thread-stream: 2.4.1
+
+  pinst@3.0.0: {}
 
   pirates@4.0.6: {}
 

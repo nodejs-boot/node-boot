@@ -1,12 +1,12 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "@node-boot/core";
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "@nodeboot/core";
 import {UserService} from "../services/users.service";
 import {ValidationMiddleware} from "../middlewares/validation.middleware";
 import {CreateUserDto, UpdateUserDto, UserModel} from "../models";
 import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
-import {Inject} from "@node-boot/di";
-import {OpenAPI, ResponseSchema} from "@node-boot/starter-openapi";
-import {Authorized} from "@node-boot/authorization";
+import {Inject} from "@nodeboot/di";
+import {OpenAPI, ResponseSchema} from "@nodeboot/starter-openapi";
+import {Authorized} from "@nodeboot/authorization";
 
 @Controller("/users", "v1")
 export class UserController {

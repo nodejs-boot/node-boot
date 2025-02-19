@@ -1,5 +1,5 @@
-import {MetadataArgsStorage} from "@node-boot/engine";
-import {ControllerMetadataArgs, NodeBootEngineOptions} from "@node-boot/context";
+import {MetadataArgsStorage} from "@nodeboot/engine";
+import {ControllerMetadataArgs, NodeBootEngineOptions} from "@nodeboot/context";
 import {IRoute} from "../types";
 
 /**

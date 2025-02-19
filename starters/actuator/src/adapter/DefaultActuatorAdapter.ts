@@ -1,11 +1,11 @@
-import {ActuatorAdapter, ActuatorOptions, ApplicationContext, CoreInfoService} from "@node-boot/context";
+import {ActuatorAdapter, ActuatorOptions, ApplicationContext, CoreInfoService} from "@nodeboot/context";
 import Prometheus from "prom-client";
 import {ExpressActuatorAdapter} from "./ExpressActuatorAdapter";
 import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
 import {FastifyActuatorAdapter} from "./FastifyActuatorAdapter";
-import {ConfigService} from "@node-boot/config";
+import {ConfigService} from "@nodeboot/config";
 import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
 
 export class DefaultActuatorAdapter implements ActuatorAdapter {

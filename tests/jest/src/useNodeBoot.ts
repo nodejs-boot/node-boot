@@ -1,5 +1,5 @@
-import {NodeBootApp} from "@node-boot/core";
-import {NodeBootTestFramework} from "@node-boot/test";
+import {NodeBootApp} from "@nodeboot/core";
+import {NodeBootTestFramework} from "@nodeboot/test";
 import {JestHooksLibrary} from "./JestHooksLibrary";
 import {afterAll, afterEach, beforeAll, beforeEach} from "@jest/globals";
 

@@ -1,6 +1,6 @@
 {
-    "name": "@node-boot/starter-actuator",
-    "version": "1.0.0",
+    "name": "@nodeboot/starter-actuator",
+    "version": "1.0.1",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -26,11 +26,12 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "release": "pnpm build && pnpm publish --access public --no-git-checks"
     },
     "dependencies": {
-        "@node-boot/config": "workspace:*",
-        "@node-boot/context": "workspace:*",
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
         "dayjs": "^1.11.9",
         "prom-client": "^14.2.0",
         "properties-reader": "^2.3.0"

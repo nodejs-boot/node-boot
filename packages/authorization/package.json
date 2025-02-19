@@ -1,6 +1,6 @@
 {
-    "name": "@node-boot/authorization",
-    "version": "1.0.0",
+    "name": "@nodeboot/authorization",
+    "version": "1.0.1",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -26,10 +26,11 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "release": "pnpm build && pnpm publish --access public --no-git-checks"
     },
     "dependencies": {
-        "@node-boot/context": "workspace:*",
-        "@node-boot/engine": "workspace:*"
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/engine": "workspace:*"
     }
 }

@@ -1,5 +1,5 @@
-import {Bean, Configuration} from "@node-boot/core";
-import {BeansContext} from "@node-boot/context";
+import {Bean, Configuration} from "@nodeboot/core";
+import {BeansContext} from "@nodeboot/context";
 import {DataSource} from "typeorm";
 import {addTransactionalDataSource, initializeTransactionalContext, StorageDriver} from "typeorm-transactional";
 import {PersistenceProperties} from "../property/PersistenceProperties";

@@ -1,4 +1,4 @@
-import {GlobalErrorHandler, NodeBootDriver, ResultTransformer, ServerConfig} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ResultTransformer, ServerConfig} from "@nodeboot/engine";
 import {
     Action,
     ActionMetadata,
@@ -8,15 +8,15 @@ import {
     NodeBootEngineOptions,
     ParamMetadata,
     UseMetadata,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 import {
     AccessDeniedError,
     AuthorizationCheckerNotDefinedError,
     AuthorizationRequiredError,
     NotFoundError,
-} from "@node-boot/error";
+} from "@nodeboot/error";
 import {Application, Request, Response} from "express";
-import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
+import {LoggerService, MiddlewareInterface} from "@nodeboot/context/src";
 import cookie from "cookie";
 import cors from "cors";
 import multer from "multer";

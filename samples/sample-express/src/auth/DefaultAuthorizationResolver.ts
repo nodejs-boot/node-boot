@@ -1,7 +1,7 @@
-import {Action, AuthorizationChecker} from "@node-boot/context";
-import {Component} from "@node-boot/core";
+import {Action, AuthorizationChecker} from "@nodeboot/context";
+import {Component} from "@nodeboot/core";
 import {Request, Response} from "express";
-import {Inject} from "@node-boot/di";
+import {Inject} from "@nodeboot/di";
 import {Logger} from "winston";
 
 @Component()

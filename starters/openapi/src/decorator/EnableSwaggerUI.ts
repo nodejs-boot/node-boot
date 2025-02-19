@@ -1,4 +1,4 @@
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext} from "@nodeboot/context";
 
 /**
  * Enables EnableSwaggerUI.

@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {BodyOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {BodyOptions} from "@nodeboot/context";
 
 /**
  * Allows to inject a request body value to the controller action parameter.

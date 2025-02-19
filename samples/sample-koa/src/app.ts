@@ -7,21 +7,21 @@ import {
     NodeBoot,
     NodeBootApp,
     NodeBootApplication,
-} from "@node-boot/core";
+} from "@nodeboot/core";
 import {UserController} from "./controllers/users.controller";
 import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
 import {MultipleConfigurations} from "./config/MultipleConfigurations";
-import {EnableAuthorization} from "@node-boot/authorization";
+import {EnableAuthorization} from "@nodeboot/authorization";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
-import {KoaServer} from "@node-boot/koa-server";
-import {EnableOpenApi, EnableSwaggerUI} from "@node-boot/starter-openapi";
-import {EnableActuator} from "@node-boot/starter-actuator";
-import {EnableDI} from "@node-boot/di";
+import {KoaServer} from "@nodeboot/koa-server";
+import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
+import {EnableActuator} from "@nodeboot/starter-actuator";
+import {EnableDI} from "@nodeboot/di";
 import {AppConfigProperties} from "./config/AppConfigProperties";
-import {EnableRepositories} from "@node-boot/starter-persistence";
+import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
-import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 
 @EnableDI(Container)
 @EnableOpenApi()

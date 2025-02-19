@@ -1,6 +1,6 @@
-import {Bean, Configuration} from "@node-boot/core";
+import {Bean, Configuration} from "@nodeboot/core";
 import helmet from "koa-helmet";
-import {BeansContext} from "@node-boot/context";
+import {BeansContext} from "@nodeboot/context";
 import Koa from "koa";
 import cors from "@koa/cors";
 

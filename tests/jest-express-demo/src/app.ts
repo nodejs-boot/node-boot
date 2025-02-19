@@ -11,12 +11,12 @@ import {
     NodeBootAppView,
     Post,
     Service,
-} from "@node-boot/core";
-import {ExpressServer} from "@node-boot/express-server";
-import {EnableDI} from "@node-boot/di";
+} from "@nodeboot/core";
+import {ExpressServer} from "@nodeboot/express-server";
+import {EnableDI} from "@nodeboot/di";
 import {Exclude, Expose} from "class-transformer";
 import {Logger} from "winston";
-import {JsonObject} from "@node-boot/context";
+import {JsonObject} from "@nodeboot/context";
 
 @Exclude()
 class UserModel {

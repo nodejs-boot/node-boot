@@ -1,5 +1,5 @@
 import {DefaultNamingStrategy} from "typeorm";
-import {PersistenceNamingStrategy} from "@node-boot/starter-persistence";
+import {PersistenceNamingStrategy} from "@nodeboot/starter-persistence";
 
 @PersistenceNamingStrategy()
 export class CustomNamingStrategy extends DefaultNamingStrategy {

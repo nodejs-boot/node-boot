@@ -1,4 +1,4 @@
-import {BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY} from "@node-boot/context";
+import {BEAN_METADATA_KEY, BEAN_NAME_METADATA_KEY} from "@nodeboot/context";
 
 export function Bean(beanName?: string): Function {
     return function (target: any, propertyKey: string) {

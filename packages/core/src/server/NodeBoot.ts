@@ -1,6 +1,6 @@
 import {BaseServer} from "./BaseServer";
 import {NodeBootAppView} from "./NodeBootApp";
-import {JsonObject} from "@node-boot/context";
+import {JsonObject} from "@nodeboot/context";
 
 export class NodeBoot {
     static async run<TApplicationServer extends new (...args: any[]) => BaseServer<any, any>>(

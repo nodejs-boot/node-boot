@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {HandlerOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {HandlerOptions} from "@nodeboot/context";
 
 /**
  * Registers an action to be executed when PUT request comes on a given route.

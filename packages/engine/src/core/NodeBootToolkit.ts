@@ -3,7 +3,7 @@ import {NodeBootEngine} from "./NodeBootEngine";
 import {ValidationOptions} from "class-validator";
 import {NodeBootDriver} from "./NodeBootDriver";
 import {ComponentImporter} from "../handler";
-import {CustomParameterDecorator, NodeBootEngineOptions} from "@node-boot/context";
+import {CustomParameterDecorator, NodeBootEngineOptions} from "@nodeboot/context";
 
 export class NodeBootToolkit {
     /**

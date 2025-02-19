@@ -1,5 +1,5 @@
-import {NodeBootToolkit} from "@node-boot/engine";
-import {ParamOptions} from "@node-boot/context";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {ParamOptions} from "@nodeboot/context";
 
 /**
  * Injects a Session object property to the controller action parameter.

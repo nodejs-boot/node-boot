@@ -9,7 +9,7 @@ import {
     ParamMetadataArgs,
     ResponseHandlerMetadata,
     UseMetadata,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 
 /**
  * Builds metadata from the given metadata arguments.

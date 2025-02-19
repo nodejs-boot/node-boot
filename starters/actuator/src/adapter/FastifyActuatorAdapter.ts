@@ -1,9 +1,9 @@
-import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@node-boot/context";
+import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@nodeboot/context";
 import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
 import {FastifyInstance} from "fastify";
-import {ConfigService} from "@node-boot/config";
+import {ConfigService} from "@nodeboot/config";
 
 export class FastifyActuatorAdapter implements ActuatorAdapter {
     constructor(

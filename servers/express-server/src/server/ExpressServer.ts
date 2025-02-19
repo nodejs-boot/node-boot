@@ -1,10 +1,10 @@
-import {ApplicationContext, JsonObject} from "@node-boot/context";
+import {ApplicationContext, JsonObject} from "@nodeboot/context";
 import express from "express";
-import {BaseServer} from "@node-boot/core";
+import {BaseServer} from "@nodeboot/core";
 import {ExpressDriver} from "../driver";
-import {NodeBootToolkit} from "@node-boot/engine";
+import {NodeBootToolkit} from "@nodeboot/engine";
 import http from "http";
-import {NodeBootAppView} from "@node-boot/core/src/server/NodeBootApp";
+import {NodeBootAppView} from "@nodeboot/core/src/server/NodeBootApp";
 import {ExpressServerConfigs} from "../types";
 import {Server} from "node:http";
 

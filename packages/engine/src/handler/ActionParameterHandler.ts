@@ -8,9 +8,9 @@ import {
     InvalidParamError,
     ParameterParseJsonError,
     ParamRequiredError,
-} from "@node-boot/error";
+} from "@nodeboot/error";
 import {NodeBootDriver} from "../core";
-import {Action, ParamMetadata} from "@node-boot/context";
+import {Action, ParamMetadata} from "@nodeboot/context";
 
 /**
  * Handles action parameter.

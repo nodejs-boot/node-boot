@@ -1,9 +1,9 @@
 import {Logger} from "winston";
-import {Middleware} from "@node-boot/core";
-import {Inject} from "@node-boot/di";
+import {Middleware} from "@nodeboot/core";
+import {Inject} from "@nodeboot/di";
 import {FastifyReply, FastifyRequest} from "fastify";
 import {HookHandlerDoneFunction} from "fastify/types/hooks";
-import {Action, MiddlewareInterface} from "@node-boot/context";
+import {Action, MiddlewareInterface} from "@nodeboot/context";
 
 @Middleware({type: "before"})
 export class LoggingMiddleware implements MiddlewareInterface<FastifyRequest, FastifyReply, HookHandlerDoneFunction> {

@@ -4,7 +4,7 @@ import {findPaths} from "@backstage/cli-common";
 import {ConfigTarget, loadConfig, LoadConfigOptionsRemote} from "@backstage/config-loader";
 import {AppConfig, ConfigReader} from "@backstage/config";
 import {ConfigService} from "./ConfigService";
-import {JsonObject} from "@node-boot/context";
+import {JsonObject} from "@nodeboot/context";
 
 export function isValidUrl(url: string): boolean {
     try {

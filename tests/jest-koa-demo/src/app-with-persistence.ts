@@ -16,20 +16,20 @@ import {
     PlainToClassTransform,
     Post,
     Service,
-} from "@node-boot/core";
-import {EnableDI} from "@node-boot/di";
+} from "@nodeboot/core";
+import {EnableDI} from "@nodeboot/di";
 import {Logger} from "winston";
-import {JsonObject} from "@node-boot/context";
+import {JsonObject} from "@nodeboot/context";
 import {Column, Entity, PrimaryGeneratedColumn, Repository} from "typeorm";
 import {
     DataRepository,
     DatasourceConfiguration,
     EnableRepositories,
     Transactional,
-} from "@node-boot/starter-persistence";
+} from "@nodeboot/starter-persistence";
 import {IsEmail, IsNotEmpty, IsString, MaxLength, MinLength} from "class-validator";
-import {HttpError} from "@node-boot/error";
-import {KoaServer} from "@node-boot/koa-server";
+import {HttpError} from "@nodeboot/error";
+import {KoaServer} from "@nodeboot/koa-server";
 
 @Entity()
 export class UserEntity {
@@ -77,7 +77,7 @@ export class UserService {
         return {
             id,
             name: `User ${id}`,
-            email: "user@node-boot.io",
+            email: "user@nodeboot.io",
             password: "encrypted",
         };
     }

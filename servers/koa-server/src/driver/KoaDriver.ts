@@ -1,4 +1,4 @@
-import {GlobalErrorHandler, NodeBootDriver, ResultTransformer, ServerConfig} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ResultTransformer, ServerConfig} from "@nodeboot/engine";
 import {
     Action,
     ActionMetadata,
@@ -7,17 +7,17 @@ import {
     MiddlewareMetadata,
     ParamMetadata,
     UseMetadata,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 import {
     AccessDeniedError,
     AuthorizationCheckerNotDefinedError,
     AuthorizationRequiredError,
     HttpError,
     NotFoundError,
-} from "@node-boot/error";
+} from "@nodeboot/error";
 import Koa, {Context, Request, Response} from "koa";
 import Router from "@koa/router";
-import {LoggerService, MiddlewareInterface} from "@node-boot/context/src";
+import {LoggerService, MiddlewareInterface} from "@nodeboot/context/src";
 import session from "koa-session";
 import {parseCookie} from "koa-cookies";
 import cors from "@koa/cors";

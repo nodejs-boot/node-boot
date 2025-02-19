@@ -1,4 +1,4 @@
-import {GlobalErrorHandler, NodeBootDriver, ServerConfig} from "@node-boot/engine";
+import {GlobalErrorHandler, NodeBootDriver, ServerConfig} from "@nodeboot/engine";
 import {
     Action,
     ActionMetadata,
@@ -10,7 +10,7 @@ import {
     NodeBootEngineOptions,
     ParamMetadata,
     UseMetadata,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {HTTPMethods} from "fastify/types/utils";
 import templateUrl from "template-url";
@@ -20,7 +20,7 @@ import {
     AuthorizationRequiredError,
     HttpError,
     NotFoundError,
-} from "@node-boot/error";
+} from "@nodeboot/error";
 import {DependenciesLoader} from "../loader";
 import {AsyncFunction} from "fastify/types/instance";
 import {FastifyServerConfigs} from "../types";

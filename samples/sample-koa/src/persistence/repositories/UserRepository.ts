@@ -1,5 +1,5 @@
 import {Repository} from "typeorm";
-import {DataRepository} from "@node-boot/starter-persistence";
+import {DataRepository} from "@nodeboot/starter-persistence";
 import {User} from "../entities";
 
 @DataRepository(User)

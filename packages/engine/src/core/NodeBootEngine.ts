@@ -6,7 +6,7 @@ import {
     InterceptorInterface,
     InterceptorMetadata,
     NodeBootEngineOptions,
-} from "@node-boot/context";
+} from "@nodeboot/context";
 import {runInSequence} from "../util";
 import {NodeBootDriver} from "./NodeBootDriver";
 import {ActionParameterHandler} from "../handler";

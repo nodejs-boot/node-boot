@@ -1,4 +1,4 @@
-import {Configuration, Configurations} from "@node-boot/core";
+import {Configuration, Configurations} from "@nodeboot/core";
 import {ClassTransformConfiguration} from "./ClassTransformConfiguration";
 import {SecurityConfiguration} from "./SecurityConfiguration";
 

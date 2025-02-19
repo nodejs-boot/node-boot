@@ -1,4 +1,4 @@
-import {ApplicationContext, TransformerOptions} from "@node-boot/context";
+import {ApplicationContext, TransformerOptions} from "@nodeboot/context";
 import {ClassTransformOptions} from "class-transformer";
 
 export function ClassToPlainTransform(options: ClassTransformOptions): Function {

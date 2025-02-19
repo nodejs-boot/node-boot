@@ -1,6 +1,6 @@
 {
-    "name": "@node-boot/test",
-    "version": "1.0.0",
+    "name": "@nodeboot/test",
+    "version": "1.0.1",
     "description": "Test framework for Node_Boot projects",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -26,12 +26,13 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
-        "typecheck": "tsc"
+        "typecheck": "tsc",
+        "release": "pnpm build && pnpm publish --access public --no-git-checks"
     },
     "dependencies": {
-        "@node-boot/context": "workspace:*",
-        "@node-boot/core": "workspace:*",
-        "@node-boot/config": "workspace:*"
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/config": "workspace:*"
     },
     "optionalDependencies": {
         "pactum": "^3.7.6",

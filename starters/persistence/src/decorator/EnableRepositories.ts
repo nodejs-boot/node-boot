@@ -1,4 +1,4 @@
-import {ApplicationContext} from "@node-boot/context";
+import {ApplicationContext} from "@nodeboot/context";
 import {DefaultRepositoriesAdapter} from "../adapter";
 import {DataSourceConfiguration, PersistenceConfiguration} from "../config";
 import {TransactionConfiguration} from "../config/TransactionConfiguration";

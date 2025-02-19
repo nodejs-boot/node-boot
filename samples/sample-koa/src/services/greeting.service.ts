@@ -1,5 +1,5 @@
 import {Logger} from "winston";
-import {Service} from "@node-boot/core";
+import {Service} from "@nodeboot/core";
 import {User} from "../persistence";
 
 @Service()

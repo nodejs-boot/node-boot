@@ -1,4 +1,4 @@
-import {DatasourceConfiguration} from "@node-boot/starter-persistence";
+import {DatasourceConfiguration} from "@nodeboot/starter-persistence";
 
 @DatasourceConfiguration({
     type: "better-sqlite3",

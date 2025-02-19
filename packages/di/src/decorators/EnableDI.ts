@@ -1,4 +1,4 @@
-import {ApplicationContext, IocContainer, UseContainerOptions} from "@node-boot/context";
+import {ApplicationContext, IocContainer, UseContainerOptions} from "@nodeboot/context";
 
 /**
  * Defines the IOC container to use for Dependency-injection
