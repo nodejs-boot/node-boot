@@ -7,42 +7,18 @@
 </div>
 <br />
 
+> NOTE: This is fresh, so documentation is under construction. Please be pacient and check our sample projects for examples:
+- [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
+- [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
+- [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
+
 ## Node-Boot Architecture
 ![node-boot-arch drawio](https://github.com/nodejs-boot/node-boot/assets/12997676/42f8256e-b94b-48a6-8375-da41fc9a56e8)
 
 
-## Table of Contents
+## Documentation
+Please Check [Node-Boot Framework Documentation](https://nodeboot-1.gitbook.io/node-boot-framework)
 
-- [Table of Contents](#table-of-contents)
-- [About the project](#about-the-project)
-  - [Built With](#built-with)
-    - [PNPM](#pnpm)
-    - [Turborepo](#turborepo)
-    - [Husky](#husky)
-    - [Typescript](#typescript)
-    - [Prettier](#prettier)
-    - [Eslint](#eslint)
-    - [Nodemon](#nodemon)
-    - [Jest](#jest)
-    - [GitHub Actions](#github-actions)
-    - [Conventional Commits](#conventional-commits)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-    - [PNPM](#pnpm-1)
-    - [Node LTS (18)](#node-lts-18)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
-  - [Docker](#docker)
-- [License](#license)
-
-## About the project
-
-Technology and its tooling evolves overtime, the aim of this project is to provide a modern Typescript monorepo example for today and for the future. Watch this space as time progresses to be kept up to date with changes within this area.
-
-Feel free to ask any questions or raise any issues.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
@@ -129,27 +105,6 @@ As Typescript does all of the type-checking, there's no requirement to use somet
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-#### GitHub Actions
-
-A CI/CD workflow automation tool that is built into GitHub. It is a great tool for automating your workflow and can be used to build, test and deploy your codebase.
-
-It is worth pointing out the `.github/workflows/pr.yaml` file. This workflow runs on every `pull_request` and validates the PR title follows the [Conventional Commits](https://www.conventionalcommits.org/) specification.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-#### Conventional Commits
-
-A specification for adding human and machine readable meaning to commit messages. It is a great tool for automating your workflow and can be used to build, test and deploy your codebase.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Prerequisites
 
 Here's a list of technologies that you will need in order to run this project. We're going to assume that you already have Node.js installed, however, you will need the required version (LTS or v18+) as stated in the `package.json:engines.node` configuration.
@@ -202,31 +157,12 @@ Turborepo and Nodemon will run each package in parallel and watch for file chang
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Deployment
+## How to Start
+Check the [Node-Boot Framework Documentation](https://nodeboot-1.gitbook.io/node-boot-framework) to understand the concepts and explore our sample projects where all features are available:
 
-There are several ways to deploy this project. Depending on your requirements, here are some examples of some popular methods.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Docker
-
-Making use of the [pnpm deploy](https://pnpm.io/cli/deploy) command, we can create a Docker image that only contains the production dependencies for a specific package within the monorepo. This essential bundles the given package and all of its local and external dependencies.
-
-```dockerfile
-FROM workspace as pruned
-RUN pnpm --filter <PACKAGE_NAME> --prod deploy <TARGET_DIRECTORY>
-
-FROM node:18-alpine
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-COPY --from=pruned /app/pruned .
-
-ENTRYPOINT ["node", "index.js"]
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
+- [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
+- [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
 
 ## License
 
