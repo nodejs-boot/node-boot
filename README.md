@@ -7,7 +7,7 @@
 </div>
 <br />
 
-> NOTE: This is fresh, so documentation is under construction. Please be pacient and check our sample projects for examples:
+> NOTE: This is fresh and in active development. Documentation is under construction. Please be pacient and check our sample projects for examples:
 - [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
 - [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
 - [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
