@@ -39,6 +39,16 @@ export class NodeBootToolkit {
 
         this.configureDriver(driver, options);
 
+        process.on("uncaughtException", error => {
+            console.error("Uncaught Exception:", error);
+            // Prevent the server from crashing
+        });
+
+        process.on("unhandledRejection", (reason: any) => {
+            console.error("Unhandled Rejection at:", `${reason.message}\n${reason.stack}`);
+            // Log, but don't exit
+        });
+
         // next create a controller executor
         new NodeBootEngine(driver, options)
             .initialize()

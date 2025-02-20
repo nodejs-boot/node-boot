@@ -1,0 +1,76 @@
+{
+    "name": "@nodeboot/express-sample-mongodb",
+    "version": "1.0.2",
+    "description": "Node-Boot sample project using Express and mongodb",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "private": "true",
+    "keywords": [
+        "node-boot",
+        "express"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "start": "pnpm run build && node dist/server.js",
+        "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
+        "dev": "NODE_ENV=development nodemon",
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest --passWithNoTests",
+        "rebuild:sqlite": "npm rebuild better-sqlite3",
+        "typecheck": "tsc",
+        "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/starter-openapi": "workspace:*",
+        "@nodeboot/express-server": "workspace:*",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/starter-actuator": "workspace:*",
+        "@nodeboot/starter-persistence": "workspace:*",
+        "katxupa": "^1.9.1",
+        "reflect-metadata": "^0.2.1",
+        "typeorm": "^0.3.17",
+        "express": "^4.21.2",
+        "body-parser": "^1.20.3",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "mongodb": "^5.9.2",
+        "cors": "^2.8.5",
+        "helmet": "^7.0.0",
+        "hpp": "^0.2.3",
+        "minimist": "^1.2.8",
+        "multer": "^1.4.5-lts.1",
+        "cookie": "^1.0.2",
+        "express-session": "^1.17.3",
+        "swagger-ui-express": "^5.0.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.19.2",
+        "@types/cors": "^2.8.13",
+        "@types/express": "^4.17.17",
+        "@types/hpp": "^0.2.2",
+        "@types/jest": "^28.1.6",
+        "@types/multer": "^1.4.7",
+        "@types/node": "^22.13.4",
+        "@types/supertest": "^2.0.12"
+    }
+}

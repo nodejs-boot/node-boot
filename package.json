@@ -41,7 +41,7 @@
         "format:check": "prettier --check '{packages,samples,servers,starters,tests}/**/{package.json,src/*.tsx,src/*.ts}'",
         "format:fix": "prettier --write '{packages,samples,servers,starters,tests}/**/{package.json,src/*.tsx,src/*.ts}'",
         "git:prune": "git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done",
-        "npm:prune": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+        "npm:prune": "pnpm store prune && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
         "build:patch": "turbo run build:patch",
         "build:minor": "turbo run build:minor",
         "build:major": "turbo run build:major",
@@ -53,7 +53,7 @@
         "@swc/jest": "^0.2.24",
         "@tsconfig/node-lts-strictest": "^18.12.1",
         "@types/jest": "^29.5.11",
-        "@types/node": "^18.15.3",
+        "@types/node": "^22.13.4",
         "@typescript-eslint/eslint-plugin": "^6.17.0",
         "@typescript-eslint/parser": "^6.17.0",
         "eslint": "^8.31.0",
@@ -71,6 +71,9 @@
         "ts-node": "^10.9.2",
         "turbo": "^2.3.3",
         "typescript": "^5.3.3"
+    },
+    "resolutions": {
+        "typeorm": "0.3.17"
     },
     "files": [
         "dist",

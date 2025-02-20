@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/koa-server",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

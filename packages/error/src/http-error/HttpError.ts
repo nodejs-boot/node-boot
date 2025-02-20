@@ -12,7 +12,5 @@ export class HttpError extends Error {
 
         if (httpCode) this.httpCode = httpCode;
         if (message) this.message = message;
-
-        this.stack = new Error().stack;
     }
 }

@@ -5,6 +5,8 @@ import {DataSourceOptions} from "typeorm/data-source/DataSourceOptions";
 import {PersistenceContext} from "../PersistenceContext";
 import {REQUIRES_FIELD_INJECTION_KEY} from "@nodeboot/di";
 import {Logger} from "winston";
+import {MongoDriver} from "typeorm/driver/mongodb/MongoDriver";
+import {MongoClient} from "mongodb";
 
 /**
  * The PersistenceConfiguration class is responsible for configuring the persistence layer of the application.
@@ -50,26 +52,35 @@ export class PersistenceConfiguration {
                 logger.info("Persistence DataSource successfully initialized");
 
                 const {synchronizeDatabase, migrationsRun} = PersistenceContext.get();
+
+                if (datasourceConfig.type === "mongodb") {
+                    PersistenceConfiguration.injectMongoClient(logger, dataSource, iocContainer);
+                }
+
                 // Inject dependencies into Subscriber instances
                 PersistenceConfiguration.setupInjection(logger, dataSource, iocContainer);
-
-                const initializationPromises: Promise<unknown>[] = [];
-                // Run migrations if enabled
-                if (migrationsRun) {
-                    initializationPromises.push(PersistenceConfiguration.runMigration(logger, dataSource));
-                }
-
-                if (synchronizeDatabase) {
-                    initializationPromises.push(PersistenceConfiguration.runDatabaseSync(logger, dataSource));
-                }
 
                 // Bind Data Repositories if DI container is configured
                 PersistenceConfiguration.bindDataRepositories(logger);
 
-                // Validate database consistency
-                Promise.all(initializationPromises).then(_ =>
-                    PersistenceConfiguration.ensureDatabase(logger, dataSource),
-                );
+                // For SQL like databases
+                if (datasourceConfig.type !== "mongodb") {
+                    const initializationPromises: Promise<unknown>[] = [];
+
+                    // Run migrations if enabled
+                    if (migrationsRun) {
+                        initializationPromises.push(PersistenceConfiguration.runMigration(logger, dataSource));
+                    }
+
+                    if (synchronizeDatabase) {
+                        initializationPromises.push(PersistenceConfiguration.runDatabaseSync(logger, dataSource));
+                    }
+
+                    // Validate database consistency
+                    Promise.all(initializationPromises).then(_ =>
+                        PersistenceConfiguration.ensureDatabase(logger, dataSource),
+                    );
+                }
             })
             .catch(err => {
                 logger.error("Error during Persistence DataSource initialization:", err);
@@ -116,6 +127,35 @@ export class PersistenceConfiguration {
             }
         }
         logger.info(`${subscribers.length} persistence event subscribers successfully injected`);
+    }
+
+    /**
+     * Injects the MongoDB client into the dependency injection (DI) container.
+     *
+     * This method retrieves the MongoClient instance from the provided TypeORM DataSource
+     * and registers it in the given IoC container. This allows the MongoClient to be injected
+     * into other services or beans within the application.
+     *
+     * @param {Logger} logger - The logger instance to log messages.
+     * @param {DataSource} dataSource - The TypeORM DataSource instance used to retrieve the MongoDB client.
+     * @param {IocContainer<unknown>} iocContainer - The IoC container where the MongoClient will be registered.
+     */
+    static injectMongoClient(logger: Logger, dataSource: DataSource, iocContainer: IocContainer<unknown>) {
+        logger.info(`Setting up injection for MongoClient`);
+
+        const mongoDriver = dataSource.driver;
+        if (mongoDriver instanceof MongoDriver) {
+            // Retrieve the MongoClient instance from the TypeORM MongoDriver
+            const mongoClient = mongoDriver.queryRunner?.databaseConnection;
+            if (mongoClient) {
+                // Register the MongoClient in the IoC container
+                iocContainer.set(MongoClient, mongoClient);
+            } else {
+                logger.warn(`Not able to inject MongoClient. Mongo client not connected`);
+            }
+        }
+
+        logger.info(`MongoClient was set to the DI container successfully. You can now inject it in your beans`);
     }
 
     /**
