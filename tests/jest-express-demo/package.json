@@ -52,8 +52,8 @@
         "typedi": "^0.10.0",
         "winston": "^3.10.0",
         "reflect-metadata": "^0.2.1",
-        "better-sqlite3": "^8.7.0",
-        "typeorm": "^0.3.17"
+        "better-sqlite3": "^9.6.0",
+        "typeorm": "^0.3.20"
     },
     "devDependencies": {
         "@nodeboot/jest": "workspace:*",
