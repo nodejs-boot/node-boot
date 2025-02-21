@@ -7,7 +7,7 @@ import {ClassTransformOptions} from "class-transformer";
 export interface BodyOptions {
     /**
      * If set to true then request body will become required.
-     * If user performs a request and body is not in a request then routing-controllers will throw an error.
+     * If user performs a request and body is not in a request then Node-Boot will throw an error.
      */
     required?: boolean;
 

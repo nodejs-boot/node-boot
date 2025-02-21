@@ -1,8 +1,8 @@
-import {getMetadataArgsStorage, MetadataArgsStorage} from "routing-controllers";
 import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY} from "@nodeboot/context";
+import {MetadataArgsStorage, NodeBootToolkit} from "@nodeboot/engine";
 
 export class MetadataService {
-    constructor(private readonly metadataStorage: MetadataArgsStorage = getMetadataArgsStorage()) {}
+    constructor(private readonly metadataStorage: MetadataArgsStorage = NodeBootToolkit.getMetadataArgsStorage()) {}
 
     getControllers() {
         return this.metadataStorage.controllers.map(controller => {

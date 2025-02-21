@@ -68,7 +68,7 @@ export interface ParamMetadataArgs {
     explicitType?: any;
 
     /**
-     * Explicitly tell that the QueryParam is an array to force routing-controller to cast it
+     * Explicitly tell that the QueryParam is an array to force Node-Boot to cast it
      */
     isArray?: boolean;
 }

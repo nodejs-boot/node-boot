@@ -4,7 +4,7 @@
 export interface UploadOptions {
     /**
      * If set to true then uploaded file become required.
-     * If user performs a request and file is not in a request then routing-controllers will throw an error.
+     * If user performs a request and file is not in a request then Node-Boot will throw an error.
      */
     required?: boolean;
 

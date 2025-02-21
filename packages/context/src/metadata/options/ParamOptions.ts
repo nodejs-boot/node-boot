@@ -7,7 +7,7 @@ import {ClassTransformOptions} from "class-transformer";
 export interface ParamOptions {
     /**
      * If set to true then parameter will be required.
-     * If user performs a request and required parameter is not in a request then routing-controllers will throw an error.
+     * If user performs a request and required parameter is not in a request then Node-Boot will throw an error.
      */
     required?: boolean;
 

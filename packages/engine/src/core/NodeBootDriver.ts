@@ -48,7 +48,7 @@ export abstract class NodeBootDriver<TServer, TAction extends Action = Action> {
     plainToClassTransformOptions?: ClassTransformOptions;
 
     /**
-     * Indicates if routing-controllers should operate in development mode.
+     * Indicates if Node-Boot should operate in development mode.
      */
     developmentMode: boolean;
 
