@@ -7,6 +7,7 @@ import {MetadataService} from "../service/MetadataService";
 import {FastifyActuatorAdapter} from "./FastifyActuatorAdapter";
 import {ConfigService} from "@nodeboot/config";
 import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
+import {Logger} from "winston";
 
 export class DefaultActuatorAdapter implements ActuatorAdapter {
     constructor(
@@ -56,6 +57,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
         }
         const configService = iocContainer.get(ConfigService);
         const infoService = iocContainer.get(CoreInfoService);
+        const logger = iocContainer.get(Logger);
 
         let frameworkAdapter: ActuatorAdapter;
         switch (options.serverType) {
@@ -93,5 +95,16 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
                 );
         }
         frameworkAdapter.bind(options, server, router);
+
+        logger.info(
+            `=====> 🏭 Actuator is Active :) = http://localhost:${
+                ApplicationContext.get().applicationOptions.port
+            }/actuator`,
+        );
+        logger.info(
+            `=====> 🚥 Prometheus monitoring endpoint is live :) = http://localhost:${
+                ApplicationContext.get().applicationOptions.port
+            }/actuator/prometheus`,
+        );
     }
 }

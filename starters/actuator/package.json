@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-actuator",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -40,7 +40,8 @@
         "properties-reader": "^2.3.0"
     },
     "peerDependencies": {
-        "routing-controllers": ">=0.10.4"
+        "routing-controllers": ">=0.10.4",
+        "winston": ">=3.10.0"
     },
     "optionalDependencies": {
         "@koa/router": ">=12.0.0",
