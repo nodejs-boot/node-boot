@@ -1,10 +1,11 @@
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import {OpenAPIObject} from "openapi3-ts";
-import {OpenApiAdapter, OpenApiOptions} from "@nodeboot/context";
+import {ApplicationContext, OpenApiAdapter, OpenApiOptions} from "@nodeboot/context";
 import {controllersToSpec} from "../openapi";
 import {NodeBootToolkit} from "@nodeboot/engine";
 import {parseDataClasses} from "../openapi/dataClassParser";
 import merge from "lodash.merge";
+import {Logger} from "winston";
 
 type OpenApiSpec = {
     spec: OpenAPIObject;
@@ -62,9 +63,27 @@ export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
                 url: "/api-docs/swagger.json",
             },
         };
+
+        this.logInitialization();
         return {
             options,
             spec: openApiSpec,
         };
+    }
+
+    private logInitialization() {
+        const logger = ApplicationContext.get().diOptions?.iocContainer.get(Logger);
+        if (logger) {
+            logger.info(
+                `=====> 🌈 Swagger UI is Live :) = http://localhost:${
+                    ApplicationContext.get().applicationOptions.port
+                }/api-docs`,
+            );
+            logger.info(
+                `=====> 🔌 OpenAPI Spec is Live :) = http://localhost:${
+                    ApplicationContext.get().applicationOptions.port
+                }/api-docs/swagger.json`,
+            );
+        }
     }
 }
