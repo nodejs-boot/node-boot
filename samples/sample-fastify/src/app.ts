@@ -22,12 +22,13 @@ import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
 import {AppConfigProperties} from "./config/AppConfigProperties";
 import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
+import {PagingUserController} from "./controllers/paging.controller";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @Configurations([AppConfigProperties, MultipleConfigurations])
-@Controllers([UserController])
+@Controllers([UserController, PagingUserController])
 @GlobalMiddlewares([LoggingMiddleware, CustomErrorHandler])
 //@EnableComponentScan()
 /*

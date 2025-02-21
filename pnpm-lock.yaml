@@ -239,8 +239,8 @@ importers:
         specifier: ^9.6.0
         version: 9.6.0
       body-parser:
-        specifier: ^1.20.2
-        version: 1.20.2
+        specifier: ^1.20.3
+        version: 1.20.3
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -254,8 +254,8 @@ importers:
         specifier: ^2.8.5
         version: 2.8.5
       express:
-        specifier: ^4.18.2
-        version: 4.18.2
+        specifier: ^4.21.2
+        version: 4.21.2
       express-session:
         specifier: ^1.17.3
         version: 1.17.3
@@ -279,7 +279,7 @@ importers:
         version: 0.2.1
       swagger-ui-express:
         specifier: ^5.0.0
-        version: 5.0.0(express@4.18.2)
+        version: 5.0.0(express@4.21.2)
       typedi:
         specifier: ^0.10.0
         version: 0.10.0
@@ -796,6 +796,9 @@ importers:
       routing-controllers:
         specifier: '>=0.10.4'
         version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.1)
+      winston:
+        specifier: '>=3.10.0'
+        version: 3.11.0
     optionalDependencies:
       '@koa/router':
         specifier: '>=12.0.0'
@@ -849,6 +852,9 @@ importers:
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.1
+      winston:
+        specifier: '>=3.10.0'
+        version: 3.11.0
     optionalDependencies:
       '@fastify/swagger':
         specifier: ^8.10.0
@@ -9201,6 +9207,7 @@ snapshots:
     dependencies:
       express: 4.18.2
       swagger-ui-dist: 5.11.0
+    optional: true
 
   swagger-ui-express@5.0.0(express@4.21.2):
     dependencies:

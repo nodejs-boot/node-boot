@@ -22,12 +22,13 @@ import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableDI} from "@nodeboot/di";
 import {ErrorMiddleware} from "./middlewares/ErrorMiddleware";
+import {PagingUserController} from "./controllers/paging.controller";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @Configurations([AppConfigProperties, MultipleConfigurations])
-@Controllers([UserController])
+@Controllers([UserController, PagingUserController])
 @GlobalMiddlewares([LoggingMiddleware, ErrorMiddleware])
 //@EnableComponentScan()
 /*

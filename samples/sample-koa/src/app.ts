@@ -22,12 +22,13 @@ import {AppConfigProperties} from "./config/AppConfigProperties";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
+import {PagingUserController} from "./controllers/paging.controller";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @Configurations([AppConfigProperties, MultipleConfigurations])
-@Controllers([UserController])
+@Controllers([UserController, PagingUserController])
 @GlobalMiddlewares([LoggingMiddleware, CustomErrorHandler])
 //@EnableComponentScan()
 /*
