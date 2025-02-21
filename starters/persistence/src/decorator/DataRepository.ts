@@ -27,7 +27,7 @@ export const DataRepository = (entity: Function): ClassDecorator => {
         }
 
         Reflect.defineMetadata("custom:repotype", repoType, target.prototype);
-        Reflect.defineMetadata("__isRepository", true, target); // Add a runtime marker
+        Reflect.defineMetadata("__isRepository", true, target);
 
         PersistenceContext.get().repositories.push({
             target,

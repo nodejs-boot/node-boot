@@ -145,17 +145,23 @@ export class PersistenceConfiguration {
 
         const mongoDriver = dataSource.driver;
         if (mongoDriver instanceof MongoDriver) {
+            // IMPORTANT: Force Set query runner since TypeORM is not setting it for mongoDB
+            (dataSource.manager as any).queryRunner = mongoDriver.queryRunner;
+
             // Retrieve the MongoClient instance from the TypeORM MongoDriver
             const mongoClient = mongoDriver.queryRunner?.databaseConnection;
             if (mongoClient) {
                 // Register the MongoClient in the IoC container
                 iocContainer.set(MongoClient, mongoClient);
+                logger.info(
+                    `MongoClient was set to the DI container successfully. You can now inject it in your beans`,
+                );
             } else {
                 logger.warn(`Not able to inject MongoClient. Mongo client not connected`);
             }
+        } else {
+            logger.error(`Invalid MongoDriver. Please configure mongodb properly`);
         }
-
-        logger.info(`MongoClient was set to the DI container successfully. You can now inject it in your beans`);
     }
 
     /**

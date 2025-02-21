@@ -56,4 +56,5 @@ persistence:
     type: "mongodb"
     cache: false
     mongodb:
+        database: "facts"
         url: mongodb+srv://tech-insights-admin:nq2zRhocHw9tDVGN@tech-insights.kav6j.mongodb.net/?retryWrites=true&w=majority&appName=tech-insights

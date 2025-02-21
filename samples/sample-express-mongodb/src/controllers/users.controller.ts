@@ -30,6 +30,18 @@ export class UserController {
         return this.user.findAllUserV2();
     }
 
+    @Get("/v3/")
+    @ResponseSchema(UserModel, {isArray: true, description: "Return a list of users"})
+    async getUsersV3(): Promise<UserModel[]> {
+        return this.user.findAllUserV3();
+    }
+
+    @Get("/v4/")
+    @ResponseSchema(UserModel, {isArray: true, description: "Return a list of users"})
+    async getUsersV4(): Promise<UserModel[]> {
+        return this.user.findAllUserV4();
+    }
+
     @Get("/:id")
     @OpenAPI({summary: "Return find a user"})
     @ResponseSchema(UserModel)

@@ -29,7 +29,18 @@ export class UserService {
     public async findAllUserV2(): Promise<User[]> {
         this.logger.info("Getting all users by using the mongo client directly");
 
-        return this.mongoClient.db("test").collection<User>("user").find({}).toArray();
+        return this.mongoClient.db("facts").collection<User>("users").find({}).toArray();
+    }
+
+    public async findAllUserV3(): Promise<User[]> {
+        this.logger.info("Getting all users by using the mongo client directly");
+
+        return this.userRepository.findAllUsingCollection();
+    }
+
+    public async findAllUserV4(): Promise<User[]> {
+        this.logger.info("Getting all users by using the mongo client directly");
+        return this.userRepository.findAllUsingClient();
     }
 
     public async findUserById(userId: number): Promise<User> {
