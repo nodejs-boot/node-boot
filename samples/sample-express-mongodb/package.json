@@ -30,8 +30,7 @@
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
         "rebuild:sqlite": "npm rebuild better-sqlite3",
-        "typecheck": "tsc",
-        "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
+        "typecheck": "tsc"
     },
     "dependencies": {
         "@nodeboot/config": "workspace:*",
@@ -44,6 +43,7 @@
         "@nodeboot/error": "workspace:*",
         "@nodeboot/starter-actuator": "workspace:*",
         "@nodeboot/starter-persistence": "workspace:*",
+        "@nodeboot/starter-scheduler": "workspace:*",
         "katxupa": "^1.9.1",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^0.3.20",
