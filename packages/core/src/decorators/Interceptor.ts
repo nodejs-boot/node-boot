@@ -1,5 +1,6 @@
 import {decorateDi} from "@nodeboot/di";
 import {NodeBootToolkit} from "@nodeboot/engine";
+import {ApplicationContext} from "@nodeboot/context";
 
 /**
  * Registers a global interceptor.
@@ -7,8 +8,8 @@ import {NodeBootToolkit} from "@nodeboot/engine";
  * @param options Arguments for @Interceptor decorator:
  *  <br/>- <b>priority</b> Middleware priority in the chain
  */
-export function Interceptor(options?: {priority?: number}) {
-    return <TFunction extends Function>(target: TFunction) => {
+export function Interceptor(options?: {priority?: number}): ClassDecorator {
+    return (target: any) => {
         // DI is optional and the decorator will only be applied if the DI container dependency is available.
         decorateDi(target);
         // Registering the interceptor
@@ -17,5 +18,7 @@ export function Interceptor(options?: {priority?: number}) {
             global: true,
             priority: options?.priority ?? 0,
         });
+
+        ApplicationContext.get().interceptorClasses.push(target);
     };
 }

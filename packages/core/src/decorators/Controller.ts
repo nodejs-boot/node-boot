@@ -1,5 +1,10 @@
 import {decorateDi} from "@nodeboot/di";
-import {CONTROLLER_PATH_METADATA_KEY, CONTROLLER_VERSION_METADATA_KEY, ControllerOptions} from "@nodeboot/context";
+import {
+    ApplicationContext,
+    CONTROLLER_PATH_METADATA_KEY,
+    CONTROLLER_VERSION_METADATA_KEY,
+    ControllerOptions,
+} from "@nodeboot/context";
 import {NodeBootToolkit} from "@nodeboot/engine";
 
 /**
@@ -11,8 +16,8 @@ import {NodeBootToolkit} from "@nodeboot/engine";
  *  @param version controller version to be used as part of the controller route
  *  @param options Extra options that apply to all controller actions
  */
-export function Controller(baseRoute?: string, version?: string, options?: ControllerOptions) {
-    return <TFunction extends Function>(target: TFunction) => {
+export function Controller(baseRoute?: string, version?: string, options?: ControllerOptions): ClassDecorator {
+    return (target: any) => {
         if (version !== undefined) {
             baseRoute = baseRoute ? `/${version}${baseRoute}` : `/${version}`;
             Reflect.defineMetadata(CONTROLLER_VERSION_METADATA_KEY, version, target);
@@ -29,5 +34,7 @@ export function Controller(baseRoute?: string, version?: string, options?: Contr
             target,
             options,
         });
+
+        ApplicationContext.get().controllerClasses.push(target);
     };
 }

@@ -13,7 +13,6 @@ export * from "./CookieParams";
 export * from "./Ctx";
 export * from "./Delete";
 export * from "./EnableClassTransformer";
-export * from "./EnableComponentScan";
 export * from "./ErrorHandler";
 export * from "./Get";
 export * from "./GlobalMiddlewares";

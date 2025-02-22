@@ -10,6 +10,7 @@ import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableDI} from "@nodeboot/di";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
+import {EnableComponentScan} from "@nodeboot/scan";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -18,6 +19,7 @@ import {EnableScheduling} from "@nodeboot/starter-scheduler";
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
+@EnableComponentScan({verbose: true})
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {

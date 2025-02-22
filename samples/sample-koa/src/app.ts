@@ -1,49 +1,24 @@
 import "reflect-metadata";
 import {Container} from "typedi";
-import {
-    Configurations,
-    Controllers,
-    GlobalMiddlewares,
-    NodeBoot,
-    NodeBootApp,
-    NodeBootApplication,
-    NodeBootAppView,
-} from "@nodeboot/core";
-import {UserController} from "./controllers/users.controller";
-import {LoggingMiddleware} from "./middlewares/LoggingMiddleware";
-import {MultipleConfigurations} from "./config/MultipleConfigurations";
+import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {KoaServer} from "@nodeboot/koa-server";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
 import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableDI} from "@nodeboot/di";
-import {AppConfigProperties} from "./config/AppConfigProperties";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
-import {CustomErrorHandler} from "./middlewares/CustomErrorHandler";
-import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
-import {PagingUserController} from "./controllers/paging.controller";
+import {EnableScheduling} from "@nodeboot/starter-scheduler";
+import {EnableComponentScan} from "@nodeboot/scan";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
-@Configurations([AppConfigProperties, MultipleConfigurations])
-@Controllers([UserController, PagingUserController])
-@GlobalMiddlewares([LoggingMiddleware, CustomErrorHandler])
-//@EnableComponentScan()
-/*
-* @EnableComponentScan({
-  controllerPaths: [
-    "/controllers"
-  ],
-  middlewarePaths: [
-    "/middlewares"
-  ]
-})
-* */
+@EnableAuthorization(LoggedInUserResolver)
 @EnableActuator()
-@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationChecker)
 @EnableRepositories()
+@EnableScheduling()
+@EnableComponentScan({verbose: true})
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {
