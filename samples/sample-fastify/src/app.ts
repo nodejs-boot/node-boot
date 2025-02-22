@@ -19,7 +19,7 @@ import {EnableScheduling} from "@nodeboot/starter-scheduler";
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
-@EnableComponentScan({verbose: true})
+@EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {

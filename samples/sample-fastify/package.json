@@ -47,7 +47,7 @@
         "@nodeboot/starter-actuator": "workspace:*",
         "@nodeboot/starter-persistence": "workspace:*",
         "@nodeboot/starter-scheduler": "workspace:*",
-        "@nodeboot/scan": "^1.1.1",
+        "@nodeboot/scan": "^1.1.4",
         "reflect-metadata": "^0.2.1",
         "fastify": "^4.21.0",
         "@fastify/cookie": "^9.0.4",

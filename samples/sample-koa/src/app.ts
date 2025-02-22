@@ -18,7 +18,7 @@ import {EnableComponentScan} from "@nodeboot/scan";
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
-@EnableComponentScan({verbose: true})
+@EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {

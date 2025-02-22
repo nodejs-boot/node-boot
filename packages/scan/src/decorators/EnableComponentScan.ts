@@ -2,10 +2,6 @@ import fs from "fs";
 import path from "path";
 import {MAIN_DECORATORS} from "../decorators.main";
 
-type EnableComponentScanOptions = {
-    verbose: boolean;
-};
-
 /**
  * @EnableComponentScan Decorator
  *
@@ -37,11 +33,16 @@ type EnableComponentScanOptions = {
  *
  * @author Manuel Santos <ney.br.santos@gmail.com>
  */
-export function EnableComponentScan(options?: EnableComponentScanOptions): ClassDecorator {
-    const {verbose = false} = options ?? {};
+export function EnableComponentScan(): ClassDecorator {
     return function () {
-        // Determine the correct base folder: `dist/` in production, `src/` in development
-        const basePath = path.resolve(process.cwd(), "dist");
+        const verbose = process.env["NODE_ENV"] !== "production";
+        let basePath: string;
+        // Check if the current working directory (`process.cwd()`) already contains "dist"
+        if (process.cwd().includes("dist")) {
+            basePath = process.cwd(); // If inside dist, just use the current working directory
+        } else {
+            basePath = path.resolve(process.cwd(), "dist"); // Otherwise, resolve the path to dist/
+        }
 
         const beansFilePath = path.join(basePath, "node-boot-beans.json");
 
