@@ -1,0 +1,1 @@
+export {EnableComponentScan} from "./EnableComponentScan";
