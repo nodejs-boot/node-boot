@@ -1,7 +1,14 @@
 import type {ClassTransformOptions} from "class-transformer";
 import type {ApplicationOptions, DependencyInjectionOptions} from "./options";
-import type {ApplicationAdapter, ConfigurationAdapter, ConfigurationPropertiesAdapter} from "./adapters";
-import {ActuatorAdapter, OpenApiBridgeAdapter, RepositoriesAdapter} from "./adapters";
+import {
+    ActuatorAdapter,
+    ApplicationAdapter,
+    ApplicationFeatureAdapter,
+    ConfigurationAdapter,
+    ConfigurationPropertiesAdapter,
+    OpenApiBridgeAdapter,
+    RepositoriesAdapter,
+} from "./adapters";
 import {AuthorizationChecker, CurrentUserChecker} from "./checkers";
 import {ClassConstructor, IocContainer} from "./ioc";
 
@@ -18,6 +25,8 @@ export class ApplicationContext {
     repositoriesAdapter?: RepositoriesAdapter;
     configurationAdapters: ConfigurationAdapter[] = [];
     configurationPropertiesAdapters: ConfigurationPropertiesAdapter[] = [];
+    applicationFeatures = {};
+    applicationFeatureAdapters: ApplicationFeatureAdapter[] = [];
     controllerClasses: Function[] = [];
     interceptorClasses: Function[] = [];
     globalMiddlewares: Function[] = [];

@@ -49,7 +49,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         this.logger.info(`Running Node-Boot application with '${this.serverType.toUpperCase()}'`);
         const context = ApplicationContext.get();
         if (context.diOptions) {
-            this.logger.info(`Binding Node-Boot @Configuration classes`);
+            this.logger.info(`Binding ${context.configurationAdapters.length} Node-Boot @Configuration classes`);
             for (const configurationAdapter of context.configurationAdapters) {
                 await configurationAdapter.bind({
                     application: framework,
@@ -59,7 +59,9 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
                 });
             }
 
-            this.logger.info(`Binding Node-Boot @ConfigurationProperties classes`);
+            this.logger.info(
+                `Binding ${context.configurationPropertiesAdapters.length} Node-Boot @ConfigurationProperties classes`,
+            );
             for (const configurationPropertiesAdapter of context.configurationPropertiesAdapters) {
                 configurationPropertiesAdapter.bind(context.diOptions.iocContainer);
             }
@@ -93,6 +95,17 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
                 framework,
                 router,
             );
+        }
+
+        if (context.diOptions?.iocContainer) {
+            this.logger.info(`Binding ${context.applicationFeatureAdapters.length} Node-Boot Application Features`);
+            for (const featureAdapter of context.applicationFeatureAdapters) {
+                featureAdapter.bind({
+                    iocContainer: context.diOptions?.iocContainer,
+                    config: this.config,
+                    logger: this.logger,
+                });
+            }
         }
     }
 
