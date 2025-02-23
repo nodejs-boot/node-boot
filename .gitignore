@@ -21,3 +21,5 @@ coverage
 .idea
 **/*.db
 .qodo
+
+firebase.service-account.json

@@ -58,3 +58,8 @@ persistence:
     mongodb:
         database: "facts"
         url: mongodb+srv://tech-insights-admin:nq2zRhocHw9tDVGN@tech-insights.kav6j.mongodb.net/?retryWrites=true&w=majority&appName=tech-insights
+
+integrations:
+    firebase:
+        serviceAccount: ./firebase.service-account.json
+        realtimeDatabaseUrl: https://nodeboot-default-rtdb.europe-west1.firebasedatabase.app

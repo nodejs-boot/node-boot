@@ -1,0 +1,51 @@
+{
+    "name": "@nodeboot/starter-firebase",
+    "version": "1.0.0",
+    "description": "Node-Boot starter package for Firebase",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "monorepo",
+        "typescript"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest",
+        "typecheck": "tsc",
+        "build:patch": "pnpm build && pnpm version patch",
+        "build:minor": "pnpm build && pnpm version minor",
+        "build:major": "pnpm build && pnpm version major",
+        "release": "pnpm publish --access public --no-git-checks"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/engine": "workspace:*"
+    },
+    "peerDependencies": {
+        "winston": ">=3.10.0",
+        "firebase-admin": ">=13.1.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}

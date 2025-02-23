@@ -44,6 +44,7 @@
         "@nodeboot/starter-actuator": "workspace:*",
         "@nodeboot/starter-persistence": "workspace:*",
         "@nodeboot/starter-scheduler": "workspace:*",
+        "@nodeboot/starter-firebase": "workspace:*",
         "@nodeboot/scan": "^1.1.4",
         "katxupa": "^1.9.1",
         "reflect-metadata": "^0.2.1",
@@ -62,7 +63,8 @@
         "express-session": "^1.17.3",
         "swagger-ui-express": "^5.0.0",
         "typedi": "^0.10.0",
-        "winston": "^3.10.0"
+        "winston": "^3.10.0",
+        "firebase-admin": "^13.1.0"
     },
     "devDependencies": {
         "@types/body-parser": "^1.19.2",
