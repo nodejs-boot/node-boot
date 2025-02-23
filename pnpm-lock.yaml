@@ -203,6 +203,8 @@ importers:
 
   packages/error: {}
 
+  packages/scan: {}
+
   samples/sample-express:
     dependencies:
       '@nodeboot/authorization':
@@ -226,6 +228,9 @@ importers:
       '@nodeboot/express-server':
         specifier: workspace:*
         version: link:../../servers/express-server
+      '@nodeboot/scan':
+        specifier: ^1.1.4
+        version: 1.1.4
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -235,6 +240,9 @@ importers:
       '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
+      '@nodeboot/starter-scheduler':
+        specifier: workspace:*
+        version: link:../../starters/scheduler
       better-sqlite3:
         specifier: ^9.6.0
         version: 9.6.0
@@ -338,6 +346,9 @@ importers:
       '@nodeboot/express-server':
         specifier: workspace:*
         version: link:../../servers/express-server
+      '@nodeboot/scan':
+        specifier: ^1.1.4
+        version: 1.1.4
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -347,6 +358,9 @@ importers:
       '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
+      '@nodeboot/starter-scheduler':
+        specifier: workspace:*
+        version: link:../../starters/scheduler
       body-parser:
         specifier: ^1.20.3
         version: 1.20.3
@@ -474,6 +488,9 @@ importers:
       '@nodeboot/fastify-server':
         specifier: workspace:*
         version: link:../../servers/fastify-server
+      '@nodeboot/scan':
+        specifier: ^1.1.4
+        version: 1.1.4
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -483,6 +500,9 @@ importers:
       '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
+      '@nodeboot/starter-scheduler':
+        specifier: workspace:*
+        version: link:../../starters/scheduler
       better-sqlite3:
         specifier: ^9.6.0
         version: 9.6.0
@@ -553,6 +573,9 @@ importers:
       '@nodeboot/koa-server':
         specifier: workspace:*
         version: link:../../servers/koa-server
+      '@nodeboot/scan':
+        specifier: ^1.1.4
+        version: 1.1.4
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -562,6 +585,9 @@ importers:
       '@nodeboot/starter-persistence':
         specifier: workspace:*
         version: link:../../starters/persistence
+      '@nodeboot/starter-scheduler':
+        specifier: workspace:*
+        version: link:../../starters/scheduler
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -784,6 +810,9 @@ importers:
       '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
+      '@nodeboot/engine':
+        specifier: workspace:*
+        version: link:../../packages/engine
       dayjs:
         specifier: ^1.11.9
         version: 1.11.10
@@ -793,9 +822,6 @@ importers:
       properties-reader:
         specifier: ^2.3.0
         version: 2.3.0
-      routing-controllers:
-        specifier: '>=0.10.4'
-        version: 0.10.4(class-transformer@0.5.1)(class-validator@0.14.1)
       winston:
         specifier: '>=3.10.0'
         version: 3.11.0
@@ -931,6 +957,22 @@ importers:
       '@types/node':
         specifier: ^22.13.4
         version: 22.13.4
+
+  starters/scheduler:
+    dependencies:
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../packages/context
+      node-cron:
+        specifier: ^3.0.3
+        version: 3.0.3
+      winston:
+        specifier: '>=3.10.0'
+        version: 3.11.0
+    devDependencies:
+      '@types/node-cron':
+        specifier: ^3.0.11
+        version: 3.0.11
 
   tests/core:
     dependencies:
@@ -1784,6 +1826,9 @@ packages:
   '@mongodb-js/saslprep@1.2.0':
     resolution: {integrity: sha512-+ywrb0AqkfaYuhHs6LxKWgqbh3I72EpEgESCw37o+9qPx9WTCkgDm2B+eMrwehGtHBWHFU4GXvnSCNiFhhausg==}
 
+  '@nodeboot/scan@1.1.4':
+    resolution: {integrity: sha512-MSiOKbJBG3GmKBuBWMu/XB8AT3UazRYIJ3VVsgwY/cAHs2i/mMexEbSK6+RAhUMeibcM6NqCUP5I8vNYMxLwJw==}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2049,6 +2094,9 @@ packages:
 
   '@types/multer@1.4.11':
     resolution: {integrity: sha512-svK240gr6LVWvv3YGyhLlA+6LRRWA4mnGIU7RcNmgjBYFl6665wcXrRfxGp5tEPVHUNm5FMcmq7too9bxCwX/w==}
+
+  '@types/node-cron@3.0.11':
+    resolution: {integrity: sha512-0ikrnug3/IyneSHqCBeslAhlK2aBfYek1fGo4bP4QnZPmiqSGRK+Oy7ZMisLWkesffJvQ1cqAcBnJC+8+nxIAg==}
 
   '@types/node@16.18.73':
     resolution: {integrity: sha512-GaTgwUNzESSlX9uhTX2RQcwj2KBf/Wda+52TTtuMpgzR2Rvw7NNypQ8BJdc5Wk6osxZHcUZAKip5PtqWsUl31Q==}
@@ -3961,6 +4009,10 @@ packages:
     resolution: {integrity: sha512-p7eGEiQil0YUV3ItH4/tBb781L5impVmmx2E9FRKF7d18XXzp4PGT2tdYMFY6wQqgxD0IwNZOiSJ0/K0fSi/OA==}
     engines: {node: '>=10'}
 
+  node-cron@3.0.3:
+    resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
+    engines: {node: '>=6.0.0'}
+
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -4402,12 +4454,6 @@ packages:
     resolution: {integrity: sha512-CqDakW+hMe/Bz202FPEymy68P+G50RfMQK+Qo5YUqc9SPipvbGjCGKd0RSKEelbsfQuw3g5NZDSrlZZAJurH1A==}
     engines: {node: '>=14'}
     hasBin: true
-
-  routing-controllers@0.10.4:
-    resolution: {integrity: sha512-o7EANDC78u/Hh8mLyPbc5noJYf/hOruk0CIcuMdpZM/jvlrgMTGObpcPNfm6HBi/lLhRlI3/ma/I6hCPKpucBQ==}
-    peerDependencies:
-      class-transformer: ^0.5.1
-      class-validator: ^0.14.0
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -5855,6 +5901,8 @@ snapshots:
       sparse-bitfield: 3.0.3
     optional: true
 
+  '@nodeboot/scan@1.1.4': {}
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -6132,6 +6180,8 @@ snapshots:
   '@types/multer@1.4.11':
     dependencies:
       '@types/express': 4.17.21
+
+  '@types/node-cron@3.0.11': {}
 
   '@types/node@16.18.73': {}
 
@@ -8431,6 +8481,10 @@ snapshots:
     dependencies:
       semver: 7.5.4
 
+  node-cron@3.0.3:
+    dependencies:
+      uuid: 8.3.2
+
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
@@ -8867,26 +8921,6 @@ snapshots:
   rimraf@5.0.5:
     dependencies:
       glob: 10.3.10
-
-  routing-controllers@0.10.4(class-transformer@0.5.1)(class-validator@0.14.1):
-    dependencies:
-      class-transformer: 0.5.1
-      class-validator: 0.14.1
-      cookie: 0.5.0
-      glob: 10.3.10
-      reflect-metadata: 0.1.14
-      template-url: 1.0.0
-    optionalDependencies:
-      '@koa/multer': 3.0.2(multer@1.4.5-lts.1)
-      '@koa/router': 12.0.1
-      body-parser: 1.20.3
-      express: 4.21.2
-      express-session: 1.17.3
-      koa: 2.15.0
-      koa-bodyparser: 4.4.1
-      multer: 1.4.5-lts.1
-    transitivePeerDependencies:
-      - supports-color
 
   run-parallel@1.2.0:
     dependencies:
