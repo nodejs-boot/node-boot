@@ -4,68 +4,105 @@ import {NodeBootToolkit} from "@nodeboot/engine";
 import {SchemaObject} from "openapi3-ts";
 
 const PRIMITIVE_TYPES = new Set(["string", "number", "boolean"]);
+const PRIMITIVE_TYPE_MAP: Record<string, string> = {
+    string: "string",
+    number: "number",
+    boolean: "boolean",
+};
 
-function resolveType(property: PropertyOptions): string {
-    let type = "";
+export type Model = {new (): any};
 
-    if (typeof property.type === "string") {
-        type = (property.type as String).toLowerCase();
-    } else {
-        type = (property.type as Function).name.toLowerCase();
+/**
+ * Normalizes the provided type (string or Function) and returns its OpenAPI type name.
+ */
+function normalizeType(type: string | Function | undefined): string {
+    if (!type) return "object"; // Default to object if type is unknown
+    if (typeof type === "string") {
+        return PRIMITIVE_TYPE_MAP[type.toLowerCase()] || "object"; // Default to `object` if unrecognized
     }
-    return type;
+    return PRIMITIVE_TYPES.has(type.name.toLowerCase()) ? type.name.toLowerCase() : type.name;
 }
 
-function resolveProperty(property: PropertyOptions) {
-    const {type: proType, itemType} = property;
-    const type = resolveType(property);
+/**
+ * Resolves a property definition for OpenAPI schema.
+ */
+function resolveProperty(property: Partial<PropertyOptions>, inferredType?: Function) {
+    const typeName = normalizeType(property.type) || normalizeType(inferredType);
 
-    delete property.name;
-    delete property.type;
-    delete property.required;
-    delete property.itemType;
-    if (PRIMITIVE_TYPES.has(type)) {
-        return Object.assign({}, {type}, property);
+    if (PRIMITIVE_TYPES.has(typeName)) {
+        return {...property, type: typeName};
     }
-    if (type === "array") {
+
+    if (typeName === "array") {
         return {
-            type,
             ...property,
-            items: resolveModel(itemType as Function),
+            type: "array",
+            items: property.itemType ? resolveModel(property.itemType) : {type: "object"},
         };
     }
-    return resolveModel(proType as Function);
+
+    return {$ref: `#/components/schemas/${typeName}`};
 }
 
-function resolveModel(model: Function): any {
+/**
+ * Resolves a model class into an OpenAPI schema definition.
+ */
+function resolveModel(model: any): SchemaObject {
     if (!model) {
-        return {type: ""};
+        return {type: "object"};
     }
 
-    const type = model.name.toLowerCase();
-    const properties = NodeBootToolkit.getMetadataArgsStorage().filterPropertyByTarget(model);
-
-    if (PRIMITIVE_TYPES.has(type)) {
-        return {type};
+    const typeName = normalizeType(model);
+    if (PRIMITIVE_TYPES.has(typeName)) {
+        return {type: typeName as any};
     }
-    return {
-        type: "object",
-        required: properties.reduce<string[]>((acc, property) => {
-            if (property.options.required && property.options.name) {
-                acc.push(property.options.name);
+
+    const schema: SchemaObject = {type: "object", properties: {}};
+    const requiredFields: string[] = [];
+
+    // Retrieve properties from decorators
+    const decoratedProperties = NodeBootToolkit.getMetadataArgsStorage().filterPropertyByTarget(model);
+    const decoratedPropertyNames = new Set(decoratedProperties.map(p => p.options.name));
+
+    // Retrieve all instance properties (decorated + non-decorated)
+    const prototype = model.prototype;
+    const allPropertyNames = new Set([...Object.keys(new model()), ...decoratedPropertyNames]);
+
+    for (const propertyName of allPropertyNames) {
+        if (propertyName) {
+            // Retrieve decorator metadata
+            const decoratorData = decoratedProperties.find(p => p.options.name === propertyName);
+            let propertyType =
+                decoratorData?.options.type || Reflect.getMetadata("design:type", prototype, propertyName);
+
+            if (!propertyType) propertyType = String; // Fallback to type string if not resolvable
+
+            const resolvedProperty = resolveProperty(
+                decoratorData?.options || {name: propertyName, required: false, type: propertyType},
+                propertyType,
+            );
+
+            if (decoratorData?.options.required) {
+                requiredFields.push(propertyName);
             }
-            return acc;
-        }, []),
-        properties: properties.reduce((acc, property) => {
-            acc[property.options.name || ""] = resolveProperty(property.options);
-            return acc;
-        }, {}),
-    };
+
+            (schema.properties as any)[propertyName] = resolvedProperty;
+        }
+    }
+
+    if (requiredFields.length) {
+        schema.required = requiredFields;
+    }
+
+    return schema;
 }
 
-export function parseDataClasses(dataClasses: Function[]): Record<string, SchemaObject> {
+/**
+ * Converts an array of model classes into OpenAPI schema definitions.
+ */
+export function parseDataClasses(dataClasses: Model[]): Record<string, SchemaObject> {
     return dataClasses.reduce((acc, model) => {
         acc[model.name] = resolveModel(model);
         return acc;
-    }, {} as {[key: string]: any});
+    }, {} as Record<string, SchemaObject>);
 }

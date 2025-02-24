@@ -23,6 +23,7 @@
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "generate-beans": "node ./node_modules/@nodeboot/scan/dist/scripts/generate-beans.js",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
         "build": "tsc -p tsconfig.build.json && pnpm run generate-beans",
         "clean:build": "rimraf ./dist",
         "lint": "eslint . --ext .js,.ts",

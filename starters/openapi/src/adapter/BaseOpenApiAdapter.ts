@@ -3,7 +3,7 @@ import {OpenAPIObject} from "openapi3-ts";
 import {ApplicationContext, OpenApiAdapter, OpenApiOptions} from "@nodeboot/context";
 import {controllersToSpec} from "../openapi";
 import {NodeBootToolkit} from "@nodeboot/engine";
-import {parseDataClasses} from "../openapi/dataClassParser";
+import {Model, parseDataClasses} from "../openapi/dataClassParser";
 import merge from "lodash.merge";
 import {Logger} from "winston";
 
@@ -27,7 +27,7 @@ export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
         });
 
         const dataCLasses = NodeBootToolkit.getMetadataArgsStorage().models.map(value => value.target);
-        const dataClassSchemas = parseDataClasses(dataCLasses);
+        const dataClassSchemas = parseDataClasses(dataCLasses as Model[]);
 
         const schemas = merge(validationSchemas, dataClassSchemas);
 
