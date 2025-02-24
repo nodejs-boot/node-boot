@@ -2,20 +2,55 @@ import {ApplicationContext, ApplicationFeatureAdapter, ApplicationFeatureContext
 import cron from "node-cron";
 import {SCHEDULING_FEATURE} from "../types";
 
+/**
+ * @typedef {Object} SchedulerOptions
+ * @property {any} target - The target class instance where the scheduled function is defined.
+ * @property {Function} cronFunction - The function that will be executed on schedule.
+ * @property {string} cronExpression - The cron expression defining the schedule.
+ */
 type SchedulerOptions = {
     target: any;
     cronFunction: Function;
     cronExpression: string;
 };
 
+/**
+ * SchedulerAdapter integrates cron-based job scheduling into a Node-Boot application.
+ * It acts as an adapter to register scheduled functions as application features.
+ *
+ * This adapter ensures that scheduled methods are registered and executed
+ * based on the specified cron expression using `node-cron`.
+ *
+ * @class SchedulerAdapter
+ * @implements {ApplicationFeatureAdapter}
+ *
+ * @author Manuel Santos <ney.br.santos@gmail.com>
+ */
 export class SchedulerAdapter implements ApplicationFeatureAdapter {
-    constructor(private readonly options: SchedulerOptions) {}
+    private readonly options: SchedulerOptions;
 
+    /**
+     * Constructs a SchedulerAdapter instance.
+     *
+     * @param {SchedulerOptions} options - The configuration options for the scheduler.
+     */
+    constructor(options: SchedulerOptions) {
+        this.options = options;
+    }
+
+    /**
+     * Binds the scheduler to the application lifecycle.
+     * Retrieves the associated bean from the dependency injection (DI) container,
+     * validates the cron expression, and registers the scheduled function.
+     *
+     * @param {ApplicationFeatureContext} context - The application context containing logger and IoC container.
+     */
     bind({logger, iocContainer}: ApplicationFeatureContext): void {
         const {target, cronFunction, cronExpression} = this.options;
 
+        // Check if scheduling is enabled
         if (ApplicationContext.get().applicationFeatures[SCHEDULING_FEATURE]) {
-            // Retrieve the class instance (bean) from the DI container based on the target class
+            // Retrieve the class instance (bean) from the DI container
             const componentBean = iocContainer.get(target.constructor);
 
             // Validate cron expression
@@ -23,7 +58,8 @@ export class SchedulerAdapter implements ApplicationFeatureAdapter {
                 logger.info(
                     `⏰ Registering scheduler ${target.constructor.name}:::${cronFunction.name}() with cron '${cronExpression}'`,
                 );
-                // Schedule the method execution
+
+                // Schedule the function execution
                 cron.schedule(cronExpression, () => {
                     logger.info(
                         `⏰ Executing scheduled task: ${target.constructor.name}:::${cronFunction.name}() scheduled as ${cronExpression}`,
@@ -43,7 +79,7 @@ export class SchedulerAdapter implements ApplicationFeatureAdapter {
             }
         } else {
             logger.warn(`⏰ Scheduler ${target.constructor.name}:::${cronFunction.name}() with cron ${cronExpression} 
-            registered but scheduling is disabled. To enabled scheduling please decorate your Node-Boot application 
+            registered but scheduling is disabled. To enable scheduling, please decorate your Node-Boot application 
             class with @EnableScheduling()`);
         }
     }
