@@ -11,6 +11,7 @@ import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableDI} from "@nodeboot/di";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableComponentScan} from "@nodeboot/scan";
+import {EnableFirebase} from "@nodeboot/starter-firebase";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -19,6 +20,7 @@ import {EnableComponentScan} from "@nodeboot/scan";
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
+@EnableFirebase()
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
