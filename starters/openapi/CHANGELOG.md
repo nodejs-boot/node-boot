@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.3.2
+
+### Patch Changes
+
+-   Change Model property options to include type as string instead of string or Function
+
 ## 1.3.1
 
 ### Patch Changes

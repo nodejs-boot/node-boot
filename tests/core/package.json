@@ -26,11 +26,7 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
-        "typecheck": "tsc",
-        "build:patch": "pnpm build && pnpm version patch",
-        "build:minor": "pnpm build && pnpm version minor",
-        "build:major": "pnpm build && pnpm version major",
-        "release": "pnpm publish --access public --no-git-checks"
+        "typecheck": "tsc"
     },
     "dependencies": {
         "@nodeboot/context": "workspace:*",
