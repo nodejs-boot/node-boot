@@ -3,11 +3,13 @@ import {PropertyOptions} from "@nodeboot/context";
 import {NodeBootToolkit} from "@nodeboot/engine";
 import {SchemaObject} from "openapi3-ts";
 
-const PRIMITIVE_TYPES = new Set(["string", "number", "boolean"]);
+const PRIMITIVE_TYPES = new Set(["string", "number", "integer", "boolean", "object"]);
 const PRIMITIVE_TYPE_MAP: Record<string, string> = {
     string: "string",
     number: "number",
+    integer: "integer",
     boolean: "boolean",
+    object: "object",
 };
 
 export type Model = {new (): any};
