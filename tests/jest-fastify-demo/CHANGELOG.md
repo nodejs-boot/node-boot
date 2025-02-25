@@ -1,5 +1,20 @@
 # @nodeboot/jest-fastify-demo
 
+## 1.0.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.3.0
+    -   @nodeboot/starter-openapi@1.4.0
+    -   @nodeboot/core@1.2.0
+    -   @nodeboot/fastify-server@1.2.0
+    -   @nodeboot/authorization@1.1.3
+    -   @nodeboot/config@1.1.3
+    -   @nodeboot/di@1.1.3
+    -   @nodeboot/starter-actuator@1.1.5
+    -   @nodeboot/starter-persistence@1.3.3
+
 ## 1.0.4
 
 ### Patch Changes
