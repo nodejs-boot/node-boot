@@ -1,0 +1,1 @@
+export {OpenApiConfigProperties} from "./OpenApiConfigProperties";

@@ -51,6 +51,26 @@ server:
             files: 5
             headerPairs: 10
 
+openapi:
+    info:
+        contact:
+            name: "Manuel Santos"
+            email: "ney.br.santos@gmail.com"
+            url: "https://www.linkedin.com/in/manuel-brito-dos-santos-a7a20a6b/"
+        license:
+            name: MIT
+            url: "https://github.com/nodejs-boot/node-boot/blob/main/LICENSE"
+    servers:
+        - url: http://localhost:3000
+          description: Localhost server
+    externalDocs:
+        url: "https://nodeboot.gitbook.io/"
+        description: "Node-Boot official documentation"
+    securitySchemes:
+        basicAuth:
+            scheme: "basic"
+            type: "http"
+
 # Storage configurations
 persistence:
     type: "better-sqlite3"

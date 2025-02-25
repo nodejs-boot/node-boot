@@ -18,6 +18,26 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         this.framework.use(express.urlencoded({extended: true}));
     }
 
+    override async configureHttpLogging(): Promise<void> {
+        // Express middleware to log incoming request
+        this.framework.use((req, _, next) => {
+            const logMessage = `==> Incoming http request: ${req.method} ${req.originalUrl} | ${req.ip} | ${req.headers["user-agent"]} | Framework: Express`;
+            this.logger.info(logMessage);
+            next(); // Proceed to the next middleware/route handler
+        });
+
+        // Your existing request logger middleware
+        this.framework.use((req, res, next) => {
+            const start = Date.now();
+            res.on("finish", () => {
+                const responseTime = Date.now() - start;
+                const logMessage = `<== Outgoing http response: ${req.method} ${req.originalUrl} ${res.statusCode} - ${responseTime}ms | ${req.ip} | ${req.headers["user-agent"]} | Framework: Express`;
+                this.logger.info(logMessage);
+            });
+            next();
+        });
+    }
+
     async run(additionalConfig?: JsonObject): Promise<ExpressServer> {
         const context = ApplicationContext.get();
 

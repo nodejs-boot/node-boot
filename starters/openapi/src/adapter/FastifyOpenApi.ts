@@ -7,8 +7,8 @@ export class FastifyOpenApi extends BaseOpenApiAdapter {
         super("fastify");
     }
 
-    bind(openApiOptions: OpenApiOptions, server: FastifyInstance, router: FastifyInstance): void {
-        const {spec, options} = super.buildSpec(openApiOptions);
+    async bind(openApiOptions: OpenApiOptions, server: FastifyInstance, router: FastifyInstance) {
+        const {spec, options} = await super.buildSpec(openApiOptions);
 
         router.get(options.swaggerOptions.url, async (_, reply) => {
             reply.send(spec);

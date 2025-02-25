@@ -8,8 +8,8 @@ export class ExpressOpenApi extends BaseOpenApiAdapter {
         super("express");
     }
 
-    bind(openApiOptions: OpenApiOptions, server: any, router: any): void {
-        const {spec, options} = super.buildSpec(openApiOptions);
+    async bind(openApiOptions: OpenApiOptions, server: any, router: any) {
+        const {spec, options} = await super.buildSpec(openApiOptions);
 
         router.get(options.swaggerOptions.url, (_: never, res: Response) => res.json(spec));
 

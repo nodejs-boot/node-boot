@@ -7,8 +7,8 @@ export class KoaOpenApi extends BaseOpenApiAdapter {
         super("koa");
     }
 
-    bind(openApiOptions: OpenApiOptions, server: any, router: any): void {
-        const {spec, options} = super.buildSpec(openApiOptions);
+    async bind(openApiOptions: OpenApiOptions, server: any, router: any) {
+        const {spec, options} = await super.buildSpec(openApiOptions);
 
         router.get(options.swaggerOptions.url, async ctx => {
             ctx.body = spec;

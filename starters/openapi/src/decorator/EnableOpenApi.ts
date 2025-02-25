@@ -10,7 +10,7 @@ import {ExpressOpenApi, FastifyOpenApi, KoaOpenApi} from "../adapter";
 export function EnableOpenApi(): Function {
     return function () {
         ApplicationContext.get().openApi = new (class implements OpenApiBridgeAdapter {
-            bind(serverType: string): OpenApiAdapter {
+            async bind(serverType: string): Promise<OpenApiAdapter> {
                 switch (serverType) {
                     case "express":
                         return new ExpressOpenApi();

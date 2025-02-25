@@ -1,5 +1,5 @@
 import * as winston from "winston";
-import {format, LoggerOptions} from "winston";
+import {format, Logger, LoggerOptions} from "winston";
 import {Format, TransformableInfo} from "logform";
 import merge from "lodash.merge";
 
@@ -29,6 +29,15 @@ export function createRootLogger(options: winston.LoggerOptions = {}, env = proc
         .createLogger(
             merge<LoggerOptions, LoggerOptions>(
                 {
+                    levels: {
+                        fatal: 0,
+                        error: 1,
+                        warn: 2,
+                        info: 3,
+                        debug: 4,
+                        trace: 5,
+                        silent: 6,
+                    },
                     level: env["LOG_LEVEL"] || "info",
                     format: env["NODE_ENV"] === "production" ? winston.format.json() : colorFormat(),
                     transports: [
@@ -74,8 +83,8 @@ function colorFormat(): Format {
     );
 }
 
-export const createLogger = (service: string, platform: string) => {
-    const logger = createRootLogger();
+export const createLogger = (service: string, platform: string, rootLogger?: Logger) => {
+    const logger = rootLogger ?? createRootLogger();
     logger.format = winston.format.combine(winston.format.timestamp(), winston.format.splat(), logger.format);
 
     logger.defaultMeta = {
@@ -84,4 +93,19 @@ export const createLogger = (service: string, platform: string) => {
     };
 
     return logger;
+};
+
+export const createLoggerAdapter = (logger: Logger) => {
+    const loggerAdapter = {
+        level: logger.level,
+        silent: logger.silent,
+        info: (msg: any) => logger.info(msg),
+        error: (msg: any) => logger.error(msg),
+        warn: (msg: any) => logger.warn(msg),
+        debug: (msg: any) => logger.debug(msg),
+        fatal: (msg: any) => logger.log("fatal", msg),
+        trace: (msg: any) => logger.log("trace", msg),
+        child: () => loggerAdapter, // Important for Fastify's child loggers
+    };
+    return loggerAdapter;
 };

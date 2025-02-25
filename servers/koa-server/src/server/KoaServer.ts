@@ -19,6 +19,24 @@ export class KoaServer extends BaseServer<Koa, Router> {
         this.router = new Router();
     }
 
+    override async configureHttpLogging(): Promise<void> {
+        // Koa middleware to log incoming request
+        this.framework.use(async (ctx, next) => {
+            const logMessage = `==> Incoming http request: ${ctx.method} ${ctx.originalUrl} | ${ctx.ip} | ${ctx.headers["user-agent"]}`;
+            this.logger.info(logMessage);
+            await next(); // Proceed to the next middleware/route handler
+        });
+
+        // Your existing request logger middleware
+        this.framework.use(async (ctx, next) => {
+            const start = Date.now();
+            await next();
+            const responseTime = Date.now() - start;
+            const logMessage = `<== Outgoing http response: ${ctx.method} ${ctx.originalUrl} ${ctx.status} - ${responseTime}ms | ${ctx.ip} | ${ctx.headers["user-agent"]}`;
+            this.logger.info(logMessage);
+        });
+    }
+
     async run(additionalConfig?: JsonObject): Promise<KoaServer> {
         const context = ApplicationContext.get();
 

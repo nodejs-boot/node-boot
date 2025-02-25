@@ -30,6 +30,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         await this.printBanner();
     }
 
+    abstract configureHttpLogging(): Promise<void>;
+
     abstract listen(): Promise<NodeBootAppView>;
 
     abstract close(): Promise<void>;
@@ -45,6 +47,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected async configure(framework: TFramework, router: TRouter, additionalConfigData?: JsonObject) {
         // Initialize configuration and logging
         await this.init(additionalConfigData);
+
+        await this.configureHttpLogging();
 
         this.logger.info(`Running Node-Boot application with '${this.serverType.toUpperCase()}'`);
         const context = ApplicationContext.get();
@@ -70,6 +74,10 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             // including importing controllers
             this.logger.info(`Setting DI container`);
             useContainer(context.diOptions.iocContainer, context.diOptions.options);
+        } else {
+            this.logger.warn(
+                `Skipping Dependency injection, auto-configuration and configuration properties features. DI container is required. Please decorate your application class with @EnableDI(Container) to activate these core features`,
+            );
         }
 
         if (context.actuatorAdapter) {
@@ -84,16 +92,22 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             );
         }
 
-        if (context.openApi) {
+        if (context.openApi && context.diOptions?.iocContainer) {
             this.logger.info(`Binding OpenAPI adapter`);
-            const openApiAdapter = context.openApi.bind(this.serverType);
-            openApiAdapter.bind(
+            const openApiAdapter = await context.openApi.bind(this.serverType);
+            await openApiAdapter.bind(
                 {
                     basePath: context.applicationOptions.apiOptions?.routePrefix,
                     controllers: context.controllerClasses,
+                    iocContainer: context.diOptions.iocContainer,
+                    logger: this.logger,
                 },
                 framework,
                 router,
+            );
+        } else {
+            this.logger.warn(
+                `Skipping OpenAPI. DI container is required. Please decorate your application class with @EnableDI(Container) to activate OpenAPI features`,
             );
         }
 
