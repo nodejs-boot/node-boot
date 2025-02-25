@@ -42,10 +42,11 @@
         "format:fix": "prettier --write '{packages,samples,servers,starters,tests}/**/{package.json,src/*.tsx,src/*.ts}'",
         "git:prune": "git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done",
         "npm:prune": "pnpm store prune && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
-        "build:patch": "turbo run build:patch",
-        "build:minor": "turbo run build:minor",
-        "build:major": "turbo run build:major",
-        "release": "turbo run release"
+        "release:changeset": "pnpm changeset",
+        "release:version": "pnpm changeset version",
+        "release:status": "pnpm changeset status",
+        "release:publish": "pnpm changeset publish",
+        "release": "pnpm run release:version && pnpm run release:publish"
     },
     "devDependencies": {
         "@changesets/cli": "^2.28.1",
