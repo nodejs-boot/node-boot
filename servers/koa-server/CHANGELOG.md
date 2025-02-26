@@ -1,5 +1,12 @@
 # @nodeboot/koa-server
 
+## 1.2.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.3.0
+
 ## 1.2.0
 
 ### Minor Changes

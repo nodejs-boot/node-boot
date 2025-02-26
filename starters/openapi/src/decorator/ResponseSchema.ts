@@ -3,6 +3,7 @@ import {IRoute} from "../types";
 import _merge from "lodash.merge";
 import {getContentType, getStatusCode} from "../openapi";
 import {OpenAPI} from "./OpenAPI";
+import {Model} from "./Model";
 
 /**
  * Supplement action with response body type annotation.
@@ -25,6 +26,9 @@ export function ResponseSchema(
         let responseSchemaName = "";
         if (typeof responseClass === "function" && responseClass.name) {
             responseSchemaName = responseClass.name;
+
+            // Automatically apply the @Model decorator to the responseClass
+            Model()(responseClass);
         } else if (typeof responseClass === "string") {
             responseSchemaName = responseClass;
         }

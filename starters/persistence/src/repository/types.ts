@@ -17,19 +17,19 @@ export class CursorRequest {
     sortField?: string;
 }
 
-export type Page<T> = {
+export class Page<T> {
     page: number;
     totalPages: number;
     totalItems: number;
     pageSize: number;
     items: T[];
-};
+}
 
-export type CursorPage<T> = {
+export class CursorPage<T> {
     pageSize: number;
     // Used for SQL databases
     cursor?: string;
     // Used for MongoDB
     lastId?: string;
     items: T[];
-};
+}

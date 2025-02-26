@@ -1,6 +1,7 @@
-import {Model, Property} from "@nodeboot/core";
+import {Property} from "@nodeboot/core";
 import {IsEmail} from "class-validator";
 import {JsonObject} from "@nodeboot/context/src";
+import {Model} from "@nodeboot/starter-openapi";
 
 @Model()
 export class UserModel {

@@ -1,5 +1,6 @@
-import {Model, Property} from "@nodeboot/core";
+import {Property} from "@nodeboot/core";
 import {IsEmail} from "class-validator";
+import {Model} from "@nodeboot/starter-openapi";
 
 @Model()
 export class UserModel {

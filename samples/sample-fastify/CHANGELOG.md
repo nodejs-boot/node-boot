@@ -1,5 +1,19 @@
 # @nodeboot/fastify-sample
 
+## 1.1.0
+
+### Minor Changes
+
+-   Move Model decorator from core to open-api package and apply Model decorator to response Classes when using ResponseSchema decorator
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.4.0
+    -   @nodeboot/starter-openapi@1.5.0
+    -   @nodeboot/core@1.3.0
+    -   @nodeboot/fastify-server@1.2.1
+
 ## 1.0.5
 
 ### Patch Changes

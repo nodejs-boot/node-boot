@@ -1,12 +1,11 @@
 import {IsEnum, IsPositive} from "class-validator";
-import {Model, Property} from "../decorators";
+import {Property} from "../decorators";
 
 export enum SortOrder {
     ASC = "ASC",
     DESC = "DESC",
 }
 
-@Model()
 export class PagingRequest {
     @IsPositive()
     @Property({description: "Current page number"})
@@ -20,7 +19,6 @@ export class PagingRequest {
     sortField?: string;
 }
 
-@Model()
 export class CursorRequest {
     @Property({required: false, description: "Number of items per page (default: 10)"})
     pageSize?: number;

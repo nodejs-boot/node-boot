@@ -1,5 +1,16 @@
 # @nodeboot/starter-persistence
 
+## 1.4.0
+
+### Minor Changes
+
+-   Move Model decorator from core to open-api package and apply Model decorator to response Classes when using ResponseSchema decorator
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.3.0
+
 ## 1.3.3
 
 ### Patch Changes

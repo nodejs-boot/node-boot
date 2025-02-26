@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.3.0
+
+### Minor Changes
+
+-   Move Model decorator from core to open-api package and apply Model decorator to response Classes when using ResponseSchema decorator
+
 ## 1.2.0
 
 ### Minor Changes
