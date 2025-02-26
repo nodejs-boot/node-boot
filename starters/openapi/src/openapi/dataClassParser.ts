@@ -29,20 +29,29 @@ function normalizeType(type: string | Function | undefined): string {
  * Resolves a property definition for OpenAPI schema.
  */
 function resolveProperty(property: Partial<PropertyOptions>, inferredType?: Function) {
-    const typeName = normalizeType(property.type) || normalizeType(inferredType);
+    const typeName = normalizeType(property.type || inferredType);
 
-    if (PRIMITIVE_TYPES.has(typeName)) {
-        return {...property, type: typeName};
+    // Handle Date explicitly
+    if (typeName === "date" || typeName === "Date") {
+        return {type: "string", format: "date-time"}; // OpenAPI standard for Date
     }
 
+    // Handle primitive types
+    if (PRIMITIVE_TYPES.has(typeName)) {
+        return {type: typeName};
+    }
+
+    // Handle array types
     if (typeName === "array") {
         return {
-            ...property,
             type: "array",
-            items: property.itemType ? resolveModel(property.itemType) : {type: "object"},
+            items: property.itemType
+                ? resolveProperty({type: property.itemType}) // Recursively resolve item type
+                : {type: "object"}, // Default to object if no item type is defined
         };
     }
 
+    // Handle object references
     return {$ref: `#/components/schemas/${typeName}`};
 }
 
@@ -77,10 +86,10 @@ function resolveModel(model: any): SchemaObject {
             let propertyType =
                 decoratorData?.options.type || Reflect.getMetadata("design:type", prototype, propertyName);
 
-            if (!propertyType) propertyType = String; // Fallback to type string if not resolvable
+            if (!propertyType) propertyType = String; // Default to string if type is not resolvable
 
             const resolvedProperty = resolveProperty(
-                decoratorData?.options || {name: propertyName, required: false, type: propertyType},
+                {name: propertyName, required: decoratorData?.options.required, type: propertyType},
                 propertyType,
             );
 

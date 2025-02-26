@@ -1,5 +1,12 @@
 # @nodeboot/test
 
+## 1.1.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.4.0
+
 ## 1.1.4
 
 ### Patch Changes

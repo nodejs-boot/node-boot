@@ -51,3 +51,4 @@ export * from "./UseAfter";
 export * from "./UseBefore";
 export * from "./UseInterceptor";
 export * from "./Property";
+export * from "./Model";

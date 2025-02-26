@@ -24,11 +24,15 @@ export function ResponseSchema(
         const statusCode = (options.statusCode || getStatusCode(route)) + "";
 
         let responseSchemaName = "";
+
+        // Ensure the response class is properly registered with @Model
         if (typeof responseClass === "function" && responseClass.name) {
             responseSchemaName = responseClass.name;
 
-            // Automatically apply the @Model decorator to the responseClass
-            Model()(responseClass);
+            // Automatically apply the @Model decorator if not already applied
+            if (!Reflect.getMetadata("node-boot:model", responseClass.prototype)) {
+                Model()(responseClass);
+            }
         } else if (typeof responseClass === "string") {
             responseSchemaName = responseClass;
         }
@@ -37,7 +41,8 @@ export function ResponseSchema(
             const reference: ReferenceObject = {
                 $ref: `#/components/schemas/${responseSchemaName}`,
             };
-            const schema: SchemaObject = isArray ? {items: reference, type: "array"} : reference;
+            const schema: SchemaObject = isArray ? {type: "array", items: reference} : reference;
+
             const responses: ResponsesObject = {
                 [statusCode]: {
                     content: {
@@ -49,15 +54,13 @@ export function ResponseSchema(
                 },
             };
 
-            const oldSchema = source.responses[statusCode]?.content[contentType].schema;
+            const oldSchema = source.responses?.[statusCode]?.content?.[contentType]?.schema;
 
             if (oldSchema?.$ref || oldSchema?.items || oldSchema?.oneOf) {
-                // case where we're adding multiple schemas under single statuscode/contentType
+                // If multiple schemas are needed under the same status code/content type
                 const newStatusCodeResponse = _merge({}, source.responses[statusCode], responses[statusCode]);
                 const newSchema = oldSchema.oneOf
-                    ? {
-                          oneOf: [...oldSchema.oneOf, schema],
-                      }
+                    ? {oneOf: [...oldSchema.oneOf, schema]}
                     : {oneOf: [oldSchema, schema]};
 
                 newStatusCodeResponse.content[contentType].schema = newSchema;

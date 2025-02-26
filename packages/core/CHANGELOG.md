@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.4.0
+
+### Minor Changes
+
+-   Fixing OpenAPI schema resolutions
+
 ## 1.3.0
 
 ### Minor Changes

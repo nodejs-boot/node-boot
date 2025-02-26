@@ -1,5 +1,16 @@
 # @nodeboot/starter-persistence
 
+## 1.5.0
+
+### Minor Changes
+
+-   Fixing OpenAPI schema resolutions
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.4.0
+
 ## 1.4.0
 
 ### Minor Changes

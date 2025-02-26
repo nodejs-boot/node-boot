@@ -1,5 +1,6 @@
-import {SortOrder} from "@nodeboot/core";
+import {Model, SortOrder} from "@nodeboot/core";
 
+@Model()
 export class PagingRequest {
     page?: number;
     pageSize?: number;
@@ -7,6 +8,7 @@ export class PagingRequest {
     sortField?: string;
 }
 
+@Model()
 export class CursorRequest {
     pageSize?: number;
     // Used for MongoDB
@@ -17,6 +19,7 @@ export class CursorRequest {
     sortField?: string;
 }
 
+@Model()
 export class Page<T> {
     page: number;
     totalPages: number;
@@ -25,6 +28,7 @@ export class Page<T> {
     items: T[];
 }
 
+@Model()
 export class CursorPage<T> {
     pageSize: number;
     // Used for SQL databases

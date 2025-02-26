@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.6.0
+
+### Minor Changes
+
+-   Fixing OpenAPI schema resolutions
+
 ## 1.5.0
 
 ### Minor Changes

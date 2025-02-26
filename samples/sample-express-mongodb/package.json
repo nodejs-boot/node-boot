@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-sample-mongodb",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Node-Boot sample project using Express and mongodb",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
