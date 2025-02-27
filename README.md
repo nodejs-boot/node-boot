@@ -164,6 +164,7 @@ Check the [Node-Boot Framework Documentation](https://nodeboot-1.gitbook.io/node
 - [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
 - [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
 - [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
+- [Node-Boot with MongoDB](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express-mongodb)
 
 ## License
 
