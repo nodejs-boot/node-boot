@@ -11,6 +11,7 @@
 - [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
 - [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
 - [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
+- [Node-Boot with MongoDB](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express-mongodb)
 
 ## Node-Boot Architecture
 ![node-boot-arch drawio](https://github.com/nodejs-boot/node-boot/assets/12997676/42f8256e-b94b-48a6-8375-da41fc9a56e8)
