@@ -18,12 +18,12 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
         if (ApplicationContext.get().applicationFeatures[HTTP_CLIENT_FEATURE]) {
             // Register HTTP method using Axios
             logger.info(
-                `🌐 Registering HTTP client "${this.targetClass.constructor.name}" for target API ${this.clientConfig.baseURL}`,
+                `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${this.clientConfig.baseURL}`,
             );
 
             const httpClient = axios.create(this.clientConfig);
             if (this.clientConfig.httpLogging) {
-                logger.info(`HTTP logging is enabled for client ${this.targetClass.constructor.name}`);
+                logger.info(`HTTP logging is enabled for client ${this.targetClass.name}`);
                 this.setupHttpLogging(httpClient, logger);
             }
             iocContainer.set(this.targetClass, httpClient);
