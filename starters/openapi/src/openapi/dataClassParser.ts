@@ -42,7 +42,7 @@ function resolveProperty(property: Partial<PropertyOptions>, inferredType?: Func
     }
 
     // Handle array types
-    if (typeName === "array") {
+    if (typeName === "array" || typeName === "Array") {
         return {
             type: "array",
             items: property.itemType

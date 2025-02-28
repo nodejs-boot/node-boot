@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.6.1
+
+### Patch Changes
+
+-   Fix issue resolving Array type for the schema deffinitions
+
 ## 1.6.0
 
 ### Minor Changes
