@@ -6,6 +6,7 @@ import {HttpError, NotFoundError} from "@nodeboot/error";
 import {ConfigService} from "@nodeboot/config";
 import {Users} from "../persistence/users.init";
 import {MongoClient} from "mongodb";
+import {MicroserviceHttpClient} from "../clients/MicroserviceHttpClient";
 
 @Service()
 export class UserService {
@@ -14,16 +15,28 @@ export class UserService {
         private readonly configService: ConfigService,
         private readonly userRepository: UserRepository,
         private readonly mongoClient: MongoClient,
+        private readonly httpClient: MicroserviceHttpClient,
     ) {
-        Users.forEach(user => this.userRepository.save(user));
+        // Workaround to load dummy users in the database
+        this.userRepository.count({}).then(existingUsers => {
+            if (!existingUsers) {
+                Users.forEach(user => this.userRepository.save(user));
+            }
+        });
     }
 
     public async findAllUser(): Promise<User[]> {
         this.logger.info("Getting all users");
         const appName = this.configService.getString("app.name");
         this.logger.info(`Reading node-boot.app.name from app-config.yam: ${appName}`);
-
         return this.userRepository.find();
+    }
+
+    public async findExternalUsers(): Promise<User[]> {
+        this.logger.info("Getting users from external service");
+        const result = await this.httpClient.get("/users");
+        this.logger.info(`Found ${result.data.length} users by calling external API`);
+        return result.data;
     }
 
     public async findAllUserV2(): Promise<User[]> {

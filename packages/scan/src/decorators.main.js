@@ -10,4 +10,5 @@ export const MAIN_DECORATORS = [
     "ErrorHandler",
     "Middleware",
     "Interceptor",
+    "HttpClient",
 ];

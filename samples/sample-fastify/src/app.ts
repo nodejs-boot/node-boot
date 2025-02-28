@@ -11,6 +11,7 @@ import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
 import {EnableComponentScan} from "@nodeboot/scan";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
+import {EnableHttpClients} from "@nodeboot/starter-http";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -19,6 +20,7 @@ import {EnableScheduling} from "@nodeboot/starter-scheduler";
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
+@EnableHttpClients()
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {

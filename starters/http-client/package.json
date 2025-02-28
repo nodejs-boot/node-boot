@@ -1,7 +1,7 @@
 {
-    "name": "@nodeboot/scan",
+    "name": "@nodeboot/starter-http",
     "version": "2.0.0",
-    "description": "Node-Boot module for @beans auto-scan. It provides the @EnableComponentScan decorator and tools for build time beans discovery",
+    "description": "Node-Boot starter package for HTTP clients",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
@@ -25,16 +25,19 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "test": "jest --passWithNoTests",
-        "typecheck": "tsc",
-        "build:patch": "pnpm build && pnpm version patch",
-        "build:minor": "pnpm build && pnpm version minor",
-        "build:major": "pnpm build && pnpm version major",
-        "release": "pnpm publish --access public --no-git-checks"
+        "test": "jest",
+        "typecheck": "tsc"
     },
+    "dependencies": {
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "axios": "^1.8.1"
+    },
+    "devDependencies": {},
     "files": [
         "dist",
         "package.json",
-        "README.md"
+        "README.md",
+        "config.d.ts"
     ]
 }

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-sample-mongodb",
-    "version": "1.1.1",
+    "version": "2.0.0",
     "description": "Node-Boot sample project using Express and mongodb",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -46,7 +46,8 @@
         "@nodeboot/starter-persistence": "workspace:*",
         "@nodeboot/starter-scheduler": "workspace:*",
         "@nodeboot/starter-firebase": "workspace:*",
-        "@nodeboot/scan": "^1.1.6",
+        "@nodeboot/starter-http": "workspace:*",
+        "@nodeboot/scan": "^2.0.0",
         "katxupa": "^1.9.1",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^0.3.20",

@@ -237,6 +237,9 @@ importers:
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
+      '@nodeboot/starter-http':
+        specifier: workspace:*
+        version: link:../../starters/http-client
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -350,14 +353,17 @@ importers:
         specifier: workspace:*
         version: link:../../servers/express-server
       '@nodeboot/scan':
-        specifier: ^1.1.6
-        version: 1.1.6
+        specifier: ^1.1.7
+        version: 1.1.7
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
       '@nodeboot/starter-firebase':
         specifier: workspace:*
         version: link:../../starters/firebase
+      '@nodeboot/starter-http':
+        specifier: workspace:*
+        version: link:../../starters/http-client
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -503,6 +509,9 @@ importers:
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
+      '@nodeboot/starter-http':
+        specifier: workspace:*
+        version: link:../../starters/http-client
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -588,6 +597,9 @@ importers:
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
+      '@nodeboot/starter-http':
+        specifier: workspace:*
+        version: link:../../starters/http-client
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -878,6 +890,18 @@ importers:
       winston:
         specifier: '>=3.10.0'
         version: 3.11.0
+
+  starters/http-client:
+    dependencies:
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      axios:
+        specifier: ^1.8.1
+        version: 1.8.1
 
   starters/openapi:
     dependencies:
@@ -1988,6 +2012,9 @@ packages:
   '@nodeboot/scan@1.1.6':
     resolution: {integrity: sha512-FLH6zTxAHepvG1X6YPibgyAY2eeMGMWgNvW3D82DJVhDS7eIIonTXPJDn8IKm9J4He60tYqHfNNcYO1hsharow==}
 
+  '@nodeboot/scan@1.1.7':
+    resolution: {integrity: sha512-O2W80CwjA7c1RexoeozDy1cPS/kHLBWAHiCCblhZonmujGMD9om4x3fb/B07wdv9Og0iqixlRe+GfUK37y8cVA==}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2586,6 +2613,9 @@ packages:
 
   axios@1.7.9:
     resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
+
+  axios@1.8.1:
+    resolution: {integrity: sha512-NN+fvwH/kV01dYUQ3PTOZns4LWtWhOFCAhQ/pHb88WQ1hNe5V/dvFwc4VJcDL11LT9xSX0QtsR8sWUuyOuOq7g==}
 
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
@@ -6720,6 +6750,8 @@ snapshots:
 
   '@nodeboot/scan@1.1.6': {}
 
+  '@nodeboot/scan@1.1.7': {}
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -7349,6 +7381,14 @@ snapshots:
       - supports-color
 
   axios@1.7.9:
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.8.1:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.0

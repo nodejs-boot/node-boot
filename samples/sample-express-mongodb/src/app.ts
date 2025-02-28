@@ -12,6 +12,7 @@ import {EnableDI} from "@nodeboot/di";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableComponentScan} from "@nodeboot/scan";
 import {EnableFirebase} from "@nodeboot/starter-firebase";
+import {EnableHttpClients} from "@nodeboot/starter-http";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -20,6 +21,7 @@ import {EnableFirebase} from "@nodeboot/starter-firebase";
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
+@EnableHttpClients()
 @EnableFirebase()
 @EnableComponentScan()
 @NodeBootApplication()

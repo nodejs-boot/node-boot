@@ -24,6 +24,12 @@ export class UserController {
         return this.user.findAllUser();
     }
 
+    @Get("/external/")
+    @ResponseSchema(UserModel, {isArray: true, description: "Return a list of users retrieved from external API"})
+    async getExternalUsers(): Promise<UserModel[]> {
+        return this.user.findExternalUsers();
+    }
+
     @Get("/query/")
     @OpenAPI({summary: "Return a list of users using a custom query"})
     @ResponseSchema(UserModel, {isArray: true})
