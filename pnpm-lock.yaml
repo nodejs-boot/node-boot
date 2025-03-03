@@ -239,7 +239,7 @@ importers:
         version: link:../../starters/actuator
       '@nodeboot/starter-http':
         specifier: workspace:*
-        version: link:../../starters/http-client
+        version: link:../../starters/http
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -249,6 +249,9 @@ importers:
       '@nodeboot/starter-scheduler':
         specifier: workspace:*
         version: link:../../starters/scheduler
+      '@nodeboot/starter-validation':
+        specifier: workspace:*
+        version: link:../../starters/validation
       better-sqlite3:
         specifier: ^9.6.0
         version: 9.6.0
@@ -363,7 +366,7 @@ importers:
         version: link:../../starters/firebase
       '@nodeboot/starter-http':
         specifier: workspace:*
-        version: link:../../starters/http-client
+        version: link:../../starters/http
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -373,6 +376,9 @@ importers:
       '@nodeboot/starter-scheduler':
         specifier: workspace:*
         version: link:../../starters/scheduler
+      '@nodeboot/starter-validation':
+        specifier: workspace:*
+        version: link:../../starters/validation
       body-parser:
         specifier: ^1.20.3
         version: 1.20.3
@@ -511,7 +517,7 @@ importers:
         version: link:../../starters/actuator
       '@nodeboot/starter-http':
         specifier: workspace:*
-        version: link:../../starters/http-client
+        version: link:../../starters/http
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -521,6 +527,9 @@ importers:
       '@nodeboot/starter-scheduler':
         specifier: workspace:*
         version: link:../../starters/scheduler
+      '@nodeboot/starter-validation':
+        specifier: workspace:*
+        version: link:../../starters/validation
       better-sqlite3:
         specifier: ^9.6.0
         version: 9.6.0
@@ -599,7 +608,7 @@ importers:
         version: link:../../starters/actuator
       '@nodeboot/starter-http':
         specifier: workspace:*
-        version: link:../../starters/http-client
+        version: link:../../starters/http
       '@nodeboot/starter-openapi':
         specifier: workspace:*
         version: link:../../starters/openapi
@@ -609,6 +618,9 @@ importers:
       '@nodeboot/starter-scheduler':
         specifier: workspace:*
         version: link:../../starters/scheduler
+      '@nodeboot/starter-validation':
+        specifier: workspace:*
+        version: link:../../starters/validation
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -891,7 +903,7 @@ importers:
         specifier: '>=3.10.0'
         version: 3.11.0
 
-  starters/http-client:
+  starters/http:
     dependencies:
       '@nodeboot/context':
         specifier: workspace:*
@@ -1021,6 +1033,18 @@ importers:
       '@types/node-cron':
         specifier: ^3.0.11
         version: 3.0.11
+
+  starters/validation:
+    dependencies:
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.1
 
   tests/core:
     dependencies:

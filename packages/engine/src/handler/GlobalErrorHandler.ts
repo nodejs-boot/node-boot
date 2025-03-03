@@ -1,8 +1,7 @@
 import {HttpError} from "@nodeboot/error";
-import {NodeBootDriver} from "../core";
 
 export class GlobalErrorHandler {
-    constructor(private readonly driver: NodeBootDriver<any>) {}
+    constructor() {}
 
     handleError(error: any) {
         if (typeof error.toJSON === "function") {
@@ -16,8 +15,6 @@ export class GlobalErrorHandler {
             if (error.message) {
                 processedError.message = error.message;
             }
-            if (error.stack && this.driver.developmentMode) processedError.stack = error.stack;
-
             Object.keys(error)
                 .filter(
                     key =>

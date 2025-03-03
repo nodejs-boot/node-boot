@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/fastify-sample",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "Node-Boot sample project using Fastify",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -49,6 +49,7 @@
         "@nodeboot/starter-persistence": "workspace:*",
         "@nodeboot/starter-scheduler": "workspace:*",
         "@nodeboot/starter-http": "workspace:*",
+        "@nodeboot/starter-validation": "workspace:*",
         "@nodeboot/scan": "^2.0.0",
         "reflect-metadata": "^0.2.1",
         "fastify": "^4.21.0",

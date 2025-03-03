@@ -1,5 +1,24 @@
 # @nodeboot/koa-sample
 
+## 2.0.3
+
+### Patch Changes
+
+-   Integrate validations package into sample projects
+-   Updated dependencies
+    -   @nodeboot/core@1.4.1
+    -   @nodeboot/starter-validation@1.0.1
+    -   @nodeboot/koa-server@1.2.3
+    -   @nodeboot/context@1.3.1
+    -   @nodeboot/authorization@1.1.4
+    -   @nodeboot/starter-actuator@1.1.6
+    -   @nodeboot/starter-openapi@1.6.2
+    -   @nodeboot/starter-persistence@1.5.1
+    -   @nodeboot/config@1.1.4
+    -   @nodeboot/di@1.1.4
+    -   @nodeboot/starter-http@2.0.2
+    -   @nodeboot/starter-scheduler@1.0.4
+
 ## 2.0.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-scheduler",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Node-Boot starter package for schedulers",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

@@ -48,7 +48,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         this.app = serverOptions.express;
         this.logger = serverOptions.logger;
         this.configs = serverOptions.configs;
-        this.globalErrorHandler = new GlobalErrorHandler(this);
+        this.globalErrorHandler = new GlobalErrorHandler();
         this.resultTransformer = new ResultTransformer(this);
     }
 
@@ -367,9 +367,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
             response.status(500);
         }
 
-        if (this.customErrorHandler) {
+        // Handle with custom error handler if not yet handled (For example input validations are already handled into a 400 response)
+        if (!error.handled && this.customErrorHandler) {
             await this.customErrorHandler.onError(error, action, actionMetadata);
         } else {
+            delete error.handled;
             const parsedError = this.globalErrorHandler.handleError(error);
             // send error content
             response.json(parsedError);

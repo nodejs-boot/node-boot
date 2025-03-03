@@ -1,5 +1,15 @@
 # @nodeboot/koa-server
 
+## 1.2.3
+
+### Patch Changes
+
+-   Add implementation of Node-Boot validation starter package
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.4
+    -   @nodeboot/core@1.4.1
+    -   @nodeboot/context@1.3.1
+
 ## 1.2.2
 
 ### Patch Changes

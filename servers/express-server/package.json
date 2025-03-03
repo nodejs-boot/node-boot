@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-server",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Express server for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

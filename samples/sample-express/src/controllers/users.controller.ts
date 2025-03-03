@@ -1,6 +1,5 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseBefore} from "@nodeboot/core";
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from "@nodeboot/core";
 import {UserService} from "../services/users.service";
-import {ValidationMiddleware} from "../middlewares/validation.middleware";
 import {CreateUserDto, UpdateUserDto, UserModel} from "../models";
 import {AppConfigProperties} from "../config/AppConfigProperties";
 import {Logger} from "winston";
@@ -47,7 +46,6 @@ export class UserController {
     @Post("/")
     @HttpCode(201)
     @Authorized()
-    @UseBefore(ValidationMiddleware(CreateUserDto))
     @OpenAPI({summary: "Create a new user"})
     @ResponseSchema(UserModel)
     async createUser(@Body() userData: CreateUserDto): Promise<UserModel> {
@@ -55,7 +53,6 @@ export class UserController {
     }
 
     @Put("/:id")
-    @UseBefore(ValidationMiddleware(UpdateUserDto))
     @OpenAPI({summary: "Update a user"})
     @ResponseSchema(UserModel)
     async updateUser(@Param("id") userId: number, @Body() userData: UpdateUserDto): Promise<UserModel> {

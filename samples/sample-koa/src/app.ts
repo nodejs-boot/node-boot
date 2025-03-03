@@ -11,15 +11,18 @@ import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableComponentScan} from "@nodeboot/scan";
 import {EnableHttpClients} from "@nodeboot/starter-http";
+import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
+import {EnableValidations} from "@nodeboot/starter-validation";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
-@EnableAuthorization(LoggedInUserResolver)
+@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationChecker)
 @EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
 @EnableHttpClients()
+@EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {

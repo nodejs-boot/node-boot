@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/jest-fastify-demo",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "Demo project for Node-Boot tests with Jest",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

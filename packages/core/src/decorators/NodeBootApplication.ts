@@ -30,16 +30,13 @@ export function NodeBootApplication(options?: ApplicationOptions): Function {
             bind(iocContainer: IocContainer): NodeBootEngineOptions {
                 const context = ApplicationContext.get();
                 return {
-                    /* cors: {
-                                           origin: ORIGIN,
-                                           credentials: CREDENTIALS
-                                         },*/
                     routePrefix: context.applicationOptions.apiOptions?.routePrefix,
                     defaults: {
                         nullResultCode: context.applicationOptions.apiOptions?.nullResultCode,
                         paramOptions: context.applicationOptions.apiOptions?.paramOptions,
                         undefinedResultCode: context.applicationOptions.apiOptions?.undefinedResultCode,
                     },
+                    validation: context.validation,
                     classTransformer: context.classTransformer,
                     classToPlainTransformOptions: context.classToPlainTransformOptions,
                     plainToClassTransformOptions: context.plainToClassTransformOptions,

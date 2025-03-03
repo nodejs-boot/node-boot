@@ -51,7 +51,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         this.logger = options.logger;
         this.configs = options.configs;
         this.app = options.fastify;
-        this.globalErrorHandler = new GlobalErrorHandler(this);
+        this.globalErrorHandler = new GlobalErrorHandler();
     }
 
     initialize() {
@@ -344,7 +344,7 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         }
     }
 
-    async handleError(error: Error, action: Action<FastifyRequest, FastifyReply>, actionMetadata?: ActionMetadata) {
+    async handleError(error: any, action: Action<FastifyRequest, FastifyReply>, actionMetadata?: ActionMetadata) {
         // Handle error using Fastify's reply
         if (actionMetadata) {
             Object.keys(actionMetadata.headers).forEach(name => {
@@ -359,9 +359,10 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
             action.response.code(500);
         }
 
-        if (this.customErrorHandler) {
+        if (!error.handled && this.customErrorHandler) {
             await this.customErrorHandler.onError(error, action, actionMetadata);
         } else {
+            delete error.handled;
             const parsedError = this.globalErrorHandler.handleError(error);
             action.response.send(parsedError);
         }

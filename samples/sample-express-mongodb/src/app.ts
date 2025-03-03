@@ -13,6 +13,7 @@ import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableComponentScan} from "@nodeboot/scan";
 import {EnableFirebase} from "@nodeboot/starter-firebase";
 import {EnableHttpClients} from "@nodeboot/starter-http";
+import {EnableValidations} from "@nodeboot/starter-validation";
 
 @EnableDI(Container)
 @EnableOpenApi()
@@ -23,6 +24,7 @@ import {EnableHttpClients} from "@nodeboot/starter-http";
 @EnableScheduling()
 @EnableHttpClients()
 @EnableFirebase()
+@EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {

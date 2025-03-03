@@ -52,7 +52,7 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         this.configs = serverOptions.configs;
         this.app = serverOptions.koa;
         this.router = serverOptions.router;
-        this.globalErrorHandler = new GlobalErrorHandler(this);
+        this.globalErrorHandler = new GlobalErrorHandler();
         this.resultTransformer = new ResultTransformer(this);
     }
 
@@ -361,9 +361,10 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
                 action.response.status = 500;
             }
 
-            if (this.customErrorHandler) {
+            if (!error.handled && this.customErrorHandler) {
                 await this.customErrorHandler.onError(error, action, actionMetadata);
             } else {
+                delete error.handled;
                 action.response.body = this.globalErrorHandler.handleError(error);
             }
         } catch (e) {

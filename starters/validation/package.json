@@ -1,0 +1,45 @@
+{
+    "name": "@nodeboot/starter-validation",
+    "version": "1.0.1",
+    "description": "Node-Boot starter package for Beans Validations",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "validations",
+        "input",
+        "beans"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/context": "workspace:*"
+    },
+    "peerDependencies": {
+        "class-validator": "^0.14.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}

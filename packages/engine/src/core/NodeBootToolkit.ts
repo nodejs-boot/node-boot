@@ -76,6 +76,7 @@ export class NodeBootToolkit {
 
         if (options.validation !== undefined) {
             driver.enableValidation = !!options.validation;
+            driver.enableValidation = true;
             if (typeof options.validation !== "boolean") {
                 driver.validationOptions = options.validation as ValidationOptions;
             }

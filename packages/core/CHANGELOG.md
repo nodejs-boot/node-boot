@@ -1,5 +1,16 @@
 # @nodeboot/core
 
+## 1.4.1
+
+### Patch Changes
+
+-   Integrate validations into core decorators
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.4
+    -   @nodeboot/context@1.3.1
+    -   @nodeboot/config@1.1.4
+    -   @nodeboot/di@1.1.4
+
 ## 1.4.0
 
 ### Minor Changes

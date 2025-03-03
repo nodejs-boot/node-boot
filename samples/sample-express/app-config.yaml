@@ -13,14 +13,13 @@ api:
     paramOptions:
         required: false
     validations:
-        enable: true
         enableDebugMessages: false
         skipUndefinedProperties: false
         skipNullProperties: false
         skipMissingProperties: false
         whitelist: false
         forbidNonWhitelisted: false
-        forbidUnknownValues: false
+        forbidUnknownValues: true
         stopAtFirstError: false
 
 # Server configurations

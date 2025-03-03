@@ -6,6 +6,7 @@
         "declaration": true,
         "declarationMap": true,
         "emitDeclarationOnly": false,
+        "sourceMap": true,
         "allowJs": true,
         "noEmit": true,
         "strict": true,

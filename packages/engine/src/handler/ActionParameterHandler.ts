@@ -1,5 +1,5 @@
 import {plainToInstance} from "class-transformer";
-import {validateOrReject as validate} from "class-validator";
+import {validateOrReject, ValidationError} from "class-validator";
 import {Param} from "../util";
 import {
     AuthorizationRequiredError,
@@ -188,28 +188,34 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
      */
     protected async validateValue(value: any, paramMetadata: ParamMetadata): Promise<any> {
         // Validate only if validations is enabled globally via configurations
-        if (this.driver.enableValidation) {
-            const shouldValidate =
-                paramMetadata.targetType &&
-                paramMetadata.targetType !== Object &&
-                value instanceof paramMetadata.targetType;
+        if (this.driver.enableValidation && paramMetadata.targetType && paramMetadata.targetType !== Object) {
+            const dto: any = plainToInstance(paramMetadata.targetType, value);
 
             // When enabled globally, still skip validation if disabled by the route
-            if (paramMetadata.validate !== false && shouldValidate) {
+            if (paramMetadata.validate !== false && dto) {
                 const options = Object.assign(
-                    {forbidUnknownValues: false},
+                    {
+                        forbidUnknownValues: false,
+                    },
                     this.driver.validationOptions,
                     paramMetadata.validate,
                 );
 
                 try {
-                    await validate(value, options);
-                } catch (validationErrors) {
-                    const error: any = new BadRequestError(
-                        `Invalid ${paramMetadata.type}, check 'errors' property for more info.`,
-                    );
+                    await validateOrReject(dto, options);
+                } catch (validationErrors: any) {
+                    const message = validationErrors
+                        .map((error: ValidationError) => {
+                            const constraints = error.constraints ?? {};
+                            return Object.keys(constraints)
+                                .map(constraint => `${constraint}->${constraints[constraint]}`)
+                                .join(", ");
+                        })
+                        .join(", ");
+                    const error: any = new BadRequestError(message);
                     error.errors = validationErrors;
                     error.paramName = paramMetadata.name;
+                    error.handled = true;
                     throw error;
                 }
             }

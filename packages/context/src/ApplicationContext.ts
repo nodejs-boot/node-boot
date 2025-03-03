@@ -11,6 +11,7 @@ import {
 } from "./adapters";
 import {AuthorizationChecker, CurrentUserChecker} from "./checkers";
 import {ClassConstructor, IocContainer} from "./ioc";
+import {ValidatorOptions} from "class-validator";
 
 export class ApplicationContext {
     private static context: ApplicationContext;
@@ -51,11 +52,12 @@ export class ApplicationContext {
      * Special function used to get currently authorized user.
      */
     currentUserChecker?: ClassConstructor<CurrentUserChecker>;
+
     /**
-     * Indicates if cors are enabled.
-     * This requires installation of additional module (cors for express and @koa/cors for koa).
+     * Indicates if class-validator should be used to auto validate objects injected into params.
+     * You can also directly pass validator options to enable validator with a given options.
      */
-    cors?: boolean | Object;
+    validation?: boolean | ValidatorOptions;
 
     static get(): ApplicationContext {
         if (!ApplicationContext.context) {

@@ -1,5 +1,15 @@
 # @nodeboot/starter-firebase
 
+## 1.0.6
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.4
+    -   @nodeboot/core@1.4.1
+    -   @nodeboot/context@1.3.1
+    -   @nodeboot/config@1.1.4
+
 ## 1.0.5
 
 ### Patch Changes
