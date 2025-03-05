@@ -31,14 +31,16 @@ function normalizeType(type: string | Function | undefined): string {
 function resolveProperty(property: Partial<PropertyOptions>, inferredType?: Function) {
     const typeName = normalizeType(property.type || inferredType);
 
+    const baseObj = {description: property.description, example: property.example};
+
     // Handle Date explicitly
     if (typeName === "date" || typeName === "Date") {
-        return {type: "string", format: "date-time"}; // OpenAPI standard for Date
+        return {type: "string", format: "date-time", ...baseObj}; // OpenAPI standard for Date
     }
 
     // Handle primitive types
     if (PRIMITIVE_TYPES.has(typeName)) {
-        return {type: typeName};
+        return {type: typeName, ...baseObj};
     }
 
     // Handle array types
@@ -48,6 +50,7 @@ function resolveProperty(property: Partial<PropertyOptions>, inferredType?: Func
             items: property.itemType
                 ? resolveProperty({type: property.itemType}) // Recursively resolve item type
                 : {type: "object"}, // Default to object if no item type is defined
+            ...baseObj,
         };
     }
 
@@ -89,7 +92,11 @@ function resolveModel(model: any): SchemaObject {
             if (!propertyType) propertyType = String; // Default to string if type is not resolvable
 
             const resolvedProperty = resolveProperty(
-                {name: propertyName, required: decoratorData?.options.required, type: propertyType},
+                {
+                    ...decoratorData?.options,
+                    name: propertyName,
+                    type: propertyType,
+                },
                 propertyType,
             );
 

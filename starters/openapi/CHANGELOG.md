@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.7.1
+
+### Patch Changes
+
+-   Fix issue in regards to item types in arrays
+
 ## 1.7.0
 
 ### Minor Changes
