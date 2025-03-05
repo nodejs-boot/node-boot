@@ -1,5 +1,12 @@
 # @nodeboot/starter-persistence
 
+## 1.6.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.5.1
+
 ## 1.6.0
 
 ### Minor Changes

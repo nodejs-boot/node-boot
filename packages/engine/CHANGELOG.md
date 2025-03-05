@@ -1,5 +1,11 @@
 # @nodeboot/engine
 
+## 1.1.6
+
+### Patch Changes
+
+-   Remove target object from validation result
+
 ## 1.1.5
 
 ### Patch Changes

@@ -213,7 +213,10 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
                         })
                         .join(", ");
                     const error: any = new BadRequestError(message);
-                    error.errors = validationErrors;
+                    error.errors = validationErrors.map((validationError: ValidationError) => {
+                        delete validationError.target;
+                        return validationError;
+                    });
                     error.paramName = paramMetadata.name;
                     error.handled = true;
                     throw error;

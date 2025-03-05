@@ -1,5 +1,12 @@
 # @nodeboot/starter-actuator
 
+## 1.1.8
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.6
+
 ## 1.1.7
 
 ### Patch Changes
