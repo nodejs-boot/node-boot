@@ -1,5 +1,12 @@
 # @nodeboot/core
 
+## 1.5.2
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.7
+
 ## 1.5.1
 
 ### Patch Changes

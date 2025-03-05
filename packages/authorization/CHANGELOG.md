@@ -1,5 +1,12 @@
 # @nodeboot/authorization
 
+## 1.1.7
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.7
+
 ## 1.1.6
 
 ### Patch Changes

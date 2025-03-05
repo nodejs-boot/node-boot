@@ -1,5 +1,12 @@
 # @nodeboot/starter-openapi
 
+## 1.7.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.1.7
+
 ## 1.7.2
 
 ### Patch Changes
