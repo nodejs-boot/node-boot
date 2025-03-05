@@ -5,7 +5,7 @@ import {Model} from "@nodeboot/starter-openapi";
 
 @Model()
 export class UserModel {
-    @Property({description: "User email address", itemType: "string"})
+    @Property({description: "User email address"})
     id?: string;
 
     @Property({description: "User email address"})
@@ -13,6 +13,6 @@ export class UserModel {
     email: string;
 
     name?: string;
-    @Property({description: "User email address", type: "object"})
+    @Property({description: "User email address"})
     schema?: JsonObject;
 }

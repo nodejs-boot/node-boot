@@ -1,8 +1,7 @@
-import {Controller, CursorRequest, Get, PagingRequest, QueryParams} from "@nodeboot/core";
+import {Controller, CursorPage, CursorRequest, Get, Page, PagingRequest, QueryParams} from "@nodeboot/core";
 import {UserModel} from "../models";
 import {Logger} from "winston";
 import {PagingUserRepository} from "../persistence";
-import {CursorPage, Page} from "@nodeboot/starter-persistence";
 
 @Controller("/paging", "v1")
 export class PagingUserController {

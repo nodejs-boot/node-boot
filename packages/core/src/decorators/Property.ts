@@ -3,12 +3,14 @@ import {NodeBootToolkit} from "@nodeboot/engine";
 
 export function Property(options: PropertyOptions = {}) {
     return function (object: Object, propertyKey: string) {
+        const resolvedType = Reflect.getMetadata("design:type", object, propertyKey);
+
         options = Object.assign(
             {},
             {
                 name: propertyKey,
-                required: true,
-                type: Reflect.getMetadata("design:type", object, propertyKey),
+                required: options.required,
+                type: options.type ?? resolvedType,
             },
             options,
         );

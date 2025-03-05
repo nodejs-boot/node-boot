@@ -1,5 +1,23 @@
 # @nodeboot/express-sample
 
+## 2.0.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.6.0
+    -   @nodeboot/context@1.4.0
+    -   @nodeboot/starter-openapi@1.7.0
+    -   @nodeboot/core@1.5.0
+    -   @nodeboot/authorization@1.1.5
+    -   @nodeboot/config@1.1.5
+    -   @nodeboot/di@1.1.5
+    -   @nodeboot/express-server@1.2.4
+    -   @nodeboot/starter-actuator@1.1.7
+    -   @nodeboot/starter-http@2.0.3
+    -   @nodeboot/starter-scheduler@1.0.5
+    -   @nodeboot/starter-validation@1.0.2
+
 ## 2.0.3
 
 ### Patch Changes

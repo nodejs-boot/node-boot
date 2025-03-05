@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.4.0
+
+### Minor Changes
+
+-   Cleanup OpenAPI decorators like Model and Property to improve type resolution
+
 ## 1.3.1
 
 ### Patch Changes

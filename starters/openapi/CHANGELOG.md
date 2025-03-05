@@ -1,5 +1,17 @@
 # @nodeboot/starter-openapi
 
+## 1.7.0
+
+### Minor Changes
+
+-   Cleanup OpenAPI decorators like Model and Property to improve type resolution
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.4.0
+    -   @nodeboot/engine@1.1.5
+
 ## 1.6.2
 
 ### Patch Changes

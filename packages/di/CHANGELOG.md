@@ -1,5 +1,12 @@
 # @nodeboot/di
 
+## 1.1.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.4.0
+
 ## 1.1.4
 
 ### Patch Changes

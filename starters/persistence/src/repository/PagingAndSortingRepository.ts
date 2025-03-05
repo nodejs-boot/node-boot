@@ -1,6 +1,6 @@
 import {FindOptionsOrder, FindOptionsWhere, LessThan, MoreThan, ObjectLiteral, Repository} from "typeorm";
-import {CursorPage, CursorRequest, Page, PagingRequest} from "./types";
 import {SortOrder} from "@nodeboot/core";
+import {CursorPage, CursorRequest, Page, PagingRequest} from "@nodeboot/core/src";
 
 /**
  * A generic repository that provides both offset-based and cursor-based pagination.
