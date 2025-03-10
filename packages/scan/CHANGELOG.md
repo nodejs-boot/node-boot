@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 2.1.2
+
+### Patch Changes
+
+-   Add some logging to component scanning
+
 ## 2.1.1
 
 ### Patch Changes

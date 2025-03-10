@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import {MAIN_DECORATORS} from "../decorators.main";
+import * as console from "node:console";
 
 type Options = {
     customDecorators: Function[];
@@ -84,7 +85,7 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
                             verboseLog(() => console.log(`⚡ Skipping already imported module: ${absolutePath}`));
                         }
                     });
-
+                    console.log(`${beans.length} application beans successfully imported`);
                     return; // Exit early since beans.json was successfully used
                 }
             } catch (error) {
@@ -104,7 +105,7 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
             }
         }
 
-        function importFilesFromDir(dir: string) {
+        function importFilesFromDir(dir: string, scannedBeans: number) {
             const files = fs.readdirSync(dir);
 
             for (const file of files) {
@@ -112,18 +113,20 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
                 const isDirectory = fs.statSync(fullPath).isDirectory();
 
                 if (isDirectory) {
-                    importFilesFromDir(fullPath);
+                    importFilesFromDir(fullPath, scannedBeans);
                 } else {
                     if (file === "index.js" || file.endsWith(".d.ts") || !file.endsWith(".js")) {
                         continue;
                     }
 
-                    if (require.cache[fullPath]) {
-                        verboseLog(() => console.log(`⚡ Skipping already imported beans for file: ${fullPath}`));
+                    if (!fileContainsRelevantDecorator(fullPath)) {
                         continue;
                     }
+                    // increment beans counter
+                    scannedBeans++;
 
-                    if (!fileContainsRelevantDecorator(fullPath)) {
+                    if (require.cache[fullPath]) {
+                        verboseLog(() => console.log(`⚡ Skipping already imported beans for file: ${fullPath}`));
                         continue;
                     }
 
@@ -138,7 +141,9 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
         }
 
         if (fs.existsSync(basePath)) {
-            importFilesFromDir(basePath);
+            const scannedBeans = 0;
+            importFilesFromDir(basePath, scannedBeans);
+            console.log(`${scannedBeans} application beans successfully imported`);
         } else {
             console.error(`❌ Scan path does not exist: ${basePath}`);
         }
