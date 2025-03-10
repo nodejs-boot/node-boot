@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 2.1.1
+
+### Patch Changes
+
+-   Force active scanning if custom decorators are provided
+
 ## 2.1.0
 
 ### Minor Changes

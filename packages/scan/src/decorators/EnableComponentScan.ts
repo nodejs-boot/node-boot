@@ -66,7 +66,8 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
             }
         }
 
-        if (fs.existsSync(beansFilePath)) {
+        // If custom decorators are provided it should do active scanning
+        if (!options?.customDecorators && fs.existsSync(beansFilePath)) {
             try {
                 const beans = JSON.parse(fs.readFileSync(beansFilePath, "utf-8"));
 
