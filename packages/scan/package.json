@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/scan",
-    "version": "2.1.3",
+    "version": "2.1.4",
     "description": "Node-Boot module for @beans auto-scan. It provides the @EnableComponentScan decorator and tools for build time beans discovery",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

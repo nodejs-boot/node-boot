@@ -94,6 +94,7 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
         }
 
         console.log(`⚠️ Beans file not found or invalid. Performing active scanning...`);
+        let scannedBeans = 0;
 
         function fileContainsRelevantDecorator(filePath: string): boolean {
             try {
@@ -105,7 +106,7 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
             }
         }
 
-        function importFilesFromDir(dir: string, scannedBeans: number) {
+        function importFilesFromDir(dir: string) {
             const files = fs.readdirSync(dir);
 
             for (const file of files) {
@@ -113,7 +114,7 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
                 const isDirectory = fs.statSync(fullPath).isDirectory();
 
                 if (isDirectory) {
-                    importFilesFromDir(fullPath, scannedBeans);
+                    importFilesFromDir(fullPath);
                 } else {
                     if (file === "index.js" || file.endsWith(".d.ts") || !file.endsWith(".js")) {
                         continue;
@@ -141,8 +142,7 @@ export function EnableComponentScan(options?: Options): ClassDecorator {
         }
 
         if (fs.existsSync(basePath)) {
-            const scannedBeans = 0;
-            importFilesFromDir(basePath, scannedBeans);
+            importFilesFromDir(basePath);
             console.log(`${scannedBeans} application beans successfully imported`);
         } else {
             console.error(`❌ Scan path does not exist: ${basePath}`);

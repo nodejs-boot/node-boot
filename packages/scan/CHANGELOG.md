@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 2.1.4
+
+### Patch Changes
+
+-   Fix counter
+
 ## 2.1.3
 
 ### Patch Changes
