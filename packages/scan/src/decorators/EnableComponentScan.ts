@@ -2,6 +2,10 @@ import fs from "fs";
 import path from "path";
 import {MAIN_DECORATORS} from "../decorators.main";
 
+type Options = {
+    customDecorators: Function[];
+};
+
 /**
  * @EnableComponentScan Decorator
  *
@@ -33,8 +37,15 @@ import {MAIN_DECORATORS} from "../decorators.main";
  *
  * @author Manuel Santos <ney.br.santos@gmail.com>
  */
-export function EnableComponentScan(): ClassDecorator {
+export function EnableComponentScan(options?: Options): ClassDecorator {
+    function scanDecorators() {
+        const additionalDecorators = options ? options.customDecorators.map(decorator => decorator.name) : [];
+        return [...MAIN_DECORATORS, ...additionalDecorators];
+    }
+
     return function () {
+        const decorators = scanDecorators();
+
         const verbose = process.env["NODE_ENV"] !== "production";
         let basePath: string;
         // Check if the current working directory (`process.cwd()`) already contains "dist"
@@ -85,7 +96,7 @@ export function EnableComponentScan(): ClassDecorator {
         function fileContainsRelevantDecorator(filePath: string): boolean {
             try {
                 const content = fs.readFileSync(filePath, "utf-8");
-                return MAIN_DECORATORS.some(decorator => content.includes(`${decorator})`));
+                return decorators.some(decorator => content.includes(`${decorator})`));
             } catch (error) {
                 console.error(`❌ Error reading file: ${filePath}`, error);
                 return false;
