@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 2.1.3
+
+### Patch Changes
+
+-   Fix package build
+
 ## 2.1.2
 
 ### Patch Changes
