@@ -1,5 +1,14 @@
 # @nodeboot/jest-koa-demo
 
+## 1.0.14
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.5.3
+    -   @nodeboot/koa-server@1.2.7
+    -   @nodeboot/starter-persistence@1.6.3
+
 ## 1.0.13
 
 ### Patch Changes

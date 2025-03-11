@@ -1,0 +1,1 @@
+export {CatalogClientProxy} from "./CatalogClientProxy";

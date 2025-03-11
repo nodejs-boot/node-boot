@@ -94,18 +94,3 @@ export const createLogger = (service: string, platform: string, rootLogger?: Log
 
     return logger;
 };
-
-export const createLoggerAdapter = (logger: Logger) => {
-    const loggerAdapter = {
-        level: logger.level,
-        silent: logger.silent,
-        info: (msg: any) => logger.info(msg),
-        error: (msg: any) => logger.error(msg),
-        warn: (msg: any) => logger.warn(msg),
-        debug: (msg: any) => logger.debug(msg),
-        fatal: (msg: any) => logger.log("fatal", msg),
-        trace: (msg: any) => logger.log("trace", msg),
-        child: () => loggerAdapter, // Important for Fastify's child loggers
-    };
-    return loggerAdapter;
-};

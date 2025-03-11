@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.5.3
+
+### Patch Changes
+
+-   Remove unused logger code
+
 ## 1.5.2
 
 ### Patch Changes

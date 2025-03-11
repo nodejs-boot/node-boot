@@ -82,3 +82,6 @@ integrations:
     firebase:
         serviceAccount: ./firebase.service-account.json
         realtimeDatabaseUrl: https://nodeboot-default-rtdb.europe-west1.firebasedatabase.app
+    backstage:
+        apiUrl: http://localhost:7051/api
+        apiKey: ${BACKSTAGE_API_KEY:-dummy}

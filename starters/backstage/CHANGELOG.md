@@ -1,9 +1,10 @@
 # @nodeboot/starter-http
 
-## 1.0.5
+## 1.0.1
 
 ### Patch Changes
 
+-   First version of the Backstage starter package for Node-Boot
 -   Updated dependencies
     -   @nodeboot/core@1.5.3
 
