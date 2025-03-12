@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 1.1.0
+
+### Minor Changes
+
+-   Add Plugin endpoint discovery service
+
 ## 1.0.1
 
 ### Patch Changes
