@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 1.1.2
+
+### Patch Changes
+
+-   export config type
+
 ## 1.1.1
 
 ### Patch Changes
