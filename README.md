@@ -2,6 +2,7 @@
 
 <br />
 <div align="center">
+  <img src="https://github.com/user-attachments/assets/5f0442f6-4e4d-43da-802e-0457d3ee96a9" width="200"></img>
   <h1>Node-Boot Framework</h1>
   <p>We take an opinionated view of the NodeJs platform and third-party libraries so you can get started with minimum fuss.</p>
 </div>
