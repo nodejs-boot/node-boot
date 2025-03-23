@@ -15,7 +15,7 @@ With minimal configuration, developers can **automatically trigger functions** w
 ✅ **Annotation-based scheduling** – Just add `@Scheduler(cronExpression)` to any bean method.
 ✅ **Cron-based execution** – Supports flexible scheduling using cron expressions.  
 ✅ **Lifecycle-aware** – Scheduling starts when the application initializes.  
-✅ **Minimal setup** – Requires only `@EnableScheduling` to activate.
+✅ **Minimal setup** – Requires only `@EnableAws` to activate.
 
 ---
 
@@ -33,13 +33,13 @@ pnpm add @nodeboot/starter-scheduler
 
 ### 1️⃣ Enable Scheduling in Your Application
 
-To activate the scheduling system, add `@EnableScheduling()` to your application class:
+To activate the scheduling system, add `@EnableAws()` to your application class:
 
 ```typescript
-import {EnableScheduling} from "@nodeboot/starter-scheduler";
+import {EnableAws} from "@nodeboot/starter-scheduler";
 import {NodeBootApplication, NodeBoot, ExpressServer} from "@nodeboot/core";
 
-@EnableScheduling()
+@EnableAws()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {
@@ -111,7 +111,7 @@ This decorator:
 -   Uses the **Adapter Pattern** to integrate with the Node-Boot lifecycle.
 -   Triggers execution based on the cron expression.
 
-### 🔹 `@EnableScheduling()`
+### 🔹 `@EnableAws()`
 
 -   Enables **automatic scheduling** in the application.
 -   Registers the **Scheduler Adapter** into the **Node-Boot lifecycle**.
@@ -144,7 +144,7 @@ export class NotificationService {
 
 ### ❌ `@Scheduler` Not Running?
 
-✔️ Ensure **@EnableScheduling()** is added to your application class.  
+✔️ Ensure **@EnableAws()** is added to your application class.  
 ✔️ Verify the **cron expression** is correct.  
 ✔️ Check the logs to see if the scheduler is registered.
 
