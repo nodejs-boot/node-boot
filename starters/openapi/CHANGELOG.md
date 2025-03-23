@@ -1,5 +1,13 @@
 # @nodeboot/starter-openapi
 
+## 1.7.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.4.1
+    -   @nodeboot/engine@1.1.8
+
 ## 1.7.3
 
 ### Patch Changes

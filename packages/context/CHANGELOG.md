@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.4.1
+
+### Patch Changes
+
+-   Add utility to deal with config placeholders
+
 ## 1.4.0
 
 ### Minor Changes
