@@ -1,3 +1,5 @@
+# Typescript example #2
+
 # 📆 `@nodeboot/starter-scheduler` – Node-Boot Scheduling Starter
 
 ## Overview
@@ -6,21 +8,44 @@ The `@nodeboot/starter-scheduler` package provides a simple yet powerful mechani
 
 It leverages [`node-cron`](https://www.npmjs.com/package/node-cron) under the hood to execute scheduled tasks at specified intervals based on **cron expressions**.
 
+The second typescript example for the Monorepo example
 With minimal configuration, developers can **automatically trigger functions** within beans using the `@Scheduler` decorator.
 
+## License
+
 ---
+
+MIT License
 
 ## ✨ Features
 
+Copyright (c) 2023 NodeBoot
 ✅ **Annotation-based scheduling** – Just add `@Scheduler(cronExpression)` to any bean method.
 ✅ **Cron-based execution** – Supports flexible scheduling using cron expressions.  
 ✅ **Lifecycle-aware** – Scheduling starts when the application initializes.  
-✅ **Minimal setup** – Requires only `@EnableAws` to activate.
+✅ **Minimal setup** – Requires only `@EnableScheduling` to activate.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
 ---
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
 ## 🚀 Installation
 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 Ensure you have **Node-Boot** installed in your project. Then, install the scheduler starter package:
 
 ```sh
@@ -33,13 +58,13 @@ pnpm add @nodeboot/starter-scheduler
 
 ### 1️⃣ Enable Scheduling in Your Application
 
-To activate the scheduling system, add `@EnableAws()` to your application class:
+To activate the scheduling system, add `@EnableScheduling()` to your application class:
 
 ```typescript
-import {EnableAws} from "@nodeboot/starter-scheduler";
+import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {NodeBootApplication, NodeBoot, ExpressServer} from "@nodeboot/core";
 
-@EnableAws()
+@EnableScheduling()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {
@@ -111,7 +136,7 @@ This decorator:
 -   Uses the **Adapter Pattern** to integrate with the Node-Boot lifecycle.
 -   Triggers execution based on the cron expression.
 
-### 🔹 `@EnableAws()`
+### 🔹 `@EnableScheduling()`
 
 -   Enables **automatic scheduling** in the application.
 -   Registers the **Scheduler Adapter** into the **Node-Boot lifecycle**.
@@ -144,7 +169,7 @@ export class NotificationService {
 
 ### ❌ `@Scheduler` Not Running?
 
-✔️ Ensure **@EnableAws()** is added to your application class.  
+✔️ Ensure **@EnableScheduling()** is added to your application class.  
 ✔️ Verify the **cron expression** is correct.  
 ✔️ Check the logs to see if the scheduler is registered.
 
