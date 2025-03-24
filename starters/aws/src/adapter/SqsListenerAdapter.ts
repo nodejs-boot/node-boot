@@ -45,15 +45,15 @@ export class SqsListenerAdapter implements ApplicationFeatureAdapter {
             // Retrieve the class instance (bean) from the DI container
             const componentBean = iocContainer.get(target.constructor);
 
+            const queueUrl = this.getQueueUrl(config, queueUrlOrConfigPlaceholder);
+
             // Validate SQS Queue url
-            if (queueUrlOrConfigPlaceholder && this.isValidSqsUrl(queueUrlOrConfigPlaceholder)) {
+            if (this.isValidSqsUrl(queueUrl)) {
                 logger.info(
-                    `Registering SQS Listener "${queueUrlOrConfigPlaceholder}" --> "${target.constructor.name}:::${listenerFunction.name}()"`,
+                    `Registering SQS Listener "${queueUrl}" --> "${target.constructor.name}:::${listenerFunction.name}()"`,
                 );
 
                 const sqsClient = iocContainer.get(SQSClient);
-
-                const queueUrl = this.getQueueUrl(config, queueUrlOrConfigPlaceholder);
 
                 const app = Consumer.create({
                     queueUrl: queueUrl,
@@ -77,7 +77,7 @@ export class SqsListenerAdapter implements ApplicationFeatureAdapter {
 
                 app.start();
             } else {
-                logger.warn(`Invalid SQS queue URL for @SqsListener at function ${listenerFunction.name}().
+                logger.warn(`Invalid SQS queue URL for @SqsListener at function  "${target.constructor.name}:::${listenerFunction.name}()".
                  Please provide a valid URL in the format "https://sqs.aws-region.amazonaws.com/account-id/queue-name"`);
             }
         } else {

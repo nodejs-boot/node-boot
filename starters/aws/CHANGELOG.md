@@ -1,5 +1,11 @@
 # @nodeboot/starter-aws
 
+## 1.0.4
+
+### Patch Changes
+
+-   Fix bug with SQS listener adapter
+
 ## 1.0.3
 
 ### Patch Changes
