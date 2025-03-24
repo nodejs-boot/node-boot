@@ -1,5 +1,11 @@
 # @nodeboot/starter-aws
 
+## 1.0.3
+
+### Patch Changes
+
+-   Fix package import
+
 ## 1.0.2
 
 ### Patch Changes

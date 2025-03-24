@@ -1,5 +1,11 @@
 # @nodeboot/koa-server
 
+## 1.2.10
+
+### Patch Changes
+
+-   Fix package import
+
 ## 1.2.9
 
 ### Patch Changes

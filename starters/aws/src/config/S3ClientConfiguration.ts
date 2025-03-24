@@ -1,8 +1,7 @@
 import {Bean, Configuration} from "@nodeboot/core";
-import {BeansContext} from "@nodeboot/context";
+import {ApplicationContext, BeansContext} from "@nodeboot/context";
 import {AwsCredentialIdentity} from "./types";
 import {AWS_CREDENTIALS_CONFIG_PATH, AWS_S3_FEATURE} from "../types";
-import {ApplicationContext} from "@nodeboot/context/src";
 
 /**
  * Configuration for AWS S3 Client.

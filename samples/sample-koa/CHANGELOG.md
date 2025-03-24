@@ -1,5 +1,12 @@
 # @nodeboot/koa-sample
 
+## 2.0.11
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/koa-server@1.2.10
+
 ## 2.0.10
 
 ### Patch Changes
