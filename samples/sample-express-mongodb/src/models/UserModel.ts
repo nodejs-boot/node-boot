@@ -1,6 +1,6 @@
 import {Property} from "@nodeboot/core";
 import {IsEmail} from "class-validator";
-import {JsonObject} from "@nodeboot/context/src";
+import {JsonObject} from "@nodeboot/context";
 import {Model} from "@nodeboot/starter-openapi";
 
 @Model()

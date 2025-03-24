@@ -1,0 +1,56 @@
+{
+    "name": "@nodeboot/starter-aws",
+    "version": "1.1.0",
+    "description": "Node-Boot starter package for AWS services",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "aws",
+        "sns",
+        "sqs",
+        "s3",
+        "dynamodb",
+        "secret-manager"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "sqs-consumer": "^11.6.0"
+    },
+    "optionalDependencies": {
+        "@aws-sdk/client-sns": ">=3.772.0",
+        "@aws-sdk/client-sqs": ">=3.772.0",
+        "@aws-sdk/client-dynamodb": ">=3.772.0",
+        "@aws-sdk/client-s3": ">=3.772.0",
+        "@aws-sdk/client-secrets-manager": ">=3.772.0"
+    },
+    "peerDependencies": {
+        "winston": ">=3.10.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}

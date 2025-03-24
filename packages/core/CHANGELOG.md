@@ -1,5 +1,25 @@
 # @nodeboot/core
 
+## 1.6.1
+
+### Patch Changes
+
+-   Fix build issue
+
+## 1.6.0
+
+### Minor Changes
+
+-   Add support for config dependent Configurations/Beans
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.4.1
+    -   @nodeboot/config@1.1.6
+    -   @nodeboot/di@1.1.6
+    -   @nodeboot/engine@1.1.8
+
 ## 1.5.3
 
 ### Patch Changes
