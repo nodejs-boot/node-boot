@@ -1,5 +1,12 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.0.12
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-aws@1.1.0
+
 ## 2.0.11
 
 ### Patch Changes

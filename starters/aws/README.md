@@ -268,13 +268,13 @@ export class SampleService {
 #### Usage with @SqsListener
 
 ```typescript
-import {SqsListener} from "@nodeboot/starter-aws";
+import {SqsListener, MessageEnvelop} from "@nodeboot/starter-aws";
 
 @Service()
 export class SampleService {
     // Using SQS Queue URL hardcoded
     @SqsListener("https://sqs.us-east-1.amazonaws.com/123456789012/my-queue")
-    async onMessage(message: any): Promise<void> {
+    async onMessage(message: MessageEnvelop): Promise<void> {
         console.log("Message received from SQS");
     }
 }
@@ -283,7 +283,7 @@ export class SampleService {
 export class SampleComponent {
     // Using SQS queue url with a config placeholder
     @SqsListener("${com.example.aws.sqs.queue-url}")
-    async onMessage(message: any): Promise<void> {
+    async onMessage(message: MessageEnvelop): Promise<void> {
         console.log("Message received from SQS");
     }
 }

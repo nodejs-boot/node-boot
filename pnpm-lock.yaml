@@ -361,6 +361,9 @@ importers:
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
+      '@nodeboot/starter-aws':
+        specifier: workspace:*
+        version: link:../../starters/aws
       '@nodeboot/starter-firebase':
         specifier: workspace:*
         version: link:../../starters/firebase

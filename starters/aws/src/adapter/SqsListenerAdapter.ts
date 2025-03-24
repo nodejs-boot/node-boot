@@ -7,6 +7,7 @@ import {
 import {AWS_SQS_FEATURE} from "../types";
 import {SQSClient} from "@aws-sdk/client-sqs";
 import {Consumer} from "sqs-consumer";
+import {MessageEnvelop} from "./types";
 
 type SqsListenerOptions = {
     target: any;
@@ -57,8 +58,17 @@ export class SqsListenerAdapter implements ApplicationFeatureAdapter {
 
                 const app = Consumer.create({
                     queueUrl: queueUrl,
-                    handleMessage: async message => {
-                        listenerFunction.apply(componentBean, message);
+                    pollingWaitTimeMs: 1000,
+                    handleMessage: async msg => {
+                        const body = JSON.parse(msg.Body!);
+
+                        const message: MessageEnvelop = {
+                            messageId: body.MessageId,
+                            signature: body.Signature,
+                            timestamp: body.Timestamp,
+                            message: JSON.parse(body.Message),
+                        };
+                        await listenerFunction.bind(componentBean)(message);
                     },
                     sqs: sqsClient,
                 });

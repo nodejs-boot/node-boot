@@ -1,5 +1,11 @@
 # @nodeboot/starter-aws
 
+## 1.1.0
+
+### Minor Changes
+
+-   Properly handle messages from SQS and unmarshall them
+
 ## 1.0.4
 
 ### Patch Changes
