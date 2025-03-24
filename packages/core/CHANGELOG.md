@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.6.1
+
+### Patch Changes
+
+-   Fix build issue
+
 ## 1.6.0
 
 ### Minor Changes

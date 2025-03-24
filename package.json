@@ -46,7 +46,7 @@
         "release:version": "pnpm changeset version",
         "release:status": "pnpm changeset status",
         "release:publish": "pnpm changeset publish",
-        "release": "pnpm run build:clean && pnpm run build && pnpm run release:status && pnpm run release:version && pnpm run release:publish"
+        "release": "pnpm run build && pnpm run release:status && pnpm run release:version && pnpm run release:publish"
     },
     "devDependencies": {
         "@changesets/cli": "^2.28.1",

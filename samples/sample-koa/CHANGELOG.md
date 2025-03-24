@@ -1,5 +1,15 @@
 # @nodeboot/koa-sample
 
+## 2.0.10
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.6.1
+    -   @nodeboot/koa-server@1.2.9
+    -   @nodeboot/starter-persistence@1.6.5
+    -   @nodeboot/starter-validation@1.0.7
+
 ## 2.0.9
 
 ### Patch Changes
