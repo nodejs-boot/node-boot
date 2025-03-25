@@ -1,5 +1,18 @@
 # @nodeboot/fastify-server
 
+## 1.3.0
+
+### Minor Changes
+
+-   Add support for Application Feature Adapter lifecycle
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.5.0
+    -   @nodeboot/core@1.7.0
+    -   @nodeboot/engine@1.1.9
+
 ## 1.2.9
 
 ### Patch Changes

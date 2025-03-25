@@ -1,5 +1,19 @@
 # @nodeboot/core
 
+## 1.7.0
+
+### Minor Changes
+
+-   Add support for Application Feature Adapter lifecycle
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.5.0
+    -   @nodeboot/config@1.1.7
+    -   @nodeboot/di@1.1.7
+    -   @nodeboot/engine@1.1.9
+
 ## 1.6.1
 
 ### Patch Changes

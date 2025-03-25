@@ -1,5 +1,13 @@
 # @nodeboot/starter-http
 
+## 1.1.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.5.0
+    -   @nodeboot/core@1.7.0
+
 ## 1.1.4
 
 ### Patch Changes
