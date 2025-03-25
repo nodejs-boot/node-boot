@@ -25,7 +25,7 @@ export class SqsClientConfiguration {
                 );
             }
 
-            const client = new SQSClient({region, credentials, logger});
+            const client = new SQSClient({region, credentials});
             iocContainer.set(SQSClient, client);
 
             // Enable AWS SQS feature in the application context

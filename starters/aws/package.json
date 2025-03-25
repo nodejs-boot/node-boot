@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-aws",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "description": "Node-Boot starter package for AWS services",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
