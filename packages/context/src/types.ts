@@ -1,6 +1,7 @@
 import {IocContainer} from "./ioc";
 import {Logger} from "winston";
 import {Config} from "./services";
+import {ApplicationLifecycleBridge} from "./ApplicationLifecycleBridge";
 
 /**
  * Controller action properties.
@@ -31,6 +32,7 @@ export interface Action<TRequest = any, TResponse = any, TNext = Function> {
 export type BeansContext<TApplication = any> = {
     iocContainer: IocContainer;
     application: TApplication;
+    lifecycleBridge: ApplicationLifecycleBridge;
     logger: Logger;
     config: Config;
 };
@@ -126,3 +128,5 @@ export type ResponseHandlerType =
     | "on-undefined"
     | "response-class-transform-options"
     | "authorized";
+
+export type LifecycleType = "application.initialized" | "application.started" | "persistence.started";

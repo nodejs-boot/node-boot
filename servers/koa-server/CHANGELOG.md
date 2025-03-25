@@ -1,5 +1,18 @@
 # @nodeboot/koa-server
 
+## 1.4.0
+
+### Minor Changes
+
+-   Implement lifecycle management for Application Feature Adapters
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.6.0
+    -   @nodeboot/core@1.8.0
+    -   @nodeboot/engine@1.1.10
+
 ## 1.3.0
 
 ### Minor Changes

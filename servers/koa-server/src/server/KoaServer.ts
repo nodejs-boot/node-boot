@@ -76,6 +76,8 @@ export class KoaServer extends BaseServer<Koa, Router> {
                     this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
                     this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);
                     this.logger.info(`=================================`);
+                    // mark the server as started
+                    super.started();
                     // Server initialized
                     resolve(this.appView());
                 });

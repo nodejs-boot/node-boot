@@ -1,6 +1,7 @@
 import {
     ApiOptions,
     ApplicationContext,
+    ApplicationLifecycleBridge,
     ApplicationOptions,
     CoreInfoService,
     JsonObject,
@@ -17,6 +18,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     protected logger: Logger;
     protected config: ConfigService;
     protected infoService: CoreInfoService;
+    protected lifecycleBridge: ApplicationLifecycleBridge;
 
     protected constructor(private readonly serverType: string) {}
 
@@ -27,6 +29,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         this.setupAppConfigs(context);
         await this.initLogger(context);
         await this.initInfoService(context);
+        await this.initLifecycleBridge(context);
         await this.printBanner();
     }
 
@@ -60,6 +63,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
                     iocContainer: context.diOptions.iocContainer,
                     logger: this.logger,
                     config: this.config,
+                    lifecycleBridge: this.lifecycleBridge,
                 });
             }
 
@@ -112,14 +116,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         }
 
         if (context.diOptions?.iocContainer) {
-            this.logger.info(`Binding ${context.applicationFeatureAdapters.length} Node-Boot Application Features`);
-            for (const featureAdapter of context.applicationFeatureAdapters) {
-                featureAdapter.bind({
-                    iocContainer: context.diOptions?.iocContainer,
-                    config: this.config,
-                    logger: this.logger,
-                });
-            }
+            this.lifecycleBridge.publish("application.initialized");
         }
     }
 
@@ -174,6 +171,18 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         this.logger.info(`Initializing Node-Boot Info Service`);
         this.infoService = new CoreInfoService(this.logger);
         context.diOptions?.iocContainer.set(CoreInfoService, this.infoService);
+    }
+
+    private async initLifecycleBridge(context: ApplicationContext) {
+        this.logger.info(`Initializing Node-Boot LifecycleBridge`);
+        this.lifecycleBridge = new ApplicationLifecycleBridge(this.logger, this.config);
+        // Start listening lifecycle events
+        this.lifecycleBridge.listen();
+        context.diOptions?.iocContainer.set(ApplicationLifecycleBridge, this.lifecycleBridge);
+    }
+
+    protected started() {
+        this.lifecycleBridge.publish("application.started");
     }
 
     private async printBanner() {

@@ -6,6 +6,8 @@ import {QueryCacheConfiguration} from "../config/QueryCacheConfiguration";
 
 export const EnableRepositories = (): ClassDecorator => {
     return () => {
+        ApplicationContext.get().applicationFeatures["persistence"] = true;
+
         // Register repositories adapter
         ApplicationContext.get().repositoriesAdapter = new DefaultRepositoriesAdapter();
 

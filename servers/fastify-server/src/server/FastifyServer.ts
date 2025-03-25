@@ -73,6 +73,8 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
                     this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
                     this.logger.info(`🚀 App listening on ${address}`);
                     this.logger.info(`=================================`);
+                    // mark the server as started
+                    super.started();
                     // Server initialized
                     resolve(this.appView());
                 }

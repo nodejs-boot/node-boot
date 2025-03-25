@@ -3,6 +3,7 @@ import {
     ApplicationFeatureAdapter,
     ApplicationFeatureContext,
     extractPlaceholderKey,
+    Lifecycle,
 } from "@nodeboot/context";
 import {AWS_SQS_FEATURE} from "../types";
 import {SQSClient} from "@aws-sdk/client-sqs";
@@ -18,6 +19,7 @@ type SqsListenerOptions = {
 const SQS_URL_PATTERN =
     /^https:\/\/sqs\.(?<region>[a-z0-9-]+)\.amazonaws\.com\/(?<accountId>\d{12})\/(?<queueName>[a-zA-Z0-9_-]+)$/;
 
+@Lifecycle("persistence.started")
 export class SqsListenerAdapter implements ApplicationFeatureAdapter {
     private readonly options: SqsListenerOptions;
 

@@ -12,6 +12,8 @@ import {
 import {AuthorizationChecker, CurrentUserChecker} from "./checkers";
 import {ClassConstructor, IocContainer} from "./ioc";
 import {ValidatorOptions} from "class-validator";
+import {LIFECYCLE_TYPE_METADATA_KEY} from "./metadata";
+import {LifecycleType} from "./types";
 
 export class ApplicationContext {
     private static context: ApplicationContext;
@@ -68,5 +70,14 @@ export class ApplicationContext {
 
     static getIocContainer(): IocContainer | undefined {
         return this.get().diOptions?.iocContainer;
+    }
+
+    static getAppFeatureAdapters(lifecycle: LifecycleType) {
+        return this.get().applicationFeatureAdapters.filter(adapter => {
+            const adapterLifecycle =
+                (Reflect.getMetadata(LIFECYCLE_TYPE_METADATA_KEY, adapter.constructor) as LifecycleType) ??
+                "application.initialized";
+            return lifecycle === adapterLifecycle;
+        });
     }
 }

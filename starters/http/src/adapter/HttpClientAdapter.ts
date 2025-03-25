@@ -3,6 +3,7 @@ import {
     ApplicationContext,
     ApplicationFeatureAdapter,
     ApplicationFeatureContext,
+    Lifecycle,
     LoggerService,
 } from "@nodeboot/context";
 import {HTTP_CLIENT_FEATURE, HttpClientConfig, HttpClientStub} from "../client";
@@ -46,6 +47,7 @@ import {HTTP_CLIENT_FEATURE, HttpClientConfig, HttpClientStub} from "../client";
  *
  * @implements {ApplicationFeatureAdapter}
  */
+@Lifecycle("application.started")
 export class HttpClientAdapter implements ApplicationFeatureAdapter {
     /**
      * Creates an instance of `HttpClientAdapter`.

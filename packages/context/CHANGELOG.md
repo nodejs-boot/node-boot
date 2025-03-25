@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.6.0
+
+### Minor Changes
+
+-   Implement lifecycle management for Application Feature Adapters
+
 ## 1.5.0
 
 ### Minor Changes

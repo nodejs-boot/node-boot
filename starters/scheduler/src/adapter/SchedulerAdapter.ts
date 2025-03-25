@@ -1,4 +1,4 @@
-import {ApplicationContext, ApplicationFeatureAdapter, ApplicationFeatureContext} from "@nodeboot/context";
+import {ApplicationContext, ApplicationFeatureAdapter, ApplicationFeatureContext, Lifecycle} from "@nodeboot/context";
 import cron from "node-cron";
 import {SCHEDULING_FEATURE} from "../types";
 
@@ -26,6 +26,7 @@ type SchedulerOptions = {
  *
  * @author Manuel Santos <ney.br.santos@gmail.com>
  */
+@Lifecycle("persistence.started")
 export class SchedulerAdapter implements ApplicationFeatureAdapter {
     private readonly options: SchedulerOptions;
 

@@ -35,7 +35,7 @@ export class PersistenceConfiguration {
      * @return dataSource (DataSource): The configured and initialized DataSource object for the persistence layer.
      * */
     @Bean()
-    public dataSource({iocContainer, logger}: BeansContext): DataSource {
+    public dataSource({iocContainer, logger, lifecycleBridge}: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
         const datasourceConfig = iocContainer.get("datasource-config") as DataSourceOptions;
 
@@ -85,6 +85,9 @@ export class PersistenceConfiguration {
             .catch(err => {
                 logger.error("Error during Persistence DataSource initialization:", err);
                 process.exit(1);
+            })
+            .finally(() => {
+                lifecycleBridge.publish("persistence.started");
             });
         logger.info("DataSource bean provided successfully");
         return dataSource;

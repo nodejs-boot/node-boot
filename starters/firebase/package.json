@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-firebase",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "description": "Node-Boot starter package for Firebase",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

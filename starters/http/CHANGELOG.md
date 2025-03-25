@@ -1,5 +1,16 @@
 # @nodeboot/starter-http
 
+## 2.1.0
+
+### Minor Changes
+
+-   Implement lifecycle management for Application Feature Adapters
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.6.0
+
 ## 2.0.5
 
 ### Patch Changes

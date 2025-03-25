@@ -1,5 +1,16 @@
 # @nodeboot/starter-scheduler
 
+## 1.2.0
+
+### Minor Changes
+
+-   Implement lifecycle management for Application Feature Adapters
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.6.0
+
 ## 1.1.0
 
 ### Minor Changes
