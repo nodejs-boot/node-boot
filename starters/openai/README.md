@@ -81,12 +81,12 @@ export class MyService {
     constructor(@Inject(() => OpenAI) private readonly openAiClient: OpenAI) {}
 
     async generateText(prompt: string): Promise<string> {
-        const response = await this.openAiClient.createCompletion({
+        const response = await this.openAiClient.chat.completions.create({
             model: "gpt-4",
-            prompt,
+            messages: [{role: "user", content: prompt}],
             max_tokens: 100,
         });
-        return response.choices[0].text;
+        return response.choices[0].message.content;
     }
 }
 ```
