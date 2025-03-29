@@ -1,5 +1,11 @@
 # @nodeboot/starter-aws
 
+## 1.2.2
+
+### Patch Changes
+
+-   Remove logger from SQS client (logging with listeners)
+
 ## 1.2.1
 
 ### Patch Changes

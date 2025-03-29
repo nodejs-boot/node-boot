@@ -84,5 +84,5 @@
         "config.d.ts"
     ],
     "configSchema": "config.d.ts",
-    "packageManager": "pnpm@9.15.2"
+    "packageManager": "pnpm@10.7.0"
 }

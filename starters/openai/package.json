@@ -1,0 +1,44 @@
+{
+    "name": "@nodeboot/starter-openai",
+    "version": "1.0.1",
+    "description": "Node-Boot starter package for OpenAI",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "ai",
+        "openai"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/context": "workspace:*"
+    },
+    "peerDependencies": {
+        "openai": ">=4.90.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}
