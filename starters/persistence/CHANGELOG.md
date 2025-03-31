@@ -1,5 +1,11 @@
 # @nodeboot/starter-persistence
 
+## 1.7.1
+
+### Patch Changes
+
+-   Fix import issue
+
 ## 1.7.0
 
 ### Minor Changes

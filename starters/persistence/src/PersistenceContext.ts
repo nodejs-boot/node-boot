@@ -1,4 +1,4 @@
-import {RepositoryMetadata} from "./metadata/RepositoryMetadata";
+import {RepositoryMetadata} from "./metadata";
 import {NamingStrategyInterface} from "typeorm/naming-strategy/NamingStrategyInterface";
 import {QueryResultCache} from "typeorm/cache/QueryResultCache";
 import {EntitySubscriberInterface, MigrationInterface} from "typeorm";

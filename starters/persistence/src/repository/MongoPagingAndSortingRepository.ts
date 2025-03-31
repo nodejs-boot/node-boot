@@ -1,6 +1,5 @@
 import {FindOptionsWhere, MongoRepository, ObjectLiteral} from "typeorm";
-import {SortOrder} from "@nodeboot/core";
-import {CursorPage, CursorRequest, Page, PagingRequest} from "@nodeboot/core/src";
+import {CursorPage, CursorRequest, Page, PagingRequest, SortOrder} from "@nodeboot/core";
 
 /**
  * A generic MongoDB repository that provides both offset-based and cursor-based pagination.

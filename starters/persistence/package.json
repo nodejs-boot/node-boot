@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-persistence",
-    "version": "1.7.0",
+    "version": "1.7.1",
     "description": "The first typescript example for the Monorepo example",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
