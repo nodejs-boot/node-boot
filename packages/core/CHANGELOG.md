@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.8.1
+
+### Patch Changes
+
+-   Add emptyPage() utility to paging and sorting feature
+
 ## 1.8.0
 
 ### Minor Changes

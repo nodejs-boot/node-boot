@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-openai",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Node-Boot starter package for OpenAI",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

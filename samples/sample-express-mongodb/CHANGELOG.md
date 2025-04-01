@@ -1,5 +1,24 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.0.17
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.8.1
+    -   @nodeboot/express-server@1.4.1
+    -   @nodeboot/starter-aws@1.2.3
+    -   @nodeboot/starter-firebase@1.0.15
+    -   @nodeboot/starter-persistence@1.7.2
+    -   @nodeboot/starter-validation@1.0.10
+
+## 2.0.16
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.7.1
+
 ## 2.0.14
 
 ### Patch Changes
