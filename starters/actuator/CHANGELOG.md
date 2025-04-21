@@ -1,5 +1,11 @@
 # @nodeboot/starter-actuator
 
+## 1.2.1
+
+### Patch Changes
+
+-   Add health endpoint to the actuator endpoints list
+
 ## 1.2.0
 
 ### Minor Changes
