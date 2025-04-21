@@ -100,6 +100,7 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
                     reject(err);
                 } else {
                     console.log("Server has been stopped.");
+                    super.stopped();
                     resolve();
                 }
             });

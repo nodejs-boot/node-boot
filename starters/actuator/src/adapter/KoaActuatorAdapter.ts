@@ -1,4 +1,4 @@
-import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@nodeboot/context";
+import {ActuatorAdapter, ActuatorOptions, CoreInfoService, HealthService} from "@nodeboot/context";
 import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
 import {MetadataService} from "../service/MetadataService";
@@ -13,6 +13,7 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
         private readonly metadataService: MetadataService,
         private readonly configService: ConfigService,
         private readonly infoService: CoreInfoService,
+        private readonly healthService: HealthService,
     ) {}
 
     bind(_options: ActuatorOptions, _server: Koa, router: Router): void {
@@ -94,6 +95,31 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
         router.get("/actuator/middlewares", async ctx => {
             ctx.status = 200;
             ctx.body = this.metadataService.getMiddlewares();
+        });
+
+        // health
+        router.get("/actuator/health", async ctx => {
+            const readiness = await this.healthService.getReadiness();
+            const liveness = await this.healthService.getLiveness();
+            ctx.status = 200;
+            ctx.body = {
+                readinessPath: "/actuator/health/readiness",
+                livenessPath: "/actuator/health/liveness",
+                readiness,
+                liveness,
+            };
+        });
+
+        router.get("/actuator/health/readiness", async ctx => {
+            const {status, payload} = await this.healthService.getReadiness();
+            ctx.status = status;
+            ctx.body = payload;
+        });
+
+        router.get("/actuator/health/liveness", async ctx => {
+            const {status, payload} = await this.healthService.getLiveness();
+            ctx.status = status;
+            ctx.body = payload;
         });
     }
 }

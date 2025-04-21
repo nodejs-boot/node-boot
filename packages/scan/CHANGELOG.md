@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 2.2.0
+
+### Minor Changes
+
+-   Upgrade typescript to latest version 5.8.3
+
 ## 2.1.4
 
 ### Patch Changes

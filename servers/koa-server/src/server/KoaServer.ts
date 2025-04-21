@@ -101,6 +101,7 @@ export class KoaServer extends BaseServer<Koa, Router> {
                     reject(err);
                 } else {
                     console.log("Server has been stopped.");
+                    super.stopped();
                     resolve();
                 }
             });

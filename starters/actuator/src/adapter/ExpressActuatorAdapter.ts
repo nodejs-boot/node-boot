@@ -1,4 +1,4 @@
-import {ActuatorAdapter, ActuatorOptions, CoreInfoService} from "@nodeboot/context";
+import {ActuatorAdapter, ActuatorOptions, CoreInfoService, HealthService} from "@nodeboot/context";
 import {Application, Response, Router} from "express";
 import {GitService} from "../service/GitService";
 import {MetricsContext} from "../types";
@@ -14,6 +14,7 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
         private readonly metadataService: MetadataService,
         private readonly configService: ConfigService,
         private readonly infoService: CoreInfoService,
+        private readonly healthService: HealthService,
     ) {}
 
     bind(_options: ActuatorOptions, _server: Application, router: Router): void {
@@ -79,6 +80,28 @@ export class ExpressActuatorAdapter implements ActuatorAdapter {
 
         router.get("/actuator/middlewares", (_, res) => {
             res.status(200).json(this.metadataService.getMiddlewares());
+        });
+
+        // health
+        router.get("/actuator/health", async (_, res) => {
+            const readiness = await this.healthService.getReadiness();
+            const liveness = await this.healthService.getLiveness();
+            res.status(200).json({
+                readinessPath: "/actuator/health/readiness",
+                livenessPath: "/actuator/health/liveness",
+                readiness,
+                liveness,
+            });
+        });
+
+        router.get("/actuator/health/readiness", async (_, res) => {
+            const {status, payload} = await this.healthService.getReadiness();
+            res.status(status).json(payload);
+        });
+
+        router.get("/actuator/health/liveness", async (_, res) => {
+            const {status, payload} = await this.healthService.getLiveness();
+            res.status(status).json(payload);
         });
     }
 }

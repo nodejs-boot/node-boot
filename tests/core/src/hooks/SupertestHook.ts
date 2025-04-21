@@ -1,6 +1,7 @@
 import request from "supertest";
 import {NodeBootAppView} from "@nodeboot/core";
 import {Hook} from "./Hook";
+import TestAgent from "supertest/lib/agent";
 
 export class SupertestHook extends Hook {
     private appView?: NodeBootAppView = undefined;
@@ -23,7 +24,7 @@ export class SupertestHook extends Hook {
     /**
      * Returns a Supertest request object to interact with the server.
      */
-    use() {
+    use(): TestAgent {
         if (!this.appView?.server) {
             throw new Error(
                 "SupertestHook: Server instance not available. Make sure the application is started and SupertestHook is properly initialized.",

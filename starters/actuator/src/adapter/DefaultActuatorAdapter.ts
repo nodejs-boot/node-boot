@@ -1,4 +1,4 @@
-import {ActuatorAdapter, ActuatorOptions, ApplicationContext, CoreInfoService} from "@nodeboot/context";
+import {ActuatorAdapter, ActuatorOptions, ApplicationContext, CoreInfoService, HealthService} from "@nodeboot/context";
 import Prometheus from "prom-client";
 import {ExpressActuatorAdapter} from "./ExpressActuatorAdapter";
 import {GitService} from "../service/GitService";
@@ -58,6 +58,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
         const configService = iocContainer.get(ConfigService);
         const infoService = iocContainer.get(CoreInfoService);
         const logger = iocContainer.get(Logger);
+        const healthService = iocContainer.get(HealthService);
 
         let frameworkAdapter: ActuatorAdapter;
         switch (options.serverType) {
@@ -68,6 +69,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
                     metadataService,
                     configService,
                     infoService,
+                    healthService,
                 );
                 break;
             case "koa":
@@ -77,6 +79,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
                     metadataService,
                     configService,
                     infoService,
+                    healthService,
                 );
                 break;
             case "fastify":
@@ -86,6 +89,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
                     metadataService,
                     configService,
                     infoService,
+                    healthService,
                 );
                 break;
             default:

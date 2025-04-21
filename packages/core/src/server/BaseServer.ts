@@ -4,6 +4,7 @@ import {
     ApplicationLifecycleBridge,
     ApplicationOptions,
     CoreInfoService,
+    HealthService,
     JsonObject,
     useContainer,
 } from "@nodeboot/context";
@@ -176,13 +177,19 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     private async initLifecycleBridge(context: ApplicationContext) {
         this.logger.info(`Initializing Node-Boot LifecycleBridge`);
         this.lifecycleBridge = new ApplicationLifecycleBridge(this.logger, this.config);
+        const healthService = new HealthService(this.lifecycleBridge);
         // Start listening lifecycle events
         this.lifecycleBridge.listen();
         context.diOptions?.iocContainer.set(ApplicationLifecycleBridge, this.lifecycleBridge);
+        context.diOptions?.iocContainer.set(HealthService, healthService);
     }
 
     protected started() {
         this.lifecycleBridge.publish("application.started");
+    }
+
+    protected stopped() {
+        this.lifecycleBridge.publish("application.stopped");
     }
 
     private async printBanner() {

@@ -4,7 +4,6 @@ export * from "./adapters";
 export * from "./ioc";
 export * from "./options";
 export * from "./ApplicationContext";
-export * from "./ApplicationLifecycleBridge";
 export * from "./types";
 export * from "./handlers";
 export * from "./checkers";

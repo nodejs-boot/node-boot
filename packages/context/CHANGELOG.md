@@ -1,5 +1,12 @@
 # @nodeboot/context
 
+## 1.7.0
+
+### Minor Changes
+
+-   Add health service and extend actuator to add health endpoints
+-   Upgrade typescript to latest version 5.8.3
+
 ## 1.6.0
 
 ### Minor Changes

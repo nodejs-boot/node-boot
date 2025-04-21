@@ -1,5 +1,20 @@
 # @nodeboot/express-server
 
+## 1.5.0
+
+### Minor Changes
+
+-   Add health service and extend actuator to add health endpoints
+-   Upgrade typescript to latest version 5.8.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.7.0
+    -   @nodeboot/core@1.9.0
+    -   @nodeboot/engine@1.2.0
+    -   @nodeboot/error@1.2.0
+
 ## 1.4.1
 
 ### Patch Changes

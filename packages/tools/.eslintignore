@@ -1,0 +1,8 @@
+# Generated files
+node_modules
+dist
+.turbo
+jest.config.js
+jest.setup.js
+.lintstagedrc.js
+**.d.ts

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/di",
-    "version": "1.1.8",
+    "version": "1.2.0",
     "description": "Dependency Injection plugin for Node-Boot",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

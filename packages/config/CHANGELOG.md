@@ -1,5 +1,16 @@
 # @nodeboot/config
 
+## 1.2.0
+
+### Minor Changes
+
+-   Upgrade typescript to latest version 5.8.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.7.0
+
 ## 1.1.8
 
 ### Patch Changes

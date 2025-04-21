@@ -85,3 +85,10 @@ integrations:
     backstage:
         apiUrl: http://localhost:7051/api
         apiKey: ${BACKSTAGE_API_KEY:-dummy}
+#    aws:
+#        credentials:
+#            accessKeyId: ${TECH_INSIGHTS_AWS_ACCESS_KEY}
+#            secretAccessKey: ${TECH_INSIGHTS_AWS_SECRET_KEY}
+#        sqs:
+#            region: ${TECH_INSIGHTS_AWS_SQS_REGION}
+#            queueUrl: https://sqs.eu-central-1.amazonaws.com/386476936272/sqs-git-insights

@@ -6,3 +6,7 @@ dist
 
 # Packages
 /packages
+.eslintrc.js
+jest.config.js
+jest.setup.js
+**.d.ts

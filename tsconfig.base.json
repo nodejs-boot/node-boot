@@ -1,5 +1,7 @@
 {
     "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules", "dist", "**/*.d.ts"],
     "compilerOptions": {
         /* Basic Options */
         "incremental": true,

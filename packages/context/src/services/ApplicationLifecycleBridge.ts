@@ -1,8 +1,8 @@
 import EventEmitter from "node:events";
-import {LifecycleType} from "./types";
-import {ApplicationContext} from "./ApplicationContext";
+import {LifecycleType} from "../types";
+import {ApplicationContext} from "../ApplicationContext";
 import {Logger} from "winston";
-import {Config} from "./services";
+import {Config} from "./Config";
 
 export class ApplicationLifecycleBridge {
     constructor(
@@ -17,6 +17,12 @@ export class ApplicationLifecycleBridge {
 
     getEventBus() {
         return this.eventBus;
+    }
+
+    subscribe(eventName: string, listener: Function) {
+        this.eventBus.once(eventName, () => {
+            listener();
+        });
     }
 
     async listen() {

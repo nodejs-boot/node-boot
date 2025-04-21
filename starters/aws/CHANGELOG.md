@@ -1,5 +1,17 @@
 # @nodeboot/starter-aws
 
+## 1.3.0
+
+### Minor Changes
+
+-   Upgrade typescript to latest version 5.8.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.7.0
+    -   @nodeboot/core@1.9.0
+
 ## 1.2.3
 
 ### Patch Changes

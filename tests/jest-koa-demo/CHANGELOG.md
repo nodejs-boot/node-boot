@@ -1,5 +1,25 @@
 # @nodeboot/jest-koa-demo
 
+## 1.1.0
+
+### Minor Changes
+
+-   Upgrade typescript to latest version 5.8.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/koa-server@1.5.0
+    -   @nodeboot/starter-actuator@1.2.0
+    -   @nodeboot/context@1.7.0
+    -   @nodeboot/core@1.9.0
+    -   @nodeboot/config@1.2.0
+    -   @nodeboot/authorization@1.2.0
+    -   @nodeboot/di@1.2.0
+    -   @nodeboot/error@1.2.0
+    -   @nodeboot/starter-openapi@1.8.0
+    -   @nodeboot/starter-persistence@1.8.0
+
 ## 1.0.21
 
 ### Patch Changes

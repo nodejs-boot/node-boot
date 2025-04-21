@@ -88,6 +88,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
                 this.logger.error("Node-Boot Fastify HTTP Server closed with error", err);
             } else {
                 this.logger.info("Node-Boot Fastify HTTP Server closed successfully");
+                super.stopped();
             }
         });
     }

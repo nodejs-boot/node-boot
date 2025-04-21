@@ -34,6 +34,7 @@
         "lint:fix": "eslint . --ext .js,.ts --fix",
         "test": "turbo run --parallel test",
         "typecheck": "turbo run --parallel typecheck",
+        "typecheck:full": "tsc --skipLibCheck false --incremental false",
         "prepare": "husky install",
         "postinstall": "husky install",
         "prepack": "pinst --disable",
@@ -46,7 +47,7 @@
         "release:version": "pnpm changeset version",
         "release:status": "pnpm changeset status",
         "release:publish": "pnpm changeset publish",
-        "release": "pnpm run build && pnpm run release:status && pnpm run release:version && pnpm run release:publish"
+        "release": "pnpm run lint-format:fix && pnpm run build && pnpm run release:status && pnpm run release:version && pnpm run release:publish"
     },
     "devDependencies": {
         "@changesets/cli": "^2.28.1",
@@ -55,7 +56,7 @@
         "@swc/jest": "^0.2.24",
         "@tsconfig/node-lts-strictest": "^18.12.1",
         "@types/jest": "^29.5.11",
-        "@types/node": "^22.13.4",
+        "@types/node": "^22.14.1",
         "@typescript-eslint/eslint-plugin": "^6.17.0",
         "@typescript-eslint/parser": "^6.17.0",
         "eslint": "^8.31.0",
@@ -72,7 +73,7 @@
         "ts-jest": "^29.1.1",
         "ts-node": "^10.9.2",
         "turbo": "^2.3.3",
-        "typescript": "^5.3.3"
+        "typescript": "^5.8.3"
     },
     "resolutions": {
         "typeorm": "0.3.20"

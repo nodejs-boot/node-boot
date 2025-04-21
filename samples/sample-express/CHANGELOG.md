@@ -1,5 +1,29 @@
 # @nodeboot/express-sample
 
+## 2.1.0
+
+### Minor Changes
+
+-   Upgrade typescript to latest version 5.8.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/express-server@1.5.0
+    -   @nodeboot/starter-actuator@1.2.0
+    -   @nodeboot/context@1.7.0
+    -   @nodeboot/core@1.9.0
+    -   @nodeboot/config@1.2.0
+    -   @nodeboot/authorization@1.2.0
+    -   @nodeboot/di@1.2.0
+    -   @nodeboot/error@1.2.0
+    -   @nodeboot/scan@2.2.0
+    -   @nodeboot/starter-http@2.2.0
+    -   @nodeboot/starter-openapi@1.8.0
+    -   @nodeboot/starter-persistence@1.8.0
+    -   @nodeboot/starter-scheduler@1.3.0
+    -   @nodeboot/starter-validation@1.1.0
+
 ## 2.0.15
 
 ### Patch Changes

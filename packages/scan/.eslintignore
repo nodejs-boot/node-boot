@@ -1,3 +1,9 @@
 # Generated files
 node_modules
 dist
+jest.config.js
+jest.setup.js
+.lintstagedrc.js
+**.d.ts
+src/scripts/generate-beans.js
+src/decorators.main.js

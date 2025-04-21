@@ -1,7 +1,6 @@
 import {IocContainer} from "./ioc";
 import {Logger} from "winston";
-import {Config} from "./services";
-import {ApplicationLifecycleBridge} from "./ApplicationLifecycleBridge";
+import {ApplicationLifecycleBridge, Config} from "./services";
 
 /**
  * Controller action properties.
@@ -129,4 +128,8 @@ export type ResponseHandlerType =
     | "response-class-transform-options"
     | "authorized";
 
-export type LifecycleType = "application.initialized" | "application.started" | "persistence.started";
+export type LifecycleType =
+    | "application.initialized"
+    | "application.started"
+    | "persistence.started"
+    | "application.stopped";
