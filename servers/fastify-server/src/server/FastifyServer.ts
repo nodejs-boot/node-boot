@@ -63,7 +63,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
     public async listen(): Promise<NodeBootAppView> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-            this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
+            this.framework.listen({port: context.applicationOptions.port, host: context.applicationOptions.server.address || '127.0.0.1'}, (err: Error | null, address: string) => {
                 if (err) {
                     this.logger.error(err);
                     reject(err);
