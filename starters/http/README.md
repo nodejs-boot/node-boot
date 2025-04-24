@@ -64,7 +64,7 @@ Alternatively, the client can be configured using configuration properties right
 you should provide the placeholder for the config path and let Node-Boot autoconfigure it.
 
 ```typescript
-@HttpClient(`${integrations.http.sampleapi}`)
+@HttpClient("${integrations.http.sampleapi}")
 export class MicroserviceHttpClient extends HttpClientStub {}
 ```
 
