@@ -60,6 +60,27 @@ import {HttpClient, HttpClientStub} from "@nodeboot/starter-http";
 export class MicroserviceHttpClient extends HttpClientStub {}
 ```
 
+Alternatively, the client can be configured using configuration properties right from the `app-config.yaml` file. In this case,
+you should provide the placeholder for the config path and let Node-Boot autoconfigure it.
+
+```typescript
+@HttpClient(`${integrations.http.sampleapi}`)
+export class MicroserviceHttpClient extends HttpClientStub {}
+```
+
+```yaml
+# app-config.yaml
+
+integrations:
+    http:
+        sampleapi:
+            baseURL: "https://jsonplaceholder.typicode.com"
+            timeout: 5000
+            httpLogging: true
+            headers:
+                Authorization: Bearer tokeXXXX
+```
+
 ### Configuration Options
 
 | Option        | Type    | Description                                 |

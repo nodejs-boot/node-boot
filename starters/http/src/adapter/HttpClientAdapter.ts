@@ -3,6 +3,7 @@ import {
     ApplicationContext,
     ApplicationFeatureAdapter,
     ApplicationFeatureContext,
+    extractPlaceholderKey,
     Lifecycle,
     LoggerService,
 } from "@nodeboot/context";
@@ -53,11 +54,11 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
      * Creates an instance of `HttpClientAdapter`.
      *
      * @param {new (...args: any[]) => any} targetClass - The class marked as an HTTP client.
-     * @param {HttpClientConfig} clientConfig - Configuration settings for the HTTP client.
+     * @param {HttpClientConfig | string} clientConfig - Configuration settings for the HTTP client.
      */
     constructor(
         private readonly targetClass: new (...args: any[]) => any,
-        private readonly clientConfig: HttpClientConfig,
+        private readonly clientConfig: HttpClientConfig | string,
     ) {}
 
     /**
@@ -69,16 +70,18 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
      *
      * @param {ApplicationFeatureContext} context - The application context providing a logger and DI container.
      */
-    bind({logger, iocContainer}: ApplicationFeatureContext): void {
+    bind({logger, iocContainer, config}: ApplicationFeatureContext): void {
         // Check if HTTP feature is enabled
         if (ApplicationContext.get().applicationFeatures[HTTP_CLIENT_FEATURE]) {
+            const httpClientConfig = this.getHttpConfig(config);
+
             logger.info(
-                `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${this.clientConfig.baseURL}`,
+                `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${httpClientConfig.baseURL}`,
             );
 
             // Create and register the HTTP client
-            const httpClient = axios.create(this.clientConfig);
-            if (this.clientConfig.httpLogging) {
+            const httpClient = axios.create(httpClientConfig);
+            if (httpClientConfig.httpLogging) {
                 logger.info(`HTTP logging is enabled for client ${this.targetClass.name}`);
                 this.setupHttpLogging(httpClient, logger);
             }
@@ -117,5 +120,26 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
                 return Promise.reject(error);
             },
         );
+    }
+
+    private getHttpConfig(config: any) {
+        if (typeof this.clientConfig === "string") {
+            // resolve httpConfigs options from configurations
+            const httpConfigs = this.resolveHttpConfig(config, this.clientConfig);
+            if (!httpConfigs)
+                throw new Error(`No http configuration object found by using ${this.clientConfig} placeholder`);
+            return httpConfigs;
+        } else {
+            // use HttpClientConfig provided via decorator
+            return this.clientConfig;
+        }
+    }
+
+    private resolveHttpConfig(config: any, configPathPlaceholder: string): HttpClientConfig | undefined {
+        const configPath = extractPlaceholderKey(configPathPlaceholder);
+        if (configPath) {
+            return config.getConfig(configPath) as HttpClientConfig;
+        }
+        return undefined;
     }
 }

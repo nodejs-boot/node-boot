@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 3.0.0
+
+### Major Changes
+
+-   Allow Http clients to auto-configure from configuration properties
+
 ## 2.2.0
 
 ### Minor Changes

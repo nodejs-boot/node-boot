@@ -27,12 +27,16 @@ import {HttpClientAdapter} from "../adapter";
  *     httpLogging: true,
  * })
  * export class MicroserviceHttpClient extends HttpClientStub {}
+ *
+ *
+ * @HttpClient(`${integrations.http.sampleapi}`)
+ * export class ServiceHttpClient extends HttpClientStub {}
  * ```
  *
- * @param {HttpClientConfig} config - Configuration options for the HTTP client.
+ * @param {HttpClientConfig | string} config - Configuration options for the HTTP client or config properties path
  * @returns {ClassDecorator} A decorator function that registers the class as an HTTP client.
  */
-export function HttpClient(config: HttpClientConfig = {httpLogging: true}): ClassDecorator {
+export function HttpClient(config: HttpClientConfig | string): ClassDecorator {
     return function (target: any) {
         const schedulerAdapter = new HttpClientAdapter(target, config);
         ApplicationContext.get().applicationFeatureAdapters.push(schedulerAdapter);
