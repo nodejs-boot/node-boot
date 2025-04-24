@@ -138,7 +138,7 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
     private resolveHttpConfig(config: any, configPathPlaceholder: string): HttpClientConfig | undefined {
         const configPath = extractPlaceholderKey(configPathPlaceholder);
         if (configPath) {
-            return config.getConfig(configPath) as HttpClientConfig;
+            return config.get(configPath) as HttpClientConfig;
         }
         return undefined;
     }

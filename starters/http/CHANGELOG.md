@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 3.0.1
+
+### Patch Changes
+
+-   Fix config resolver
+
 ## 3.0.0
 
 ### Major Changes
