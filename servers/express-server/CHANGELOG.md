@@ -1,5 +1,11 @@
 # @nodeboot/express-server
 
+## 1.6.0
+
+### Minor Changes
+
+-   Add host address to allow access from outside of kubenretes containers and fix health probs
+
 ## 1.5.0
 
 ### Minor Changes

@@ -70,7 +70,7 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
             try {
-                this.serverInstance = this.framework.listen(context.applicationOptions.port, () => {
+                this.serverInstance = this.framework.listen(context.applicationOptions.port ?? 3000, "0.0.0.0", () => {
                     this.logger.info(`=================================`);
                     this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
                     this.logger.info(`🚀 App listening on the port ${context.applicationOptions.port}`);

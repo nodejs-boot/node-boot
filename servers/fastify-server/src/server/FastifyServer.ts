@@ -63,22 +63,25 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
     public async listen(): Promise<NodeBootAppView> {
         return new Promise((resolve, reject) => {
             const context = ApplicationContext.get();
-            this.framework.listen({port: context.applicationOptions.port}, (err: Error | null, address: string) => {
-                if (err) {
-                    this.logger.error(err);
-                    reject(err);
-                    process.exit(1);
-                } else {
-                    this.logger.info(`=================================`);
-                    this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
-                    this.logger.info(`🚀 App listening on ${address}`);
-                    this.logger.info(`=================================`);
-                    // mark the server as started
-                    super.started();
-                    // Server initialized
-                    resolve(this.appView());
-                }
-            });
+            this.framework.listen(
+                {port: context.applicationOptions.port, host: "0.0.0.0"},
+                (err: Error | null, address: string) => {
+                    if (err) {
+                        this.logger.error(err);
+                        reject(err);
+                        process.exit(1);
+                    } else {
+                        this.logger.info(`=================================`);
+                        this.logger.info(`======= ENV: ${context.applicationOptions.environment} =======`);
+                        this.logger.info(`🚀 App listening on ${address}`);
+                        this.logger.info(`=================================`);
+                        // mark the server as started
+                        super.started();
+                        // Server initialized
+                        resolve(this.appView());
+                    }
+                },
+            );
         });
     }
 
