@@ -64,6 +64,8 @@ Alternatively, the client can be configured using configuration properties right
 you should provide the placeholder for the config path and let Node-Boot autoconfigure it.
 
 ```typescript
+import {HttpClient, HttpClientStub} from "@nodeboot/starter-http";
+
 @HttpClient("${integrations.http.sampleapi}")
 export class MicroserviceHttpClient extends HttpClientStub {}
 ```
@@ -78,7 +80,7 @@ integrations:
             timeout: 5000
             httpLogging: true
             headers:
-                Authorization: Bearer tokeXXXX
+                X-API-KEY: ${API_KEY}
 ```
 
 ### Configuration Options
