@@ -1,9 +1,17 @@
 import {ApplicationLifecycleBridge} from "./ApplicationLifecycleBridge";
+import {ApplicationContext} from "../ApplicationContext";
 
 export class HealthService {
     #isRunning = false;
 
     constructor(readonly lifecycleBridge: ApplicationLifecycleBridge) {
+        lifecycleBridge.subscribe("application.started", () => {
+            // IMPORTANT: If persistence layer is not activated, consider application as ready after started
+            if (!ApplicationContext.get().applicationFeatures["persistence"]) {
+                this.#isRunning = true;
+            }
+        });
+
         lifecycleBridge.subscribe("persistence.started", () => {
             this.#isRunning = true;
         });
