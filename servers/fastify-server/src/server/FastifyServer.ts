@@ -17,15 +17,19 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
 
     override async configureHttpLogging(): Promise<void> {
         this.framework.addHook("onRequest", (request, _, done) => {
-            const logMessage = `==> Incoming http request: ${request.method} ${request.raw.url} | ${request.ip} | ${request.headers["user-agent"]}`;
-            this.logger.info(logMessage);
+            if (this.shouldLog(request.raw.url!)) {
+                const logMessage = `==> Incoming http request: ${request.method} ${request.raw.url} | ${request.ip} | ${request.headers["user-agent"]}`;
+                this.logger.info(logMessage);
+            }
             done(); // Proceed with request processing
         });
 
         this.framework.addHook("onResponse", (request, reply, done) => {
-            const responseTime = reply.getResponseTime();
-            const logMessage = `<== Outgoing http response: ${request.method} ${request.raw.url} ${reply.statusCode} - ${responseTime}ms | ${request.ip} | ${request.headers["user-agent"]}`;
-            this.logger.info(logMessage);
+            if (this.shouldLog(request.raw.url!)) {
+                const responseTime = reply.getResponseTime();
+                const logMessage = `<== Outgoing http response: ${request.method} ${request.raw.url} ${reply.statusCode} - ${responseTime}ms | ${request.ip} | ${request.headers["user-agent"]}`;
+                this.logger.info(logMessage);
+            }
             done();
         });
     }

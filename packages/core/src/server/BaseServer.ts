@@ -209,4 +209,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             `\n${banner}${separator}Host: "${info.host}" Running Node "${info.nodeVersion}"\nWith App: "${appName}" version "${info.build?.version}"\nPowered by Node-Boot "${info.build?.nodeBoot}" (Running ${info.build?.serverFramework} version "${info.build?.serverVersion}")\n${separator}`,
         );
     }
+
+    protected shouldLog(requestPath: string) {
+        return !requestPath.startsWith("/actuator");
+    }
 }

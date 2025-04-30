@@ -21,8 +21,10 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
     override async configureHttpLogging(): Promise<void> {
         // Express middleware to log incoming request
         this.framework.use((req, _, next) => {
-            const logMessage = `==> Incoming http request: ${req.method} ${req.originalUrl} | ${req.ip} | ${req.headers["user-agent"]} | Framework: Express`;
-            this.logger.info(logMessage);
+            if (this.shouldLog(req.originalUrl)) {
+                const logMessage = `==> Incoming http request: ${req.method} ${req.originalUrl} | ${req.ip} | ${req.headers["user-agent"]} | Framework: Express`;
+                this.logger.info(logMessage);
+            }
             next(); // Proceed to the next middleware/route handler
         });
 
@@ -30,9 +32,11 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         this.framework.use((req, res, next) => {
             const start = Date.now();
             res.on("finish", () => {
-                const responseTime = Date.now() - start;
-                const logMessage = `<== Outgoing http response: ${req.method} ${req.originalUrl} ${res.statusCode} - ${responseTime}ms | ${req.ip} | ${req.headers["user-agent"]} | Framework: Express`;
-                this.logger.info(logMessage);
+                if (this.shouldLog(req.originalUrl)) {
+                    const responseTime = Date.now() - start;
+                    const logMessage = `<== Outgoing http response: ${req.method} ${req.originalUrl} ${res.statusCode} - ${responseTime}ms | ${req.ip} | ${req.headers["user-agent"]} | Framework: Express`;
+                    this.logger.info(logMessage);
+                }
             });
             next();
         });

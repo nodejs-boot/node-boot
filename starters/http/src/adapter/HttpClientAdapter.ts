@@ -105,18 +105,36 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
      * @private
      */
     private setupHttpLogging(instance: HttpClientStub, logger: LoggerService) {
-        instance.interceptors.request.use(request => {
-            logger.debug(`<== Outgoing Request: ${request.method?.toUpperCase()} ${request.url}`);
-            return request;
-        });
+        instance.interceptors.request.use(
+            request => {
+                logger.debug(
+                    `<== Outgoing Request: ${request.baseURL}/${request.method?.toUpperCase()} ${request.url}`,
+                );
+                return request;
+            },
+            error => {
+                console.error("Axios Request Error:", error);
+                return Promise.reject(error);
+            },
+        );
 
         instance.interceptors.response.use(
             response => {
-                logger.debug(`==> Incoming Response: ${response.status} ${response.config.url}`);
+                logger.debug(
+                    `==> Incoming Response: ${response.status} ${response.request.baseURL}/${response.config.url}`,
+                );
                 return response;
             },
             error => {
-                logger.error(`Error: ${error.message}`);
+                if (error.response) {
+                    console.error("Axios Response Error:", {
+                        status: error.response.status,
+                        url: error.config.url,
+                        data: error.response.data,
+                    });
+                } else {
+                    console.error("Axios Network/Error:", error.message);
+                }
                 return Promise.reject(error);
             },
         );
