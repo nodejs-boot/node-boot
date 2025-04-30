@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 3.0.4
+
+### Patch Changes
+
+-   Fix base url resolver for incoming responses
+
 ## 3.0.3
 
 ### Patch Changes

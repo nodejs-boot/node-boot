@@ -58,7 +58,7 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
      */
     constructor(
         private readonly targetClass: new (...args: any[]) => any,
-        private readonly clientConfig: HttpClientConfig | string,
+        private clientConfig: HttpClientConfig | string,
     ) {}
 
     /**
@@ -73,15 +73,15 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
     bind({logger, iocContainer, config}: ApplicationFeatureContext): void {
         // Check if HTTP feature is enabled
         if (ApplicationContext.get().applicationFeatures[HTTP_CLIENT_FEATURE]) {
-            const httpClientConfig = this.getHttpConfig(config);
+            this.clientConfig = this.getHttpConfig(config);
 
             logger.info(
-                `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${httpClientConfig.baseURL}`,
+                `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${this.clientConfig.baseURL}`,
             );
 
             // Create and register the HTTP client
-            const httpClient = axios.create(httpClientConfig);
-            if (httpClientConfig.httpLogging) {
+            const httpClient = axios.create(this.clientConfig);
+            if (this.clientConfig.httpLogging) {
                 logger.info(`HTTP logging is enabled for client ${this.targetClass.name}`);
                 this.setupHttpLogging(httpClient, logger);
             }
@@ -121,7 +121,9 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
         instance.interceptors.response.use(
             response => {
                 logger.debug(
-                    `==> Incoming Response: ${response.status} ${response.request.baseURL}/${response.config.url}`,
+                    `==> Incoming Response: ${response.status} ${(this.clientConfig as HttpClientConfig).baseURL}/${
+                        response.config.url
+                    }`,
                 );
                 return response;
             },
