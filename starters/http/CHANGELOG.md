@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 3.0.3
+
+### Patch Changes
+
+-   9a1d261: Improve http client logging. Add request and response body in debug mode
+
 ## 3.0.2
 
 ### Patch Changes

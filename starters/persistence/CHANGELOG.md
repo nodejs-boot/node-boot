@@ -1,5 +1,12 @@
 # @nodeboot/starter-persistence
 
+## 1.8.2
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.9.2
+
 ## 1.8.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.9.2
+
+### Patch Changes
+
+-   9a1d261: Skip healthcheck logging
+
 ## 1.9.1
 
 ### Patch Changes

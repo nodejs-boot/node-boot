@@ -1,5 +1,13 @@
 # @nodeboot/fastify-server
 
+## 1.6.2
+
+### Patch Changes
+
+-   9a1d261: Skip healthcheck logging
+-   Updated dependencies
+    -   @nodeboot/core@1.9.2
+
 ## 1.6.1
 
 ### Patch Changes
