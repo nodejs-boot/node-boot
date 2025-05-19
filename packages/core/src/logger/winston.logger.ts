@@ -83,8 +83,8 @@ function colorFormat(): Format {
     );
 }
 
-export const createLogger = (service: string, platform: string, rootLogger?: Logger) => {
-    const logger = rootLogger ?? createRootLogger();
+export const createLogger = (service: string, platform: string, level?: string, rootLogger?: Logger) => {
+    const logger = rootLogger ?? createRootLogger({level});
     logger.format = winston.format.combine(winston.format.timestamp(), winston.format.splat(), logger.format);
 
     logger.defaultMeta = {

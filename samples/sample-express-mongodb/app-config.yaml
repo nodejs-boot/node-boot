@@ -38,8 +38,6 @@ server:
         optionsSuccessStatus: 204
         preflight: true
         strictPreflight: false
-        exposedHeaders: []
-        allowedHeaders: []
     multipart:
         throwFileSizeLimit: true
         limits:

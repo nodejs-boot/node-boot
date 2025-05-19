@@ -1,5 +1,12 @@
 # @nodeboot/starter-firebase
 
+## 1.1.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.9.3
+
 ## 1.1.2
 
 ### Patch Changes

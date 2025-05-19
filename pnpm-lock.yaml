@@ -284,8 +284,8 @@ importers:
         specifier: workspace:*
         version: link:../../servers/express-server
       '@nodeboot/scan':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.2.0
+        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -408,14 +408,11 @@ importers:
         specifier: workspace:*
         version: link:../../servers/express-server
       '@nodeboot/scan':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.2.0
+        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
-      '@nodeboot/starter-aws':
-        specifier: workspace:*
-        version: link:../../starters/aws
       '@nodeboot/starter-firebase':
         specifier: workspace:*
         version: link:../../starters/firebase
@@ -565,8 +562,8 @@ importers:
         specifier: workspace:*
         version: link:../../servers/fastify-server
       '@nodeboot/scan':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.2.0
+        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -656,8 +653,8 @@ importers:
         specifier: workspace:*
         version: link:../../servers/koa-server
       '@nodeboot/scan':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.2.0
+        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -2340,8 +2337,8 @@ packages:
   '@mongodb-js/saslprep@1.2.0':
     resolution: {integrity: sha512-+ywrb0AqkfaYuhHs6LxKWgqbh3I72EpEgESCw37o+9qPx9WTCkgDm2B+eMrwehGtHBWHFU4GXvnSCNiFhhausg==}
 
-  '@nodeboot/scan@2.0.0':
-    resolution: {integrity: sha512-5a/uzyemjvv6p6cHH2bgB/OCKJ2bZA27n1gfmyKgqBI4auInJuTfs5DsKmkNqwMQZ7k4vCKYXRt+q4cwC1IkOw==}
+  '@nodeboot/scan@2.2.0':
+    resolution: {integrity: sha512-f8CFDsI+WZ/JLbEp/gfqZeV/nkiBqFqU/EuOmt4vkytXZ6Pru5JHLj9wRsAS3YF6M+OD26Lw/2E3JcQ+sFEtmA==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -8358,7 +8355,7 @@ snapshots:
       sparse-bitfield: 3.0.3
     optional: true
 
-  '@nodeboot/scan@2.0.0': {}
+  '@nodeboot/scan@2.2.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.9.3
+
+### Patch Changes
+
+-   Add configuration option for log level
+
 ## 1.9.2
 
 ### Patch Changes

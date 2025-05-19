@@ -162,7 +162,8 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     }
 
     private async initLogger(context: ApplicationContext) {
-        this.logger = createLogger(context.applicationOptions.name!, context.applicationOptions.platform!);
+        const logLevel = this.config.getOptionalString("logger.level");
+        this.logger = createLogger(context.applicationOptions.name!, context.applicationOptions.platform!, logLevel);
         this.logger.info(`Initializing Node-Boot logger`);
         context.diOptions?.iocContainer.set(Logger, this.logger);
         context.diOptions?.iocContainer.set("logger", this.logger);
