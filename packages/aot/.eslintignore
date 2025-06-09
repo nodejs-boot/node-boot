@@ -5,5 +5,7 @@ jest.config.js
 jest.setup.js
 .lintstagedrc.js
 **.d.ts
-src/scripts/generate-beans.js
+src/scripts/node-boot-aot-beans.js
+src/scripts/node-boot-aot-model-schema.js
+src/scripts/node-boot-aot.js
 src/decorators.main.js

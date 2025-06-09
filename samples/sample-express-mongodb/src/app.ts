@@ -10,7 +10,7 @@ import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableDI} from "@nodeboot/di";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
-import {EnableComponentScan} from "@nodeboot/scan";
+import {EnableComponentScan} from "../../../packages/aot";
 import {EnableFirebase} from "@nodeboot/starter-firebase";
 import {EnableHttpClients} from "@nodeboot/starter-http";
 import {EnableValidations} from "@nodeboot/starter-validation";

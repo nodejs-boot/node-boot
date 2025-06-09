@@ -84,6 +84,12 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
+  packages/aot:
+    dependencies:
+      typescript-json-schema:
+        specifier: ^0.65.1
+        version: 0.65.1(@swc/core@1.3.104)
+
   packages/authorization:
     dependencies:
       '@nodeboot/context':
@@ -205,8 +211,6 @@ importers:
         version: 1.9.1
 
   packages/error: {}
-
-  packages/scan: {}
 
   packages/tools:
     dependencies:

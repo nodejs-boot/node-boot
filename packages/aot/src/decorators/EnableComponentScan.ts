@@ -8,35 +8,65 @@ type Options = {
 };
 
 /**
- * @EnableComponentScan Decorator
+ * @EnableComponentScan
  *
- * Auto scan for Node-Boot beans.
- * ### Concept:
- *  - **Prefers Pre-built Beans JSON**: Reads `node-boot-beans.json` for faster imports.
- *  - **Fallback to Active Scanning**: If JSON is missing, it scans `dist/` or `src/`.
- *  - **Ensures Efficient Imports**: Avoids duplicate imports using `require.cache`.
+ * A **Node-Boot** class decorator that performs **automatic component registration**
+ * by scanning compiled JavaScript files for known decorators (e.g., `@Controller`, `@Service`)
+ * or loading from a prebuilt bean manifest (`node-boot-beans.json`).
+ *
+ * Designed to work in tandem with the `node-boot-aot-beans.js` script for faster startup,
+ * this decorator streamlines the bootstrapping process of your Node-Boot application by
+ * importing all necessary beans automatically.
+ *
+ * ---
+ *
+ * ### How It Works:
+ * 1. **Production Mode (`dist/`)**:
+ *    - Looks for `dist/node-boot-beans.json` (generated at build time).
+ *    - Dynamically imports all listed files unless they're already cached.
+ *
+ * 2. **Development Mode (`src/`) or Fallback**:
+ *    - If no JSON file is found or custom decorators are provided,
+ *      it performs a full recursive scan of the codebase (defaults to `dist/`).
+ *    - Loads files that contain relevant decorators.
+ *
+ * ---
  *
  * ### Features:
- * - **Automatic Folder Detection**: Runs in `src/` during development and `dist/` in production.
- * - **Avoids Duplicate Imports**: Uses `require.cache` to skip already imported modules.
- * - **Handles Index Files**: If a folder contains `index.js`, only the `index.js` file is skipped, not the entire folder.
- * - **Skips Unnecessary Files**:
- *   - Ignores `.d.ts` (TypeScript declaration files)
- *   - Skips non-JavaScript files unless necessary
- *   - Avoids reloading already imported files
+ * - ✅ **AOT-Aware**: Prioritizes reading precomputed metadata (`node-boot-beans.json`) for fast startup.
+ * - 🔍 **Dynamic Scanning Fallback**: Falls back to live scanning when needed (e.g., during dev or missing beans file).
+ * - ⚡ **Smart Importing**: Prevents redundant imports using `require.cache`.
+ * - 🧩 **Extensible**: Accepts custom decorators via `options.customDecorators`.
+ * - 🛡 **Robust Logging**: Gives informative logs during both scanning and importing.
  *
- * ### Usage Example:
- * ```typescript
- * @EnableComponentScan()
- * @NodeBootApplication()
- * export class FactsServiceApp implements NodeBootApp {
- *     start(): Promise<NodeBootAppView> {
- *         return NodeBoot.run(ExpressServer);
- *     }
+ * ---
+ *
+ * ### Options:
+ * ```ts
+ * {
+ *   customDecorators: Function[]; // Add support for custom component decorators
  * }
  * ```
  *
- * @author Manuel Santos <ney.br.santos@gmail.com>
+ * ### Usage:
+ * ```ts
+ * @EnableComponentScan()
+ * @NodeBootApplication()
+ * export class MyApp implements NodeBootApp {
+ *   start(): Promise<NodeBootAppView> {
+ *     return NodeBoot.run(ExpressServer);
+ *   }
+ * }
+ * ```
+ *
+ * ### Environment Behavior:
+ * - If `NODE_ENV !== "production"` → verbose logs enabled, source scanning more likely.
+ * - Automatically resolves correct path depending on whether the app is running inside `dist/`.
+ *
+ * ---
+ *
+ * @author
+ * Manuel Santos <ney.br.santos@gmail.com>
  */
 export function EnableComponentScan(options?: Options): ClassDecorator {
     function scanDecorators() {

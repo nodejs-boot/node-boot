@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 1.1.0
+
+### Minor Changes
+
+-   AOT compilation module for component scan and OpenAPI model definitions
+
 ## 2.2.0
 
 ### Minor Changes

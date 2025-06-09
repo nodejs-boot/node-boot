@@ -1,12 +1,14 @@
 {
-    "name": "@nodeboot/scan",
-    "version": "2.2.0",
-    "description": "Node-Boot module for @beans auto-scan. It provides the @EnableComponentScan decorator and tools for build time beans discovery",
+    "name": "@nodeboot/aot",
+    "version": "1.1.0",
+    "description": "Node-Boot module for Ahead-of-Time (AOT) compilation. Generates node-boot beans and OpenAPI schemas at compile time",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "monorepo",
-        "typescript"
+        "boot",
+        "aot",
+        "beans",
+        "schema"
     ],
     "repository": {
         "type": "git",
@@ -28,9 +30,17 @@
         "test": "jest --passWithNoTests",
         "typecheck": "tsc"
     },
+    "dependencies": {
+        "typescript-json-schema": "^0.65.1"
+    },
     "files": [
         "dist",
         "package.json",
         "README.md"
-    ]
+    ],
+    "bin": {
+        "node-boot-aot": "./dist/scripts/node-boot-aot.js",
+        "node-boot-aot-beans": "./dist/scripts/node-boot-aot-beans.js",
+        "node-boot-aot-models": "./dist/scripts/node-boot-aot-models.js"
+    }
 }
