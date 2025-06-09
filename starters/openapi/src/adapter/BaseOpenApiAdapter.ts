@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import {InfoObject, OpenAPIObject} from "openapi3-ts";
 import {
@@ -38,8 +40,9 @@ export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
 
         const dataCLasses = NodeBootToolkit.getMetadataArgsStorage().models.map(value => value.target);
         const dataClassSchemas = parseDataClasses(dataCLasses as Model[]);
+        const precompiledSchema = await this.loadPreCompiled(openApiOptions.logger);
 
-        const schemas = merge(validationSchemas, dataClassSchemas);
+        const schemas = merge(validationSchemas, dataClassSchemas, precompiledSchema);
 
         const routingControllersOptions = {
             controllers: openApiOptions.controllers,
@@ -69,6 +72,29 @@ export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
             options,
             spec: openApiSpec,
         };
+    }
+
+    private async loadPreCompiled(logger: LoggerService) {
+        let precompiledModelSchemas = {};
+        try {
+            const basePath = process.cwd().includes("dist") ? process.cwd() : path.resolve(process.cwd(), "dist");
+
+            const modelsFilePath = path.join(basePath, "node-boot-models.json");
+            if (fs.existsSync(modelsFilePath)) {
+                const modelsJson = JSON.parse(fs.readFileSync(modelsFilePath, "utf-8"));
+                if (modelsJson?.components?.schemas) {
+                    precompiledModelSchemas = modelsJson.components.schemas;
+                    logger.info(
+                        `📦 Loaded ${Object.keys(precompiledModelSchemas).length} models from node-boot-models.json`,
+                    );
+                }
+            } else {
+                logger.warn(`⚠️ node-boot-models.json not found. Using live-parsed models.`);
+            }
+        } catch (error: any) {
+            logger.warn(`⚠️ Failed to load node-boot-models.json. Falling back to runtime parsing.`, error);
+        }
+        return precompiledModelSchemas;
     }
 
     private async getInfo(iocContainer: IocContainer, openApiConfig?: OpenApiConfigProperties): Promise<InfoObject> {

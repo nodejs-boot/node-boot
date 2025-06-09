@@ -9,7 +9,7 @@ import {EnableActuator} from "@nodeboot/starter-actuator";
 import {EnableDI} from "@nodeboot/di";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
-import {EnableComponentScan} from "@nodeboot/scan";
+import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableHttpClients} from "@nodeboot/starter-http";
 import {DefaultAuthorizationChecker} from "./auth/DefaultAuthorizationChecker";
 import {EnableValidations} from "@nodeboot/starter-validation";

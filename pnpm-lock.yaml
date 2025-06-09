@@ -266,6 +266,9 @@ importers:
 
   samples/sample-express:
     dependencies:
+      '@nodeboot/aot':
+        specifier: ^1.1.2
+        version: 1.1.2(@swc/core@1.3.104)
       '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
@@ -287,9 +290,6 @@ importers:
       '@nodeboot/express-server':
         specifier: workspace:*
         version: link:../../servers/express-server
-      '@nodeboot/scan':
-        specifier: ^2.2.0
-        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -390,6 +390,9 @@ importers:
 
   samples/sample-express-mongodb:
     dependencies:
+      '@nodeboot/aot':
+        specifier: ^1.1.2
+        version: 1.1.2(@swc/core@1.3.104)
       '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
@@ -411,9 +414,6 @@ importers:
       '@nodeboot/express-server':
         specifier: workspace:*
         version: link:../../servers/express-server
-      '@nodeboot/scan':
-        specifier: ^2.2.0
-        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -544,6 +544,9 @@ importers:
       '@fastify/view':
         specifier: ^8.0.0
         version: 8.2.0
+      '@nodeboot/aot':
+        specifier: ^1.1.2
+        version: 1.1.2(@swc/core@1.3.104)
       '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
@@ -565,9 +568,6 @@ importers:
       '@nodeboot/fastify-server':
         specifier: workspace:*
         version: link:../../servers/fastify-server
-      '@nodeboot/scan':
-        specifier: ^2.2.0
-        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -635,6 +635,9 @@ importers:
       '@koa/router':
         specifier: ^12.0.0
         version: 12.0.1
+      '@nodeboot/aot':
+        specifier: ^1.1.2
+        version: 1.1.2(@swc/core@1.3.104)
       '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
@@ -656,9 +659,6 @@ importers:
       '@nodeboot/koa-server':
         specifier: workspace:*
         version: link:../../servers/koa-server
-      '@nodeboot/scan':
-        specifier: ^2.2.0
-        version: 2.2.0
       '@nodeboot/starter-actuator':
         specifier: workspace:*
         version: link:../../starters/actuator
@@ -2341,8 +2341,9 @@ packages:
   '@mongodb-js/saslprep@1.2.0':
     resolution: {integrity: sha512-+ywrb0AqkfaYuhHs6LxKWgqbh3I72EpEgESCw37o+9qPx9WTCkgDm2B+eMrwehGtHBWHFU4GXvnSCNiFhhausg==}
 
-  '@nodeboot/scan@2.2.0':
-    resolution: {integrity: sha512-f8CFDsI+WZ/JLbEp/gfqZeV/nkiBqFqU/EuOmt4vkytXZ6Pru5JHLj9wRsAS3YF6M+OD26Lw/2E3JcQ+sFEtmA==}
+  '@nodeboot/aot@1.1.2':
+    resolution: {integrity: sha512-yAL4OXW1q25XbTlzp77vIGKx9heUZwdjmoQlOTX1cHXfylwV81/Ga9Z4+MwOp6AogBHWA1PccPGilpiWVy0aVg==}
+    hasBin: true
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -8359,7 +8360,12 @@ snapshots:
       sparse-bitfield: 3.0.3
     optional: true
 
-  '@nodeboot/scan@2.2.0': {}
+  '@nodeboot/aot@1.1.2(@swc/core@1.3.104)':
+    dependencies:
+      typescript-json-schema: 0.65.1(@swc/core@1.3.104)
+    transitivePeerDependencies:
+      - '@swc/core'
+      - '@swc/wasm'
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

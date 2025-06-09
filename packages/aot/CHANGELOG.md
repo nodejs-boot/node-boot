@@ -1,5 +1,17 @@
 # @nodeboot/scan
 
+## 1.2.0
+
+### Minor Changes
+
+-   Integrate pre-compiled schemas into openAPI spec
+
+## 1.1.2
+
+### Patch Changes
+
+-   fix script
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.11.0
+
+### Minor Changes
+
+-   Integrate pre-compiled schemas into openAPI spec
+
 ## 1.10.0
 
 ### Minor Changes

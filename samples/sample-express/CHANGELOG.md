@@ -1,5 +1,13 @@
 # @nodeboot/express-sample
 
+## 2.1.11
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@1.11.0
+    -   @nodeboot/aot@1.2.0
+
 ## 2.1.10
 
 ### Patch Changes

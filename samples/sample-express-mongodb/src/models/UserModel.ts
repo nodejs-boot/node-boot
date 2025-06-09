@@ -12,9 +12,7 @@ export class UserModel {
     @IsEmail()
     email: string;
 
-    @Property()
     name?: string;
 
-    @Property({itemType: Role})
     roles?: Role[];
 }
