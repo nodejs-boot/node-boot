@@ -53,7 +53,7 @@ export class Page<T> {
     totalItems: number;
     @Property({description: "Number of items per page (default: 10)"})
     pageSize: number;
-    @Property({description: "Items of current page"})
+    @Property({description: "Items of current page", itemType: "T"})
     items: T[];
 }
 
@@ -67,6 +67,6 @@ export class CursorPage<T> {
     // Used for MongoDB
     @Property({description: "The `_id` of the last item from the previous page (optional)"})
     lastId?: string;
-    @Property({description: "Items of current page"})
+    @Property({description: "Items of current page", itemType: "T"})
     items: T[];
 }

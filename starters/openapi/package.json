@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-openapi",
-    "version": "1.8.1",
+    "version": "1.9.0",
     "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

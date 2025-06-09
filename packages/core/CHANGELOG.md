@@ -1,5 +1,19 @@
 # @nodeboot/core
 
+## 1.10.0
+
+### Minor Changes
+
+-   Extend OpenAPI model resolution feature to support raw types and inheritance
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.8.0
+    -   @nodeboot/config@1.2.2
+    -   @nodeboot/di@1.2.2
+    -   @nodeboot/engine@1.2.2
+
 ## 1.9.3
 
 ### Patch Changes

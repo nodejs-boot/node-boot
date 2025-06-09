@@ -1,5 +1,17 @@
 # @nodeboot/starter-openapi
 
+## 1.9.0
+
+### Minor Changes
+
+-   Extend OpenAPI model resolution feature to support raw types and inheritance
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.8.0
+    -   @nodeboot/engine@1.2.2
+
 ## 1.8.1
 
 ### Patch Changes

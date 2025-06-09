@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.8.0
+
+### Minor Changes
+
+-   Extend OpenAPI model resolution feature to support raw types and inheritance
+
 ## 1.7.1
 
 ### Patch Changes
