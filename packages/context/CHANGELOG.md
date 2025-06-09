@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.9.0
+
+### Minor Changes
+
+-   Add support for union types through anyof, oneOf and allOf
+
 ## 1.8.0
 
 ### Minor Changes

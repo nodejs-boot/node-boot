@@ -1,5 +1,14 @@
 # @nodeboot/jest
 
+## 1.2.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.9.0
+    -   @nodeboot/core@1.10.1
+    -   @nodeboot/test@1.2.5
+
 ## 1.2.4
 
 ### Patch Changes

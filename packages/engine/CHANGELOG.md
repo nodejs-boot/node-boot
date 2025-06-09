@@ -1,5 +1,12 @@
 # @nodeboot/engine
 
+## 1.2.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.9.0
+
 ## 1.2.2
 
 ### Patch Changes

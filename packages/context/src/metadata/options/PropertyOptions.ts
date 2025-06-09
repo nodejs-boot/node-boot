@@ -21,4 +21,9 @@ export interface PropertyOptions {
     example?: any;
     nullable?: boolean;
     enum?: any[];
+
+    // Composition support
+    oneOf?: (Function | string)[];
+    anyOf?: (Function | string)[];
+    allOf?: (Function | string)[];
 }

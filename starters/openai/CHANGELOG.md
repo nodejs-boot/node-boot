@@ -1,5 +1,13 @@
 # @nodeboot/starter-openai
 
+## 1.1.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.9.0
+    -   @nodeboot/core@1.10.1
+
 ## 1.1.4
 
 ### Patch Changes

@@ -77,12 +77,27 @@ function resolveProperty(property: Partial<PropertyOptions>, inferredType?: Func
         example: property.example,
     };
 
-    if (property.nullable) {
-        baseObj.nullable = property.nullable;
-    }
+    baseObj.nullable = property.nullable;
+    baseObj.enum = property.enum;
 
-    if (property.enum) {
-        baseObj.enum = property.enum;
+    // Handle oneOf/anyOf/allOf
+    if (property.oneOf) {
+        return {
+            oneOf: property.oneOf.map(toRefOrPrimitive),
+            ...baseObj,
+        };
+    }
+    if (property.anyOf) {
+        return {
+            anyOf: property.anyOf.map(toRefOrPrimitive),
+            ...baseObj,
+        };
+    }
+    if (property.allOf) {
+        return {
+            allOf: property.allOf.map(toRefOrPrimitive),
+            ...baseObj,
+        };
     }
 
     if (typeName.type !== "array") {
@@ -217,6 +232,15 @@ function getAllDecoratedProperties(model: Function): any[] {
         current = Object.getPrototypeOf(current);
     }
     return dedupeDecoratedProperties(allProps);
+}
+
+function toRefOrPrimitive(type: any): any {
+    if (typeof type === "function") {
+        return {$ref: `#/components/schemas/${type.name}`};
+    } else if (typeof type === "string") {
+        return {type}; // primitive type
+    }
+    return {};
 }
 
 /**

@@ -1,5 +1,14 @@
 # @nodeboot/koa-server
 
+## 1.6.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.9.0
+    -   @nodeboot/core@1.10.1
+    -   @nodeboot/engine@1.2.3
+
 ## 1.6.4
 
 ### Patch Changes

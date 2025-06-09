@@ -1,5 +1,17 @@
 # @nodeboot/starter-openapi
 
+## 1.10.0
+
+### Minor Changes
+
+-   Add support for union types through anyof, oneOf and allOf
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.9.0
+    -   @nodeboot/engine@1.2.3
+
 ## 1.9.0
 
 ### Minor Changes
