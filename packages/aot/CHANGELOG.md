@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 1.1.1
+
+### Patch Changes
+
+-   Add bin scripts
+
 ## 1.1.0
 
 ### Minor Changes

@@ -23,7 +23,7 @@
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "generate-beans": "node ./node_modules/@nodeboot/scan/dist/scripts/generate-beans.js",
-        "generate-shcemas": "node ./node_modules/@nodeboot/scan/dist/scripts/generate-node-boot-models-v2.js",
+        "generate-shcemas": "node ./node_modules/@nodeboot/aot/dist/scripts/generate-node-boot-models-v2.js",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
         "build": "tsc -p tsconfig.build.json && pnpm run generate-beans",
         "clean:build": "rimraf ./dist",
