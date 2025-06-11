@@ -48,7 +48,7 @@ export function getOperation(route: IRoute, schemas: {[p: string]: oa.SchemaObje
  * Return OpenAPI Operation ID for given route.
  */
 export function getOperationId(route: IRoute): string {
-    return `${route.action.target.name}.${route.action.method}`;
+    return `${route.action.method}`;
 }
 
 /**

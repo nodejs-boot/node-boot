@@ -1,5 +1,12 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.1.14
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@1.13.0
+
 ## 2.1.13
 
 ### Patch Changes

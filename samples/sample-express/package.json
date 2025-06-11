@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-sample",
-    "version": "2.1.12",
+    "version": "2.1.13",
     "description": "Node-Boot sample project using Express",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

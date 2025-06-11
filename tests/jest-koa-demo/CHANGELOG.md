@@ -1,5 +1,12 @@
 # @nodeboot/jest-koa-demo
 
+## 1.1.10
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@1.13.0
+
 ## 1.1.9
 
 ### Patch Changes

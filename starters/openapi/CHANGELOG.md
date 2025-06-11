@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.13.0
+
+### Minor Changes
+
+-   Exclude controller name from OpenAPI operation ID
+
 ## 1.12.0
 
 ### Minor Changes
