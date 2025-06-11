@@ -73,8 +73,8 @@ function findModelFiles(dir) {
             result.push(...findModelFiles(fullPath));
         } else if (
             entry.endsWith(".ts") &&
-            !entry.endsWith(".d.ts") &&
-            fs.readFileSync(fullPath, "utf-8").includes("@Model")
+            !entry.endsWith(".d.ts")
+            //&& fs.readFileSync(fullPath, "utf-8").includes("@Model")
         ) {
             result.push(fullPath);
         }
@@ -100,17 +100,63 @@ function createProgramFromFiles(files) {
 }
 
 /**
- * Wraps collected schemas into an OpenAPI-compatible components object.
+ * Wraps collected schemas into an OpenAPI-compatible components object,
+ * and removes unresolved $ref entries by replacing them with an empty object.
  *
  * @param {Record<string, object>} schemas - Individual schemas keyed by model name.
- * @returns {object} Merged OpenAPI-compatible schema structure.
+ * @returns {object} Merged and cleaned OpenAPI-compatible schema structure.
  */
 function mergeSchemas(schemas) {
+    const cleanedSchemas = {};
+
+    // Helper to clean unresolved $ref
+    const resolveRefs = obj => {
+        if (Array.isArray(obj)) {
+            return obj.map(resolveRefs);
+        } else if (obj && typeof obj === "object") {
+            if (obj.$ref) {
+                const refMatch = obj.$ref.match(/^#\/definitions\/(.+)$/);
+                if (refMatch) {
+                    const refName = refMatch[1];
+                    if (!schemas[refName]) {
+                        // Replace unresolved $ref with empty object
+                        return {};
+                    }
+                }
+            }
+
+            const result = {};
+            for (const key of Object.keys(obj)) {
+                result[key] = resolveRefs(obj[key]);
+            }
+            return result;
+        }
+        return obj;
+    };
+
+    for (const [key, schema] of Object.entries(schemas)) {
+        cleanedSchemas[key] = resolveRefs(schema);
+    }
+
     return {
         $schema: "http://json-schema.org/draft-07/schema#",
         components: {
-            schemas,
+            schemas: cleanedSchemas,
         },
+    };
+}
+
+function extractModelAndEnumNames(filePath) {
+    const content = fs.readFileSync(filePath, "utf-8");
+    const modelMatches = [...content.matchAll(/@Model\(\)\s+export\s+class\s+(\w+)/g)];
+    const enumMatches = [...content.matchAll(/export\s+enum\s+(\w+)/g)];
+
+    const modelNames = modelMatches.map(([, name]) => name);
+    const enumNames = enumMatches.map(([, name]) => name);
+
+    return {
+        modelNames,
+        enumNames,
     };
 }
 
@@ -131,16 +177,18 @@ function runAOTModelSchema() {
     const schemas = {};
 
     for (const sourceFile of modelFiles) {
-        const source = fs.readFileSync(sourceFile, "utf-8");
+        const {modelNames, enumNames} = extractModelAndEnumNames(sourceFile);
 
-        // Match `@Model()` followed by exported class declaration
-        const typeMatches = [...source.matchAll(/@Model\(\)\s+export\s+class\s+(\w+)/g)];
-
-        for (const [, className] of typeMatches) {
+        for (const className of modelNames.concat(enumNames)) {
             // @ts-ignore
             const schema = generateSchema(program, className, {
-                required: true,
-                ignoreErrors: true,
+                ref: true, // ⚠️ Enables `$ref` usage — better for reusability
+                topRef: false, // Do NOT wrap entire schema in one top-level $ref
+                titles: true, // Adds `title` field to each schema (improves Swagger UI)
+                defaultProps: true, // Include default values if present
+                ignoreErrors: true, // Prevent crashes on edge types
+                aliasRef: true, // Keeps references to type aliases (important for enums and Records)
+                validate: false, // Speeds up schema generation
             });
 
             if (schema) {

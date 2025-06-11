@@ -1,5 +1,17 @@
 # @nodeboot/scan
 
+## 1.2.2
+
+### Patch Changes
+
+-   Improve schema resolution
+
+## 1.2.1
+
+### Patch Changes
+
+-   Allow referenced objects
+
 ## 1.2.0
 
 ### Minor Changes

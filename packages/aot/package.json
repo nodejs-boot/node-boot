@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/aot",
-    "version": "1.2.0",
+    "version": "1.2.2",
     "description": "Node-Boot module for Ahead-of-Time (AOT) compilation. Generates node-boot beans and OpenAPI schemas at compile time",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

@@ -12,10 +12,10 @@ import {
     OpenApiOptions,
 } from "@nodeboot/context";
 import {controllersToSpec} from "../openapi";
-import {NodeBootToolkit} from "@nodeboot/engine";
-import {Model, parseDataClasses} from "../openapi/dataClassParser";
 import merge from "lodash.merge";
 import {OpenApiConfigProperties} from "../properties";
+import {NodeBootToolkit} from "@nodeboot/engine";
+import {Model, parseDataClasses} from "../openapi/dataClassParser";
 
 type OpenApiSpec = {
     spec: OpenAPIObject;
@@ -42,7 +42,11 @@ export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
         const dataClassSchemas = parseDataClasses(dataCLasses as Model[]);
         const precompiledSchema = await this.loadPreCompiled(openApiOptions.logger);
 
-        const schemas = merge(validationSchemas, dataClassSchemas, precompiledSchema);
+        const schemas = merge({}, dataClassSchemas, validationSchemas, precompiledSchema);
+
+        // Clear models and model properties since they won't be needed after schema generation
+        NodeBootToolkit.getMetadataArgsStorage().models = [];
+        NodeBootToolkit.getMetadataArgsStorage().modelProperties = [];
 
         const routingControllersOptions = {
             controllers: openApiOptions.controllers,

@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 1.12.0
+
+### Minor Changes
+
+-   Combine dataClass, validation and precompiled schemas to create the final API schema
+
 ## 1.11.0
 
 ### Minor Changes
