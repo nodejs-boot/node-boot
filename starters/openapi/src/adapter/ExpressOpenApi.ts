@@ -12,20 +12,28 @@ export class ExpressOpenApi extends BaseOpenApiAdapter {
     async bind(openApiOptions: OpenApiOptions, _server: any, router: any) {
         const {spec, options} = await super.buildSpec(openApiOptions);
 
-        router.get(options.swaggerOptions.url, (_: never, res: Response) => res.json(spec));
+        const swaggerJsonPath = options.swaggerOptions.url || "/swagger.json";
+        const swaggerUiPrefix = "/api-docs";
 
-        // 1. Serve the spec
-        router.get("/swagger.json", async (_req, res) => res.json(spec));
+        router.get(swaggerJsonPath, (_: never, res: Response) => res.json(spec));
 
         // Serve swagger-config.js (external script to avoid CSP violation)
-        router.get(`/api-docs/swagger-config.js`, (_req, res) => {
-            res.type("application/javascript").send(generateSwaggerJsConfig(options.swaggerOptions.url));
+        router.get(`${swaggerUiPrefix}/swagger-config.js`, (_req, res) => {
+            res.type("application/javascript").send(generateSwaggerJsConfig(swaggerJsonPath));
         });
 
-        router.get("/api-docs/", async (_req, res) => {
+        router.get(`${swaggerUiPrefix}/`, async (_req, res) => {
             res.send(generateSwaggerUiHtml());
         });
 
-        router.use("/api-docs", express.static(swaggerUiDist.getAbsoluteFSPath()));
+        router.use(swaggerUiPrefix, express.static(swaggerUiDist.getAbsoluteFSPath()));
+
+        router.get("/docs", async (_req, reply) => {
+            reply.redirect(302, `${swaggerUiPrefix}/`);
+        });
+
+        router.get(swaggerUiPrefix, async (_req, reply) => {
+            reply.redirect(302, swaggerUiPrefix + "/");
+        });
     }
 }

@@ -55,6 +55,10 @@ export class KoaOpenApi extends BaseOpenApiAdapter {
             router.get("/docs", async (ctx: Context) => {
                 ctx.redirect(`${swaggerUiPrefix}/`);
             });
+
+            router.get(swaggerUiPrefix, async (ctx: Context) => {
+                ctx.redirect(`${swaggerUiPrefix}/`);
+            });
         }
     }
 }

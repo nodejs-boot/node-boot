@@ -59,6 +59,11 @@ export class HttpOpenApi extends BaseOpenApiAdapter {
                 res.setHeader("Location", `${swaggerUiPrefix}/`);
                 res.end();
             });
+            router.on("GET", swaggerUiPrefix, (_req: IncomingMessage, res: ServerResponse) => {
+                res.statusCode = 302;
+                res.setHeader("Location", `${swaggerUiPrefix}/`);
+                res.end();
+            });
         }
     }
 }

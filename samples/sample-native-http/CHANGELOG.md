@@ -1,5 +1,12 @@
 # @nodeboot/fastify-sample
 
+## 1.1.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@2.1.0
+
 ## 1.1.2
 
 ### Patch Changes

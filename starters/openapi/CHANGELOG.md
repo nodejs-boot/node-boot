@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 2.1.0
+
+### Minor Changes
+
+-   Fix Swagger UI paths
+
 ## 2.0.1
 
 ### Patch Changes
