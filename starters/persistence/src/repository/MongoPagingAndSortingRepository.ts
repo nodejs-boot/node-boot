@@ -6,7 +6,22 @@ import {CursorPage, CursorRequest, Page, PagingRequest, SortOrder} from "@nodebo
  * This can be extended by application repositories to support pagination out of the box.
  *
  * @template Entity - The database entity type (e.g., User, Product, Post)
- * @author Manuel Santos <ney.br.santos@gmail.com>
+ *
+ * @example Offset-based pagination
+ * ```ts
+ * class UserRepository extends MongoPagingAndSortingRepository<User> {}
+ *
+ * const page = await userRepository.findPaginated({}, { page: 1, pageSize: 20 });
+ * ```
+ *
+ * @example Cursor-based pagination
+ * ```ts
+ * class UserRepository extends MongoPagingAndSortingRepository<User> {}
+ *
+ * const cursorPage = await userRepository.findCursorPaginated({}, { pageSize: 10, lastId: "..." });
+ * ```
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export class MongoPagingAndSortingRepository<Entity extends ObjectLiteral> extends MongoRepository<Entity> {
     /**

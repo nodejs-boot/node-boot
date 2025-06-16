@@ -61,9 +61,8 @@ export class UserService {
             id: userId,
         });
 
-        return optionalOf(user)
-            .orElseThrow(() => new NotFoundError("User doesn't exist"))
-            .get();
+        optionalOf(user).orElseThrow(() => new NotFoundError("User doesn't exist"));
+        return user!;
     }
 
     public async createUser(userData: CreateUserDto): Promise<User> {
@@ -71,9 +70,11 @@ export class UserService {
             email: userData.email,
         });
 
-        return optionalOf(existingUser)
-            .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
-            .elseAsync(() => this.userRepository.save(userData));
+        optionalOf(existingUser).ifPresentThrow(
+            () => new HttpError(409, `This email ${userData.email} already exists`),
+        );
+
+        return this.userRepository.save(userData);
     }
 
     public async updateUser(userId: number, userData: UpdateUserDto): Promise<User> {
@@ -81,15 +82,12 @@ export class UserService {
             id: userId,
         });
 
-        return optionalOf(user)
-            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
-            .map(user => {
-                return {
-                    ...user,
-                    userData,
-                };
-            })
-            .runAsync(user => this.userRepository.save(user));
+        optionalOf(user).orElseThrow(() => new HttpError(409, "User doesn't exist"));
+
+        return this.userRepository.save({
+            ...user,
+            userData,
+        });
     }
 
     public async deleteUser(userId: number): Promise<void> {
@@ -97,8 +95,8 @@ export class UserService {
             id: userId,
         });
 
-        await optionalOf(user)
-            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
-            .runAsync(() => this.userRepository.deleteOne({_id: userId}));
+        optionalOf(user).orElseThrow(() => new HttpError(409, "User doesn't exist"));
+
+        await this.userRepository.deleteOne({_id: userId});
     }
 }

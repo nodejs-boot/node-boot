@@ -3,7 +3,25 @@ import {EntityManager} from "typeorm";
 import {Logger} from "winston";
 import {PersistenceContext} from "../PersistenceContext";
 
+/**
+ * Default implementation of the {@link RepositoriesAdapter} interface.
+ *
+ * Responsible for binding all repositories from the {@link PersistenceContext}
+ * to the provided IoC container, initializing them with the TypeORM EntityManager,
+ * and caching them inside the EntityManager and the IoC container.
+ */
 export class DefaultRepositoriesAdapter implements RepositoriesAdapter {
+    /**
+     * Binds repositories to the given IoC container.
+     *
+     * Retrieves the TypeORM EntityManager and a Winston Logger instance from the container,
+     * then iterates over all repositories defined in the {@link PersistenceContext}.
+     * For each repository, it creates an instance, logs the registration,
+     * stores the instance in the EntityManager's repository cache, and
+     * registers the instance with the IoC container.
+     *
+     * @param {IocContainer} iocContainer - The IoC container to bind repositories to.
+     */
     bind(iocContainer: IocContainer): void {
         const entityManager = iocContainer.get(EntityManager);
         const logger = iocContainer.get(Logger);

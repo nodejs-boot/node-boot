@@ -2,29 +2,31 @@ import {OracleConnectionCredentialsOptions} from "typeorm/driver/oracle/OracleCo
 
 /**
  * Oracle-specific connection options.
+ * Extends Oracle connection credentials with additional settings.
  */
 export interface OracleConnectionProperties extends OracleConnectionCredentialsOptions {
     /**
-     * Schema name. By default is "public".
+     * Schema name. Defaults to `"public"` if not specified.
      */
     readonly schema?: string;
 
     /**
-     * A boolean determining whether to pass time values in UTC or local time. (default: false).
+     * Determines whether to pass time values in UTC or local time.
+     * Defaults to `false` (use local time).
      */
     readonly useUTC?: boolean;
 
     /**
-     * Replication setup.
+     * Replication configuration for Oracle connections.
      */
     readonly replication?: {
         /**
-         * Master server used by orm to perform writes.
+         * Master server connection options used by ORM to perform writes.
          */
         readonly master: OracleConnectionCredentialsOptions;
 
         /**
-         * List of read-from severs (slaves).
+         * List of read-only servers (slaves) for read operations.
          */
         readonly slaves: OracleConnectionCredentialsOptions[];
     };

@@ -1,16 +1,32 @@
 import {StorageDriver} from "typeorm-transactional/dist/enums/storage-driver";
 
+/**
+ * Configuration options for transaction hooks and storage driver behavior.
+ *
+ * Controls limits and persistence mechanisms during transactional lifecycle.
+ *
+ * @author Manuel Santos <ney.br.santos@gmail.com>
+ */
 export interface TransactionConfigProperties {
     /**
-     * Controls how many hooks (`commit`, `rollback`, `complete`) can be used simultaneously.
-     * If you exceed the number of hooks of same type, you get a warning. This is a useful to find possible memory leaks.
-     * You can set this options to `0` or `Infinity` to indicate an unlimited number of listeners.
+     * Maximum number of allowed simultaneous hook handlers of the same type
+     * (`commit`, `rollback`, `complete`).
+     *
+     * Exceeding this limit triggers a warning to help detect potential memory leaks.
+     *
+     * To allow unlimited handlers, set this to `0` or `Infinity`.
+     *
+     * @default undefined (no explicit limit)
      */
     maxHookHandlers?: number;
+
     /**
-     * Controls storage driver used for providing persistency during the async request timespan.
-     * You can force any of the available drivers with this option.
-     * By default, the modern AsyncLocalStorage will be preferred, if it is supported by your runtime.
+     * Storage driver used to persist transaction context across asynchronous operations.
+     *
+     * Defaults to using modern `AsyncLocalStorage` if supported by the runtime.
+     * You can override this setting to force a specific storage driver.
+     *
+     * @default StorageDriver.ASYNC_LOCAL_STORAGE (if supported)
      */
     storageDriver?: StorageDriver;
 }

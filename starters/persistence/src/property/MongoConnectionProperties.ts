@@ -1,6 +1,8 @@
 /**
  * MongoDB specific connection options.
  * Synced with http://mongodb.github.io/node-mongodb-native/3.1/api/MongoClient.html
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface MongoConnectionProperties {
     /**

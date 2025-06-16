@@ -49,9 +49,8 @@ export class UserService {
             id: userId,
         });
 
-        return optionalOf(user)
-            .orElseThrow(() => new NotFoundError("User doesn't exist"))
-            .get();
+        optionalOf(user).orElseThrow(() => new NotFoundError("User doesn't exist"));
+        return user!;
     }
 
     @Transactional()
@@ -64,9 +63,11 @@ export class UserService {
             this.logger.info("Transaction was successfully committed");
         });
 
-        return optionalOf(existingUser)
-            .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
-            .elseAsync(() => this.userRepository.save(userData));
+        optionalOf(existingUser).ifPresentThrow(
+            () => new HttpError(409, `This email ${userData.email} already exists`),
+        );
+
+        return this.userRepository.save(userData);
     }
 
     @Transactional()
@@ -75,15 +76,12 @@ export class UserService {
             id: userId,
         });
 
-        return optionalOf(user)
-            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
-            .map(user => {
-                return {
-                    ...user,
-                    userData,
-                };
-            })
-            .runAsync(user => this.userRepository.save(user));
+        optionalOf(user).orElseThrow(() => new HttpError(409, "User doesn't exist"));
+
+        return this.userRepository.save({
+            ...user,
+            userData,
+        });
     }
 
     @Transactional()
@@ -96,9 +94,9 @@ export class UserService {
             this.logger.warn("Transactions was rolled back due to error:", error);
         });
 
-        await optionalOf(user)
-            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
-            .runAsync(() => this.userRepository.delete({id: userId}));
+        optionalOf(user).orElseThrow(() => new HttpError(409, "User doesn't exist"));
+
+        await this.userRepository.delete({id: userId});
 
         throw new Error("Error after deleting that should rollback transaction");
     }

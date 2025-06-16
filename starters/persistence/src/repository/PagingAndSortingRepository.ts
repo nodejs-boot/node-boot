@@ -3,10 +3,29 @@ import {CursorPage, CursorRequest, Page, PagingRequest, SortOrder} from "@nodebo
 
 /**
  * A generic repository that provides both offset-based and cursor-based pagination.
- * This can be extended by application repositories to support pagination out of the box.
+ * Designed for relational databases using TypeORM.
+ *
+ * Can be extended by custom repositories to provide pagination out-of-the-box.
  *
  * @template Entity - The database entity type (e.g., User, Post, Product)
- * @author Manuel Santos <ney.br.santos@gmail.com>
+ *
+ * @example Offset-based pagination:
+ * ```ts
+ * class UserRepository extends PagingAndSortingRepository<User> {}
+ * const result = await userRepository.findPaginated({}, { page: 1, pageSize: 20 });
+ * ```
+ *
+ * @example Cursor-based pagination:
+ * ```ts
+ * const result = await userRepository.findCursorPaginated({}, {
+ *   pageSize: 10,
+ *   cursor: "2024-01-01T00:00:00.000Z",
+ *   sortField: "createdAt",
+ *   sortOrder: "DESC"
+ * });
+ * ```
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export class PagingAndSortingRepository<Entity extends ObjectLiteral> extends Repository<Entity> {
     /**

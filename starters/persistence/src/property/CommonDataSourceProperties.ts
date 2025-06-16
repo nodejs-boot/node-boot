@@ -4,6 +4,8 @@ import {PrepareLogMessagesOptions} from "typeorm/logger/Logger";
 
 /**
  * CommonDataSourceProperties is set of DataSource properties shared by all database types.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface CommonDataSourceProperties {
     /**

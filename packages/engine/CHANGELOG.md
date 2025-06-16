@@ -1,5 +1,11 @@
 # @nodeboot/engine
 
+## 1.2.4
+
+### Patch Changes
+
+-   Several improvements and cleanups
+
 ## 1.2.3
 
 ### Patch Changes

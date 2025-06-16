@@ -88,9 +88,10 @@ export class UserService {
             email: userData.email,
         });
 
-        return optionalOf(existingUser)
-            .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
-            .elseAsync(() => this.userRepository.save(userData));
+        optionalOf(existingUser).ifPresentThrow(
+            () => new HttpError(409, `This email ${userData.email} already exists`),
+        );
+        return this.userRepository.save(userData);
     }
 
     @Transactional()
@@ -99,10 +100,8 @@ export class UserService {
             id: userId,
         });
 
-        await optionalOf(user)
-            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
-            .runAsync(() => this.userRepository.delete({id: userId}));
-
+        optionalOf(user).orElseThrow(() => new HttpError(409, "User doesn't exist"));
+        await this.userRepository.delete({id: userId});
         throw new Error("Error after deleting that should rollback transaction");
     }
 }

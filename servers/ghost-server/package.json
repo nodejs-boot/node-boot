@@ -1,0 +1,49 @@
+{
+    "name": "@nodeboot/ghost-server",
+    "version": "1.1.0",
+    "description": "Node-Boot Ghost Server for Pure IoC Applications. Suitable for Auto-configuration testing, background jobs, etc",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "nodeboot",
+        "ghost",
+        "empty",
+        "server"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "dev": "nodemon",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest --passWithNoTests",
+        "typecheck": "tsc",
+        "build:patch": "pnpm build && pnpm version patch",
+        "build:minor": "pnpm build && pnpm version minor",
+        "build:major": "pnpm build && pnpm version major",
+        "release": "pnpm publish --access public --no-git-checks"
+    },
+    "dependencies": {
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/engine": "workspace:*",
+        "@nodeboot/error": "workspace:*"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}

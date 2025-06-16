@@ -1,5 +1,9 @@
 module.exports = {
-    transform: {
-        "^.+\\.(t|j)sx?$": "@swc/jest",
+    preset: "ts-jest",
+    testEnvironment: "node",
+    globals: {
+        "ts-jest": {
+            tsconfig: "tsconfig.json",
+        },
     },
 };

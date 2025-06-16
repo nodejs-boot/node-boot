@@ -1,12 +1,25 @@
 {
     "name": "@nodeboot/starter-persistence",
-    "version": "1.8.5",
-    "description": "The first typescript example for the Monorepo example",
+    "version": "1.8.6",
+    "description": "Nodeboot starter package for persistence. Supports data access layer auto-configuration providing features like database initialization, consistency check, entity mapping, repository pattern, transactions, paging, migrations, persistence listeners, persistence logger, etc",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "monorepo",
-        "typescript"
+        "data",
+        "persistence",
+        "database",
+        "transactions",
+        "migration",
+        "repository-pattern",
+        "mongodb",
+        "mysql",
+        "postgresql",
+        "mariadb",
+        "sqlite",
+        "oracle",
+        "cockroachdb",
+        "google-spanner",
+        "ms-sqlserver"
     ],
     "repository": {
         "type": "git",
@@ -45,7 +58,9 @@
         "mongodb": "5.9.2"
     },
     "devDependencies": {
-        "@types/node": "^22.13.4"
+        "@types/node": "^22.13.4",
+        "@types/jest": "^28.1.6",
+        "ts-jest": "^29.1.1"
     },
     "files": [
         "dist",

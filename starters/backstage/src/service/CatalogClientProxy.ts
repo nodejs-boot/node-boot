@@ -12,6 +12,7 @@ import {
     GetEntityAncestorsResponse,
     GetEntityFacetsRequest,
     GetEntityFacetsResponse,
+    GetLocationsResponse,
     Location,
     QueryEntitiesRequest,
     QueryEntitiesResponse,
@@ -36,6 +37,10 @@ export class CatalogClientProxy implements CatalogApi {
         return {
             token: options?.token ?? this.apiKey,
         };
+    }
+
+    getLocations(request?: {}, options?: CatalogRequestOptions): Promise<GetLocationsResponse> {
+        return this.catalogClient.getLocations(request, this.useOptions(options));
     }
 
     getEntities(request?: GetEntitiesRequest, options?: CatalogRequestOptions): Promise<GetEntitiesResponse> {

@@ -1,5 +1,16 @@
 # @nodeboot/starter-openapi
 
+## 2.0.0
+
+### Major Changes
+
+-   OpenAPI refactor to use custom/unique swagger UI. Usage of AOT to generate OpenAPI specs at compile time
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.2.4
+
 ## 1.13.0
 
 ### Minor Changes

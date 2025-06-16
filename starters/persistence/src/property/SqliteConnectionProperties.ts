@@ -1,49 +1,55 @@
 /**
  * Sqlite-specific connection options.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface SqliteConnectionProperties {
     /**
-     * Storage type or path to the storage.
+     * Storage type or path to the storage file.
      */
     readonly database: string;
 
     /**
-     * Encryption key for for SQLCipher.
+     * Encryption key for SQLCipher encrypted databases.
      */
     readonly key?: string;
 
     /**
-     * In your SQLite application when you perform parallel writes its common to face SQLITE_BUSY error.
-     * This error indicates that SQLite failed to write to the database file since someone else already writes into it.
-     * Since SQLite cannot handle parallel saves this error cannot be avoided.
+     * When performing parallel writes, SQLite may return SQLITE_BUSY errors if another process
+     * is writing to the database. SQLite cannot handle parallel saves.
      *
-     * To simplify life's of those who have this error this particular option sets a timeout within which ORM will try
-     * to perform requested write operation again and again until it receives SQLITE_BUSY error.
+     * This option sets a retry timeout (in milliseconds) during which the ORM will repeatedly
+     * try the write operation until it succeeds or the timeout is reached.
      *
-     * Enabling WAL can improve your app performance and face less SQLITE_BUSY issues.
-     * Time in milliseconds.
+     * Enabling Write-Ahead Logging (WAL) mode can reduce SQLITE_BUSY occurrences and improve performance.
      */
     readonly busyErrorRetry?: number;
 
     /**
-     * Enables WAL mode. By default its disabled.
+     * Enables Write-Ahead Logging (WAL) mode.
+     * Disabled by default.
      *
      * @see https://www.sqlite.org/wal.html
      */
     readonly enableWAL?: boolean;
 
     /**
-     * Specifies the open file flags. By default its undefined.
+     * Specifies the open file flags.
+     * By default undefined.
+     *
      * @see https://www.sqlite.org/c3ref/c_open_autoproxy.html
      * @see https://github.com/TryGhost/node-sqlite3/blob/master/test/open_close.test.js
      */
     readonly flags?: number;
 
+    /**
+     * Disallowed property to avoid confusion with pool management.
+     */
     readonly poolSize?: never;
 
     /**
-     * Query or change the setting of the busy timeout.
-     * Time in milliseconds.
+     * Sets or queries the busy timeout setting in milliseconds.
+     * This controls how long SQLite will wait when the database is locked before returning SQLITE_BUSY.
      *
      * @see https://www.sqlite.org/pragma.html#pragma_busy_timeout
      */

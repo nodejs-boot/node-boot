@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/koa-sample",
-    "version": "2.1.13",
+    "version": "2.1.14",
     "description": "Node-Boot sample project using Koa",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -50,7 +50,7 @@
         "@nodeboot/starter-http": "workspace:*",
         "@nodeboot/starter-validation": "workspace:*",
         "@nodeboot/aot": "^1.2.0",
-        "katxupa": "^1.9.1",
+        "katxupa": "^1.10.2",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^0.3.20",
         "koa": ">=2.14.2",
@@ -63,7 +63,6 @@
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
         "koa-helmet": "^7.0.2",
-        "koa2-swagger-ui": "^5.8.0",
         "hpp": "^0.2.3",
         "typedi": "^0.10.0",
         "winston": "^3.10.0"

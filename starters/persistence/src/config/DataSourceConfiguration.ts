@@ -7,8 +7,33 @@ import {PersistenceLogger} from "../adapter/PersistenceLogger";
 import {PERSISTENCE_CONFIG_PATH} from "../types";
 import {QUERY_CACHE_CONFIG} from "./QueryCacheConfiguration";
 
+/**
+ * Configuration class responsible for creating and providing the
+ * TypeORM DataSourceOptions bean configured with persistence settings.
+ *
+ * Retrieves persistence configuration properties, initializes the
+ * persistence logger, sets up subscribers, migrations, naming strategy,
+ * and query cache configuration for the data source.
+ *
+ * Throws errors if required configurations are missing or inconsistent.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
+ */
 @Configuration()
 export class DataSourceConfiguration {
+    /**
+     * Provides the DataSourceOptions bean named "datasource-config".
+     *
+     * @param {BeansContext} context - The beans context containing config, iocContainer, and logger.
+     * @returns {DataSourceOptions} The configured TypeORM DataSourceOptions.
+     *
+     * @throws {Error} If the persistence configuration node is missing.
+     * @throws {Error} If no database-specific configuration found for the persistence type.
+     * @throws {Error} If database type mismatches between configuration and overrides.
+     * @throws {Error} If both synchronize and migrationsRun options are enabled.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     @Bean("datasource-config")
     public dataSourceConfig({config, iocContainer, logger}: BeansContext): DataSourceOptions {
         const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);

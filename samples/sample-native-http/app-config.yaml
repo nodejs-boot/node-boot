@@ -1,0 +1,87 @@
+# App configurations
+app:
+    name: "facts-service"
+    platform: "tech-insights"
+    environment: "development"
+    defaultErrorHandler: false
+    port: 3000
+
+api:
+    routePrefix: "/api"
+    nullResultCode: 200
+    undefinedResultCode: 200
+    paramOptions:
+        required: false
+    validations:
+        enableDebugMessages: true
+        skipUndefinedProperties: false
+        skipNullProperties: false
+        skipMissingProperties: false
+        whitelist: false
+        forbidNonWhitelisted: false
+        forbidUnknownValues: true
+        stopAtFirstError: true
+
+# Server configurations
+server:
+    cors:
+        origin: "*"
+        methods:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+        credentials: true
+        maxAge: 55000
+        cacheControl: 4096
+        preflightContinue: true
+        optionsSuccessStatus: 204
+        preflight: true
+        strictPreflight: false
+    multipart:
+        throwFileSizeLimit: true
+        limits:
+            fieldNameSize: 128
+            fieldSize: 128
+            fields: 10
+            fileSize: 4096
+            files: 5
+            headerPairs: 10
+
+openapi:
+    info:
+        contact:
+            name: "Manuel Santos"
+            email: "ney.br.santos@gmail.com"
+            url: "https://www.linkedin.com/in/manuel-brito-dos-santos-a7a20a6b/"
+        license:
+            name: MIT
+            url: "https://github.com/nodejs-boot/node-boot/blob/main/LICENSE"
+    servers:
+        - url: http://localhost:3000
+          description: Localhost server
+    externalDocs:
+        url: "https://nodeboot.gitbook.io/"
+        description: "Node-Boot official documentation"
+    securitySchemes:
+        basicAuth:
+            scheme: "basic"
+            type: "http"
+
+# Storage configurations
+persistence:
+    type: "better-sqlite3"
+    synchronize: false # False, meaning that the application rely on migrations
+    cache: true
+    migrationsRun: true
+    better-sqlite3:
+        database: "fastify-sample.db"
+    transactions:
+        # Controls how many hooks (`commit`, `rollback`, `complete`) can be used simultaneously.
+        # If you exceed the number of hooks of same type, you get a warning. This is a useful to find possible memory leaks.
+        # You can set this options to `0` or `Infinity` to indicate an unlimited number of listeners.
+        maxHookHandlers: 10
+        # Controls storage driver used for providing persistency during the async request timespan.
+        # You can force any of the available drivers with this option.
+        # By default, the modern AsyncLocalStorage will be preferred, if it is supported by your runtime.
+        storageDriver: "AUTO"

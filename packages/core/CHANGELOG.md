@@ -1,5 +1,13 @@
 # @nodeboot/core
 
+## 1.10.2
+
+### Patch Changes
+
+-   Several improvements and cleanups
+-   Updated dependencies
+    -   @nodeboot/engine@1.2.4
+
 ## 1.10.1
 
 ### Patch Changes

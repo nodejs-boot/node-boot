@@ -71,8 +71,8 @@ function colorFormat(): Format {
         format.printf((info: TransformableInfo) => {
             const {timestamp, level, message, plugin, service, ...fields} = info;
             const prefix = plugin || service;
-            const timestampColor = colorizer.colorize("timestamp", timestamp);
-            const prefixColor = colorizer.colorize("prefix", prefix);
+            const timestampColor = colorizer.colorize("timestamp", timestamp as string);
+            const prefixColor = colorizer.colorize("prefix", prefix as string);
 
             const extraFields = Object.entries(fields)
                 .map(([key, value]) => `${colorizer.colorize("field", `${key}`)}=${value}`)

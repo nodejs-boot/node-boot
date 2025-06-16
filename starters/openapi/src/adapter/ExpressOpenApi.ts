@@ -1,30 +1,31 @@
-import {ApplicationContext, OpenApiOptions} from "@nodeboot/context";
-import swaggerUi from "swagger-ui-express";
+import {OpenApiOptions} from "@nodeboot/context";
 import {BaseOpenApiAdapter} from "./BaseOpenApiAdapter";
-import {Response} from "express";
+import express, {Response} from "express";
+import {generateSwaggerJsConfig, generateSwaggerUiHtml} from "../swagger-ui/ui";
+import swaggerUiDist from "swagger-ui-dist";
 
 export class ExpressOpenApi extends BaseOpenApiAdapter {
     constructor() {
         super("express");
     }
 
-    async bind(openApiOptions: OpenApiOptions, server: any, router: any) {
+    async bind(openApiOptions: OpenApiOptions, _server: any, router: any) {
         const {spec, options} = await super.buildSpec(openApiOptions);
 
         router.get(options.swaggerOptions.url, (_: never, res: Response) => res.json(spec));
 
-        if (ApplicationContext.get().swaggerUI) {
-            if (swaggerUi?.serve) {
-                server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spec, options));
-            } else {
-                throw new Error(
-                    "Unable to initialize Swagger UI. 'swagger-ui-express' dependency is missing. " +
-                        "Please add it to your project by running:" +
-                        "\nnpm install swagger-ui-express" +
-                        "\nyarn add swagger-ui-express" +
-                        "\n or pnpm swagger-ui-express",
-                );
-            }
-        }
+        // 1. Serve the spec
+        router.get("/swagger.json", async (_req, res) => res.json(spec));
+
+        // Serve swagger-config.js (external script to avoid CSP violation)
+        router.get(`/api-docs/swagger-config.js`, (_req, res) => {
+            res.type("application/javascript").send(generateSwaggerJsConfig(options.swaggerOptions.url));
+        });
+
+        router.get("/api-docs/", async (_req, res) => {
+            res.send(generateSwaggerUiHtml());
+        });
+
+        router.use("/api-docs", express.static(swaggerUiDist.getAbsoluteFSPath()));
     }
 }

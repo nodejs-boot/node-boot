@@ -10,30 +10,32 @@ import {MongoClient} from "mongodb";
 
 /**
  * The PersistenceConfiguration class is responsible for configuring the persistence layer of the application.
- * It defines two beans: dataSource and entityManager, which are used to manage the database connection and perform database operations.
+ * It defines beans for DataSource and EntityManager, manages database initialization,
+ * migrations, synchronization, repository bindings, and ensures persistence consistency.
  *
- * <i>Main functionalities</i>:
- * * Configuring the DataSource bean for the persistence layer.
- * * Initializing the DataSource.
- * * Run migrations if enabled
- * * Run database Sync if enabled
- * * Binding data repositories to the DI container
- * * Validate persistence layer consistency
+ * Main functionalities include:
+ * - Configuring the DataSource bean
+ * - Initializing DataSource and running migrations or synchronization if enabled
+ * - Injecting dependencies into subscribers and MongoDB client
+ * - Binding data repositories to the DI container
+ * - Validating the persistence layer consistency
  *
- *  @author manusant (ney.br.santos@gmail.com)
- * */
+ * @author Manuel Santos <https://github.com/manusant>
+ */
 @Configuration()
 export class PersistenceConfiguration {
     /**
-     * The dataSource method  is responsible for configuring and providing the
-     * DataSource object for the persistence layer of the application.
+     * Configures and provides the DataSource bean for the persistence layer.
+     * Initializes the DataSource, injects dependencies, runs migrations or database synchronization
+     * based on configuration, and validates database consistency.
      *
-     * @param iocContainer (IocContainer): An instance of the IoC container used for dependency injection.
-     * @param logger (Logger): An instance of the logger class used for logging messages.
-     * @param config (Config): An instance of the configuration class used for retrieving configuration values.
+     * @param {BeansContext} context - Context containing iocContainer, logger, and lifecycleBridge.
+     * @returns {DataSource} The initialized and configured TypeORM DataSource instance.
      *
-     * @return dataSource (DataSource): The configured and initialized DataSource object for the persistence layer.
-     * */
+     * @throws {Error} If DataSource initialization fails.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     @Bean()
     public dataSource({iocContainer, logger, lifecycleBridge}: BeansContext): DataSource {
         logger.info("Configuring persistence DataSource");
@@ -94,14 +96,13 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The entityManager method  is responsible for providing an instance of the
-     * EntityManager class, which is used for managing database operations.
+     * Provides an instance of the EntityManager bean for database operations.
      *
-     * @param iocContainer (IocContainer): An instance of the IoC container used for dependency injection.
-     * @param logger (Logger): An instance of the logger class used for logging messages.
+     * @param {BeansContext} context - Context containing iocContainer and logger.
+     * @returns {EntityManager} The EntityManager instance from the configured DataSource.
      *
-     * @return entityManager (EntityManager): The provided instance of the EntityManager class
-     * */
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     @Bean()
     public entityManager({iocContainer, logger}: BeansContext): EntityManager {
         logger.info("Providing EntityManager");
@@ -111,20 +112,21 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The setupInjection method  is responsible for setting up dependency injection
-     * for the persistence event subscribers. It retrieves the subscribers from the dataSource object and iterates over
-     * each subscriber to inject the required dependencies using the IoC container.
+     * Sets up dependency injection for persistence event subscribers.
+     * Injects required dependencies into subscriber instances based on metadata.
      *
-     * @param logger (Logger): An instance of the logger class used for logging messages.
-     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
-     * @param iocContainer (IocContainer<unknown>): An instance of the IoC container used for dependency injection.
-     * */
+     * @param {Logger} logger - Logger instance for logging messages.
+     * @param {DataSource} dataSource - The DataSource containing subscribers.
+     * @param {IocContainer<unknown>} iocContainer - The IoC container for resolving dependencies.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     static setupInjection(logger: Logger, dataSource: DataSource, iocContainer: IocContainer<unknown>) {
         const subscribers = dataSource.subscribers;
         logger.info(`Setting up dependency injection for ${subscribers.length} persistence event subscribers`);
         for (const subscriber of subscribers) {
             for (const fieldToInject of Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, subscriber) || []) {
-                // Extract type metadata for field injection. This is useful for custom injection in some modules
+                // Extract type metadata for field injection
                 const propertyType = Reflect.getMetadata("design:type", subscriber, fieldToInject);
                 subscriber[fieldToInject as never] = iocContainer.get(propertyType) as never;
             }
@@ -133,28 +135,27 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * Injects the MongoDB client into the dependency injection (DI) container.
+     * Injects the MongoDB client into the IoC container.
+     * Retrieves MongoClient from the TypeORM MongoDriver and registers it for DI.
      *
-     * This method retrieves the MongoClient instance from the provided TypeORM DataSource
-     * and registers it in the given IoC container. This allows the MongoClient to be injected
-     * into other services or beans within the application.
+     * @param {Logger} logger - Logger instance for logging messages.
+     * @param {DataSource} dataSource - TypeORM DataSource instance.
+     * @param {IocContainer<unknown>} iocContainer - The IoC container where MongoClient will be registered.
      *
-     * @param {Logger} logger - The logger instance to log messages.
-     * @param {DataSource} dataSource - The TypeORM DataSource instance used to retrieve the MongoDB client.
-     * @param {IocContainer<unknown>} iocContainer - The IoC container where the MongoClient will be registered.
+     * @author Manuel Santos <https://github.com/manusant>
      */
     static injectMongoClient(logger: Logger, dataSource: DataSource, iocContainer: IocContainer<unknown>) {
         logger.info(`Setting up injection for MongoClient`);
 
         const mongoDriver = dataSource.driver;
         if (mongoDriver instanceof MongoDriver) {
-            // IMPORTANT: Force Set query runner since TypeORM is not setting it for mongoDB
+            // Force set query runner since TypeORM is not setting it for MongoDB
             (dataSource.manager as any).queryRunner = mongoDriver.queryRunner;
 
-            // Retrieve the MongoClient instance from the TypeORM MongoDriver
+            // Retrieve the MongoClient instance from the MongoDriver's query runner
             const mongoClient = mongoDriver.queryRunner?.databaseConnection;
             if (mongoClient) {
-                // Register the MongoClient in the IoC container
+                // Register MongoClient in the IoC container
                 iocContainer.set(MongoClient, mongoClient);
                 logger.info(
                     `MongoClient was set to the DI container successfully. You can now inject it in your beans`,
@@ -168,12 +169,14 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The runMigration method  is responsible for running database migrations
-     * using the dataSource object. It logs the success or failure of the migration operation.
+     * Runs database migrations using the provided DataSource.
+     * Logs migration success or failure.
      *
-     * @param logger (Logger): An instance of the logger class used for logging messages.
-     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
-     * */
+     * @param {Logger} logger - Logger instance for logging messages.
+     * @param {DataSource} dataSource - The DataSource to run migrations on.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     static async runMigration(logger: Logger, dataSource: DataSource) {
         logger.info("Running migrations");
         try {
@@ -185,12 +188,15 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The bindDataRepositories method  is responsible for binding the data
-     * repositories to the IoC container. It checks if the diOptions property is defined in the ApplicationContext and
-     * then calls the bind method on the repositoriesAdapter using the IoC container.
+     * Binds persistence repositories to the IoC container.
+     * Throws an error if the DI container is not configured.
      *
-     * @param logger (Logger): An instance of the logger class used for logging messages
-     * */
+     * @param {Logger} logger - Logger instance for logging messages.
+     *
+     * @throws {Error} When diOptions or IOC container is missing.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     static bindDataRepositories(logger: Logger) {
         const context = ApplicationContext.get();
         if (context.diOptions) {
@@ -202,13 +208,14 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The runDatabaseSync method  is responsible for starting the synchronization
-     * of the database. It calls the synchronize method on the DataSource object to perform the synchronization and logs
-     * the success or failure of the operation.
+     * Runs database synchronization.
+     * Logs success or errors.
      *
-     * @param logger (Logger): An instance of the logger class used for logging messages.
-     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
-     * */
+     * @param {Logger} logger - Logger instance for logging messages.
+     * @param {DataSource} dataSource - The DataSource to synchronize.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     static async runDatabaseSync(logger: Logger, dataSource: DataSource) {
         logger.info(`Starting database synchronization`);
         try {
@@ -220,12 +227,14 @@ export class PersistenceConfiguration {
     }
 
     /**
-     * The ensureDatabase method is responsible for validating the consistency of
-     * the database by comparing the registered entities with the existing tables in the database.
+     * Validates database consistency by comparing registered entities with existing tables.
+     * Logs inconsistencies and exits process if found.
      *
-     * @param logger (Logger): An instance of the logger class used for logging messages.
-     * @param dataSource (DataSource): An instance of the DataSource class representing the database connection.
-     * */
+     * @param {Logger} logger - Logger instance for logging messages.
+     * @param {DataSource} dataSource - The DataSource used to create a query runner.
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     static async ensureDatabase(logger: Logger, dataSource: DataSource) {
         const queryRunner = dataSource.createQueryRunner();
 

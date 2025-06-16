@@ -8,6 +8,14 @@ import {PERSISTENCE_CONFIG_PATH} from "../types";
 
 export const QUERY_CACHE_CONFIG = "query-cache-config";
 
+/**
+ * Configuration type for query cache.
+ * Can be a boolean flag or a configuration object with optional custom provider factory.
+ *
+ * @typedef {boolean | (QueryCacheProperties & { provider?: (connection: DataSource) => QueryResultCache })} QueryCacheConfig
+ *
+ * @author Manuel Santos <https://github.com/manusant>
+ */
 export type QueryCacheConfig =
     | boolean
     | (QueryCacheProperties & {
@@ -17,10 +25,34 @@ export type QueryCacheConfig =
           provider?: (connection: DataSource) => QueryResultCache;
       });
 
+/**
+ * QueryCacheConfiguration class responsible for setting up
+ * query cache configurations based on application properties.
+ * It integrates with PersistenceContext to optionally use a custom query cache provider.
+ *
+ * Supports enabling/disabling cache, using complex configuration options,
+ * or providing a custom cache provider factory.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
+ */
 @Configuration()
 export class QueryCacheConfiguration {
+    /**
+     * Configures the query cache settings bean.
+     *
+     * - Reads persistence configuration from application config.
+     * - Checks if caching is enabled or custom cache options are set.
+     * - If a custom QueryCache class is provided in PersistenceContext, uses it as a provider.
+     * - Sets up the IoC container binding with the cache config or provider.
+     * - Logs relevant information and warnings during configuration.
+     *
+     * @param {BeansContext} context - The context containing iocContainer, logger, and config.
+     * @returns {void}
+     *
+     * @author Manuel Santos <https://github.com/manusant>
+     */
     @Bean()
-    public queryCacheConfig({iocContainer, logger, config}: BeansContext) {
+    public queryCacheConfig({iocContainer, logger, config}: BeansContext): void {
         logger.info("Preparing cache configurations");
 
         const persistenceProperties = config.getOptionalConfig(PERSISTENCE_CONFIG_PATH);

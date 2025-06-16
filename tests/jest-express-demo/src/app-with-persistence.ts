@@ -88,9 +88,11 @@ export class UserService {
             email: userData.email,
         });
 
-        return optionalOf(existingUser)
-            .ifPresentThrow(() => new HttpError(409, `This email ${userData.email} already exists`))
-            .elseAsync(() => this.userRepository.save(userData));
+        optionalOf(existingUser).ifPresentThrow(
+            () => new HttpError(409, `This email ${userData.email} already exists`),
+        );
+
+        return this.userRepository.save(userData);
     }
 
     @Transactional()

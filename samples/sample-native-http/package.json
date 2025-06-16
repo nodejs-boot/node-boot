@@ -1,0 +1,71 @@
+{
+    "name": "@nodeboot/native-http-sample",
+    "version": "1.1.0",
+    "description": "Node-Boot sample project using native HTTP server. This project demonstrates how to create a simple HTTP server using Node.js and TypeScript, showcasing the capabilities of the Node-Boot framework.",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "private": "true",
+    "keywords": [
+        "nodeboot",
+        "typescript",
+        "http",
+        "native",
+        "server",
+        "sample"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "start": "pnpm run clean:build && pnpm run build && node dist/server.js",
+        "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
+        "dev": "NODE_ENV=development nodemon",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "build": "tsc -p tsconfig.build.json",
+        "postbuild": "npx @nodeboot/aot node-boot-aot",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "jest --passWithNoTests",
+        "typecheck": "tsc",
+        "rebuild:sqlite": "npm rebuild better-sqlite3",
+        "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/http-server": "workspace:*",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/starter-openapi": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "katxupa": "^1.10.2",
+        "@nodeboot/starter-actuator": "workspace:*",
+        "@nodeboot/starter-persistence": "workspace:*",
+        "@nodeboot/starter-scheduler": "workspace:*",
+        "@nodeboot/starter-http": "workspace:*",
+        "@nodeboot/starter-validation": "workspace:*",
+        "@nodeboot/aot": "^1.2.0",
+        "reflect-metadata": "^0.2.1",
+        "typeorm": "^0.3.20",
+        "better-sqlite3": "^9.6.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0"
+    },
+    "devDependencies": {
+        "@types/jest": "^28.1.6",
+        "@types/node": "^22.13.4",
+        "@types/supertest": "^2.0.12"
+    }
+}

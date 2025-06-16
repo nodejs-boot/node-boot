@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-openapi",
-    "version": "1.13.0",
+    "version": "2.0.0",
     "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -38,7 +38,8 @@
         "lodash.startcase": "^4.4.0",
         "path-to-regexp": "^6.2.1",
         "reflect-metadata": "^0.2.1",
-        "class-validator-jsonschema": "^4.0.0"
+        "class-validator-jsonschema": "^4.0.0",
+        "swagger-ui-dist": "^5.24.1"
     },
     "devDependencies": {
         "@types/lodash.capitalize": "^4.2.9",
@@ -46,16 +47,15 @@
         "@types/lodash.startcase": "^4.4.9",
         "openapi-types": "^12.1.3",
         "@types/reflect-metadata": "^0.1.0",
-        "@types/swagger-ui-express": "^4.1.6"
+        "@types/swagger-ui-dist": "^3.30.5",
+        "@types/express": "^5.0.3",
+        "@types/koa": "^2.15.0"
     },
     "optionalDependencies": {
         "koa": "^2.14.2",
         "express": "^4.18.2",
-        "fastify": ">=4.21.0",
-        "swagger-ui-express": "^5.0.0",
-        "koa2-swagger-ui": "^5.8.0",
-        "@fastify/swagger-ui": "^1.9.3",
-        "@fastify/swagger": "^8.10.0"
+        "fastify": "^4.21.0",
+        "@fastify/static": "^7.0.4"
     },
     "files": [
         "dist",

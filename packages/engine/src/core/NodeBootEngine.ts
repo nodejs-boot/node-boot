@@ -100,7 +100,7 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
 
         // after all parameters are computed
         try {
-            const params = await Promise.all(paramsPromises);
+            const params = (await Promise.all(paramsPromises)).filter(value => value);
             return await this.handleCallMethodResult(params, action, actionMetadata, interceptorFns);
         } catch (error) {
             // otherwise simply handle error without action execution

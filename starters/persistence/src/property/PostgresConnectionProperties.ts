@@ -2,6 +2,11 @@ import {PostgresConnectionCredentialsOptions} from "typeorm/driver/postgres/Post
 
 /**
  * Postgres-specific connection options.
+ *
+ * Extends the basic Postgres credentials options with additional properties such as replication,
+ * schema, timezone handling, and extension management.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface PostgresConnectionProperties extends PostgresConnectionCredentialsOptions {
     /**
@@ -19,55 +24,52 @@ export interface PostgresConnectionProperties extends PostgresConnectionCredenti
      */
     readonly replication?: {
         /**
-         * Master server used by orm to perform writes.
+         * Master server used by ORM to perform writes.
          */
         readonly master: PostgresConnectionCredentialsOptions;
 
         /**
-         * List of read-from severs (slaves).
+         * List of read-from servers (slaves).
          */
         readonly slaves: PostgresConnectionCredentialsOptions[];
     };
 
     /**
-     * The milliseconds before a timeout occurs during the initial connection to the postgres
-     * server. If undefined, or set to 0, there is no timeout. Defaults to undefined.
+     * The milliseconds before a timeout occurs during the initial connection to the Postgres
+     * server. If undefined or set to 0, there is no timeout. Defaults to undefined.
      */
     readonly connectTimeoutMS?: number;
 
     /**
-     * The Postgres extension to use to generate UUID columns. Defaults to uuid-ossp.
-     * If pgcrypto is selected, TypeORM will use the gen_random_uuid() function from this extension.
-     * If uuid-ossp is selected, TypeORM will use the uuid_generate_v4() function from this extension.
+     * The Postgres extension to use for generating UUID columns. Defaults to 'uuid-ossp'.
+     *
+     * - `pgcrypto`: Uses the `gen_random_uuid()` function.
+     * - `uuid-ossp`: Uses the `uuid_generate_v4()` function.
      */
     readonly uuidExtension?: "pgcrypto" | "uuid-ossp";
 
     /**
-     * Include notification messages from Postgres server in client logs
+     * Include notification messages from Postgres server in client logs.
      */
     readonly logNotifications?: boolean;
 
     /**
-     * Automatically install postgres extensions
+     * Automatically install Postgres extensions if they are missing.
      */
     readonly installExtensions?: boolean;
 
     /**
-     * sets the application_name var to help db administrators identify
-     * the service using this connection. Defaults to 'undefined'
+     * Sets the `application_name` variable to help DB administrators identify
+     * the service using this connection. Defaults to 'undefined'.
      */
     readonly applicationName?: string;
 
     /**
      * Return 64-bit integers (int8) as JavaScript integers.
      *
-     * Because JavaScript doesn't have support for 64-bit integers node-postgres cannot confidently
-     * parse int8 data type results as numbers because if you have a huge number it will overflow
-     * and the result you'd get back from node-postgres would not be the result in the database.
-     * That would be a very bad thing so node-postgres just returns int8 results as strings and leaves the parsing up to you.
-     *
-     * Enabling parseInt8 will cause node-postgres to parse int8 results as numbers.
-     * Note: the maximum safe integer in js is: Number.MAX_SAFE_INTEGER (`+2^53`)
+     * JavaScript does not natively support 64-bit integers, so node-postgres returns int8
+     * results as strings by default to avoid overflow issues. Enabling this will parse them
+     * as numbers, but beware of the `Number.MAX_SAFE_INTEGER` limitation (+/- 2^53).
      *
      * @see [JavaScript Number objects](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5)
      * @see [node-postgres int8 explanation](https://github.com/brianc/node-pg-types#:~:text=on%20projects%3A%20return-,64%2Dbit%20integers,-(int8)%20as)

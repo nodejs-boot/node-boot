@@ -2,6 +2,8 @@ import {CockroachConnectionCredentialsOptions} from "typeorm/driver/cockroachdb/
 
 /**
  * Cockroachdb-specific connection options.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface CockroachConnectionProperties extends CockroachConnectionCredentialsOptions {
     /**

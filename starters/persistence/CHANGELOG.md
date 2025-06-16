@@ -1,5 +1,13 @@
 # @nodeboot/starter-persistence
 
+## 1.8.6
+
+### Patch Changes
+
+-   Persistence Layer documentation
+-   Updated dependencies
+    -   @nodeboot/core@1.10.2
+
 ## 1.8.5
 
 ### Patch Changes

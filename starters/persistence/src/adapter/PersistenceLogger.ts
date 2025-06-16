@@ -2,13 +2,34 @@ import {AbstractLogger, LogLevel, LogMessage} from "typeorm";
 import {Logger} from "winston";
 import {PersistenceProperties} from "../property/PersistenceProperties";
 
+/**
+ * Logger implementation for TypeORM that delegates log messages
+ * to a Winston logger, formatted according to persistence configuration.
+ *
+ * Extends TypeORM's {@link AbstractLogger}.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
+ */
 export class PersistenceLogger extends AbstractLogger {
+    /**
+     * Creates a new PersistenceLogger instance.
+     *
+     * @param {Logger} logger - The Winston logger instance to delegate logging to.
+     * @param {PersistenceProperties} configs - Configuration properties for persistence and logging format.
+     */
     constructor(private readonly logger: Logger, private readonly configs: PersistenceProperties) {
         super();
     }
 
     /**
-     * Write log to specific output.
+     * Writes log messages to the configured logger.
+     *
+     * Processes a single or multiple log messages, formats them according to
+     * configured log format, then sends them to the appropriate Winston logging method
+     * depending on the log level or message type.
+     *
+     * @param {LogLevel} level - The TypeORM log level of the message(s).
+     * @param {LogMessage | LogMessage[]} logMessage - One or more log messages to be written.
      */
     protected writeLog(level: LogLevel, logMessage: LogMessage | LogMessage[]) {
         const messages = this.prepareLogMessages(logMessage, this.configs.logFormat);

@@ -1,5 +1,6 @@
 import {ApplicationContext, OpenApiAdapter, OpenApiBridgeAdapter} from "@nodeboot/context";
 import {ExpressOpenApi, FastifyOpenApi, KoaOpenApi} from "../adapter";
+import {HttpOpenApi} from "../adapter/HttpOpenApi";
 
 /**
  * Enables OenAPI auto-generation.
@@ -18,6 +19,8 @@ export function EnableOpenApi(): Function {
                         return new KoaOpenApi();
                     case "fastify":
                         return new FastifyOpenApi();
+                    case "native-http":
+                        return new HttpOpenApi();
                     default:
                         throw new Error(
                             "OpenAPI feature is only allowed for 'express', 'koa' and 'fastify' servers. " +

@@ -1,0 +1,16 @@
+# App configurations
+app:
+    name: "ghost-service"
+    platform: "tech-insights"
+    environment: "development"
+    defaultErrorHandler: false
+    port: 3000
+
+# Storage configurations
+persistence:
+    type: "better-sqlite3"
+    synchronize: false # False, meaning that the application rely on migrations
+    cache: true
+    migrationsRun: true
+    better-sqlite3:
+        database: "express-sample.db"

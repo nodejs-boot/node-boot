@@ -1,5 +1,13 @@
 # @nodeboot/starter-http
 
+## 1.2.6
+
+### Patch Changes
+
+-   Bugfixing in Backstage package
+-   Updated dependencies
+    -   @nodeboot/core@1.10.2
+
 ## 1.2.5
 
 ### Patch Changes

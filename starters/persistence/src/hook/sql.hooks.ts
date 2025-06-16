@@ -1,12 +1,23 @@
 import {EntityManager, QueryRunner, Repository} from "typeorm";
 
 /**
- * Retrieves the EntityManager associated with a given TypeORM repository instance.
+ * Retrieves the `EntityManager` associated with a given TypeORM repository instance.
  *
- * @template R - A repository extending Repository or any other TypeORM repository.
+ * @template R - A repository extending TypeORM's Repository.
  * @param repoInstance - An instance of a TypeORM Repository.
- * @returns The EntityManager associated with the repository.
- * @throws Error if the repository instance is invalid.
+ * @returns The associated `EntityManager`.
+ * @throws Error if the repository instance is invalid or lacks an EntityManager.
+ *
+ * @example
+ * ```ts
+ * import { useEntityManager } from "@nodeboot/starter-persistence";
+ *
+ * const entityManager = useEntityManager(this.userRepository);
+ * await entityManager.find(User);
+ * ```
+ *
+ * @author
+ * Manuel Santos <https://github.com/manusant>
  */
 export function useEntityManager<R extends Repository<any>>(repoInstance: R): EntityManager {
     if (!repoInstance.manager) {
@@ -16,12 +27,23 @@ export function useEntityManager<R extends Repository<any>>(repoInstance: R): En
 }
 
 /**
- * Retrieves the QueryRunner associated with a given TypeORM repository.
+ * Retrieves the `QueryRunner` associated with a given TypeORM repository instance.
  *
  * @template R - A repository extending TypeORM's Repository.
  * @param repoInstance - An instance of a TypeORM Repository.
- * @returns The QueryRunner associated with the repository.
- * @throws Error if the repository does not have a valid QueryRunner.
+ * @returns The associated `QueryRunner`.
+ * @throws Error if the repository does not have a valid `QueryRunner`.
+ *
+ * @example
+ * ```ts
+ * import { useQueryRunner } from "@nodeboot/starter-persistence";
+ *
+ * const runner = useQueryRunner(this.userRepository);
+ * await runner.connect();
+ * ```
+ *
+ * @author
+ * Manuel Santos <https://github.com/manusant>
  */
 export function useQueryRunner<R extends Repository<any>>(repoInstance: R): QueryRunner {
     if (!repoInstance.queryRunner) {

@@ -2,6 +2,9 @@ import {SpannerConnectionCredentialsOptions} from "typeorm/driver/spanner/Spanne
 
 /**
  * Spanner specific connection options.
+ * Extends base Spanner connection credentials with additional properties.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface SpannerConnectionProperties extends SpannerConnectionCredentialsOptions {
     /**
@@ -9,10 +12,16 @@ export interface SpannerConnectionProperties extends SpannerConnectionCredential
      */
     readonly type: "spanner";
 
-    // todo
+    /**
+     * Database name.
+     * @todo implement
+     */
     readonly database?: string;
 
-    // todo
+    /**
+     * Database schema name.
+     * @todo implement
+     */
     readonly schema?: string;
 
     /**
@@ -24,75 +33,79 @@ export interface SpannerConnectionProperties extends SpannerConnectionCredential
 
     /**
      * The timezone configured on the MySQL server.
-     * This is used to type cast server date/time values to JavaScript Date object and vice versa.
-     * This can be 'local', 'Z', or an offset in the form +HH:MM or -HH:MM. (Default: 'local')
+     * Used to type cast server date/time values to JavaScript Date objects and vice versa.
+     * Can be 'local', 'Z', or an offset in the form +HH:MM or -HH:MM.
+     * Default: 'local'
      */
     readonly timezone?: string;
 
     /**
-     * The milliseconds before a timeout occurs during the initial connection to the MySQL server. (Default: 10000)
+     * The milliseconds before a timeout occurs during the initial connection to the MySQL server.
+     * Default: 10000
      */
     readonly connectTimeout?: number;
 
     /**
-     * The milliseconds before a timeout occurs during the initial connection to the MySQL server. (Default: 10000)
-     * This difference between connectTimeout and acquireTimeout is subtle and is described in the mysqljs/mysql docs
+     * The milliseconds before a timeout occurs during the initial connection to the MySQL server.
+     * Difference between connectTimeout and acquireTimeout is subtle, see mysqljs/mysql docs:
      * https://github.com/mysqljs/mysql/tree/master#pool-options
+     * Default: 10000
      */
     readonly acquireTimeout?: number;
 
     /**
-     * Allow connecting to MySQL instances that ask for the old (insecure) authentication method. (Default: false)
+     * Allow connecting to MySQL instances that ask for the old (insecure) authentication method.
+     * Default: false
      */
     readonly insecureAuth?: boolean;
 
     /**
-     * When dealing with big numbers (BIGINT and DECIMAL columns) in the database, you should enable this option (Default: false)
+     * Enable support for big numbers (BIGINT and DECIMAL columns).
+     * Default: false
      */
     readonly supportBigNumbers?: boolean;
 
     /**
-     * Enabling both supportBigNumbers and bigNumberStrings forces big numbers (BIGINT and DECIMAL columns) to be always
-     * returned as JavaScript String objects (Default: false). Enabling supportBigNumbers but leaving bigNumberStrings
-     * disabled will return big numbers as String objects only when they cannot be accurately represented with
-     * [JavaScript Number objects](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5) (which happens when they exceed the [-2^53, +2^53] range),
-     * otherwise they will be returned as Number objects. This option is ignored if supportBigNumbers is disabled.
+     * When enabled with supportBigNumbers, forces big numbers to always be returned as strings.
+     * Default: false
      */
     readonly bigNumberStrings?: boolean;
 
     /**
-     * Force date types (TIMESTAMP, DATETIME, DATE) to be returned as strings rather then inflated into JavaScript Date objects.
-     * Can be true/false or an array of type names to keep as strings.
+     * Force date types (TIMESTAMP, DATETIME, DATE) to be returned as strings rather than JavaScript Date objects.
+     * Can be boolean or an array of type names.
      */
     readonly dateStrings?: boolean | string[];
 
     /**
-     * Prints protocol details to stdout. Can be true/false or an array of packet type names that should be printed.
-     * (Default: false)
+     * Prints protocol details to stdout.
+     * Can be boolean or an array of packet type names.
+     * Default: false
      */
     readonly debug?: boolean | string[];
 
     /**
      * Generates stack traces on Error to include call site of library entrance ("long stack traces").
-     * Slight performance penalty for most calls. (Default: true)
+     * Slight performance penalty. Default: true
      */
     readonly trace?: boolean;
 
     /**
-     * Allow multiple mysql statements per query. Be careful with this, it could increase the scope of SQL injection attacks.
-     * (Default: false)
+     * Allow multiple MySQL statements per query.
+     * Be cautious, increases risk of SQL injection attacks.
+     * Default: false
      */
     readonly multipleStatements?: boolean;
 
     /**
      * Use spatial functions like GeomFromText and AsText which are removed in MySQL 8.
-     * (Default: true)
+     * Default: true
      */
     readonly legacySpatialSupport?: boolean;
 
     /**
-     * List of connection flags to use other than the default ones. It is also possible to blacklist default ones.
-     * For more information, check https://github.com/mysqljs/mysql#connection-flags.
+     * List of connection flags to use other than the default ones.
+     * See https://github.com/mysqljs/mysql#connection-flags for details.
      */
     readonly flags?: string[];
 
@@ -101,40 +114,42 @@ export interface SpannerConnectionProperties extends SpannerConnectionCredential
      */
     readonly replication?: {
         /**
-         * Master server used by orm to perform writes.
+         * Master server used for writes.
          */
         readonly master: SpannerConnectionCredentialsOptions;
 
         /**
-         * List of read-from severs (slaves).
+         * List of read-from servers (slaves).
          */
         readonly slaves: SpannerConnectionCredentialsOptions[];
 
         /**
-         * If true, PoolCluster will attempt to reconnect when connection fails. (Default: true)
+         * If true, attempts to reconnect when connection fails.
+         * Default: true
          */
         readonly canRetry?: boolean;
 
         /**
-         * If connection fails, node's errorCount increases.
-         * When errorCount is greater than removeNodeErrorCount, remove a node in the PoolCluster. (Default: 5)
+         * Number of errors before a node is removed.
+         * Default: 5
          */
         readonly removeNodeErrorCount?: number;
 
         /**
-         * If connection fails, specifies the number of milliseconds before another connection attempt will be made.
-         * If set to 0, then node will be removed instead and never re-used. (Default: 0)
+         * Milliseconds before another connection attempt is made after failure.
+         * If 0, node is removed and never reused.
+         * Default: 0
          */
         readonly restoreNodeTimeout?: number;
 
         /**
-         * Determines how slaves are selected:
-         * RR: Select one alternately (Round-Robin).
-         * RANDOM: Select the node by random function.
-         * ORDER: Select the first node available unconditionally.
+         * How slaves are selected: RR (Round-Robin), RANDOM, or ORDER.
          */
         readonly selector?: "RR" | "RANDOM" | "ORDER";
     };
 
+    /**
+     * Explicitly disallowed property.
+     */
     readonly poolSize?: never;
 }

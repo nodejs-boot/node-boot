@@ -1,5 +1,19 @@
 # @nodeboot/express-sample
 
+## 2.1.14
+
+### Patch Changes
+
+-   Several improvements and cleanups
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.8.6
+    -   @nodeboot/starter-openapi@2.0.0
+    -   @nodeboot/express-server@1.6.6
+    -   @nodeboot/core@1.10.2
+    -   @nodeboot/authorization@1.2.4
+    -   @nodeboot/starter-actuator@1.2.5
+    -   @nodeboot/starter-validation@1.1.6
+
 ## 2.1.13
 
 ### Patch Changes

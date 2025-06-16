@@ -1,5 +1,7 @@
 /**
  * Sqlite-specific connection options.
+ *
+ * @author Manuel Santos <https://github.com/manusant>
  */
 export interface BetterSqlite3ConnectionProperties {
     /**

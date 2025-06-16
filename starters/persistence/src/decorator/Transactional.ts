@@ -1,27 +1,38 @@
 import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typeorm-transactional";
 
 /**
- * The Transactional function is a decorator that can be applied to methods in TypeScript classes. It wraps the decorated
- * method in a transaction, providing transactional behavior for the method's execution.
+ * Decorator to mark a method as transactional.
  *
- * The decorated method is wrapped in a transaction, allowing it to be executed within a transactional context.
+ * When applied, the method is automatically executed within a transactional context.
+ * This is useful for ensuring atomic operations across database queries.
+ *
+ * This decorator leverages `typeorm-transactional` to manage the transactional scope and propagation.
+ *
+ * @param options - (Optional) Configuration for transaction behavior.
+ *  - `connectionName`?: string — Name of the connection to use.
+ *  - `propagation`?: Propagation — Defines how transactions relate to each other (e.g., REQUIRED, REQUIRES_NEW).
+ *  - `isolationLevel`?: IsolationLevel — The isolation level for the transaction.
+ *  - `name`?: string | symbol — Optional name for the transaction context.
+ *
+ * @returns MethodDecorator — A method decorator that wraps the function in a transaction.
  *
  * @example
  * ```ts
+ * import {Transactional} from "@nodeboot/starter-persistence";
+ *
  * class UserService {
  *   @Transactional()
  *   async createUser(name: string): Promise<User> {
- *     // Method implementation
+ *     // All operations here are part of the same transaction
+ *     const user = new User();
+ *     user.name = name;
+ *     return await this.userRepository.save(user);
  *   }
  * }
  * ```
  *
- * @param options (optional) - An object that can contain the following properties:
- *      connectionName: The name of the data source connection to use for the transaction.
- *      propagation: The propagation behavior of the transaction.
- *      isolationLevel: The isolation level of the transaction.
- *      name: The name or symbol of the method being decorated.
- * */
+ * @author Manuel Santos <https://github.com/manusant>
+ */
 export const Transactional = (options?: WrapInTransactionOptions): MethodDecorator => {
     return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
         InnerTransactional(options)(target, propertyKey, descriptor);
