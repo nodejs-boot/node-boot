@@ -1,5 +1,11 @@
 # @nodeboot/engine
 
+## 1.3.0
+
+### Minor Changes
+
+-   Update Katxupa lib
+
 ## 1.2.4
 
 ### Patch Changes
