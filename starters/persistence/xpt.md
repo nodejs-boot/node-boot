@@ -769,7 +769,7 @@ import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typ
 -   class UserService {
 -   @Transactional()
 -   async createUser(name: string): Promise<User> {
--               // Method implementation
+-                     // Method implementation
 -   }
 -   }
 -   ```
@@ -778,10 +778,10 @@ import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typ
 
 -
 -   @param options (optional) - An object that can contain the following properties:
--                connectionName: The name of the data source connection to use for the transaction.
--                propagation: The propagation behavior of the transaction.
--                isolationLevel: The isolation level of the transaction.
--                name: The name or symbol of the method being decorated.
+-                      connectionName: The name of the data source connection to use for the transaction.
+-                      propagation: The propagation behavior of the transaction.
+-                      isolationLevel: The isolation level of the transaction.
+-                      name: The name or symbol of the method being decorated.
 -   \*/
     export const Transactional = (options?: WrapInTransactionOptions): MethodDecorator => {
     return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
