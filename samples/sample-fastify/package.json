@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/fastify-sample",
-    "version": "2.1.14",
+    "version": "2.1.16",
     "description": "Node-Boot sample project using Fastify",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -44,7 +44,7 @@
         "@nodeboot/authorization": "workspace:*",
         "@nodeboot/di": "workspace:*",
         "@nodeboot/error": "workspace:*",
-        "katxupa": "^1.10.2",
+        "katxupa": "^1.10.4",
         "@nodeboot/starter-actuator": "workspace:*",
         "@nodeboot/starter-persistence": "workspace:*",
         "@nodeboot/starter-scheduler": "workspace:*",

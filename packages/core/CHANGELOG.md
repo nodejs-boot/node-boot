@@ -1,5 +1,18 @@
 # @nodeboot/core
 
+## 1.11.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.3.0
+
+## 1.11.0
+
+### Minor Changes
+
+-   Fix issue and improve actuator endpoints performance
+
 ## 1.10.2
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @nodeboot/test
 
+## 1.2.8
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.11.1
+
+## 1.2.7
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.11.0
+
 ## 1.2.6
 
 ### Patch Changes

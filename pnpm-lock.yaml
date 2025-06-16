@@ -207,8 +207,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.2
       katxupa:
-        specifier: ^1.9.1
-        version: 1.10.1
+        specifier: ^1.10.4
+        version: 1.10.4
 
   packages/error: {}
 
@@ -339,8 +339,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -463,8 +463,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
@@ -590,8 +590,8 @@ importers:
         specifier: ^4.29.1
         version: 4.29.1
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.2
@@ -660,8 +660,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.2
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.2
@@ -748,8 +748,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       koa:
         specifier: '>=2.14.2'
         version: 2.16.1
@@ -857,8 +857,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.2
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.2
@@ -1578,8 +1578,8 @@ importers:
         specifier: ^4.21.0
         version: 4.29.1
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       reflect-metadata:
         specifier: ^0.2.1
         version: 0.2.2
@@ -1669,8 +1669,8 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       katxupa:
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.4
+        version: 1.10.4
       koa:
         specifier: '>=2.14.2'
         version: 2.16.1
@@ -4902,11 +4902,8 @@ packages:
   jws@4.0.0:
     resolution: {integrity: sha512-KDncfTmOZoOMTFG4mBlG0qUIOlc03fmzH+ru6RgYVZhPkyiy/92Owlt/8UEN+a4TXR1FQetfIpJE8ApdvdVxTg==}
 
-  katxupa@1.10.1:
-    resolution: {integrity: sha512-M1/sIjjrzr4vLlB/r8CP32lHINkijA3BWq/+OnjVLO/Bpkz00eXs4nbJuhXoBkDcKDE5Bw/SrmHsZaQrtn80ew==}
-
-  katxupa@1.10.2:
-    resolution: {integrity: sha512-AthZ8wDiAOqKP8ZToCvKGN5zWAXiBhhf7N+757++vOPIJ6qpnKlBetINr0tJoRsGMhwq9vbw0KhjzJEy4Xoe+A==}
+  katxupa@1.10.4:
+    resolution: {integrity: sha512-+AiEui3QlxglhnnrUkLUB/K2K4UB60rgkpMQHV2gjj3RnQzo5snkJTzABnInGGJKAgwilzYUQ+pezDdaPNFeng==}
 
   keygrip@1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
@@ -11472,9 +11469,7 @@ snapshots:
       jwa: 2.0.1
       safe-buffer: 5.2.1
 
-  katxupa@1.10.1: {}
-
-  katxupa@1.10.2: {}
+  katxupa@1.10.4: {}
 
   keygrip@1.1.0:
     dependencies:

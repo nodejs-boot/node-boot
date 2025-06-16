@@ -27,23 +27,28 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
             // Retrieve data from the request context
             const responseTimeInMilliseconds = Date.now() - request["locals"].startEpoch;
 
-            // Observe response time
-            this.context.http_request_duration_milliseconds
-                .labels(request.method, request.url, reply.statusCode.toString())
-                .observe(responseTimeInMilliseconds);
+            setImmediate(() => {
+                //Offload the metrics recording to the event loop
+                this.context.http_request_duration_milliseconds
+                    .labels(request.method, request.routeOptions?.url || request.url, reply.statusCode.toString())
+                    .observe(responseTimeInMilliseconds);
+            });
 
             done(null, payload);
         });
 
         router.addHook("onResponse", (request, reply, done) => {
-            // Increment the HTTP request counter
-            this.context.http_request_counter
-                .labels({
-                    method: request.method,
-                    route: request.url,
-                    statusCode: reply.statusCode,
-                })
-                .inc();
+            const labels = {
+                method: request.method,
+                route: request.url,
+                statusCode: reply.statusCode,
+            };
+
+            setImmediate(() => {
+                // Offload the metrics recording to the event loop
+                // Increment the HTTP request counter
+                this.context.http_request_counter.labels(labels).inc();
+            });
 
             done();
         });
@@ -111,8 +116,10 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
 
         // health
         router.get("/actuator/health", async (_, res) => {
-            const readiness = await this.healthService.getReadiness();
-            const liveness = await this.healthService.getLiveness();
+            const [readiness, liveness] = await Promise.all([
+                this.healthService.getReadiness(),
+                this.healthService.getLiveness(),
+            ]);
             res.status(200);
             res.send({
                 readinessPath: "/actuator/health/readiness",

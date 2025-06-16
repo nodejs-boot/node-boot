@@ -25,19 +25,19 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
             await next();
 
             const responseTimeInMilliseconds = Date.now() - ctx.state["startEpoch"];
+            const labels = {
+                method: ctx.method,
+                route: ctx.originalUrl,
+                statusCode: ctx.status,
+            };
 
-            this.context.http_request_duration_milliseconds
-                .labels(ctx.method, ctx.path, ctx.status.toString())
-                .observe(responseTimeInMilliseconds);
+            setImmediate(() => {
+                this.context.http_request_duration_milliseconds
+                    .labels(ctx.method, ctx._matchedRoute?.toString() || ctx.path, ctx.status.toString())
+                    .observe(responseTimeInMilliseconds);
 
-            // Increment the HTTP request counter
-            this.context.http_request_counter
-                .labels({
-                    method: ctx.method,
-                    route: ctx.originalUrl,
-                    statusCode: ctx.status,
-                })
-                .inc();
+                this.context.http_request_counter.labels(labels).inc();
+            });
         });
 
         router.get("/actuator", async ctx => {
@@ -99,8 +99,10 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
 
         // health
         router.get("/actuator/health", async ctx => {
-            const readiness = await this.healthService.getReadiness();
-            const liveness = await this.healthService.getLiveness();
+            const [readiness, liveness] = await Promise.all([
+                this.healthService.getReadiness(),
+                this.healthService.getLiveness(),
+            ]);
             ctx.status = 200;
             ctx.body = {
                 readinessPath: "/actuator/health/readiness",

@@ -101,9 +101,9 @@ export class UserService {
             id: userId,
         });
 
-        await optionalOf(user)
-            .orElseThrow(() => new HttpError(409, "User doesn't exist"))
-            .runAsync(() => this.userRepository.delete({id: userId}));
+        optionalOf(user).orElseThrow(() => new HttpError(409, "User doesn't exist"));
+
+        await this.userRepository.delete({id: userId});
 
         throw new Error("Error after deleting that should rollback transaction");
     }

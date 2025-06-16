@@ -42,10 +42,10 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
 
         // if its current-user decorator then get its value
         if (param.type === "current-user") {
-            value = await optionalOf(this.driver.currentUserChecker)
-                .orElseThrow(() => new CurrentUserCheckerNotDefinedError())
-                .map(userChecker => userChecker.check(action))
-                .get();
+            const checker = optionalOf(this.driver.currentUserChecker).orElseThrow(
+                () => new CurrentUserCheckerNotDefinedError(),
+            );
+            value = checker.check(action);
         }
 
         // check cases when parameter is required but its empty and throw errors in this case
@@ -122,20 +122,17 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
                 case "string":
                 case "boolean":
                 case "date":
-                    return Param.ofString(value, param)
-                        .orElseThrow(() => new InvalidParamError(value, param.name, param.targetName))
-                        .map(normalizedValue => (param.isArray ? [normalizedValue] : normalizedValue))
-                        .get();
+                    return this.extractPrimitiveParam(value, param);
                 case "array":
                     return [value];
             }
         } else if (Array.isArray(value)) {
-            return value.map(v =>
-                Param.ofString(v, param)
-                    .orElseThrow(() => new InvalidParamError(v, param.name, param.targetName))
-                    .map(normalizedValue => (param.isArray ? [normalizedValue] : normalizedValue))
-                    .get(),
-            );
+            return value.map(v => {
+                const normalizedValue = Param.ofString(v, param).orElseThrow(
+                    () => new InvalidParamError(v, param.name, param.targetName),
+                );
+                return param.isArray ? [normalizedValue] : normalizedValue;
+            });
         }
 
         // if target type is not primitive, transform and validate it
@@ -146,6 +143,14 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
         }
 
         return value;
+    }
+
+    private extractPrimitiveParam(value: string, param: ParamMetadata) {
+        const normalizedValue = Param.ofString(value, param).orElseThrow(
+            () => new InvalidParamError(value, param.name, param.targetName),
+        );
+
+        return param.isArray ? [normalizedValue] : normalizedValue;
     }
 
     /**
