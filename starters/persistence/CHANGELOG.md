@@ -1,5 +1,11 @@
 # @nodeboot/starter-persistence
 
+## 1.8.9
+
+### Patch Changes
+
+-   Add findById method to mongo repository interface
+
 ## 1.8.8
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @nodeboot/express-sample
 
+## 2.1.21
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.8.9
+
 ## 2.1.20
 
 ### Patch Changes

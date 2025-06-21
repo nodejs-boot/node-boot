@@ -1,5 +1,6 @@
 import {FindOptionsWhere, MongoRepository, ObjectLiteral} from "typeorm";
 import {CursorPage, CursorRequest, Page, PagingRequest, SortOrder} from "@nodeboot/core";
+import {ObjectId} from "mongodb";
 
 /**
  * A generic MongoDB repository that provides both offset-based and cursor-based pagination.
@@ -24,6 +25,16 @@ import {CursorPage, CursorRequest, Page, PagingRequest, SortOrder} from "@nodebo
  * @author Manuel Santos <https://github.com/manusant>
  */
 export class MongoPagingAndSortingRepository<Entity extends ObjectLiteral> extends MongoRepository<Entity> {
+    /**
+     * Finds a single entity by its ID.
+     *
+     * @param id - The ID of the entity to find. Can be a string, number, ObjectId, or Uint8Array.
+     * @returns A promise that resolves to the found entity or null if not found.
+     */
+    async findById(id: string | number | ObjectId | Uint8Array): Promise<Entity | null> {
+        return this.findOneBy({_id: new ObjectId(id)});
+    }
+
     /**
      * Offset-based pagination (Traditional Pagination)
      *
