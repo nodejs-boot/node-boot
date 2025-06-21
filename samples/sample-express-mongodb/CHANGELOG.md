@@ -1,5 +1,12 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.1.21
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-http@3.1.2
+
 ## 2.1.20
 
 ### Patch Changes

@@ -8,7 +8,7 @@ import {
     LoggerService,
 } from "@nodeboot/context";
 import {HTTP_CLIENT_FEATURE, HttpClientConfig, HttpClientStub} from "../client";
-import {HttpError} from "@nodeboot/error/src";
+import {HttpError} from "@nodeboot/error";
 
 /**
  * The adapter responsible for integrating HTTP clients into the NodeBoot application lifecycle.

@@ -1,5 +1,11 @@
 # @nodeboot/starter-http
 
+## 3.1.2
+
+### Patch Changes
+
+-   Fix package import
+
 ## 3.1.1
 
 ### Patch Changes

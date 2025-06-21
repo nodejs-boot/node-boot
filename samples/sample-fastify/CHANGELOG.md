@@ -1,5 +1,12 @@
 # @nodeboot/fastify-sample
 
+## 2.1.20
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-http@3.1.2
+
 ## 2.1.19
 
 ### Patch Changes

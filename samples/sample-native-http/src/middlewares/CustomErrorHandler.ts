@@ -3,7 +3,7 @@ import {ErrorHandler} from "@nodeboot/core";
 import {Inject} from "@nodeboot/di";
 import {Action, ErrorHandlerInterface} from "@nodeboot/context";
 import {IncomingMessage, ServerResponse} from "node:http";
-import {HttpError} from "@nodeboot/error/src";
+import {HttpError} from "@nodeboot/error";
 
 @ErrorHandler()
 export class CustomErrorHandler implements ErrorHandlerInterface<HttpError, IncomingMessage, ServerResponse> {
