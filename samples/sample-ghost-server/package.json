@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-ghost-server",
-    "version": "2.2.2",
+    "version": "2.2.4",
     "description": "Node-Boot sample project without http server",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

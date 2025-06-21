@@ -8,6 +8,7 @@ import {
     LoggerService,
 } from "@nodeboot/context";
 import {HTTP_CLIENT_FEATURE, HttpClientConfig, HttpClientStub} from "../client";
+import {HttpError} from "@nodeboot/error/src";
 
 /**
  * The adapter responsible for integrating HTTP clients into the NodeBoot application lifecycle.
@@ -81,6 +82,11 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
 
             // Create and register the HTTP client
             const httpClient = axios.create(this.clientConfig);
+
+            // Set up error handling for the HTTP client
+            this.setupErrorHandling(httpClient);
+
+            // If httpLogging is enabled, set up logging for requests and responses
             if (this.clientConfig.httpLogging) {
                 logger.info(`HTTP logging is enabled for client ${this.targetClass.name}`);
                 this.setupHttpLogging(httpClient, logger);
@@ -129,15 +135,31 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
             },
             error => {
                 if (error.response) {
-                    console.error("Axios Response Error:", {
+                    logger.error("HTTP Response Error:", {
                         status: error.response.status,
                         url: error.config.url,
                         data: error.response.data,
                     });
                 } else {
-                    console.error("Axios Network/Error:", error.message);
+                    logger.error("HTTP Network Error:", error.message);
                 }
                 return Promise.reject(error);
+            },
+        );
+    }
+
+    private setupErrorHandling(instance: HttpClientStub) {
+        instance.interceptors.response.use(
+            response => response, // pass successful responses through
+            (error: any) => {
+                const status = error.response?.status ?? 500;
+                const message =
+                    error.response?.data?.message ||
+                    error.message ||
+                    "Unexpected error occurred while making HTTP request";
+
+                // You can also log here or report to a monitoring system
+                return Promise.reject(new HttpError(status, message));
             },
         );
     }

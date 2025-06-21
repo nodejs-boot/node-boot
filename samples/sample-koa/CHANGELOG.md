@@ -1,5 +1,19 @@
 # @nodeboot/koa-sample
 
+## 2.1.19
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-http@3.1.1
+
+## 2.1.18
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-http@3.1.0
+
 ## 2.1.17
 
 ### Patch Changes

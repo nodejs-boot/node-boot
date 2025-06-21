@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/fastify-sample",
-    "version": "2.1.17",
+    "version": "2.1.19",
     "description": "Node-Boot sample project using Fastify",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

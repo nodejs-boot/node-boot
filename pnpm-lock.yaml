@@ -1199,6 +1199,9 @@ importers:
       '@nodeboot/context':
         specifier: workspace:*
         version: link:../../packages/context
+      '@nodeboot/error':
+        specifier: workspace:*
+        version: link:../../packages/error
       axios:
         specifier: ^1.8.1
         version: 1.10.0

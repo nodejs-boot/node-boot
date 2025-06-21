@@ -1,5 +1,17 @@
 # @nodeboot/starter-http
 
+## 3.1.1
+
+### Patch Changes
+
+-   Improve error logging
+
+## 3.1.0
+
+### Minor Changes
+
+-   Add HTTP error handling to client
+
 ## 3.0.6
 
 ### Patch Changes

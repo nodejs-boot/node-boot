@@ -1,5 +1,19 @@
 # @nodeboot/express-ghost-server
 
+## 2.2.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-http@3.1.1
+
+## 2.2.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-http@3.1.0
+
 ## 2.2.2
 
 ### Patch Changes
