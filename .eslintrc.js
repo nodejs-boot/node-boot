@@ -2,12 +2,24 @@
 module.exports = {
     root: true,
     env: {node: true},
-    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier", "katxupa"],
+    ignorePatterns: ["dist/", "node_modules/", "coverage/", "scripts/", "**/*.d.ts"],
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "katxupa",
+        "plugin:import/recommended",
+    ],
     plugins: ["@typescript-eslint"],
     parser: "@typescript-eslint/parser",
     parserOptions: {
         tsconfigRootDir: __dirname,
         project: "./tsconfig.json",
+    },
+    settings: {
+        "import/resolver": {
+            typescript: {}, // this loads paths from tsconfig.json
+        },
     },
     rules: {
         "no-cond-assign": "off",
@@ -25,5 +37,7 @@ module.exports = {
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-cond-assign": "off",
+        "import/no-cycle": ["error", {maxDepth: 1}],
+        "import/named": "off", // Disable named import checks, as they can conflict with TypeScript's own checks
     },
 };

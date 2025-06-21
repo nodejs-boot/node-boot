@@ -1,5 +1,12 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.1.23
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/aot@1.3.0
+
 ## 2.1.22
 
 ### Patch Changes

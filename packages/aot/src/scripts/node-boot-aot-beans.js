@@ -51,7 +51,7 @@ import {MAIN_DECORATORS} from "../decorators.main";
  * ---
  * Part of the Node-Boot AOT toolchain for optimizing startup and reducing runtime scanning.
  *
- * @author Manuel Santos <ney.br.santos@gmail.com>
+ * @author Manuel Santos <https://github.com/manusant>
  */
 
 // Define the `dist/` directory (output folder after TypeScript build)

@@ -50,7 +50,7 @@ import {generateSchema} from "typescript-json-schema";
  * ---
  * Inspired by AOT techniques to speed up runtime behavior by generating schemas ahead of startup.
  *
- * @author Manuel Santos <ney.br.santos@gmail.com>
+ * @author Manuel Santos <https://github.com/manusant>
  */
 
 const SRC_DIR = path.resolve(process.cwd(), "src");

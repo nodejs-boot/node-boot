@@ -149,6 +149,12 @@ export class MyApp implements NodeBootApp {
 -   `node-boot-aot-models.js`:
     Scans `@Model()`-decorated classes and generates a JSON Schema file (`node-boot-models.json`).
 
+-   `node-boot-cycle-detector.js`:
+    Detects circular dependencies in the bean graph, ensuring no infinite loops in component/service resolution.
+
+-   `node-boot-aot.js`:
+    Combines all AOT scripts into a single runner for convenience.
+
 ### Decorator
 
 -   `@EnableComponentScan(options?: { customDecorators?: Function[] })`:

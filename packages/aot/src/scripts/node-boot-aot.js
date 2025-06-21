@@ -23,9 +23,12 @@
  *   }
  * }
  * ```
+ * @author Manuel Santos <https://github.com/manusant>
  */
 
 console.log("🚀 Running all Node-Boot AOT scripts...");
+
+import "./node-boot-cycle-detector.js";
 
 try {
     require("./node-boot-aot-beans.js");

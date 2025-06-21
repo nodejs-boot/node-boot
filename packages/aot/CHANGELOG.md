@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 1.3.0
+
+### Minor Changes
+
+-   Add AOT Node-Boot Circular Dependency Analyzer
+
 ## 1.2.2
 
 ### Patch Changes
