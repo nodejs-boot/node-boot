@@ -30,37 +30,6 @@
  *
  * @author Manuel Santos <https://github.com/manusant>
  */
-
-/**
- * Node-Boot Circular Dependency Analyzer
- *
- * This script statically analyzes the TypeScript source code under the `src/` directory
- * to detect **circular dependencies** between services/components using class constructor
- * injection and NodeBoot decorators like `@Service` or `@Component`.
- *
- * ### Features:
- * - **Supports TypeScript 4 & 5**: Uses a compatibility wrapper for accessing decorators.
- * - **Decorator Filtering**: Only classes decorated with known injectable decorators are analyzed.
- * - **Dependency Graph**: Builds a constructor-based dependency graph of injected types.
- * - **Cycle Detection**: Uses depth-first search (DFS) to find cycles in the graph.
- * - **Fast & CI-Ready**: Designed to run post-lint/build in CI pipelines to fail on architecture violations.
- *
- * ### Usage:
- * Run manually or from `package.json` scripts:
- * ```sh
- * node node-boot-cycle-detector.js
- * ```
- *
- * ### Requirements:
- * - Your classes should use NodeBoot decorators (`@Service`, `@Component`, etc.)
- * - TypeScript must be configured with appropriate type information (e.g., not erased before analysis).
- * - The analysis is performed **before compilation**, directly on `.ts` files in `src/`.
- *
- * ---
- * Part of the Node-Boot developer toolchain for enforcing architectural soundness.
- *
- * @author Manuel Santos <https://github.com/manusant>
- */
 import ts from "typescript";
 import fs from "fs";
 import path from "path";
