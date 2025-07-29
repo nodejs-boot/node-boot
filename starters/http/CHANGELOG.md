@@ -1,5 +1,16 @@
 # @nodeboot/starter-http
 
+## 3.2.0
+
+### Minor Changes
+
+-   03bf326: Add support for ratelimit
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.10.0
+
 ## 3.1.2
 
 ### Patch Changes

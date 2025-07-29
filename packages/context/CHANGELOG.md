@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.10.0
+
+### Minor Changes
+
+-   03bf326: Refactor actuator to support native HTTP server
+
 ## 1.9.0
 
 ### Minor Changes

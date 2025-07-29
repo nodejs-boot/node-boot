@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-persistence",
-    "version": "1.8.9",
+    "version": "1.8.10",
     "description": "Nodeboot starter package for persistence. Supports data access layer auto-configuration providing features like database initialization, consistency check, entity mapping, repository pattern, transactions, paging, migrations, persistence listeners, persistence logger, etc",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

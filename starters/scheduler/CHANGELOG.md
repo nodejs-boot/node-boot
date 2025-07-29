@@ -1,5 +1,12 @@
 # @nodeboot/starter-scheduler
 
+## 1.3.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.10.0
+
 ## 1.3.3
 
 ### Patch Changes

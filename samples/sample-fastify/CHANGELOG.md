@@ -1,5 +1,23 @@
 # @nodeboot/fastify-sample
 
+## 2.1.22
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-actuator@1.4.0
+    -   @nodeboot/context@1.10.0
+    -   @nodeboot/core@1.12.0
+    -   @nodeboot/starter-http@3.2.0
+    -   @nodeboot/authorization@1.2.6
+    -   @nodeboot/config@1.2.4
+    -   @nodeboot/di@1.2.4
+    -   @nodeboot/fastify-server@1.6.9
+    -   @nodeboot/starter-openapi@2.1.1
+    -   @nodeboot/starter-persistence@1.8.10
+    -   @nodeboot/starter-scheduler@1.3.4
+    -   @nodeboot/starter-validation@1.1.9
+
 ## 2.1.21
 
 ### Patch Changes

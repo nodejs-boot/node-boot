@@ -1,5 +1,19 @@
 # @nodeboot/core
 
+## 1.12.0
+
+### Minor Changes
+
+-   03bf326: Refactor actuator to support native HTTP server
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.10.0
+    -   @nodeboot/config@1.2.4
+    -   @nodeboot/di@1.2.4
+    -   @nodeboot/engine@1.3.1
+
 ## 1.11.1
 
 ### Patch Changes
