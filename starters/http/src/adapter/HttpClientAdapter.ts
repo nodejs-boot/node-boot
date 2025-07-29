@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
 import {
     ApplicationContext,
     ApplicationFeatureAdapter,
@@ -7,8 +7,9 @@ import {
     Lifecycle,
     LoggerService,
 } from "@nodeboot/context";
-import {HTTP_CLIENT_FEATURE, HttpClientConfig, HttpClientStub} from "../client";
+import {HTTP_CLIENT_FEATURE, HttpClientConfig, HttpClientStub, PluginConfigs} from "../client";
 import {HttpError} from "@nodeboot/error";
+import axiosRateLimit from "axios-rate-limit";
 
 /**
  * The adapter responsible for integrating HTTP clients into the NodeBoot application lifecycle.
@@ -56,10 +57,12 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
      *
      * @param {new (...args: any[]) => any} targetClass - The class marked as an HTTP client.
      * @param {HttpClientConfig | string} clientConfig - Configuration settings for the HTTP client.
+     * @param {PluginConfigs} [pluginConfigs] - Optional plugin configurations for the HTTP client.
      */
     constructor(
         private readonly targetClass: new (...args: any[]) => any,
         private clientConfig: HttpClientConfig | string,
+        private pluginConfigs?: PluginConfigs,
     ) {}
 
     /**
@@ -81,7 +84,9 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
             );
 
             // Create and register the HTTP client
-            const httpClient = axios.create(this.clientConfig);
+            let httpClient = axios.create(this.clientConfig);
+            // If plugin configurations are provided, set up plugins
+            httpClient = this.setupPlugins(httpClient, logger);
 
             // Set up error handling for the HTTP client
             this.setupErrorHandling(httpClient);
@@ -99,6 +104,17 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
                 `🌐 HTTP client is disabled. Please enable HTTP client feature by decorating your application class with @EnableHttpClients()`,
             );
         }
+    }
+
+    private setupPlugins(httpClient: AxiosInstance, logger: LoggerService) {
+        if (this.pluginConfigs) {
+            // Apply rate limiting if configured
+            if (this.pluginConfigs.rateLimit) {
+                logger.info(`Applying rate limit configuration to HTTP client ${this.targetClass.name}`);
+                httpClient = axiosRateLimit(httpClient, this.pluginConfigs.rateLimit);
+            }
+        }
+        return httpClient;
     }
 
     /**

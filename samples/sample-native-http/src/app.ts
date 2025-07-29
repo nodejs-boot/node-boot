@@ -12,12 +12,13 @@ import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableHttpClients} from "@nodeboot/starter-http";
 import {EnableValidations} from "@nodeboot/starter-validation";
 import {HttpServer} from "@nodeboot/http-server";
+import {EnableActuator} from "@nodeboot/starter-actuator";
 
 @EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
-//@EnableActuator()
+@EnableActuator()
 @EnableRepositories()
 @EnableScheduling()
 @EnableHttpClients()

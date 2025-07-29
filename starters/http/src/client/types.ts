@@ -1,4 +1,5 @@
 import {AxiosRequestConfig} from "axios";
+import {rateLimitOptions} from "axios-rate-limit";
 
 export const HTTP_CLIENT_FEATURE = Symbol("HTTP-Client-Feature");
 
@@ -36,3 +37,27 @@ export interface HttpClientConfig extends AxiosRequestConfig {
      */
     httpLogging?: boolean;
 }
+
+/**
+ * Plugin configuration options for the HTTP client feature in the NodeBoot framework.
+ *
+ * This type allows for optional configuration of rate limiting for HTTP requests.
+ *
+ * ## Properties
+ * - **rateLimit** (`rateLimitOptions`) – Configuration options for rate limiting HTTP requests.
+ *
+ * ## Usage Example
+ * ```typescript
+ * import { PluginConfigs } from "@nodeboot/starter-http";
+ *
+ * const pluginConfig: PluginConfigs = {
+ *     rateLimit: {
+ *         maxRequests: 100,
+ *         perMilliseconds: 60000,
+ *     },
+ * };
+ * ```
+ */
+export type PluginConfigs = {
+    rateLimit?: rateLimitOptions;
+};

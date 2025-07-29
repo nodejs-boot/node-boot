@@ -61,6 +61,7 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
             for (const configurationAdapter of context.configurationAdapters) {
                 await configurationAdapter.bind({
                     application: framework,
+                    router: router,
                     iocContainer: context.diOptions.iocContainer,
                     logger: this.logger,
                     config: this.config,
@@ -195,12 +196,14 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
 
     private async printBanner() {
         const banner =
-            "_____   __     _________           ________            _____ \n" +
-            "___  | / /___________  /____       ___  __ )_____________  /_\n" +
-            "__   |/ /_  __ \\  __  /_  _ \\________  __  |  __ \\  __ \\  __/\n" +
-            "_  /|  / / /_/ / /_/ / /  __//_____/  /_/ // /_/ / /_/ / /_  \n" +
-            "/_/ |_/  \\____/\\__,_/  \\___/       /_____/ \\____/\\____/\\__/  \n" +
-            "                                                             \n";
+            process.env["NODE_ENV"] !== "production"
+                ? "_____   __     _________           ________            _____ \n" +
+                  "___  | / /___________  /____       ___  __ )_____________  /_\n" +
+                  "__   |/ /_  __ \\  __  /_  _ \\________  __  |  __ \\  __ \\  __/\n" +
+                  "_  /|  / / /_/ / /_/ / /  __//_____/  /_/ // /_/ / /_/ / /_  \n" +
+                  "/_/ |_/  \\____/\\__,_/  \\___/       /_____/ \\____/\\____/\\__/  \n" +
+                  "                                                             \n"
+                : "";
 
         const appConfig = this.config.getOptionalConfig("app");
         const info = await this.infoService.getInfo();

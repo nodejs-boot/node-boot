@@ -28,9 +28,10 @@ export interface Action<TRequest = any, TResponse = any, TNext = Function> {
     next?: TNext;
 }
 
-export type BeansContext<TApplication = any> = {
+export type BeansContext<TApplication = any, TRouter = any> = {
     iocContainer: IocContainer;
     application: TApplication;
+    router: TRouter;
     lifecycleBridge: ApplicationLifecycleBridge;
     logger: Logger;
     config: Config;

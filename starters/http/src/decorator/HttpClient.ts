@@ -1,4 +1,4 @@
-import {HttpClientConfig} from "../client";
+import {HttpClientConfig, PluginConfigs} from "../client";
 import {ApplicationContext} from "@nodeboot/context";
 import {HttpClientAdapter} from "../adapter";
 
@@ -34,11 +34,12 @@ import {HttpClientAdapter} from "../adapter";
  * ```
  *
  * @param {HttpClientConfig | string} config - Configuration options for the HTTP client or config properties path
+ * @param {PluginConfigs} [plugins] - Optional plugin configurations for the HTTP client, such as rate limiting.
  * @returns {ClassDecorator} A decorator function that registers the class as an HTTP client.
  */
-export function HttpClient(config: HttpClientConfig | string): ClassDecorator {
+export function HttpClient(config: HttpClientConfig | string, plugins?: PluginConfigs): ClassDecorator {
     return function (target: any) {
-        const schedulerAdapter = new HttpClientAdapter(target, config);
+        const schedulerAdapter = new HttpClientAdapter(target, config, plugins);
         ApplicationContext.get().applicationFeatureAdapters.push(schedulerAdapter);
     };
 }

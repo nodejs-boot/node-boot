@@ -8,6 +8,7 @@ import {FastifyActuatorAdapter} from "./FastifyActuatorAdapter";
 import {ConfigService} from "@nodeboot/config";
 import {KoaActuatorAdapter} from "./KoaActuatorAdapter";
 import {Logger} from "winston";
+import {HttpActuatorAdapter} from "./HttpActuatorAdapter";
 
 export class DefaultActuatorAdapter implements ActuatorAdapter {
     constructor(
@@ -92,9 +93,19 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
                     healthService,
                 );
                 break;
+            case "native-http":
+                frameworkAdapter = new HttpActuatorAdapter(
+                    context,
+                    this.gitService,
+                    metadataService,
+                    configService,
+                    infoService,
+                    healthService,
+                );
+                break;
             default:
                 throw new Error(
-                    "Actuator feature is only allowed for express, koa and fastify servers. " +
+                    "Actuator feature is only allowed for express, koa, fastify and native-http (node:http) servers. " +
                         "Please remove @EnableActuator from your application",
                 );
         }
