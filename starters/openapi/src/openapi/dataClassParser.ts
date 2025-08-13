@@ -1,7 +1,6 @@
-import {OPEN_API_TYPE_FORMAT, PropertyOptions} from "@nodeboot/context";
+import {OPEN_API_TYPE_FORMAT, PropertyOptions, PropertyType} from "@nodeboot/context";
 import {NodeBootToolkit} from "@nodeboot/engine";
 import {ReferenceObject, SchemaObject} from "openapi3-ts";
-import {PropertyType} from "@nodeboot/context/src/metadata/options/PropertyOptions";
 
 type PRIMITIVE_TYPE = "string" | "number" | "integer" | "boolean" | "object" | "array" | "date";
 type OPEN_API_TYPE = "integer" | "number" | "string" | "boolean" | "object" | "null" | "array";

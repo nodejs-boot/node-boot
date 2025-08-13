@@ -3,6 +3,7 @@ import path from "path";
 import {validationMetadatasToSchemas} from "class-validator-jsonschema";
 import {InfoObject, OpenAPIObject} from "openapi3-ts";
 import {
+    allowedProfiles,
     ApplicationContext,
     Config,
     CoreInfoService,
@@ -49,7 +50,8 @@ export abstract class BaseOpenApiAdapter implements OpenApiAdapter {
         NodeBootToolkit.getMetadataArgsStorage().modelProperties = [];
 
         const routingControllersOptions = {
-            controllers: openApiOptions.controllers,
+            // Controllers are filtered based on the active profiles
+            controllers: openApiOptions.controllers.filter(controller => allowedProfiles(controller)),
             routePrefix: openApiOptions.basePath,
         };
 

@@ -1,5 +1,19 @@
 # @nodeboot/core
 
+## 1.13.0
+
+### Minor Changes
+
+-   Add support for Application profiles
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.11.0
+    -   @nodeboot/engine@1.4.0
+    -   @nodeboot/di@1.3.0
+    -   @nodeboot/config@1.2.5
+
 ## 1.12.0
 
 ### Minor Changes

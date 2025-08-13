@@ -1,5 +1,17 @@
 # @nodeboot/starter-openapi
 
+## 2.2.0
+
+### Minor Changes
+
+-   Add support for Application profiles
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.11.0
+    -   @nodeboot/engine@1.4.0
+
 ## 2.1.1
 
 ### Patch Changes

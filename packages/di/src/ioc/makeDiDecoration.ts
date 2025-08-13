@@ -1,10 +1,18 @@
 import {DiOptions} from "./types";
+import {allowedProfiles} from "@nodeboot/context";
 
 /**
  * Apply dependency injection decorator if dependency injection framework is available
  * */
 export function decorateDi<TFunction>(target: TFunction, options?: DiOptions): boolean {
-    return decorateTypeDi(target, options) || decorateInversify(target);
+    // Check if the target class is allowed to be decorated based on active profiles
+    if (allowedProfiles(target)) {
+        // Try to apply TypeDI decorator first, if it fails, fallback to Inversify
+        // This allows for flexibility in using either framework based on availability
+        // and ensures that the decorator is applied correctly.
+        return decorateTypeDi(target, options) || decorateInversify(target);
+    }
+    return false;
 }
 
 /**

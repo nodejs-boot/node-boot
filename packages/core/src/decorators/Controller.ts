@@ -15,9 +15,11 @@ import {NodeBootToolkit} from "@nodeboot/engine";
  *  @param baseRoute Extra path you can apply as a base route to all controller actions
  *  @param version controller version to be used as part of the controller route
  *  @param options Extra options that apply to all controller actions
+ *
+ *  @author Manuel Santos <ney.br.santos@gmail.com>
  */
 export function Controller(baseRoute?: string, version?: string, options?: ControllerOptions): ClassDecorator {
-    return (target: any) => {
+    return function (target: any) {
         if (version !== undefined) {
             baseRoute = baseRoute ? `/${version}${baseRoute}` : `/${version}`;
             Reflect.defineMetadata(CONTROLLER_VERSION_METADATA_KEY, version, target);
@@ -27,6 +29,7 @@ export function Controller(baseRoute?: string, version?: string, options?: Contr
 
         // DI is optional and the decorator will only be applied if the DI container dependency is available.
         decorateDi(target);
+
         // Register controller metadata into the engine
         NodeBootToolkit.getMetadataArgsStorage().controllers.push({
             type: "default",

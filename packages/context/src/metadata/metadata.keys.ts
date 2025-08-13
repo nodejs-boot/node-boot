@@ -10,3 +10,4 @@ export const CONTROLLER_VERSION_METADATA_KEY = Symbol("Controller-Version");
 
 // BEAN
 export const LIFECYCLE_TYPE_METADATA_KEY = "__Lifecycle-Type";
+export const BEAN_PROFILE_METADATA_KEY = "__Bean-Profile";

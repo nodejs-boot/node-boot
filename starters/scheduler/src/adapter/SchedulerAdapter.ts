@@ -1,4 +1,11 @@
-import {ApplicationContext, ApplicationFeatureAdapter, ApplicationFeatureContext, Lifecycle} from "@nodeboot/context";
+import {
+    allowedProfiles,
+    ApplicationContext,
+    ApplicationFeatureAdapter,
+    ApplicationFeatureContext,
+    getActiveProfiles,
+    Lifecycle,
+} from "@nodeboot/context";
 import cron from "node-cron";
 import {SCHEDULING_FEATURE} from "../types";
 
@@ -51,24 +58,25 @@ export class SchedulerAdapter implements ApplicationFeatureAdapter {
 
         // Check if scheduling is enabled
         if (ApplicationContext.get().applicationFeatures[SCHEDULING_FEATURE]) {
-            // Retrieve the class instance (bean) from the DI container
-            const componentBean = iocContainer.get(target.constructor);
+            if (allowedProfiles(target)) {
+                // Retrieve the class instance (bean) from the DI container
+                const componentBean = iocContainer.get(target.constructor);
 
-            // Validate cron expression
-            if (cronExpression && cron.validate(cronExpression)) {
-                logger.info(
-                    `⏰ Registering scheduler ${target.constructor.name}:::${cronFunction.name}() with cron '${cronExpression}'`,
-                );
-
-                // Schedule the function execution
-                cron.schedule(cronExpression, () => {
+                // Validate cron expression
+                if (cronExpression && cron.validate(cronExpression)) {
                     logger.info(
-                        `⏰ Executing scheduled task: ${target.constructor.name}:::${cronFunction.name}() scheduled as ${cronExpression}`,
+                        `⏰ Registering scheduler ${target.constructor.name}:::${cronFunction.name}() with cron '${cronExpression}'`,
                     );
-                    cronFunction.apply(componentBean);
-                });
-            } else {
-                logger.warn(`Invalid CRON expression for @Scheduler at function ${cronFunction.name}(). 
+
+                    // Schedule the function execution
+                    cron.schedule(cronExpression, () => {
+                        logger.info(
+                            `⏰ Executing scheduled task: ${target.constructor.name}:::${cronFunction.name}() scheduled as ${cronExpression}`,
+                        );
+                        cronFunction.apply(componentBean);
+                    });
+                } else {
+                    logger.warn(`Invalid CRON expression for @Scheduler at function ${cronFunction.name}(). 
                     Please make sure you configure the @Scheduler with a valid cron expression, following this format:\n
                     *    *    *    *    *\n 
                     │    │    │    │    │  
@@ -77,6 +85,12 @@ export class SchedulerAdapter implements ApplicationFeatureAdapter {
                     │    │    └────── Day of the month (1 - 31)  
                     │    └──────── Hour (0 - 23)  
                     └────────── Minute (0 - 59)`);
+                }
+            } else {
+                logger.warn(`⏰ Scheduler ${target.constructor.name}:::${
+                    cronFunction.name
+                }() with cron ${cronExpression} 
+                not registered because it is not allowed for the current active profiles: ${getActiveProfiles()}`);
             }
         } else {
             logger.warn(`⏰ Scheduler ${target.constructor.name}:::${cronFunction.name}() with cron ${cronExpression} 

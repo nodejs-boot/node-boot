@@ -1,8 +1,10 @@
 import {
+    allowedProfiles,
     ApplicationContext,
     ApplicationFeatureAdapter,
     ApplicationFeatureContext,
     extractPlaceholderKey,
+    getActiveProfiles,
     Lifecycle,
 } from "@nodeboot/context";
 import {AWS_SQS_FEATURE} from "../types";
@@ -45,54 +47,64 @@ export class SqsListenerAdapter implements ApplicationFeatureAdapter {
 
         // Check if SQS feature is enabled
         if (ApplicationContext.get().applicationFeatures[AWS_SQS_FEATURE]) {
-            // Retrieve the class instance (bean) from the DI container
-            const componentBean = iocContainer.get(target.constructor);
+            // Check if the current active profiles allow this SQS listener
+            // This is useful for conditional listener registration based on environment profiles
+            // e.g., only register certain listeners in production or development environments.
+            if (allowedProfiles(target)) {
+                // Retrieve the class instance (bean) from the DI container
+                const componentBean = iocContainer.get(target.constructor);
 
-            const queueUrl = this.getQueueUrl(config, queueUrlOrConfigPlaceholder);
+                const queueUrl = this.getQueueUrl(config, queueUrlOrConfigPlaceholder);
 
-            // Validate SQS Queue url
-            if (this.isValidSqsUrl(queueUrl)) {
-                logger.info(
-                    `Registering SQS Listener "${queueUrl}" --> "${target.constructor.name}:::${listenerFunction.name}()"`,
-                );
+                // Validate SQS Queue url
+                if (this.isValidSqsUrl(queueUrl)) {
+                    logger.info(
+                        `Registering SQS Listener "${queueUrl}" --> "${target.constructor.name}:::${listenerFunction.name}()"`,
+                    );
 
-                // "@ts-expect-error
-                // SQSClient have a strange way to pass arguments to constructor that can make ts fail
-                const sqsClient = iocContainer.get(SQSClient);
+                    // "@ts-expect-error
+                    // SQSClient have a strange way to pass arguments to constructor that can make ts fail
+                    const sqsClient = iocContainer.get(SQSClient);
 
-                const app = Consumer.create({
-                    queueUrl: queueUrl,
-                    pollingWaitTimeMs: 1000,
-                    handleMessage: async msg => {
-                        const body = JSON.parse(msg.Body!);
+                    const app = Consumer.create({
+                        queueUrl: queueUrl,
+                        pollingWaitTimeMs: 1000,
+                        handleMessage: async msg => {
+                            const body = JSON.parse(msg.Body!);
 
-                        const message: MessageEnvelop = {
-                            messageId: body.MessageId,
-                            signature: body.Signature,
-                            timestamp: body.Timestamp,
-                            message: JSON.parse(body.Message),
-                        };
-                        await listenerFunction.bind(componentBean)(message);
-                    },
-                    sqs: sqsClient,
-                });
+                            const message: MessageEnvelop = {
+                                messageId: body.MessageId,
+                                signature: body.Signature,
+                                timestamp: body.Timestamp,
+                                message: JSON.parse(body.Message),
+                            };
+                            await listenerFunction.bind(componentBean)(message);
+                        },
+                        sqs: sqsClient,
+                    });
 
-                app.on("error", err => {
-                    logger.error(`SQS Generic Error: ${err.message}`);
-                });
+                    app.on("error", err => {
+                        logger.error(`SQS Generic Error: ${err.message}`);
+                    });
 
-                app.on("processing_error", err => {
-                    logger.error(`SQS Processing Error: ${err.message}`);
-                });
+                    app.on("processing_error", err => {
+                        logger.error(`SQS Processing Error: ${err.message}`);
+                    });
 
-                app.on("timeout_error", err => {
-                    logger.error(`SQS Timeout Error: ${err.message}`);
-                });
+                    app.on("timeout_error", err => {
+                        logger.error(`SQS Timeout Error: ${err.message}`);
+                    });
 
-                app.start();
-            } else {
-                logger.warn(`Invalid SQS queue URL for @SqsListener at function  "${target.constructor.name}:::${listenerFunction.name}()".
+                    app.start();
+                } else {
+                    logger.warn(`Invalid SQS queue URL for @SqsListener at function  "${target.constructor.name}:::${listenerFunction.name}()".
                  Please provide a valid URL in the format "https://sqs.aws-region.amazonaws.com/account-id/queue-name"`);
+                }
+            } else {
+                logger.warn(`SqsListener ${target.constructor.name}:::${
+                    listenerFunction.name
+                }() with queueUrl ${queueUrlOrConfigPlaceholder} 
+                registered but the active profiles ${getActiveProfiles()} do not match the required profiles defined in the component/service class.`);
             }
         } else {
             logger.warn(`⏰ SqsListener ${target.constructor.name}:::${listenerFunction.name}() with queueUrl ${queueUrlOrConfigPlaceholder} 

@@ -1,5 +1,17 @@
 # @nodeboot/starter-aws
 
+## 1.4.0
+
+### Minor Changes
+
+-   Add support for Application profiles
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.11.0
+    -   @nodeboot/core@1.13.0
+
 ## 1.3.9
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @nodeboot/http-server
 
+## 1.1.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.11.0
+    -   @nodeboot/engine@1.4.0
+    -   @nodeboot/core@1.13.0
+
 ## 1.1.3
 
 ### Patch Changes

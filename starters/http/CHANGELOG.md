@@ -1,5 +1,16 @@
 # @nodeboot/starter-http
 
+## 3.3.0
+
+### Minor Changes
+
+-   Add support for Application profiles
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.11.0
+
 ## 3.2.0
 
 ### Minor Changes

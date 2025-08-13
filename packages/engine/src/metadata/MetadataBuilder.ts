@@ -1,6 +1,7 @@
 import {MetadataArgsStorage} from "./MetadataArgsStorage";
 import {
     ActionMetadata,
+    allowedProfiles,
     ControllerMetadata,
     InterceptorMetadata,
     MiddlewareMetadata,
@@ -46,7 +47,9 @@ export class MetadataBuilder {
         const middlewares = !classes
             ? metadataArgsStorage.middlewares
             : metadataArgsStorage.filterMiddlewareMetadatasForClasses(classes);
-        return middlewares.map(middlewareArgs => new MiddlewareMetadata(middlewareArgs));
+        return middlewares
+            .filter(metadata => allowedProfiles(metadata.target))
+            .map(middlewareArgs => new MiddlewareMetadata(middlewareArgs));
     }
 
     /**
@@ -57,13 +60,15 @@ export class MetadataBuilder {
         const interceptors = !classes
             ? metadataArgsStorage.interceptors
             : metadataArgsStorage.filterInterceptorMetadatasForClasses(classes);
-        return interceptors.map(
-            interceptorArgs =>
-                new InterceptorMetadata({
-                    ...interceptorArgs,
-                    interceptor: interceptorArgs.target,
-                }),
-        );
+        return interceptors
+            .filter(metadata => allowedProfiles(metadata.target))
+            .map(
+                interceptorArgs =>
+                    new InterceptorMetadata({
+                        ...interceptorArgs,
+                        interceptor: interceptorArgs.target,
+                    }),
+            );
     }
 
     /**
@@ -74,14 +79,16 @@ export class MetadataBuilder {
         const controllers = !classes
             ? metadataArgsStorage.controllers
             : metadataArgsStorage.filterControllerMetadatasForClasses(classes);
-        return controllers.map(controllerArgs => {
-            const controller = new ControllerMetadata(controllerArgs);
-            controller.build(this.createControllerResponseHandlers(controller));
-            controller.actions = this.createActions(controller);
-            controller.uses = this.createControllerUses(controller);
-            controller.interceptors = this.createControllerInterceptorUses(controller);
-            return controller;
-        });
+        return controllers
+            .filter(metadata => allowedProfiles(metadata.target))
+            .map(controllerArgs => {
+                const controller = new ControllerMetadata(controllerArgs);
+                controller.build(this.createControllerResponseHandlers(controller));
+                controller.actions = this.createActions(controller);
+                controller.uses = this.createControllerUses(controller);
+                controller.interceptors = this.createControllerInterceptorUses(controller);
+                return controller;
+            });
     }
 
     /**

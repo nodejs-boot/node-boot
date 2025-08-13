@@ -30,3 +30,19 @@ export function extractPlaceholderKey(placeholder: string): string | undefined {
 export function isPlaceholder(value: string): boolean {
     return PLACEHOLDER_REGEX.test(value);
 }
+
+/**
+ * Returns the constructor of the given target.
+ * If the target is already a class constructor, it is returned as is.
+ * If the target is an instance, its constructor is returned.
+ */
+export function toTargetClass<T>(target: T | (new (...args: any[]) => T)) {
+    if (typeof target === "function") {
+        // Already a constructor
+        return target;
+    }
+    if (target && typeof target === "object") {
+        return target.constructor as new (...args: any[]) => T;
+    }
+    throw new TypeError(`Invalid target: expected a class constructor or instance, got ${typeof target}`);
+}

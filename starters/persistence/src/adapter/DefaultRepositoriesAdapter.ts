@@ -1,4 +1,4 @@
-import {IocContainer, RepositoriesAdapter} from "@nodeboot/context";
+import {allowedProfiles, IocContainer, RepositoriesAdapter} from "@nodeboot/context";
 import {EntityManager} from "typeorm";
 import {Logger} from "winston";
 import {PersistenceContext} from "../PersistenceContext";
@@ -29,13 +29,19 @@ export class DefaultRepositoriesAdapter implements RepositoriesAdapter {
         for (const repository of PersistenceContext.get().repositories) {
             const {target, entity, type} = repository;
 
-            const entityRepositoryInstance = new (target as any)(entity, entityManager, entityManager.queryRunner);
+            // Check if the current active profiles allow this repository
+            // This is useful for conditional repository registration based on environment profiles
+            if (allowedProfiles(target)) {
+                const entityRepositoryInstance = new (target as any)(entity, entityManager, entityManager.queryRunner);
 
-            logger.info(`Registering a '${type.toString()}' repository '${target.name}' for entity '${entity.name}'`);
-            // Set repository to entity manager cache
-            (entityManager as any).repositories.set(target, entityRepositoryInstance);
-            // set it to the DI container
-            iocContainer.set(target, entityRepositoryInstance);
+                logger.info(
+                    `Registering a '${type.toString()}' repository '${target.name}' for entity '${entity.name}'`,
+                );
+                // Set repository to entity manager cache
+                (entityManager as any).repositories.set(target, entityRepositoryInstance);
+                // set it to the DI container
+                iocContainer.set(target, entityRepositoryInstance);
+            }
         }
     }
 }

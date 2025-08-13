@@ -12,6 +12,7 @@ export function Interceptor(options?: {priority?: number}): ClassDecorator {
     return (target: any) => {
         // DI is optional and the decorator will only be applied if the DI container dependency is available.
         decorateDi(target);
+
         // Registering the interceptor
         NodeBootToolkit.getMetadataArgsStorage().interceptors.push({
             target: target,

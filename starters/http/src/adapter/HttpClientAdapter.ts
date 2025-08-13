@@ -1,9 +1,11 @@
 import axios, {AxiosInstance} from "axios";
 import {
+    allowedProfiles,
     ApplicationContext,
     ApplicationFeatureAdapter,
     ApplicationFeatureContext,
     extractPlaceholderKey,
+    getActiveProfiles,
     Lifecycle,
     LoggerService,
 } from "@nodeboot/context";
@@ -77,28 +79,41 @@ export class HttpClientAdapter implements ApplicationFeatureAdapter {
     bind({logger, iocContainer, config}: ApplicationFeatureContext): void {
         // Check if HTTP feature is enabled
         if (ApplicationContext.get().applicationFeatures[HTTP_CLIENT_FEATURE]) {
-            this.clientConfig = this.getHttpConfig(config);
+            // Check if the current active profiles allow this HTTP client
+            // This is useful for conditional client registration based on environment profiles
+            // e.g., only register certain clients in production or development environments.
+            // This is done by checking the active profiles against the allowed profiles defined in the client class
+            // metadata. If no active profiles are defined, all configurations are allowed.
+            if (allowedProfiles(this.targetClass)) {
+                this.clientConfig = this.getHttpConfig(config);
 
-            logger.info(
-                `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${this.clientConfig.baseURL}`,
-            );
+                logger.info(
+                    `🌐 Registering HTTP client "${this.targetClass.name}" for target API ${this.clientConfig.baseURL}`,
+                );
 
-            // Create and register the HTTP client
-            let httpClient = axios.create(this.clientConfig);
-            // If plugin configurations are provided, set up plugins
-            httpClient = this.setupPlugins(httpClient, logger);
+                // Create and register the HTTP client
+                let httpClient = axios.create(this.clientConfig);
+                // If plugin configurations are provided, set up plugins
+                httpClient = this.setupPlugins(httpClient, logger);
 
-            // Set up error handling for the HTTP client
-            this.setupErrorHandling(httpClient);
+                // Set up error handling for the HTTP client
+                this.setupErrorHandling(httpClient);
 
-            // If httpLogging is enabled, set up logging for requests and responses
-            if (this.clientConfig.httpLogging) {
-                logger.info(`HTTP logging is enabled for client ${this.targetClass.name}`);
-                this.setupHttpLogging(httpClient, logger);
+                // If httpLogging is enabled, set up logging for requests and responses
+                if (this.clientConfig.httpLogging) {
+                    logger.info(`HTTP logging is enabled for client ${this.targetClass.name}`);
+                    this.setupHttpLogging(httpClient, logger);
+                }
+
+                // Provide the client instance to the DI container
+                iocContainer.set(this.targetClass, httpClient);
+            } else {
+                logger.warn(
+                    `HTTP client ${
+                        this.targetClass.name
+                    } is not registered because it is not allowed in the current active profiles: ${getActiveProfiles()}`,
+                );
             }
-
-            // Provide the client instance to the DI container
-            iocContainer.set(this.targetClass, httpClient);
         } else {
             logger.warn(
                 `🌐 HTTP client is disabled. Please enable HTTP client feature by decorating your application class with @EnableHttpClients()`,
