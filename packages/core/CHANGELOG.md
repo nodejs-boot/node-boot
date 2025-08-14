@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.13.2
+
+### Patch Changes
+
+-   Fix banner message
+
 ## 1.13.1
 
 ### Patch Changes

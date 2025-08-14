@@ -1,5 +1,12 @@
 # @nodeboot/fastify-server
 
+## 1.6.12
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.13.2
+
 ## 1.6.11
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/jest",
-    "version": "1.2.11",
+    "version": "1.2.12",
     "description": "Test framework for Node_Boot projects",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

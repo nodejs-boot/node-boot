@@ -1,5 +1,15 @@
 # @nodeboot/fastify-sample
 
+## 1.2.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.13.2
+    -   @nodeboot/http-server@1.1.6
+    -   @nodeboot/starter-persistence@1.9.2
+    -   @nodeboot/starter-validation@1.1.12
+
 ## 1.2.2
 
 ### Patch Changes

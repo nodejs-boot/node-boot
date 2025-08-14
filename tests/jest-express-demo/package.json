@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/jest-express-demo",
-    "version": "1.1.13",
+    "version": "1.1.14",
     "description": "Demo project for Node-Boot tests with Jest",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

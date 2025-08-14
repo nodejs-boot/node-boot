@@ -1,5 +1,14 @@
 # @nodeboot/jest-fastify-demo
 
+## 1.1.19
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.13.2
+    -   @nodeboot/fastify-server@1.6.12
+    -   @nodeboot/starter-persistence@1.9.2
+
 ## 1.1.18
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @nodeboot/jest-express-demo
 
+## 1.1.14
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.13.2
+    -   @nodeboot/express-server@1.6.12
+    -   @nodeboot/starter-persistence@1.9.2
+
 ## 1.1.13
 
 ### Patch Changes

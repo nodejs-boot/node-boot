@@ -1,5 +1,14 @@
 # @nodeboot/express-ghost-server
 
+## 2.2.10
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.13.2
+    -   @nodeboot/ghost-server@1.1.6
+    -   @nodeboot/starter-persistence@1.9.2
+
 ## 2.2.9
 
 ### Patch Changes
