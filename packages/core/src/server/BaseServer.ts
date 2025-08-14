@@ -210,7 +210,12 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
         const appName = appConfig?.getOptionalString("name") ?? info.build?.name ?? "Un-named App";
         const separator = "============================================================\n";
         this.logger.info(
-            `\n${banner}${separator}Host: "${info.host}" Running Node "${info.nodeVersion}"\nWith App: "${appName}" version "${info.build?.version}"\nPowered by Node-Boot "${info.build?.nodeBoot}" (Running ${info.build?.serverFramework} version "${info.build?.serverVersion}")\n${separator}`,
+            `\n${banner}${separator}
+            Host: "${info.host}" Running Node "${info.nodeVersion}"\n
+            With App: "${appName}" version "${info.build?.version}"\n
+            Powered by Node-Boot "${info.build?.nodeBoot}" (Running ${info.build?.serverFramework} version "${info.build?.serverVersion}")\n
+            Active Profiles: ${info.activeProfiles}\n
+            ${separator}`,
         );
     }
 

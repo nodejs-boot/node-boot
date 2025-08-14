@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.11.1
+
+### Patch Changes
+
+-   Show Active profiles info in server bootstrap logs and actuator info
+
 ## 1.11.0
 
 ### Minor Changes

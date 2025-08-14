@@ -30,6 +30,7 @@ export type Info = {
     loadAvg: number[];
     host: string;
     build?: BuildInfo;
+    activeProfiles: string[];
 };
 
 export type MemoryInfo = {

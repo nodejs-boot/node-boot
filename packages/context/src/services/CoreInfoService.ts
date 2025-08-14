@@ -4,6 +4,7 @@ import v8 from "v8";
 import fs from "fs";
 import {LoggerService} from "./LoggerService";
 import {ApplicationContext} from "../ApplicationContext";
+import {getActiveProfiles} from "../decorators";
 
 export class CoreInfoService {
     private buildInfo?: BuildInfo;
@@ -17,6 +18,7 @@ export class CoreInfoService {
             loadAvg: os.loadavg(),
             uptime: process.uptime(),
             build: await this.getBuild(),
+            activeProfiles: getActiveProfiles(),
         };
     }
 

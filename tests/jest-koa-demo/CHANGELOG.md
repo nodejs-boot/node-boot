@@ -1,5 +1,20 @@
 # @nodeboot/jest-koa-demo
 
+## 1.1.18
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.11.1
+    -   @nodeboot/core@1.13.1
+    -   @nodeboot/authorization@1.2.8
+    -   @nodeboot/config@1.2.6
+    -   @nodeboot/di@1.3.1
+    -   @nodeboot/koa-server@1.6.11
+    -   @nodeboot/starter-actuator@1.4.2
+    -   @nodeboot/starter-openapi@2.2.1
+    -   @nodeboot/starter-persistence@1.9.1
+
 ## 1.1.17
 
 ### Patch Changes
