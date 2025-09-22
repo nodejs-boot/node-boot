@@ -35,11 +35,11 @@ export class FastifyOpenApi extends BaseOpenApiAdapter {
             });
 
             router.get("/docs", async (_req, reply) => {
-                reply.redirect(302, swaggerUiPrefix + "/");
+                reply.redirect(swaggerUiPrefix + "/", 302);
             });
 
             router.get(swaggerUiPrefix, async (_req, reply) => {
-                reply.redirect(302, swaggerUiPrefix + "/");
+                reply.redirect(swaggerUiPrefix + "/", 302);
             });
         }
     }

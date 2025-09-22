@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-openapi",
-    "version": "2.2.2",
+    "version": "2.3.0",
     "description": "OpenAPI plugin for Node-Boot. It allows OpenAPI specs to be automatically generated from controller endpoints",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -54,8 +54,8 @@
     "optionalDependencies": {
         "koa": "^2.14.2",
         "express": "^4.18.2",
-        "fastify": "^4.21.0",
-        "@fastify/static": "^7.0.4"
+        "fastify": "^5.6.0",
+        "@fastify/static": "^8.2.0"
     },
     "files": [
         "dist",

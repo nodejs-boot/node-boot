@@ -12,7 +12,19 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
     constructor() {
         super("fastify");
         this.framework = Fastify({forceCloseConnections: true, logger: false});
-        this.framework.decorateRequest("locals", {});
+        // Add a `locals` property to the Fastify request object
+        this.framework.decorateRequest("locals", {
+            getter(this: any) {
+                // attach a hidden property on `this` (the request)
+                if (!this.__locals) {
+                    this.__locals = {};
+                }
+                return this.__locals;
+            },
+            setter(this: any, value) {
+                this.__locals = value;
+            },
+        });
     }
 
     override async configureHttpLogging(): Promise<void> {
@@ -26,7 +38,7 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
 
         this.framework.addHook("onResponse", (request, reply, done) => {
             if (this.shouldLog(request.raw.url!)) {
-                const responseTime = reply.getResponseTime();
+                const responseTime = reply.elapsedTime;
                 const logMessage = `<== Outgoing http response: ${request.method} ${request.raw.url} ${reply.statusCode} - ${responseTime}ms | ${request.ip} | ${request.headers["user-agent"]}`;
                 this.logger.info(logMessage);
             }

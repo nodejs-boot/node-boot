@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 2.3.0
+
+### Minor Changes
+
+-   Fix fastify dependency compatibility
+
 ## 2.2.2
 
 ### Patch Changes

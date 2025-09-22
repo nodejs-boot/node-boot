@@ -1,5 +1,11 @@
 # @nodeboot/fastify-server
 
+## 1.7.0
+
+### Minor Changes
+
+-   Fix fastify dependency compatibility
+
 ## 1.6.12
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @nodeboot/fastify-sample
 
+## 1.3.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-actuator@1.6.0
+    -   @nodeboot/starter-openapi@2.3.0
+
 ## 1.3.0
 
 ### Minor Changes

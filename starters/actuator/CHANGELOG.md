@@ -1,5 +1,11 @@
 # @nodeboot/starter-actuator
 
+## 1.6.0
+
+### Minor Changes
+
+-   Fix fastify dependency compatibility
+
 ## 1.5.0
 
 ### Minor Changes

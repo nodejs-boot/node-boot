@@ -1,5 +1,13 @@
 # @nodeboot/express-sample
 
+## 2.2.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-actuator@1.6.0
+    -   @nodeboot/starter-openapi@2.3.0
+
 ## 2.2.0
 
 ### Minor Changes
