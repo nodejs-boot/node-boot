@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-http",
-    "version": "3.3.1",
+    "version": "3.4.0",
     "description": "Node-Boot starter package for HTTP clients",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -30,9 +30,11 @@
     },
     "dependencies": {
         "@nodeboot/context": "workspace:*",
-        "@nodeboot/error": "workspace:*",
-        "axios": "^1.11.0",
-        "axios-rate-limit": "^1.4.0"
+        "@nodeboot/error": "workspace:*"
+    },
+    "peerDependencies": {
+        "axios": ">=1.12.2",
+        "axios-rate-limit": ">=1.4.0"
     },
     "devDependencies": {},
     "files": [

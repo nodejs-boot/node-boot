@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 2.2.2
+
+### Patch Changes
+
+-   Small fix to support primitive response types
+
 ## 2.2.1
 
 ### Patch Changes

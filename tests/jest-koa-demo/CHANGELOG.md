@@ -1,5 +1,17 @@
 # @nodeboot/jest-koa-demo
 
+## 1.2.0
+
+### Minor Changes
+
+-   Update dependencies
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@2.2.2
+    -   @nodeboot/starter-actuator@1.5.0
+
 ## 1.1.19
 
 ### Patch Changes

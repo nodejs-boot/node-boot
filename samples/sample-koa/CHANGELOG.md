@@ -1,5 +1,18 @@
 # @nodeboot/koa-sample
 
+## 2.2.0
+
+### Minor Changes
+
+-   Update dependencies
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@2.2.2
+    -   @nodeboot/starter-actuator@1.5.0
+    -   @nodeboot/starter-http@3.4.0
+
 ## 2.1.25
 
 ### Patch Changes

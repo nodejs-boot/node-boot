@@ -1,5 +1,11 @@
 # @nodeboot/test
 
+## 1.3.0
+
+### Minor Changes
+
+-   Update dependencies
+
 ## 1.2.12
 
 ### Patch Changes

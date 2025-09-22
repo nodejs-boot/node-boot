@@ -17,6 +17,35 @@ export function ResponseSchema(
         isArray?: boolean;
     } = {},
 ) {
+    function resolvePrimitiveSchema(primitiveType: string) {
+        let primitiveSchema: SchemaObject;
+        switch (primitiveType) {
+            case "string":
+                primitiveSchema = {type: "string"};
+                break;
+            case "number":
+                primitiveSchema = {type: "number"};
+                break;
+            case "integer":
+                primitiveSchema = {type: "integer"};
+                break;
+            case "boolean":
+                primitiveSchema = {type: "boolean"};
+                break;
+            case "object":
+                primitiveSchema = {type: "object"};
+                break;
+            case "array":
+                primitiveSchema = {type: "array", items: {}};
+                break;
+            default:
+                // Fallback for custom types or unknown primitives
+                primitiveSchema = {type: "string"};
+                break;
+        }
+        return primitiveSchema;
+    }
+
     const setResponseSchema = (source: OperationObject, route: IRoute) => {
         const contentType = options.contentType || getContentType(route);
         const description = options.description || "";
@@ -24,6 +53,7 @@ export function ResponseSchema(
         const statusCode = (options.statusCode || getStatusCode(route)) + "";
 
         let responseSchemaName = "";
+        let schema: SchemaObject | undefined = undefined;
 
         // Ensure the response class is properly registered with @Model
         if (typeof responseClass === "function" && responseClass.name) {
@@ -33,16 +63,21 @@ export function ResponseSchema(
             if (!Reflect.getMetadata("node-boot:model", responseClass.prototype)) {
                 Model()(responseClass);
             }
-        } else if (typeof responseClass === "string") {
-            responseSchemaName = responseClass;
-        }
 
-        if (responseSchemaName) {
             const reference: ReferenceObject = {
                 $ref: `#/components/schemas/${responseSchemaName}`,
             };
-            const schema: SchemaObject = isArray ? {type: "array", items: reference} : reference;
+            schema = isArray ? {type: "array", items: reference} : reference;
+        } else if (typeof responseClass === "string") {
+            // Handle primitive types directly
+            const primitiveType = responseClass.toLowerCase();
+            const primitiveSchema = resolvePrimitiveSchema(primitiveType);
 
+            schema = isArray ? {type: "array", items: primitiveSchema} : primitiveSchema;
+            responseSchemaName = primitiveType; // For tracking purposes
+        }
+
+        if (responseSchemaName && schema) {
             const responses: ResponsesObject = {
                 [statusCode]: {
                     content: {

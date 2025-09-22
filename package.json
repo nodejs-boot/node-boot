@@ -78,7 +78,7 @@
         "typescript": "^5.8.3"
     },
     "resolutions": {
-        "typeorm": "0.3.20"
+        "typeorm": "0.3.27"
     },
     "files": [
         "dist",

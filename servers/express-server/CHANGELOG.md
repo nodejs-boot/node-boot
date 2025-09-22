@@ -1,5 +1,11 @@
 # @nodeboot/express-server
 
+## 1.7.0
+
+### Minor Changes
+
+-   Update dependencies
+
 ## 1.6.12
 
 ### Patch Changes
