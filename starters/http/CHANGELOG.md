@@ -1,5 +1,17 @@
 # @nodeboot/starter-http
 
+## 3.5.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/error@1.3.0
+
 ## 3.4.0
 
 ### Minor Changes

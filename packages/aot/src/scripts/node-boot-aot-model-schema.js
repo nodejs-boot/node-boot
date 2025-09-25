@@ -2,8 +2,7 @@
 
 import fs from "fs";
 import path from "path";
-import ts from "typescript";
-import {generateSchema} from "typescript-json-schema";
+import {generateSchema, getProgramFromFiles} from "typescript-json-schema";
 
 /**
  * Node-Boot AOT Model Schema Generator
@@ -84,22 +83,6 @@ function findModelFiles(dir) {
 }
 
 /**
- * Creates a TypeScript program from a list of file paths.
- *
- * @param {readonly string[]} files - Paths to TypeScript files.
- * @returns {ts.Program} A TypeScript program instance.
- */
-function createProgramFromFiles(files) {
-    return ts.createProgram(files, {
-        strictNullChecks: true,
-        experimentalDecorators: true,
-        emitDecoratorMetadata: true,
-        target: ts.ScriptTarget.ESNext,
-        module: ts.ModuleKind.CommonJS,
-    });
-}
-
-/**
  * Wraps collected schemas into an OpenAPI-compatible components object,
  * and removes unresolved $ref entries by replacing them with an empty object.
  *
@@ -109,7 +92,20 @@ function createProgramFromFiles(files) {
 function mergeSchemas(schemas) {
     const cleanedSchemas = {};
 
-    // Helper to clean unresolved $ref
+    // List of primitive types to skip as referenced schemas
+    const primitiveTypes = new Set([
+        "Object",
+        "DateTime",
+        "Date",
+        "String",
+        "Number",
+        "Boolean",
+        "Array",
+        "Int",
+        "Float",
+    ]);
+
+    // Helper to clean unresolved $ref and skip primitives
     const resolveRefs = obj => {
         if (Array.isArray(obj)) {
             return obj.map(resolveRefs);
@@ -118,6 +114,30 @@ function mergeSchemas(schemas) {
                 const refMatch = obj.$ref.match(/^#\/definitions\/(.+)$/);
                 if (refMatch) {
                     const refName = refMatch[1];
+                    if (primitiveTypes.has(refName)) {
+                        // Replace with OpenAPI primitive type
+                        // Map to OpenAPI types
+                        switch (refName) {
+                            case "String":
+                                return {type: "string"};
+                            case "Date":
+                                return {type: "string", format: "date"};
+                            case "DateTime":
+                                return {type: "string", format: "date-time"};
+                            case "Int":
+                                return {type: "integer"};
+                            case "Number":
+                            case "Float":
+                                return {type: "number"};
+                            case "Boolean":
+                                return {type: "boolean"};
+                            case "Array":
+                                return {type: "array"};
+                            case "Object":
+                            default:
+                                return {type: "object"};
+                        }
+                    }
                     if (!schemas[refName]) {
                         // Replace unresolved $ref with empty object
                         return {};
@@ -148,7 +168,7 @@ function mergeSchemas(schemas) {
 
 function extractModelAndEnumNames(filePath) {
     const content = fs.readFileSync(filePath, "utf-8");
-    const modelMatches = [...content.matchAll(/@Model\(\)\s+export\s+class\s+(\w+)/g)];
+    const modelMatches = [...content.matchAll(/@Model\(\)[\s\S]*?export\s+class\s+(\w+)/g)];
     const enumMatches = [...content.matchAll(/export\s+enum\s+(\w+)/g)];
 
     const modelNames = modelMatches.map(([, name]) => name);
@@ -173,7 +193,12 @@ function runAOTModelSchema() {
         return;
     }
 
-    const program = createProgramFromFiles(modelFiles);
+    const program = getProgramFromFiles(modelFiles, {
+        strictNullChecks: true,
+        experimentalDecorators: true,
+        emitDecoratorMetadata: true,
+    });
+
     const schemas = {};
 
     for (const sourceFile of modelFiles) {

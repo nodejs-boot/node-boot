@@ -1,5 +1,12 @@
 # @nodeboot/scan
 
+## 1.4.0
+
+### Minor Changes
+
+-   Add support for primitive types for AOT OpenAPI schema generation
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
 ## 1.3.0
 
 ### Minor Changes

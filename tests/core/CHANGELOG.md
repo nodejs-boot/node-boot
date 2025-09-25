@@ -1,5 +1,18 @@
 # @nodeboot/test
 
+## 1.4.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.3.0
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/core@1.14.0
+
 ## 1.3.0
 
 ### Minor Changes

@@ -11,8 +11,7 @@ import {
     ParamMetadata,
     UseMetadata,
 } from "@nodeboot/context";
-import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
-import {HTTPMethods} from "fastify/types/utils";
+import {FastifyError, FastifyInstance, FastifyReply, FastifyRequest, HTTPMethods} from "fastify";
 import templateUrl from "template-url";
 import {
     AccessDeniedError,
@@ -22,7 +21,6 @@ import {
     NotFoundError,
 } from "@nodeboot/error";
 import {DependenciesLoader} from "../loader";
-import {AsyncFunction} from "fastify/types/instance";
 import {FastifyServerConfigs} from "../types";
 
 const actionToHttpMethodMap = {
@@ -39,6 +37,8 @@ type FastifyServerOptions = {
     fastify: FastifyInstance;
     configs?: FastifyServerConfigs;
 };
+
+type AsyncFunction = (...args: any) => Promise<any>;
 
 export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<FastifyRequest, FastifyReply>> {
     private readonly logger: LoggerService;

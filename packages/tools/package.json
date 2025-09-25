@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/tools",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Node-Boot tools to help during CI-CD and automation processes",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

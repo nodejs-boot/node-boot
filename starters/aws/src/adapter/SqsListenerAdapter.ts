@@ -62,8 +62,7 @@ export class SqsListenerAdapter implements ApplicationFeatureAdapter {
                         `Registering SQS Listener "${queueUrl}" --> "${target.constructor.name}:::${listenerFunction.name}()"`,
                     );
 
-                    // "@ts-expect-error
-                    // SQSClient have a strange way to pass arguments to constructor that can make ts fail
+                    // "@ts-expect-error" SQSClient have a strange way to pass arguments to constructor that can make ts fail
                     const sqsClient = iocContainer.get(SQSClient);
 
                     const app = Consumer.create({

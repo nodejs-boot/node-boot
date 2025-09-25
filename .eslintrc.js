@@ -18,7 +18,9 @@ module.exports = {
     },
     settings: {
         "import/resolver": {
-            typescript: {}, // this loads paths from tsconfig.json
+            node: {
+                extensions: [".js", ".jsx", ".ts", ".tsx"],
+            },
         },
     },
     rules: {

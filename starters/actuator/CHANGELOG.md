@@ -1,5 +1,18 @@
 # @nodeboot/starter-actuator
 
+## 1.7.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.3.0
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/engine@1.5.0
+
 ## 1.6.0
 
 ### Minor Changes

@@ -1,5 +1,17 @@
 # @nodeboot/authorization
 
+## 1.3.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/engine@1.5.0
+
 ## 1.2.8
 
 ### Patch Changes

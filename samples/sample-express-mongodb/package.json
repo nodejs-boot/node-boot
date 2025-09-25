@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-sample-mongodb",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "Node-Boot sample project using Express and mongodb",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -49,7 +49,7 @@
         "@nodeboot/starter-firebase": "workspace:*",
         "@nodeboot/starter-http": "workspace:*",
         "@nodeboot/starter-validation": "workspace:*",
-        "@nodeboot/aot": "workspace:*",
+        "@nodeboot/aot": "^1.4.0",
         "katxupa": "^1.10.4",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^0.3.27",

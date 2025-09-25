@@ -1,5 +1,11 @@
 # @nodeboot/error
 
+## 1.3.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
 ## 1.2.0
 
 ### Minor Changes

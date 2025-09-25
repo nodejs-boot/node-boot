@@ -1,5 +1,23 @@
 # @nodeboot/jest-express-demo
 
+## 1.3.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.3.0
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/core@1.14.0
+    -   @nodeboot/di@1.4.0
+    -   @nodeboot/engine@1.5.0
+    -   @nodeboot/error@1.3.0
+    -   @nodeboot/express-server@1.8.0
+    -   @nodeboot/starter-persistence@1.10.0
+
 ## 1.2.0
 
 ### Minor Changes

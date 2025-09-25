@@ -1,5 +1,17 @@
 # @nodeboot/starter-openai
 
+## 1.2.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/core@1.14.0
+
 ## 1.1.12
 
 ### Patch Changes

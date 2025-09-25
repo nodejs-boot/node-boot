@@ -1,5 +1,25 @@
 # @nodeboot/jest-koa-demo
 
+## 1.3.0
+
+### Minor Changes
+
+-   Upgrade typescript, fix eslint and fix aot openapi model generation
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/authorization@1.3.0
+    -   @nodeboot/config@1.3.0
+    -   @nodeboot/context@1.12.0
+    -   @nodeboot/core@1.14.0
+    -   @nodeboot/di@1.4.0
+    -   @nodeboot/error@1.3.0
+    -   @nodeboot/koa-server@1.7.0
+    -   @nodeboot/starter-actuator@1.7.0
+    -   @nodeboot/starter-openapi@2.4.0
+    -   @nodeboot/starter-persistence@1.10.0
+
 ## 1.2.1
 
 ### Patch Changes

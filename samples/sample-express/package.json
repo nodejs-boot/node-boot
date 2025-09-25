@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-sample",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "Node-Boot sample project using Express",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -23,6 +23,7 @@
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "aot-script": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-cycle-detector.js",
+        "model-gen": "node ../../packages/aot/dist/scripts/node-boot-aot-model-schema.js",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
         "build": "tsc -p tsconfig.build.json",
         "postbuild": "npx @nodeboot/aot node-boot-aot",

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-ghost-server",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "description": "Node-Boot sample project without http server",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -45,7 +45,7 @@
         "@nodeboot/starter-scheduler": "workspace:*",
         "@nodeboot/starter-http": "workspace:*",
         "@nodeboot/ghost-server": "workspace:*",
-        "@nodeboot/aot": "^1.2.0",
+        "@nodeboot/aot": "^1.4.0",
         "katxupa": "^1.10.4",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^0.3.27",
