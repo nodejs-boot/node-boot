@@ -1,5 +1,12 @@
 # @nodeboot/jest-fastify-demo
 
+## 1.3.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-openapi@2.4.1
+
 ## 1.3.0
 
 ### Minor Changes

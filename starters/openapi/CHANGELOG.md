@@ -1,5 +1,11 @@
 # @nodeboot/starter-openapi
 
+## 2.4.1
+
+### Patch Changes
+
+-   Add support for time related objects (luxon DateTime and Timestamp)
+
 ## 2.4.0
 
 ### Minor Changes

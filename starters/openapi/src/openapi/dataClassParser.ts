@@ -41,6 +41,16 @@ const PRIMITIVE_TYPE_MAP: Record<string, FIELD_TYPE> = {
         openApiType: "string",
         typeFormat: "date-time",
     },
+    datetime: {
+        type: "date",
+        openApiType: "string",
+        typeFormat: "date-time",
+    },
+    timestamp: {
+        type: "date",
+        openApiType: "string",
+        typeFormat: "date-time",
+    },
 };
 
 export type Model = {new (): any};

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/express-sample",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "description": "Node-Boot sample project using Express",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -68,6 +68,7 @@
         "cookie": "0.7.0",
         "express-session": "^1.17.3",
         "typedi": "^0.10.0",
+        "luxon": "^3.0.0",
         "winston": "^3.10.0"
     },
     "devDependencies": {
@@ -78,6 +79,7 @@
         "@types/jest": "^28.1.6",
         "@types/multer": "^2.0.0",
         "@types/node": "^22.13.4",
-        "@types/supertest": "^2.0.12"
+        "@types/supertest": "^2.0.12",
+        "@types/luxon": "^3.0.0"
     }
 }
