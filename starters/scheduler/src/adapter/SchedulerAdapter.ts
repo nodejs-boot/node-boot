@@ -8,13 +8,8 @@ import {
 } from "@nodeboot/context";
 import cron from "node-cron";
 import {SCHEDULING_FEATURE} from "../types";
+import {SchedulingContext} from "../context/SchedulingContext";
 
-/**
- * @typedef {Object} SchedulerOptions
- * @property {any} target - The target class instance where the scheduled function is defined.
- * @property {Function} cronFunction - The function that will be executed on schedule.
- * @property {string} cronExpression - The cron expression defining the schedule.
- */
 type SchedulerOptions = {
     target: any;
     cronFunction: Function;
@@ -44,6 +39,7 @@ export class SchedulerAdapter implements ApplicationFeatureAdapter {
      */
     constructor(options: SchedulerOptions) {
         this.options = options;
+        SchedulingContext.get().addInstance(this);
     }
 
     /**
@@ -69,12 +65,13 @@ export class SchedulerAdapter implements ApplicationFeatureAdapter {
                     );
 
                     // Schedule the function execution
-                    cron.schedule(cronExpression, () => {
+                    const cronTask = cron.schedule(cronExpression, () => {
                         logger.info(
                             `⏰ Executing scheduled task: ${target.constructor.name}:::${cronFunction.name}() scheduled as ${cronExpression}`,
                         );
                         cronFunction.apply(componentBean);
                     });
+                    SchedulingContext.get().addCronJob(cronTask);
                 } else {
                     logger.warn(`Invalid CRON expression for @Scheduler at function ${cronFunction.name}(). 
                     Please make sure you configure the @Scheduler with a valid cron expression, following this format:\n

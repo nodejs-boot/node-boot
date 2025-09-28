@@ -10,4 +10,5 @@ export * from "./checkers";
 export * from "./metadata";
 export * from "./services";
 export * from "./decorators";
+export * from "./shutdown";
 export * from "./utils";

@@ -24,6 +24,6 @@ import {PersistenceContext} from "../PersistenceContext";
 export function EntityEventSubscriber<T extends new (...args: any[]) => EntitySubscriberInterface>() {
     return (target: T) => {
         EventSubscriber()(target);
-        PersistenceContext.get().eventSubscribers.push(target);
+        PersistenceContext.get().addEventSubscriber(target);
     };
 }

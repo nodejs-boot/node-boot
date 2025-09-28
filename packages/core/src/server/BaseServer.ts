@@ -14,14 +14,20 @@ import {ConfigService, loadNodeBootConfig} from "@nodeboot/config";
 import {NodeBootAppView} from "./NodeBootApp";
 import {SERVER_CONFIGURATIONS} from "../constants";
 import {Server} from "node:http";
+import {ProcessSignalHandler, ServerInstance} from "../ProcessSignalHandler";
 
-export abstract class BaseServer<TFramework = any, TRouter = any> {
+export abstract class BaseServer<TFramework = any, TRouter = any> implements ServerInstance {
     protected logger: Logger;
     protected config: ConfigService;
     protected infoService: CoreInfoService;
     protected lifecycleBridge: ApplicationLifecycleBridge;
+    private signalHandler: ProcessSignalHandler;
 
-    protected constructor(private readonly serverType: string) {}
+    protected constructor(private readonly serverType: string) {
+        // Register this server instance for proper cleanup
+        this.signalHandler = ProcessSignalHandler.getInstance();
+        this.signalHandler.registerServer(this);
+    }
 
     protected async init(additionalConfigData?: JsonObject) {
         const context = ApplicationContext.get();
@@ -39,6 +45,30 @@ export abstract class BaseServer<TFramework = any, TRouter = any> {
     abstract listen(): Promise<NodeBootAppView>;
 
     abstract close(): Promise<void>;
+
+    /**
+     * Enhanced cleanup method that properly releases all resources
+     * to prevent memory leaks during application shutdown
+     */
+    protected async cleanup(): Promise<void> {
+        this.logger.info("Cleaning up Node-Boot application resources");
+
+        // Cleanup lifecycle bridge
+        if (this.lifecycleBridge && typeof this.lifecycleBridge.cleanup === "function") {
+            this.lifecycleBridge.cleanup();
+        }
+
+        // Publish stopped event before cleanup
+        this.stopped();
+
+        // Unregister from signal handler
+        this.signalHandler.unregisterServer(this);
+
+        // Clear logger transports to prevent hanging references
+        if (this.logger && typeof this.logger.close === "function") {
+            this.logger.close();
+        }
+    }
 
     abstract getHttpServer(): Server;
 

@@ -1,5 +1,6 @@
 import {ApplicationContext} from "@nodeboot/context";
 import {SCHEDULING_FEATURE} from "../types";
+import {SchedulerHooks} from "../hook/SchedulerHooks";
 
 /**
  * Enables scheduling in a Node-Boot application.
@@ -26,5 +27,8 @@ import {SCHEDULING_FEATURE} from "../types";
 export const EnableScheduling = (): ClassDecorator => {
     return () => {
         ApplicationContext.get().applicationFeatures[SCHEDULING_FEATURE] = true;
+
+        // Register shutdown hooks to clean up scheduled tasks
+        new SchedulerHooks();
     };
 };

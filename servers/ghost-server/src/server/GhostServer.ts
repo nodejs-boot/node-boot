@@ -47,7 +47,8 @@ export class GhostServer extends BaseServer<unknown, unknown> {
      */
     public async close(): Promise<void> {
         this.logger.info("NoServer stopped.");
-        super.stopped();
+        // Call the enhanced cleanup method
+        await this.cleanup();
     }
 
     /**

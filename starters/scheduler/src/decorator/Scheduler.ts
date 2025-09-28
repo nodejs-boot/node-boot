@@ -1,5 +1,12 @@
 import {ApplicationContext} from "@nodeboot/context";
 import {SchedulerAdapter} from "../adapter";
+import {SchedulingContext} from "../context/SchedulingContext";
+
+function createSchedulerKey(target: any, propertyKey: string | symbol, cronExpression: string): string {
+    const className = target.constructor.name;
+    const methodName = String(propertyKey);
+    return `${className}::${methodName}::${cronExpression}`;
+}
 
 /**
  * A decorator to schedule the execution of a method based on a cron expression.
@@ -32,7 +39,14 @@ import {SchedulerAdapter} from "../adapter";
  * @author Manuel Santos <ney.br.santos@gmail.com>
  */
 export function Scheduler(cronExpression: string): MethodDecorator {
-    return function (target: any, _: string | symbol, descriptor: PropertyDescriptor) {
+    return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
+        const schedulerKey = createSchedulerKey(target, propertyKey, cronExpression);
+
+        // Use SchedulingContext for duplicate prevention
+        if (!SchedulingContext.get().registerScheduler(schedulerKey)) {
+            return;
+        }
+
         const schedulerAdapter = new SchedulerAdapter({
             target,
             cronExpression,

@@ -261,6 +261,9 @@ export class PersistenceConfiguration {
         } catch (error) {
             logger.error(`Error validating database:`, error);
             process.exit(1);
+        } finally {
+            // Always release the query runner to prevent connection leaks
+            await queryRunner.release();
         }
     }
 }

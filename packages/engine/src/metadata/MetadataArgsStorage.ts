@@ -170,6 +170,19 @@ export class MetadataArgsStorage {
         this.actions = [];
         this.params = [];
         this.responseHandlers = [];
+        this.models = [];
+        this.modelProperties = [];
+    }
+
+    /**
+     * Resets the global metadata storage singleton.
+     * Useful for testing and hot-reload scenarios to prevent memory leaks.
+     */
+    static reset(): void {
+        if ((global as any).engineMetadataArgsStorage) {
+            (global as any).engineMetadataArgsStorage.reset();
+            (global as any).engineMetadataArgsStorage = undefined;
+        }
     }
 
     /**

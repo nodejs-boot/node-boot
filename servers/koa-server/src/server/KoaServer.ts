@@ -99,13 +99,14 @@ export class KoaServer extends BaseServer<Koa, Router> {
         }
 
         return await new Promise<void>((resolve, reject) => {
-            this.serverInstance.close(err => {
+            this.serverInstance.close(async err => {
                 if (err) {
-                    console.error("Error stopping the server:", err);
+                    this.logger.error("NodeBoot Koa Server closed with error", err);
                     reject(err);
                 } else {
-                    console.log("Server has been stopped.");
-                    super.stopped();
+                    this.logger.info("NodeBoot Koa Server closed successfully");
+                    // Call the enhanced cleanup method
+                    await this.cleanup();
                     resolve();
                 }
             });

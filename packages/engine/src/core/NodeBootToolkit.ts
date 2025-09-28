@@ -6,6 +6,9 @@ import {ComponentImporter} from "../handler";
 import {CustomParameterDecorator, NodeBootEngineOptions} from "@nodeboot/context";
 
 export class NodeBootToolkit {
+    // Track if process listeners have been registered to prevent duplicates
+    private static processListenersRegistered = false;
+
     /**
      * Gets metadata args storage.
      * Metadata args storage follows the best practices and stores metadata in a global variable.
@@ -39,15 +42,20 @@ export class NodeBootToolkit {
 
         this.configureDriver(driver, options);
 
-        process.on("uncaughtException", error => {
-            console.error("Uncaught Exception:", error);
-            // Prevent the server from crashing
-        });
+        // Only register process listeners once to prevent memory leaks
+        if (!NodeBootToolkit.processListenersRegistered) {
+            process.on("uncaughtException", error => {
+                console.error("Uncaught Exception:", error);
+                // Prevent the server from crashing
+            });
 
-        process.on("unhandledRejection", (reason: any) => {
-            console.error("Unhandled Rejection at:", `${reason.message}\n${reason.stack}`);
-            // Log, but don't exit
-        });
+            process.on("unhandledRejection", (reason: any) => {
+                console.error("Unhandled Rejection at:", `${reason.message}\n${reason.stack}`);
+                // Log, but don't exit
+            });
+
+            NodeBootToolkit.processListenersRegistered = true;
+        }
 
         // next create a controller executor
         new NodeBootEngine(driver, options)
@@ -56,6 +64,21 @@ export class NodeBootToolkit {
             .registerMiddlewares("before", middlewareClasses)
             .registerControllers(controllerClasses)
             .registerMiddlewares("after", middlewareClasses); // todo: register only for loaded controllers?
+    }
+
+    /**
+     * Reset all static state and cleanup resources.
+     * Should be called during testing or hot-reload scenarios.
+     */
+    static reset(): void {
+        // Reset metadata storage
+        MetadataArgsStorage.reset();
+
+        // Reset process listeners flag
+        NodeBootToolkit.processListenersRegistered = false;
+
+        // Note: We don't remove the actual process listeners as they're global
+        // and removing them could affect other parts of the application
     }
 
     private static configureDriver<TServer, TDriver extends NodeBootDriver<TServer>>(

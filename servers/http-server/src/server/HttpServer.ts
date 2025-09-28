@@ -69,13 +69,18 @@ export class HttpServer extends BaseServer<Server, Instance<HTTPVersion.V1>> {
     }
 
     public async close(): Promise<void> {
-        this.server.close(err => {
-            if (err) {
-                this.logger.error("NodeBoot HTTP Server closed with error", err);
-            } else {
-                this.logger.info("NodeBoot HTTP Server closed successfully");
-                super.stopped();
-            }
+        return new Promise<void>((resolve, reject) => {
+            this.server.close(async err => {
+                if (err) {
+                    this.logger.error("NodeBoot HTTP Server closed with error", err);
+                    reject(err);
+                } else {
+                    this.logger.info("NodeBoot HTTP Server closed successfully");
+                    // Call the enhanced cleanup method
+                    await this.cleanup();
+                    resolve();
+                }
+            });
         });
     }
 

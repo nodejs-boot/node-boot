@@ -25,6 +25,26 @@ export class ApplicationLifecycleBridge {
         });
     }
 
+    /**
+     * Cleanup method to prevent memory leaks by removing all listeners
+     * and clearing the event bus when the application shuts down
+     */
+    cleanup() {
+        this.logger.debug("Cleaning up ApplicationLifecycleBridge resources");
+        this.eventBus.removeAllListeners();
+        // Set max listeners to 0 to prevent further additions
+        this.eventBus.setMaxListeners(0);
+    }
+
+    /**
+     * Get the current number of listeners for monitoring purposes
+     */
+    getListenerCount(): number {
+        return this.eventBus.eventNames().reduce((total, eventName) => {
+            return total + this.eventBus.listenerCount(eventName);
+        }, 0);
+    }
+
     async listen() {
         this.eventBus.once("application.initialized", () => {
             this.applyLifecycle("application.initialized");

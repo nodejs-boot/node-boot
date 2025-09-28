@@ -102,14 +102,15 @@ export class FastifyServer extends BaseServer<FastifyInstance, FastifyInstance> 
     }
 
     public async close(): Promise<void> {
-        this.getHttpServer().close(err => {
-            if (err) {
-                this.logger.error("Node-Boot Fastify HTTP Server closed with error", err);
-            } else {
-                this.logger.info("Node-Boot Fastify HTTP Server closed successfully");
-                super.stopped();
-            }
-        });
+        try {
+            await this.framework.close();
+            this.logger.info("Node-Boot Fastify HTTP Server closed successfully");
+            // Call the enhanced cleanup method
+            await this.cleanup();
+        } catch (err) {
+            this.logger.error("Node-Boot Fastify HTTP Server closed with error", err);
+            throw err;
+        }
     }
 
     getHttpServer(): Server {

@@ -98,13 +98,14 @@ export class ExpressServer extends BaseServer<express.Application, express.Appli
         }
 
         return await new Promise<void>((resolve, reject) => {
-            this.serverInstance.close(err => {
+            this.serverInstance.close(async err => {
                 if (err) {
                     console.error("Error stopping the server:", err);
                     reject(err);
                 } else {
                     console.log("Server has been stopped.");
-                    super.stopped();
+                    // Call the enhanced cleanup method
+                    await this.cleanup();
                     resolve();
                 }
             });

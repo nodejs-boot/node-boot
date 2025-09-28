@@ -82,4 +82,56 @@ export class PersistenceContext {
         }
         return PersistenceContext.context;
     }
+
+    /**
+     * Adds a repository if not already present (prevents duplicates).
+     */
+    addRepository(repo: RepositoryMetadata): void {
+        if (!this.repositories.some(r => r.target === repo.target && r.entity === repo.entity)) {
+            this.repositories.push(repo);
+        }
+    }
+
+    /**
+     * Adds a migration if not already present (prevents duplicates).
+     */
+    addMigration(migration: new (...args: any[]) => MigrationInterface): void {
+        if (!this.migrations.includes(migration)) {
+            this.migrations.push(migration);
+        }
+    }
+
+    /**
+     * Adds an event subscriber if not already present (prevents duplicates).
+     */
+    addEventSubscriber(subscriber: new (...args: any[]) => EntitySubscriberInterface): void {
+        if (!this.eventSubscribers.includes(subscriber)) {
+            this.eventSubscribers.push(subscriber);
+        }
+    }
+
+    /**
+     * Clears all arrays and references in the context (does not reset the singleton itself).
+     */
+    clear(): void {
+        this.repositories = [];
+        this.migrations = [];
+        this.eventSubscribers = [];
+        this.namingStrategy = undefined;
+        this.queryCache = undefined;
+        this.databaseConnectionOverrides = undefined;
+        this.synchronizeDatabase = undefined;
+        this.migrationsRun = undefined;
+    }
+
+    /**
+     * Resets the singleton context and clears all arrays and references.
+     * Useful for tests and hot-reload environments to prevent memory leaks.
+     */
+    static reset(): void {
+        if (PersistenceContext.context) {
+            PersistenceContext.context.clear();
+        }
+        PersistenceContext.context = undefined as any;
+    }
 }
