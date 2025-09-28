@@ -1,5 +1,19 @@
 # @nodeboot/starter-persistence
 
+## 1.11.0
+
+### Minor Changes
+
+-   237ead1: fixing potential memory leands and improve codebase
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.0
+    -   @nodeboot/core@1.15.0
+    -   @nodeboot/config@1.3.1
+    -   @nodeboot/di@1.4.1
+
 ## 1.10.0
 
 ### Minor Changes

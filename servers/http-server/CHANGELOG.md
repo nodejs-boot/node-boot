@@ -1,5 +1,18 @@
 # @nodeboot/http-server
 
+## 1.3.0
+
+### Minor Changes
+
+-   237ead1: fixing potential memory leands and improve codebase
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.0
+    -   @nodeboot/core@1.15.0
+    -   @nodeboot/engine@1.6.0
+
 ## 1.2.0
 
 ### Minor Changes

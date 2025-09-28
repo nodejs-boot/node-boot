@@ -1,5 +1,16 @@
 # @nodeboot/engine
 
+## 1.6.0
+
+### Minor Changes
+
+-   237ead1: fixing potential memory leands and improve codebase
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.0
+
 ## 1.5.0
 
 ### Minor Changes

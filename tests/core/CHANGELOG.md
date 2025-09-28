@@ -1,5 +1,14 @@
 # @nodeboot/test
 
+## 1.4.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.0
+    -   @nodeboot/core@1.15.0
+    -   @nodeboot/config@1.3.1
+
 ## 1.4.0
 
 ### Minor Changes

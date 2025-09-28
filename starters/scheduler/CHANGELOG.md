@@ -1,5 +1,16 @@
 # @nodeboot/starter-scheduler
 
+## 1.6.0
+
+### Minor Changes
+
+-   237ead1: Implement shutdown hook feature through cleanup function decorator
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.0
+
 ## 1.5.0
 
 ### Minor Changes
