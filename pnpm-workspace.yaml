@@ -1,6 +1,7 @@
 packages:
     - packages/*
     - servers/*
+    - serverless/*
     - starters/*
     - samples/*
     - tests/*

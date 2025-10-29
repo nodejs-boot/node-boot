@@ -1,5 +1,12 @@
 # @nodeboot/koa-sample
 
+## 2.2.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.11.1
+
 ## 2.2.4
 
 ### Patch Changes

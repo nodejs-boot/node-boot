@@ -75,7 +75,7 @@ persistence:
     cache: true
     migrationsRun: true
     better-sqlite3:
-        database: "fastify-sample.db"
+        database: "sample-database.db"
     transactions:
         # Controls how many hooks (`commit`, `rollback`, `complete`) can be used simultaneously.
         # If you exceed the number of hooks of same type, you get a warning. This is a useful to find possible memory leaks.
