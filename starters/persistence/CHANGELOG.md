@@ -1,5 +1,11 @@
 # @nodeboot/starter-persistence
 
+## 1.11.1
+
+### Patch Changes
+
+-   Add missing shutdown hooks for datasource and mongoDB client
+
 ## 1.11.0
 
 ### Minor Changes

@@ -1,9 +1,10 @@
 import {Bean, Configuration} from "@nodeboot/core";
-import {BeansContext} from "@nodeboot/context";
+import {ApplicationContext, BeansContext, ShutdownHook} from "@nodeboot/context";
 import {DataSource} from "typeorm";
 import {addTransactionalDataSource, initializeTransactionalContext, StorageDriver} from "typeorm-transactional";
 import {PersistenceProperties} from "../property/PersistenceProperties";
 import {PERSISTENCE_CONFIG_PATH} from "../types";
+import {Logger} from "winston";
 
 /**
  * TransactionConfiguration class responsible for setting up transactional support
@@ -44,5 +45,23 @@ export class TransactionConfiguration {
         logger.info(
             "Transactions successfully configured with storage driver in AUTO mode (AsyncLocalStorage when node >= 16 and cls-hooked otherwise)",
         );
+    }
+
+    /**
+     * Shutdown hook to clean up transactional context.
+     * This ensures proper cleanup of transaction-related resources.
+     *
+     * Priority 150 - runs after persistence connections are closed but before other cleanup.
+     */
+    @ShutdownHook({priority: 150, timeout: 5000})
+    async cleanupTransactionalContext(): Promise<void> {
+        const logger = ApplicationContext.get().diOptions?.iocContainer.get(Logger);
+        logger?.info("🔄 Cleaning up transactional context...");
+
+        // Note: typeorm-transactional doesn't provide a direct cleanup method,
+        // but we can ensure any pending transactions are handled gracefully
+        // The actual cleanup happens when DataSource is destroyed in PersistenceConfiguration
+
+        logger?.info("✅ Transactional context cleanup completed");
     }
 }

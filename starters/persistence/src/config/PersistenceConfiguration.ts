@@ -1,6 +1,6 @@
 import {Bean, Configuration} from "@nodeboot/core";
 import {DataSource, EntityManager} from "typeorm";
-import {ApplicationContext, BeansContext, IocContainer} from "@nodeboot/context";
+import {ApplicationContext, BeansContext, IocContainer, ShutdownHook} from "@nodeboot/context";
 import {DataSourceOptions} from "typeorm/data-source/DataSourceOptions";
 import {PersistenceContext} from "../PersistenceContext";
 import {REQUIRES_FIELD_INJECTION_KEY} from "@nodeboot/di";
@@ -19,6 +19,7 @@ import {MongoClient} from "mongodb";
  * - Injecting dependencies into subscribers and MongoDB client
  * - Binding data repositories to the DI container
  * - Validating the persistence layer consistency
+ * - Properly cleaning up database connections on shutdown
  *
  * @author Manuel Santos <https://github.com/manusant>
  */
@@ -264,6 +265,45 @@ export class PersistenceConfiguration {
         } finally {
             // Always release the query runner to prevent connection leaks
             await queryRunner.release();
+        }
+    }
+
+    /**
+     * Shutdown hook to properly close DataSource and MongoDB connections.
+     * This prevents connection leaks and ensures graceful shutdown.
+     *
+     * @ShutdownHook with high priority (200) to ensure database connections
+     * are closed before other components that might depend on them.
+     */
+    @ShutdownHook({priority: 200, timeout: 10000})
+    async closePersistenceConnections(): Promise<void> {
+        const iocContainer = ApplicationContext.get().diOptions?.iocContainer;
+        const logger = iocContainer?.get("logger") as Logger;
+
+        logger?.info("🔌 Closing persistence connections...");
+        try {
+            // Close DataSource if it exists and is initialized
+            if (iocContainer?.has(DataSource)) {
+                const datasource = iocContainer.get(DataSource);
+
+                if (datasource.isInitialized) {
+                    logger?.info("Closing TypeORM DataSource connections");
+                    await datasource.destroy();
+                    logger?.info("TypeORM DataSource connections closed successfully");
+                }
+            }
+
+            // Close MongoDB client if it exists
+            if (iocContainer?.has(MongoClient)) {
+                logger?.info("Closing MongoDB client connection");
+                await iocContainer?.get(MongoClient).close();
+                logger?.info("MongoDB client connection closed successfully");
+            }
+
+            logger?.info("✅ All persistence connections closed successfully");
+        } catch (error) {
+            logger?.error("❌ Error closing persistence connections:", error);
+            // Don't throw here - we want other shutdown hooks to continue
         }
     }
 }
