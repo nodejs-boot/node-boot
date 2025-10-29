@@ -1,6 +1,9 @@
 # Generated files
 node_modules
 dist
+/dist
+.pnpm-store
+pnpm-lock.yaml
 jest.config.js
 jest.setup.js
 .lintstagedrc.js
