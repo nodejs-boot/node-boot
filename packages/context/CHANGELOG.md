@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 1.13.1
+
+### Patch Changes
+
+-   Add awaitEven to allow external components to await for specific lifecycle events
+
 ## 1.13.0
 
 ### Minor Changes

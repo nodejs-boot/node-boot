@@ -1,5 +1,14 @@
 # @nodeboot/ghost-server
 
+## 1.3.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.1
+    -   @nodeboot/core@1.15.1
+    -   @nodeboot/engine@1.6.1
+
 ## 1.3.0
 
 ### Minor Changes

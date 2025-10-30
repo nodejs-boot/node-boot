@@ -26,6 +26,28 @@ export class ApplicationLifecycleBridge {
     }
 
     /**
+     * Await the first occurrence of a lifecycle event.
+     * Optional timeout (ms) will reject the Promise if the event does not fire.
+     */
+    awaitEvent(lifecycleEvent: LifecycleType, timeoutMs?: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const handler = () => {
+                if (timeout) clearTimeout(timeout);
+                resolve();
+            };
+            this.eventBus.once(lifecycleEvent.toString(), handler);
+
+            let timeout: NodeJS.Timeout | undefined;
+            if (timeoutMs && timeoutMs > 0) {
+                timeout = setTimeout(() => {
+                    this.eventBus.removeListener(lifecycleEvent.toString(), handler);
+                    reject(new Error(`Timeout waiting for event '${lifecycleEvent}'`));
+                }, timeoutMs);
+            }
+        });
+    }
+
+    /**
      * Cleanup method to prevent memory leaks by removing all listeners
      * and clearing the event bus when the application shuts down
      */

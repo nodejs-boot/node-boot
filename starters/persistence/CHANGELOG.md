@@ -1,5 +1,15 @@
 # @nodeboot/starter-persistence
 
+## 1.11.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@1.13.1
+    -   @nodeboot/config@1.3.2
+    -   @nodeboot/core@1.15.1
+    -   @nodeboot/di@1.4.2
+
 ## 1.11.1
 
 ### Patch Changes
