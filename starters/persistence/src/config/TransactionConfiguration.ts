@@ -34,17 +34,21 @@ export class TransactionConfiguration {
      */
     @Bean()
     public transactionConfig({iocContainer, logger, config}: BeansContext): void {
-        logger.info("Configuring transactions");
-        const dataSource = iocContainer.get(DataSource);
+        if (process.env["TRANSACTIONS_DISABLED"] === "true") {
+            logger.warn("Transactions are disabled via TRANSACTIONS_DISABLED environment variable.");
+        } else {
+            logger.info("Configuring transactions");
+            const dataSource = iocContainer.get(DataSource);
 
-        const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);
+            const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);
 
-        // Enable transactions
-        initializeTransactionalContext(persistenceProperties.transactions ?? {storageDriver: StorageDriver.AUTO});
-        addTransactionalDataSource(dataSource);
-        logger.info(
-            "Transactions successfully configured with storage driver in AUTO mode (AsyncLocalStorage when node >= 16 and cls-hooked otherwise)",
-        );
+            // Enable transactions
+            initializeTransactionalContext(persistenceProperties.transactions ?? {storageDriver: StorageDriver.AUTO});
+            addTransactionalDataSource(dataSource);
+            logger.info(
+                "Transactions successfully configured with storage driver in AUTO mode (AsyncLocalStorage when node >= 16 and cls-hooked otherwise)",
+            );
+        }
     }
 
     /**

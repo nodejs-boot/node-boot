@@ -1,5 +1,11 @@
 # @nodeboot/starter-persistence
 
+## 1.12.0
+
+### Minor Changes
+
+-   add option to disable transactions
+
 ## 1.11.4
 
 ### Patch Changes
