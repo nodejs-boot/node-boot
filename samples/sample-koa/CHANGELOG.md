@@ -1,5 +1,23 @@
 # @nodeboot/koa-sample
 
+## 2.2.7
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.0.0
+    -   @nodeboot/authorization@1.3.3
+    -   @nodeboot/config@1.3.3
+    -   @nodeboot/core@1.15.2
+    -   @nodeboot/di@1.4.3
+    -   @nodeboot/koa-server@1.8.2
+    -   @nodeboot/starter-actuator@1.7.3
+    -   @nodeboot/starter-http@3.5.3
+    -   @nodeboot/starter-openapi@2.4.4
+    -   @nodeboot/starter-persistence@1.11.4
+    -   @nodeboot/starter-scheduler@1.6.2
+    -   @nodeboot/starter-validation@1.2.3
+
 ## 2.2.6
 
 ### Patch Changes

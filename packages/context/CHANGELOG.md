@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 2.0.0
+
+### Major Changes
+
+-   Add support for passed events in the application lifecycle events brindge
+
 ## 1.13.1
 
 ### Patch Changes

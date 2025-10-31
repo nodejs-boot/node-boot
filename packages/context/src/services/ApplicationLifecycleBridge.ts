@@ -5,6 +5,9 @@ import {Logger} from "winston";
 import {Config} from "./Config";
 
 export class ApplicationLifecycleBridge {
+    // Track lifecycle events that have already been published so late subscribers can still react immediately
+    private readonly firedEvents = new Set<string>();
+
     constructor(
         private readonly logger: Logger,
         private readonly config: Config,
@@ -12,6 +15,8 @@ export class ApplicationLifecycleBridge {
     ) {}
 
     async publish(lifecycleEvent: LifecycleType) {
+        // Mark fired before emitting to avoid race conditions with late subscriptions right after publish invocation
+        this.firedEvents.add(lifecycleEvent.toString());
         this.eventBus.emit(lifecycleEvent);
     }
 
@@ -19,17 +24,28 @@ export class ApplicationLifecycleBridge {
         return this.eventBus;
     }
 
+    hasFired(lifecycleEvent: LifecycleType): boolean {
+        return this.firedEvents.has(lifecycleEvent.toString());
+    }
+
     subscribe(eventName: string, listener: Function) {
-        this.eventBus.once(eventName, () => {
+        // If already fired, invoke immediately (microtask scheduling not strictly needed here)
+        if (this.firedEvents.has(eventName)) {
             listener();
-        });
+            return;
+        }
+        this.eventBus.once(eventName, listener as () => void);
     }
 
     /**
      * Await the first occurrence of a lifecycle event.
      * Optional timeout (ms) will reject the Promise if the event does not fire.
+     * If the event has already fired, resolves immediately.
      */
     awaitEvent(lifecycleEvent: LifecycleType, timeoutMs?: number): Promise<void> {
+        if (this.hasFired(lifecycleEvent)) {
+            return Promise.resolve();
+        }
         return new Promise((resolve, reject) => {
             const handler = () => {
                 if (timeout) clearTimeout(timeout);
@@ -56,6 +72,7 @@ export class ApplicationLifecycleBridge {
         this.eventBus.removeAllListeners();
         // Set max listeners to 0 to prevent further additions
         this.eventBus.setMaxListeners(0);
+        this.firedEvents.clear();
     }
 
     /**

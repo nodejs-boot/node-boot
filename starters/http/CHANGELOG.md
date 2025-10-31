@@ -1,5 +1,12 @@
 # @nodeboot/starter-http
 
+## 3.5.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.0.0
+
 ## 3.5.2
 
 ### Patch Changes
