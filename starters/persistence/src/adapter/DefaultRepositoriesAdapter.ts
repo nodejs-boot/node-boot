@@ -2,6 +2,7 @@ import {allowedProfiles, IocContainer, RepositoriesAdapter} from "@nodeboot/cont
 import {EntityManager} from "typeorm";
 import {Logger} from "winston";
 import {PersistenceContext} from "../PersistenceContext";
+import {RepositoryType} from "../types";
 
 /**
  * Default implementation of the {@link RepositoriesAdapter} interface.
@@ -32,7 +33,13 @@ export class DefaultRepositoriesAdapter implements RepositoriesAdapter {
             // Check if the current active profiles allow this repository
             // This is useful for conditional repository registration based on environment profiles
             if (allowedProfiles(target)) {
-                const entityRepositoryInstance = new (target as any)(entity, entityManager, entityManager.queryRunner);
+                // MongoDB repositories should only receive 2 parameters (entity, manager)
+                // SQL repositories receive 3 parameters (entity, manager, queryRunner)
+                // Passing a 3rd parameter (even undefined) to MongoDB repos causes hanging in Jest tests
+                const entityRepositoryInstance =
+                    type === RepositoryType.MONGO
+                        ? new (target as any)(entity, entityManager)
+                        : new (target as any)(entity, entityManager, entityManager.queryRunner);
 
                 logger.info(
                     `Registering a '${type.toString()}' repository '${target.name}' for entity '${entity.name}'`,

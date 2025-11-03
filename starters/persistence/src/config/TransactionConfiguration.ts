@@ -34,13 +34,11 @@ export class TransactionConfiguration {
      */
     @Bean()
     public transactionConfig({iocContainer, logger, config}: BeansContext): void {
-        if (process.env["TRANSACTIONS_DISABLED"] === "true") {
-            logger.warn("Transactions are disabled via TRANSACTIONS_DISABLED environment variable.");
-        } else {
+        const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);
+
+        if (persistenceProperties.type !== "mongodb") {
             logger.info("Configuring transactions");
             const dataSource = iocContainer.get(DataSource);
-
-            const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);
 
             // Enable transactions
             initializeTransactionalContext(persistenceProperties.transactions ?? {storageDriver: StorageDriver.AUTO});

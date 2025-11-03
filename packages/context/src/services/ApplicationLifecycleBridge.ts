@@ -93,7 +93,8 @@ export class ApplicationLifecycleBridge {
 
             // IMPORTANT: If persistence layer is not activated, run persistence started lifecycle after app is running
             if (!ApplicationContext.get().applicationFeatures["persistence"]) {
-                this.applyLifecycle("persistence.started");
+                // Explicitly publish persistence.started event
+                this.publish("persistence.started");
             }
         });
         this.eventBus.once("persistence.started", () => {

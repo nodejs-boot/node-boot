@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 2.1.0
+
+### Minor Changes
+
+-   Properly fire persistence.started event when there is no persistence active
+
 ## 2.0.0
 
 ### Major Changes

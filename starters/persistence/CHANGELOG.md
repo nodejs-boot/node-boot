@@ -1,5 +1,27 @@
 # @nodeboot/starter-persistence
 
+## 1.13.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.1.0
+    -   @nodeboot/config@1.3.4
+    -   @nodeboot/core@1.15.3
+    -   @nodeboot/di@1.4.4
+
+## 1.13.0
+
+### Minor Changes
+
+-   disable transactions if mongodb
+
+## 1.12.1
+
+### Patch Changes
+
+-   fix issue
+
 ## 1.12.0
 
 ### Minor Changes

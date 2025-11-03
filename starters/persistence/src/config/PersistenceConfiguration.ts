@@ -150,10 +150,9 @@ export class PersistenceConfiguration {
 
         const mongoDriver = dataSource.driver;
         if (mongoDriver instanceof MongoDriver) {
-            // Force set query runner since TypeORM is not setting it for MongoDB
-            (dataSource.manager as any).queryRunner = mongoDriver.queryRunner;
-
-            // Retrieve the MongoClient instance from the MongoDriver's query runner
+            // Retrieve the MongoClient instance from the MongoDriver
+            // Note: For MongoDB, we don't set a persistent queryRunner on the EntityManager
+            // as it causes hanging issues in tests and is not required by TypeORM's MongoDB driver
             const mongoClient = mongoDriver.queryRunner?.databaseConnection;
             if (mongoClient) {
                 // Register MongoClient in the IoC container
@@ -296,7 +295,8 @@ export class PersistenceConfiguration {
             // Close MongoDB client if it exists
             if (iocContainer?.has(MongoClient)) {
                 logger?.info("Closing MongoDB client connection");
-                await iocContainer?.get(MongoClient).close();
+                // Force close to immediately terminate all connections and prevent hanging in tests
+                await iocContainer?.get(MongoClient).close(true);
                 logger?.info("MongoDB client connection closed successfully");
             }
 
