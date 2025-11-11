@@ -133,6 +133,8 @@ export class ApplicationLifecycleBridge {
     }
 
     async applyLifecycle(lifecycle: LifecycleType) {
+        this.logger.info("Applying lifecycle adapters for event: " + lifecycle);
+
         const iocContainer = ApplicationContext.getIocContainer();
         if (iocContainer) {
             const featureAdapters = ApplicationContext.getAppFeatureAdapters(lifecycle);
@@ -144,8 +146,12 @@ export class ApplicationLifecycleBridge {
                     logger: this.logger,
                 });
             }
-            // Publish that adapters have been bound for this lifecycle event
-            await this.publish("application.adapters.bound");
+
+            if (lifecycle === "persistence.started") {
+                this.logger.info("All persistence.started lifecycle adapters have been bound.");
+                // Publish that adapters have been bound for this lifecycle event
+                await this.publish("application.adapters.bound");
+            }
         }
     }
 }

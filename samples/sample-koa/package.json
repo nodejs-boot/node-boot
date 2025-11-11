@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/koa-sample",
-    "version": "2.2.13",
+    "version": "2.2.14",
     "description": "Node-Boot sample project using Koa",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

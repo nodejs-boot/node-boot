@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/lambda-server",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "description": "Node-Boot AWS Lambda server package. It provides a simple way to create Lambda handlers using NodeBoot, with support for routing, middleware, and request handling.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

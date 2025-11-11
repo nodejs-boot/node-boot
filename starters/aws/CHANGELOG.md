@@ -1,5 +1,13 @@
 # @nodeboot/starter-aws
 
+## 1.5.7
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.2.1
+    -   @nodeboot/core@1.16.2
+
 ## 1.5.6
 
 ### Patch Changes

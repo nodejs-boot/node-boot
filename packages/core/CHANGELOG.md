@@ -1,5 +1,15 @@
 # @nodeboot/core
 
+## 1.16.2
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.2.1
+    -   @nodeboot/config@1.3.6
+    -   @nodeboot/di@1.4.6
+    -   @nodeboot/engine@1.6.5
+
 ## 1.16.1
 
 ### Patch Changes
