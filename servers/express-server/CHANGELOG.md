@@ -1,5 +1,14 @@
 # @nodeboot/express-server
 
+## 1.9.5
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.2.0
+    -   @nodeboot/core@1.16.1
+    -   @nodeboot/engine@1.6.4
+
 ## 1.9.4
 
 ### Patch Changes

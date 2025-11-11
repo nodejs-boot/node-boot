@@ -9,5 +9,5 @@ export type ApplicationFeatureContext = {
 };
 
 export interface ApplicationFeatureAdapter extends NodeBootAdapter {
-    bind(context: ApplicationFeatureContext): void;
+    bind(context: ApplicationFeatureContext): void | Promise<void>;
 }

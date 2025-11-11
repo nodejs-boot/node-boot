@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/engine",
-    "version": "1.6.3",
+    "version": "1.6.4",
     "description": "Node-Boot engine that enables hte node-boot magic with application server frameworks through drivers",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

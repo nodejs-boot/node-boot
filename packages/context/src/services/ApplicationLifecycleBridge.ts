@@ -86,10 +86,30 @@ export class ApplicationLifecycleBridge {
 
     async listen() {
         this.eventBus.once("application.initialized", () => {
-            this.applyLifecycle("application.initialized");
+            this.applyLifecycle("application.initialized")
+                .then(_ =>
+                    this.logger.info(
+                        `Lifecycle application feature adapters successfully bind after application.initialized event.`,
+                    ),
+                )
+                .catch(err =>
+                    this.logger.error(
+                        `Error during lifecycle application feature adapters bind after application.initialized event: ${err}`,
+                    ),
+                );
         });
         this.eventBus.once("application.started", () => {
-            this.applyLifecycle("application.started");
+            this.applyLifecycle("application.started")
+                .then(_ =>
+                    this.logger.info(
+                        `Lifecycle application feature adapters successfully bind after application.started event.`,
+                    ),
+                )
+                .catch(err =>
+                    this.logger.error(
+                        `Error during lifecycle application feature adapters bind after application.started event: ${err}`,
+                    ),
+                );
 
             // IMPORTANT: If persistence layer is not activated, run persistence started lifecycle after app is running
             if (!ApplicationContext.get().applicationFeatures["persistence"]) {
@@ -98,22 +118,34 @@ export class ApplicationLifecycleBridge {
             }
         });
         this.eventBus.once("persistence.started", () => {
-            this.applyLifecycle("persistence.started");
+            this.applyLifecycle("persistence.started")
+                .then(_ =>
+                    this.logger.info(
+                        `Lifecycle application feature adapters successfully bind after persistence.started event.`,
+                    ),
+                )
+                .catch(err =>
+                    this.logger.error(
+                        `Error during lifecycle application feature adapters bind after persistence.started event: ${err}`,
+                    ),
+                );
         });
     }
 
-    applyLifecycle(lifecycle: LifecycleType) {
+    async applyLifecycle(lifecycle: LifecycleType) {
         const iocContainer = ApplicationContext.getIocContainer();
         if (iocContainer) {
             const featureAdapters = ApplicationContext.getAppFeatureAdapters(lifecycle);
             this.logger.info(`Binding ${featureAdapters.length} ${lifecycle} Node-Boot Application Features`);
             for (const featureAdapter of featureAdapters) {
-                featureAdapter.bind({
+                await featureAdapter.bind({
                     iocContainer,
                     config: this.config,
                     logger: this.logger,
                 });
             }
+            // Publish that adapters have been bound for this lifecycle event
+            await this.publish("application.adapters.bound");
         }
     }
 }

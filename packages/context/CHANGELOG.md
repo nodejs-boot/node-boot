@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 2.2.0
+
+### Minor Changes
+
+-   Improve application lifecycle to allow externals to await application.feature.bound lifecycle events
+
 ## 2.1.0
 
 ### Minor Changes

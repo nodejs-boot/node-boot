@@ -133,4 +133,5 @@ export type LifecycleType =
     | "application.initialized"
     | "application.started"
     | "persistence.started"
-    | "application.stopped";
+    | "application.stopped"
+    | "application.adapters.bound";
