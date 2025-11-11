@@ -1,5 +1,11 @@
 # @nodeboot/core
 
+## 1.16.0
+
+### Minor Changes
+
+-   Add PostConstruct feature
+
 ## 1.15.3
 
 ### Patch Changes

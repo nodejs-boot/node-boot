@@ -1,5 +1,15 @@
 # @nodeboot/express-sample
 
+## 2.2.12
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/core@1.16.0
+    -   @nodeboot/express-server@1.9.4
+    -   @nodeboot/starter-persistence@1.13.2
+    -   @nodeboot/starter-validation@1.2.5
+
 ## 2.2.11
 
 ### Patch Changes
