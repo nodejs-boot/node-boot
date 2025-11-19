@@ -1,5 +1,12 @@
 # @nodeboot/express-sample
 
+## 2.2.15
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/express-server@1.10.0
+
 ## 2.2.14
 
 ### Patch Changes

@@ -452,16 +452,14 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         action: Action<FastifyRequest, FastifyReply>,
         actionMetadata: ActionMetadata,
     ) {
-        if (result === undefined && actionMetadata.undefinedResultCode) {
-            action.response.code(actionMetadata.undefinedResultCode);
-        } else if (result === null) {
-            if (actionMetadata.nullResultCode) {
-                action.response.code(actionMetadata.nullResultCode);
-            } else {
-                action.response.code(204);
-            }
-        } else if (actionMetadata.successHttpCode) {
+        if (actionMetadata.successHttpCode) {
             action.response.code(actionMetadata.successHttpCode);
+        } else if (result === undefined && actionMetadata.undefinedResultCode) {
+            action.response.code(actionMetadata.undefinedResultCode);
+        } else if (result === null && actionMetadata.nullResultCode) {
+            action.response.code(actionMetadata.nullResultCode);
+        } else {
+            action.response.code(result === null || result === undefined ? 204 : 200);
         }
     }
 }

@@ -1,5 +1,11 @@
 # @nodeboot/express-server
 
+## 1.10.0
+
+### Minor Changes
+
+-   Properly handle HTTP code for successfull responses
+
 ## 1.9.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @nodeboot/http-server
 
+## 1.4.0
+
+### Minor Changes
+
+-   Properly handle HTTP code for successfull responses
+
 ## 1.3.6
 
 ### Patch Changes

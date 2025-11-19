@@ -327,15 +327,7 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         }
 
         // set http status code
-        if (result === undefined && actionMetadata.undefinedResultCode) {
-            action.response.status = actionMetadata.undefinedResultCode;
-        } else if (result === null && actionMetadata.nullResultCode) {
-            action.response.status = actionMetadata.nullResultCode;
-        } else if (actionMetadata.successHttpCode) {
-            action.response.status = actionMetadata.successHttpCode;
-        } else if (action.response.body === null) {
-            action.response.status = 204;
-        }
+        this.applyResponseStatus(result, action, actionMetadata);
 
         // apply http headers
         Object.keys(actionMetadata.headers).forEach(name => {
@@ -405,5 +397,17 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
             }
         });
         return middlewareFunctions;
+    }
+
+    private applyResponseStatus(result: any, action: Action<Request, Response>, actionMetadata: ActionMetadata) {
+        if (actionMetadata.successHttpCode) {
+            action.response.status = actionMetadata.successHttpCode;
+        } else if (result === undefined && actionMetadata.undefinedResultCode) {
+            action.response.status = actionMetadata.undefinedResultCode;
+        } else if (result === null && actionMetadata.nullResultCode) {
+            action.response.status = actionMetadata.nullResultCode;
+        } else {
+            action.response.status = result === null || result === undefined ? 204 : 200;
+        }
     }
 }

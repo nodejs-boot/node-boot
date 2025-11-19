@@ -264,17 +264,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         result = this.resultTransformer.transformResult(result, actionMetadata);
 
         // set http status code
-        if (result === undefined && actionMetadata.undefinedResultCode) {
-            action.response.status(actionMetadata.undefinedResultCode);
-        } else if (result === null) {
-            if (actionMetadata.nullResultCode) {
-                action.response.status(actionMetadata.nullResultCode);
-            } else {
-                action.response.status(204);
-            }
-        } else if (actionMetadata.successHttpCode) {
-            action.response.status(actionMetadata.successHttpCode);
-        }
+        this.applyResponseStatus(result, action, actionMetadata);
 
         // apply http headers
         Object.keys(actionMetadata.headers).forEach(name => {
@@ -413,5 +403,17 @@ export class ExpressDriver extends NodeBootDriver<Application> {
             }
         });
         return middlewareFunctions;
+    }
+
+    private applyResponseStatus(result: any, action: Action<Request, Response>, actionMetadata: ActionMetadata) {
+        if (actionMetadata.successHttpCode) {
+            action.response.status(actionMetadata.successHttpCode);
+        } else if (result === undefined && actionMetadata.undefinedResultCode) {
+            action.response.status(actionMetadata.undefinedResultCode);
+        } else if (result === null && actionMetadata.nullResultCode) {
+            action.response.status(actionMetadata.nullResultCode);
+        } else {
+            action.response.status(result === null || result === undefined ? 204 : 200);
+        }
     }
 }

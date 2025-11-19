@@ -1,5 +1,11 @@
 # @nodeboot/fastify-server
 
+## 1.9.0
+
+### Minor Changes
+
+-   Properly handle HTTP code for successfull responses
+
 ## 1.8.6
 
 ### Patch Changes

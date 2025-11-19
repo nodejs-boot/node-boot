@@ -310,15 +310,15 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
             return;
         }
 
+        this.applyResponseStatus(result, action, actionMetadata);
+
         // Handle undefined, null, buffers, streams, etc.
         if (result === undefined) {
-            res.statusCode = 404;
             res.end("Not Found");
             return;
         }
 
         if (result === null) {
-            res.statusCode = actionMetadata.nullResultCode || 204;
             res.end();
             return;
         }
@@ -356,5 +356,21 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
             });
             req.on("error", reject);
         });
+    }
+
+    private applyResponseStatus(
+        result: any,
+        action: Action<IncomingMessage, ServerResponse<IncomingMessage>>,
+        actionMetadata: ActionMetadata,
+    ) {
+        if (actionMetadata.successHttpCode) {
+            action.response.statusCode = actionMetadata.successHttpCode;
+        } else if (result === undefined && actionMetadata.undefinedResultCode) {
+            action.response.statusCode = actionMetadata.undefinedResultCode;
+        } else if (result === null && actionMetadata.nullResultCode) {
+            action.response.statusCode = actionMetadata.nullResultCode;
+        } else {
+            action.response.statusCode = result === null || result === undefined ? 204 : 200;
+        }
     }
 }
