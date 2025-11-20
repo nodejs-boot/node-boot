@@ -1,5 +1,19 @@
 # @nodeboot/express-ghost-server
 
+## 2.3.13
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.3.0
+    -   @nodeboot/config@1.3.7
+    -   @nodeboot/core@1.16.3
+    -   @nodeboot/di@1.4.7
+    -   @nodeboot/ghost-server@1.3.7
+    -   @nodeboot/starter-http@3.5.7
+    -   @nodeboot/starter-persistence@1.13.5
+    -   @nodeboot/starter-scheduler@1.6.6
+
 ## 2.3.12
 
 ### Patch Changes

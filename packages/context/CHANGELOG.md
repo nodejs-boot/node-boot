@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 2.3.0
+
+### Minor Changes
+
+-   Improve application lifecycle processing by processing events for application feature adapters sequentially in order to avoid race conditions and eventually missing DI dependencies
+
 ## 2.2.1
 
 ### Patch Changes

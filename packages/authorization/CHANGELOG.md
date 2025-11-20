@@ -1,5 +1,13 @@
 # @nodeboot/authorization
 
+## 1.3.7
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.3.0
+    -   @nodeboot/engine@1.6.6
+
 ## 1.3.6
 
 ### Patch Changes
