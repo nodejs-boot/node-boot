@@ -67,9 +67,8 @@ With auto-configuration enabled, you can inject Firebase services into your comp
 ### Example Service:
 
 ```typescript
-import {Service} from "@nodeboot/core";
+import {Service, Inject} from "@nodeboot/core";
 import {FIREBASE_MACHINE_LEARNING_BEAN} from "@nodeboot/starter-firebase";
-import {Inject} from "typedi";
 import {Logger} from "winston";
 import {remoteConfig} from "firebase-admin";
 
