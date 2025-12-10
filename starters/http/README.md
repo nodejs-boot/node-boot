@@ -100,7 +100,7 @@ integrations:
 Once defined, the HTTP client can be injected into a service for making API calls:
 
 ```typescript
-import {Service} from "typedi";
+import {Service} from "@nodeboot/core";
 import {Logger} from "@nodeboot/logger";
 import {MicroserviceHttpClient} from "./MicroserviceHttpClient";
 
