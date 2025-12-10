@@ -73,12 +73,12 @@ export class MyApplication implements NodeBootApp {
 Once enabled, you can inject the OpenAI client into your services to interact with OpenAI's APIs:
 
 ```typescript
-import {Inject, Service} from "typedi";
+import {Inject, Service} from "@nodeboot/core";
 import OpenAI from "openai";
 
 @Service()
 export class MyService {
-    constructor(@Inject(() => OpenAI) private readonly openAiClient: OpenAI) {}
+    constructor(private readonly openAiClient: OpenAI) {}
 
     async generateText(prompt: string): Promise<string> {
         const response = await this.openAiClient.chat.completions.create({
