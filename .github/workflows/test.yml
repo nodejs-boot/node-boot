@@ -2,6 +2,10 @@ name: Test
 on:
     workflow_dispatch:
 
+    push:
+        branches:
+            - main
+
     pull_request_target:
         types:
             - opened
