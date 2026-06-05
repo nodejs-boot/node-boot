@@ -1,0 +1,64 @@
+core:
+    - packages/**/*
+servers:
+    - servers/**/*
+serverless:
+    - serverless/**/*
+starters:
+    - starters/**/*
+samples:
+    - samples/**/*
+cicd:
+    - .github/workflows/**/*
+aot:
+    - packages/aot/**/*
+authorization:
+    - packages/authorization/**/*
+config:
+    - packages/config/**/*
+context:
+    - packages/context/**/*
+core-framework:
+    - packages/core/**/*
+di:
+    - packages/di/**/*
+engine:
+    - packages/engine/**/*
+error:
+    - packages/error/**/*
+tools:
+    - packages/tools/**/*
+express-server:
+    - servers/express-server/**/*
+fastify-server:
+    - servers/fastify-server/**/*
+ghost-server:
+    - servers/ghost-server/**/*
+node-http-server:
+    - servers/http-server/**/*
+koa-server:
+    - servers/koa-server/**/*
+actuator:
+    - starters/actuator/**/*
+aws:
+    - starters/aws/**/*
+backstage:
+    - starters/backstage/**/*
+firebase:
+    - starters/firebase/**/*
+http-client:
+    - starters/http/**/*
+openai:
+    - starters/openai/**/*
+openapi:
+    - starters/openapi/**/*
+persistence:
+    - starters/persistence/**/*
+scheduler:
+    - starters/scheduler/**/*
+validation:
+    - starters/validation/**/*
+docs:
+    - docs/**/*
+    - mkdocks.yaml
+    - techdocs-requirements.txt
