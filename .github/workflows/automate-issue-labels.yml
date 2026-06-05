@@ -1,0 +1,59 @@
+name: Automate Issue Labels
+on:
+    issues:
+        types: [opened]
+
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
+jobs:
+    label-issue:
+        runs-on: [ubuntu-latest]
+        if: github.repository == 'nodejs-boot/node-boot'
+        steps:
+            - name: View context attributes
+              uses: actions/github-script@v6
+              with:
+                  script: |
+                      const keywords = {
+                        'mongodb|postgres|mysql|mariadb|typeorm|persistence|transaction|': 'persistence',
+                        'http': 'http',
+                        'actuator': 'actuator',
+                        'RFC': 'rfc',
+                        'architecture|arch': 'architecture',
+                        'aws': 'aws',
+                        'backstage': 'backstage',
+                        'firebase': 'firebase',
+                        'openai': 'openai',
+                        'scheduler|cron': 'scheduler',
+                        'validation': 'validation',
+                        'express': 'express-server',
+                        'fastify': 'fastify-server',
+                        'node:http|nodeJs server': 'http-server',
+                        'koa': 'koa-server',
+                        'aot': 'aot',
+                        'AZ|authorization': 'authorization',
+                        'config': 'config',
+                        'di|dependency injection|typedi': 'dependency-injection',
+                      };
+
+                      const labels = Object.entries(keywords)
+                        .map(([regexp, label]) => {
+                          if (new RegExp(regexp, 'gi').test(context.payload.issue.title)) {
+                            return label;
+                          }
+                        })
+                        .filter(Boolean);
+                        
+                      if(!labels.length) {
+                        return;
+                      }
+
+                      github.rest.issues.addLabels({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        labels
+                      });

@@ -1,0 +1,22 @@
+name: Automate PR area labels
+on:
+    pull_request_target:
+        types:
+            - opened
+            - synchronize
+            - reopened
+
+permissions:
+    contents: write
+    issues: write
+    pull-requests: write
+
+jobs:
+    triage:
+        runs-on: [ubuntu-latest]
+        if: (!github.event.pull_request || github.event.pull_request.draft == false)
+        steps:
+            - uses: actions/labeler@v4
+              with:
+                  repo-token: "${{ secrets.GITHUB_TOKEN }}"
+                  sync-labels: true
