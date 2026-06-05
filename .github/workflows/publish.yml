@@ -45,14 +45,14 @@ jobs:
             - name: Setup environment variables
               run: echo "CURRENT_BRANCH=$(echo -n ${{github.head_ref || github.ref_name}})" >> $GITHUB_ENV
 
+            - name: Building Packages
+              run: pnpm build
+
             - name: Check code Style
               run: pnpm lint-format:fix
 
             - name: verify type dependencies
               run: pnpm nodeboot:check:type-deps
-
-            - name: Building Packages
-              run: pnpm build
 
             - name: Execute Linter
               run: pnpm lint

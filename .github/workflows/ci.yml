@@ -59,11 +59,11 @@ jobs:
               shell: bash
               run: pnpm install --frozen-lockfile
 
-            - name: Check code Style
-              run: pnpm lint-format
-
             - name: build all packages
               run: pnpm build
+
+            - name: Check code Style
+              run: pnpm lint-format
 
             - name: Execute Linter
               run: pnpm lint
