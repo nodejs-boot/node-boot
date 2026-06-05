@@ -1,10 +1,5 @@
-import {
-    runOnTransactionCommit as innerRunOnTransactionCommit,
-    runOnTransactionComplete as innerRunOnTransactionComplete,
-    runOnTransactionRollback as innerRunOnTransactionRollback,
-    wrapInTransaction,
-    WrapInTransactionOptions,
-} from "typeorm-transactional";
+import {wrapInTransaction, WrapInTransactionOptions} from "../transaction";
+import {getTransactionalContextHook} from "../transaction/hooks";
 
 /**
  * Registers a callback to be executed when the current transaction is successfully committed.
@@ -22,7 +17,7 @@ import {
  * Manuel Santos <https://github.com/manusant>
  */
 export const runOnTransactionCommit = (cb: () => void) => {
-    return innerRunOnTransactionCommit(cb);
+    getTransactionalContextHook().once("commit", cb);
 };
 
 /**
@@ -41,7 +36,7 @@ export const runOnTransactionCommit = (cb: () => void) => {
  * Manuel Santos <https://github.com/manusant>
  */
 export const runOnTransactionRollback = (cb: (e: Error) => void) => {
-    return innerRunOnTransactionRollback(cb);
+    getTransactionalContextHook().once("rollback", cb);
 };
 
 /**
@@ -64,7 +59,7 @@ export const runOnTransactionRollback = (cb: (e: Error) => void) => {
  * Manuel Santos <https://github.com/manusant>
  */
 export const runOnTransactionComplete = (cb: (e: Error | undefined) => void) => {
-    return innerRunOnTransactionComplete(cb);
+    getTransactionalContextHook().once("end", cb);
 };
 
 /**

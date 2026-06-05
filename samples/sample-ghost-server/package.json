@@ -48,11 +48,11 @@
         "@nodeboot/aot": "^1.4.0",
         "katxupa": "^1.10.4",
         "reflect-metadata": "^0.2.1",
-        "typeorm": "^0.3.27",
+        "typeorm": "^1.0.0",
         "body-parser": "^1.20.3",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
-        "better-sqlite3": "^9.6.0",
+        "better-sqlite3": "^12.10.0",
         "typedi": "^0.10.0",
         "winston": "^3.10.0"
     },

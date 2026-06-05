@@ -52,7 +52,7 @@
         "@nodeboot/aot": "^1.4.0",
         "katxupa": "^1.10.4",
         "reflect-metadata": "^0.2.1",
-        "typeorm": "^0.3.27",
+        "typeorm": "^1.0.0",
         "koa": "^3.0.1",
         "@koa/router": "^14.0.0",
         "koa-bodyparser": "^4.4.1",

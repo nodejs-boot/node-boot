@@ -31,7 +31,7 @@ export class MongoPagingAndSortingRepository<Entity extends ObjectLiteral> exten
      * @param id - The ID of the entity to find. Can be a string, number, ObjectId, or Uint8Array.
      * @returns A promise that resolves to the found entity or null if not found.
      */
-    async findById(id: string | number | ObjectId | Uint8Array): Promise<Entity | null> {
+    async findById(id: string | ObjectId | Uint8Array): Promise<Entity | null> {
         return this.findOneBy({_id: new ObjectId(id)});
     }
 

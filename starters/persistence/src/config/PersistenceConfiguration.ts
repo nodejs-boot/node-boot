@@ -7,6 +7,7 @@ import {REQUIRES_FIELD_INJECTION_KEY} from "@nodeboot/di";
 import {Logger} from "winston";
 import {MongoDriver} from "typeorm/driver/mongodb/MongoDriver";
 import {MongoClient} from "mongodb";
+import {MongoTransactionalQueryRunner} from "../transaction/mongodb/MongoTransactionalQueryRunner";
 
 /**
  * The PersistenceConfiguration class is responsible for configuring the persistence layer of the application.
@@ -57,6 +58,7 @@ export class PersistenceConfiguration {
                 const {synchronizeDatabase, migrationsRun} = PersistenceContext.get();
 
                 if (datasourceConfig.type === "mongodb") {
+                    PersistenceConfiguration.setupMongoTransactionalRunner(logger, dataSource);
                     PersistenceConfiguration.injectMongoClient(logger, dataSource, iocContainer);
                 }
 
@@ -133,6 +135,31 @@ export class PersistenceConfiguration {
             }
         }
         logger.info(`${subscribers.length} persistence event subscribers successfully injected`);
+    }
+
+    /**
+     * Replaces TypeORM's default Mongo query runner with a transaction-capable implementation.
+     */
+    static setupMongoTransactionalRunner(logger: Logger, dataSource: DataSource): void {
+        const mongoDriver = dataSource.driver;
+        if (!(mongoDriver instanceof MongoDriver)) {
+            return;
+        }
+
+        const mongoClient = mongoDriver.queryRunner?.databaseConnection;
+        if (!mongoClient) {
+            logger.warn("Mongo transactional query runner was not installed because MongoClient is unavailable");
+            return;
+        }
+
+        const queryRunner = new MongoTransactionalQueryRunner(dataSource, mongoClient);
+        Object.assign(queryRunner, {
+            manager: dataSource.manager,
+        });
+
+        // Replace the singleton runner used by MongoDriver.createQueryRunner().
+        (mongoDriver as any).queryRunner = queryRunner;
+        logger.info("Mongo transactional query runner installed");
     }
 
     /**

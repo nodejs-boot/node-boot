@@ -1,4 +1,4 @@
-import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typeorm-transactional";
+import {wrapInTransaction, WrapInTransactionOptions} from "../transaction";
 
 /**
  * Decorator to mark a method as transactional.
@@ -34,7 +34,23 @@ import {Transactional as InnerTransactional, WrapInTransactionOptions} from "typ
  * @author Manuel Santos <https://github.com/manusant>
  */
 export const Transactional = (options?: WrapInTransactionOptions): MethodDecorator => {
-    return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
-        InnerTransactional(options)(target, propertyKey, descriptor);
+    return (_: unknown, methodName: string | symbol, descriptor: TypedPropertyDescriptor<any>) => {
+        const originalMethod = descriptor.value as () => unknown;
+
+        descriptor.value = wrapInTransaction(originalMethod, {
+            ...options,
+            name: methodName,
+        });
+
+        Reflect.getMetadataKeys(originalMethod).forEach(previousMetadataKey => {
+            const previousMetadata = Reflect.getMetadata(previousMetadataKey, originalMethod);
+
+            Reflect.defineMetadata(previousMetadataKey, previousMetadata, descriptor.value as object);
+        });
+
+        Object.defineProperty(descriptor.value, "name", {
+            value: originalMethod.name,
+            writable: false,
+        });
     };
 };

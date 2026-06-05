@@ -1,10 +1,10 @@
 import {Bean, Configuration} from "@nodeboot/core";
 import {ApplicationContext, BeansContext, ShutdownHook} from "@nodeboot/context";
 import {DataSource} from "typeorm";
-import {addTransactionalDataSource, initializeTransactionalContext, StorageDriver} from "typeorm-transactional";
 import {PersistenceProperties} from "../property/PersistenceProperties";
 import {PERSISTENCE_CONFIG_PATH} from "../types";
 import {Logger} from "winston";
+import {addTransactionalDataSource, initializeTransactionalContext} from "../transaction";
 
 /**
  * TransactionConfiguration class responsible for setting up transactional support
@@ -36,17 +36,24 @@ export class TransactionConfiguration {
     public transactionConfig({iocContainer, logger, config}: BeansContext): void {
         const persistenceProperties = config.get<PersistenceProperties>(PERSISTENCE_CONFIG_PATH);
 
-        if (persistenceProperties.type !== "mongodb") {
-            logger.info("Configuring transactions");
-            const dataSource = iocContainer.get(DataSource);
+        logger.info("Configuring transactions");
+        const dataSource = iocContainer.get(DataSource);
 
-            // Enable transactions
-            initializeTransactionalContext(persistenceProperties.transactions ?? {storageDriver: StorageDriver.AUTO});
-            addTransactionalDataSource(dataSource);
-            logger.info(
-                "Transactions successfully configured with storage driver in AUTO mode (AsyncLocalStorage when node >= 16 and cls-hooked otherwise)",
-            );
+        // Enable transactions for all supported data sources.
+        initializeTransactionalContext(persistenceProperties.transactions);
+
+        if (persistenceProperties.type === "mongodb") {
+            // MongoDB does not need SQL DataSource patching and runs with driver-level query runner transactions.
+            addTransactionalDataSource({
+                dataSource,
+                patch: false,
+            });
+            logger.info("MongoDB transactions configured with AsyncLocalStorage context propagation");
+            return;
         }
+
+        addTransactionalDataSource(dataSource);
+        logger.info("Transactions successfully configured with AsyncLocalStorage context propagation");
     }
 
     /**
