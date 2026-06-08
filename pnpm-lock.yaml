@@ -917,9 +917,6 @@ importers:
       '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
-      '@types/aws-lambda':
-        specifier: ^8.10.155
-        version: 8.10.155
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
@@ -927,6 +924,9 @@ importers:
         specifier: ^9.3.0
         version: 9.3.0
     devDependencies:
+      '@types/aws-lambda':
+        specifier: ^8.10.155
+        version: 8.10.155
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.14
