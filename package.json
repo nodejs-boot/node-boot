@@ -48,15 +48,21 @@
         "release:version": "pnpm changeset version",
         "release:status": "pnpm changeset status",
         "release:publish": "pnpm changeset publish",
-        "release": "pnpm run lint-format:fix && pnpm run build && pnpm run release:status && pnpm run release:version && pnpm run release:publish"
+        "nodeboot:check:type-deps": "node ./node_modules/@nodeboot/tools/dist/check-type-dependencies.js",
+        "nodeboot:check:local-deps": "node ./node_modules/@nodeboot/tools/dist/verify-local-dependencies.js",
+        "nodeboot:check:docs": "node ./node_modules/@nodeboot/tools/dist/check-docs-quality.js"
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
             "pnpm lint-format:fix"
+        ],
+        "*.{json,md,css,html}": [
+            "prettier --write"
         ]
     },
     "devDependencies": {
         "@changesets/cli": "^2.28.1",
+        "@nodeboot/tools": "^1.2.0",
         "@jest/globals": "^29.5.0",
         "@swc/core": "^1.3.41",
         "@swc/jest": "^0.2.24",

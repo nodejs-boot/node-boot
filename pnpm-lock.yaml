@@ -14,6 +14,9 @@ importers:
       '@jest/globals':
         specifier: ^29.5.0
         version: 29.7.0
+      '@nodeboot/tools':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@swc/core':
         specifier: ^1.3.41
         version: 1.12.1
@@ -2319,6 +2322,9 @@ packages:
   '@nodeboot/aot@1.4.0':
     resolution: {integrity: sha512-yaXH7mHZe+O77dhf2pDah6mcoryTktO0mJzxWDTau8VIn9oSBJnFCprUN41GyXA6Ec23EVw3A/oOs2wj1qd08g==}
     hasBin: true
+
+  '@nodeboot/tools@1.2.0':
+    resolution: {integrity: sha512-V7PGqWLhduJ4raIyUN7lyuPmnbpKEDOQdgirCUOUAwt76DtBM6xsZ8mrbW/NnBlIWNnSGgsJlqPlA0tZ8o3+lA==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -10761,6 +10767,23 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
+
+  '@nodeboot/tools@1.2.0':
+    dependencies:
+      '@manypkg/get-packages': 2.2.2
+      '@octokit/rest': 20.1.2
+      chalk: 4.1.2
+      command-exists: 1.2.9
+      fs-extra: 11.3.0
+      glob: 10.4.5
+      mdast-util-to-string: 4.0.0
+      remark-parse: 11.0.0
+      remark-stringify: 11.0.0
+      semver: 7.7.2
+      shx: 0.3.4
+      unified: 11.0.5
+    transitivePeerDependencies:
+      - supports-color
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
