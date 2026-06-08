@@ -279,8 +279,8 @@ importers:
   samples/sample-express:
     dependencies:
       '@nodeboot/aot':
-        specifier: workspace:*
-        version: link:../../packages/aot
+        specifier: ^1.4.0
+        version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
         version: link:../../packages/authorization
