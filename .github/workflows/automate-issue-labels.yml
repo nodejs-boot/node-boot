@@ -46,7 +46,7 @@ jobs:
                           }
                         })
                         .filter(Boolean);
-                        
+
                       if(!labels.length) {
                         return;
                       }
