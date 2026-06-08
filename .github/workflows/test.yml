@@ -2,9 +2,10 @@ name: Test
 on:
     workflow_dispatch:
 
-    push:
-        branches:
-            - main
+    # FIXME - enable this after tests are setup
+    #push:
+    #    branches:
+    #        - main
 
     pull_request_target:
         types:
