@@ -46,6 +46,7 @@
         "npm:prune": "pnpm store prune && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
         "changeset:create": "pnpm changeset",
         "release:version": "pnpm changeset version",
+        "changeset:format": "pnpm prettier --write '{packages,samples,serverless,servers,starters}/*/{package.json,CHANGELOG.md}'",
         "release:status": "pnpm changeset status",
         "release:publish": "pnpm changeset publish",
         "nodeboot:check:type-deps": "node ./node_modules/@nodeboot/tools/dist/check-type-dependencies.js",
