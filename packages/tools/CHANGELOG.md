@@ -1,5 +1,11 @@
 # @nodeboot/tools
 
+## 1.2.1
+
+### Patch Changes
+
+-   ddb6943: testing new release pipeline
+
 ## 1.2.0
 
 ### Minor Changes
