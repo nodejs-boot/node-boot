@@ -30,8 +30,10 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "test": "jest --passWithNoTests",
-        "typecheck": "tsc",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc",
         "gen:schema:test": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot-model-schema.js"
     },
     "dependencies": {
@@ -74,7 +76,6 @@
         "@types/cors": "^2.8.13",
         "@types/express": "^4.17.17",
         "@types/hpp": "^0.2.2",
-        "@types/jest": "^28.1.6",
         "@types/multer": "^2.0.0",
         "@types/node": "^22.13.4",
         "@types/supertest": "^2.0.12"

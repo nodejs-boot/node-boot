@@ -12,6 +12,5 @@ ignoredBuiltDependencies:
 onlyBuiltDependencies:
     - "@firebase/util"
     - "@scarf/scarf"
-    - "@swc/core"
     - better-sqlite3
     - unrs-resolver

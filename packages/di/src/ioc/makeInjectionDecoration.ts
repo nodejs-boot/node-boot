@@ -4,8 +4,8 @@ import {InjectionOptions} from "./types";
  * Apply proper @Inject decorator if dependency injection framework is available
  * */
 export function decorateInjection(
-    target: Object,
-    propertyName: string | Symbol,
+    target: object,
+    propertyName: string | symbol,
     index?: number,
     options?: InjectionOptions,
 ): boolean {
@@ -16,8 +16,8 @@ export function decorateInjection(
  * Apply @Inject decorator if TypeDI framework is available
  * */
 function decorateTypeDi(
-    target: Object,
-    propertyName: string | Symbol,
+    target: object,
+    propertyName: string | symbol,
     index?: number,
     options?: InjectionOptions,
 ): boolean {
@@ -42,8 +42,8 @@ function decorateTypeDi(
  * Apply @inject decorator if Inversify framework is available
  * */
 function decorateInversify(
-    target: Object,
-    propertyName: string | Symbol,
+    target: object,
+    propertyName: string | symbol,
     index?: number,
     options?: InjectionOptions,
 ): boolean {

@@ -24,7 +24,7 @@
         },
         "build": {
             "dependsOn": ["^build"],
-            "outputs": ["dist/**", "tsconfig.tsbuildinfo"]
+            "outputs": ["dist/**", "tsconfig.json", "tsconfig.*.json", "tsconfig.tsbuildinfo"]
         },
         "clean:build": {
             "dependsOn": ["build"]
@@ -39,13 +39,14 @@
         "format": {},
         "format:fix": {},
         "release": {},
-        "build:patch": {},
-        "build:minor": {},
-        "build:major": {},
+        "nodeboot:update": {},
         "test": {
             "dependsOn": ["build"]
         },
-        "typecheck": {
+        "test:coverage": {
+            "dependsOn": ["build"]
+        },
+        "tsc": {
             "outputs": ["tsconfig.tsbuildinfo"]
         }
     }

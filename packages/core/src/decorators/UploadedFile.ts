@@ -6,7 +6,7 @@ import {UploadOptions} from "@nodeboot/context";
  * Must be applied on a controller action parameter.
  */
 export function UploadedFile(name: string, options?: UploadOptions): Function {
-    return function (object: Object, methodName: string, index: number) {
+    return function (object: object, methodName: string, index: number) {
         NodeBootToolkit.getMetadataArgsStorage().params.push({
             type: "file",
             object: object,

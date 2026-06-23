@@ -5,7 +5,7 @@ import {NodeBootToolkit} from "@nodeboot/engine";
  * Must be applied on a controller action.
  */
 export function Redirect(url: string): Function {
-    return function (object: Object, methodName: string) {
+    return function (object: object, methodName: string) {
         NodeBootToolkit.getMetadataArgsStorage().responseHandlers.push({
             type: "redirect",
             target: object.constructor,

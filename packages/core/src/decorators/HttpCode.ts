@@ -7,7 +7,7 @@ import {NodeBootToolkit} from "@nodeboot/engine";
  * Must be applied on a controller action.
  */
 export function HttpCode(code: number): Function {
-    return function (object: Object, methodName: string) {
+    return function (object: object, methodName: string) {
         NodeBootToolkit.getMetadataArgsStorage().responseHandlers.push({
             type: "success-code",
             target: object.constructor,

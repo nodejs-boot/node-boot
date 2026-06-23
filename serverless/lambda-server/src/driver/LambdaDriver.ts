@@ -12,7 +12,6 @@ import {
 import {GlobalErrorHandler, NodeBootDriver} from "@nodeboot/engine";
 import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError} from "@nodeboot/error";
 import {parse as parseCookie} from "cookie";
-// eslint-disable-next-line import/no-unresolved
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from "aws-lambda";
 
 type LambdaDriverOptions = {

@@ -54,8 +54,8 @@ jobs:
             - name: Execute Linter
               run: pnpm lint
 
-            - name: Typescript Checks # Check this later on to run typecheck:full instead to check transitive dependencies as well
-              run: pnpm typecheck
+            - name: Typescript Checks # Check this later on to run tsc:full instead to check transitive dependencies as well
+              run: pnpm tsc
 
             - name: Start monorepo release
               id: start-monorepo-release

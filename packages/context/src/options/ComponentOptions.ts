@@ -36,5 +36,5 @@ export type ComponentOptions<Type = unknown> = {
     /**
      * Instance of the target class.
      */
-    value?: unknown | Symbol;
+    value?: unknown | symbol;
 };

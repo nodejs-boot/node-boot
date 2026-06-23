@@ -25,7 +25,6 @@ import session from "express-session";
 import bodyParser from "body-parser";
 import {ExpressServerConfigs} from "../types";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
 
 type ExpressServerOptions = {
@@ -193,7 +192,7 @@ export class ExpressDriver extends NodeBootDriver<Application> {
     /**
      * Registers all routes in the framework.
      */
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     registerRoutes() {}
 
     /**

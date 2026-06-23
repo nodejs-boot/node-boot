@@ -13,7 +13,7 @@ export function Inject(serviceName?: string): Function;
 export function Inject(symbolValue?: symbol): Function;
 export function Inject(token: Token<unknown>): Function;
 export function Inject(options?: InjectionOptions): Function {
-    return (target: Object, propertyName: string | Symbol, index?: number) => {
+    return (target: object, propertyName: string | symbol, index?: number) => {
         // Registering metadata for custom filed injection (used for example in the Persistence Event Subscribers)
         if (propertyName && typeof propertyName === "string") {
             const injectProperties: string[] = Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, target) || [];

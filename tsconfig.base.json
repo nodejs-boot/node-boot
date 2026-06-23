@@ -1,8 +1,9 @@
 {
     "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
     "include": ["**/*.ts"],
-    "exclude": ["node_modules", "dist", "**/*.d.ts"],
+    "exclude": ["node_modules", "dist"],
     "compilerOptions": {
+        "lib": ["esnext", "dom"],
         /* Basic Options */
         "incremental": true,
         "declaration": true,
@@ -10,6 +11,7 @@
         "emitDeclarationOnly": false,
         "sourceMap": true,
         "allowJs": true,
+        "checkJs": false,
         "noEmit": true,
         "strict": true,
 

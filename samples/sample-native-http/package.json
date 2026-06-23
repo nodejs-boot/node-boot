@@ -35,7 +35,7 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "test": "jest --passWithNoTests",
-        "typecheck": "tsc",
+        "tsc": "tsc",
         "rebuild:sqlite": "npm rebuild better-sqlite3",
         "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
     },

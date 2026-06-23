@@ -39,7 +39,7 @@ export class CatalogClientProxy implements CatalogApi {
         };
     }
 
-    getLocations(request?: {}, options?: CatalogRequestOptions): Promise<GetLocationsResponse> {
+    getLocations(request?: any, options?: CatalogRequestOptions): Promise<GetLocationsResponse> {
         return this.catalogClient.getLocations(request, this.useOptions(options));
     }
 

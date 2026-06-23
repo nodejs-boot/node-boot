@@ -10,33 +10,34 @@
 <br />
 
 > NOTE: This is fresh and in active development. Documentation is under construction. Please be pacient and check our sample projects for examples:
-- [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
-- [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
-- [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
-- [Node-Boot with MongoDB](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express-mongodb)
+
+-   [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
+-   [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
+-   [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
+-   [Node-Boot with MongoDB](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express-mongodb)
 
 ## Node-Boot Architecture
+
 ![node-boot-arch drawio](https://github.com/nodejs-boot/node-boot/assets/12997676/42f8256e-b94b-48a6-8375-da41fc9a56e8)
 
-
 ## Documentation
-Please Check [Node-Boot Framework Documentation](https://nodeboot-1.gitbook.io/node-boot-framework)
 
+Please Check [Node-Boot Framework Documentation](https://nodeboot-1.gitbook.io/node-boot-framework)
 
 ### Built With
 
 This project uses the following technologies and tools:
 
-- [PNPM](https://pnpm.io/) - Package management
-- [Turborepo](https://turbo.build/repo) - High performance build system
-- [Husky](https://typicode.github.io/husky/) - Git hooks
-- [Typescript](https://www.typescriptlang.org/) - Type-safe codebase
-- [Prettier](https://prettier.io/) - Code formatter
-- [Eslint](https://eslint.org/) - Code linter
-- [Nodemon](https://github.com/remy/nodemon) - Development runtime (script monitor)
-- [Jest](https://jestjs.io/) - Frontend & backend test suite
-- [GitHub Actions](https://github.com/features/actions) - CI/CD workflow automation
-- [Conventional Commits](https://www.conventionalcommits.org/) - Commit message standard
+-   [PNPM](https://pnpm.io/) - Package management
+-   [Turborepo](https://turbo.build/repo) - High performance build system
+-   [Husky](https://typicode.github.io/husky/) - Git hooks
+-   [Typescript](https://www.typescriptlang.org/) - Type-safe codebase
+-   [Prettier](https://prettier.io/) - Code formatter
+-   [Eslint](https://eslint.org/) - Code linter
+-   [Nodemon](https://github.com/remy/nodemon) - Development runtime (script monitor)
+-   [Jest](https://jestjs.io/) - Frontend & backend test suite
+-   [GitHub Actions](https://github.com/features/actions) - CI/CD workflow automation
+-   [Conventional Commits](https://www.conventionalcommits.org/) - Commit message standard
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -66,9 +67,9 @@ A superset of JavaScript that compiles to clean JavaScript code. A type-safe cod
 
 You will notice 3 `tsconfig.ts` file variants in the root of the project.
 
-- `tsconfig.base.json` - This is the base configuration for all packages within the monorepo. It is worth pointing out that we extend the recommended rules for the current Node LTS version and for strict type-checking from `@tsconfig/node-lts-strictest` ([tsconfig/bases](https://github.com/tsconfig/bases))
-- `tsconfig.build.json` - This is the configuration for the build process. It extends the base configuration and configures where the compiled codebase should be outputted to and what should be compiled.
-- `tsconfig.json` - This is the configuration for the root of the monorepo mainly for the IDE to use and other libraries that may need it such as Eslint (`@typescript-eslint`). It also extends the base configuration.
+-   `tsconfig.base.json` - This is the base configuration for all packages within the monorepo. It is worth pointing out that we extend the recommended rules for the current Node LTS version and for strict type-checking from `@tsconfig/node-lts-strictest` ([tsconfig/bases](https://github.com/tsconfig/bases))
+-   `tsconfig.build.json` - This is the configuration for the build process. It extends the base configuration and configures where the compiled codebase should be outputted to and what should be compiled.
+-   `tsconfig.json` - This is the configuration for the root of the monorepo mainly for the IDE to use and other libraries that may need it such as Eslint (`@typescript-eslint`). It also extends the base configuration.
 
 Within each `packages/*` directory, you will notice a `tsconfig.json` and `tsconfig.build.json` file. This is for package specific Typescript configuration. It is important in some aspects to treat each package independently from each other as they may have different requirements.
 
@@ -96,7 +97,7 @@ A pluggable and configurable linting tool that statically analyses your code to 
 
 A monitoring tool that restarts the configured executable when file changes in the configured directory are detected.
 
-Within the `packages/*` directories, you will notice a `nodemode.json` that has an executable script of `exec: pnpm typecheck && pnpm build`. This is to ensure that the codebase is fully type-checked and built - ready for dependants to import. Remember, that the built configuration is only intended for the final built code and not the source code. This form of double Type-checking also quite performant as the Typescript compilation is cached in the form a generate `tsconfig.tsbuildinfo` file thanks to the `incremental: true` Typescript configuration option.
+Within the `packages/*` directories, you will notice a `nodemode.json` that has an executable script of `exec: pnpm tsc && pnpm build`. This is to ensure that the codebase is fully type-checked and built - ready for dependants to import. Remember, that the built configuration is only intended for the final built code and not the source code. This form of double Type-checking also quite performant as the Typescript compilation is cached in the form a generate `tsconfig.tsbuildinfo` file thanks to the `incremental: true` Typescript configuration option.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -161,12 +162,13 @@ Turborepo and Nodemon will run each package in parallel and watch for file chang
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## How to Start
+
 Check the [Node-Boot Framework Documentation](https://nodeboot-1.gitbook.io/node-boot-framework) to understand the concepts and explore our sample projects where all features are available:
 
-- [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
-- [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
-- [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
-- [Node-Boot with MongoDB](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express-mongodb)
+-   [Node-Boot with Express](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express)
+-   [Node-Boot with Fastify](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-fastify)
+-   [Node-Boot with Koa](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-koa)
+-   [Node-Boot with MongoDB](https://github.com/nodejs-boot/node-boot/tree/main/samples/sample-express-mongodb)
 
 ## License
 

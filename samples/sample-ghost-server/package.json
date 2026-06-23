@@ -30,9 +30,11 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "test": "jest --passWithNoTests",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc",
         "rebuild:sqlite": "npm rebuild better-sqlite3",
-        "typecheck": "tsc",
         "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
     },
     "dependencies": {
@@ -57,7 +59,6 @@
         "winston": "^3.10.0"
     },
     "devDependencies": {
-        "@types/jest": "^28.1.6",
         "@types/node": "^22.13.4",
         "@types/supertest": "^2.0.12"
     }

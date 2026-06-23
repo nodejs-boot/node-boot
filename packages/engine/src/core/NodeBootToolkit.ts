@@ -119,7 +119,7 @@ export class NodeBootToolkit {
      * Registers custom parameter decorator used in the controller actions.
      */
     static createParamDecorator(options: CustomParameterDecorator) {
-        return function (object: Object, method: string, index: number) {
+        return function (object: object, method: string, index: number) {
             NodeBootToolkit.getMetadataArgsStorage().params.push({
                 type: "custom-converter",
                 name: "custom-param-decorator",

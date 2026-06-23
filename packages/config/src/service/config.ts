@@ -8,7 +8,6 @@ import {JsonObject} from "@nodeboot/context";
 
 export function isValidUrl(url: string): boolean {
     try {
-        // eslint-disable-next-line no-new
         new URL(url);
         return true;
     } catch {
@@ -34,7 +33,6 @@ export async function loadNodeBootConfig(options: {
         .flat()
         .map(arg => (isValidUrl(arg) ? {url: arg} : {path: resolvePath(arg)}));
 
-    /* eslint-disable-next-line no-restricted-syntax */
     const paths = findPaths(__dirname);
 
     let currentCancelFunc: (() => void) | undefined = undefined;

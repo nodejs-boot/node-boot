@@ -5,7 +5,7 @@ import {NodeBootToolkit} from "@nodeboot/engine";
  * Must be applied on a controller action.
  */
 export function ContentType(contentType: string): Function {
-    return function (object: Object, methodName: string) {
+    return function (object: object, methodName: string) {
         NodeBootToolkit.getMetadataArgsStorage().responseHandlers.push({
             type: "content-type",
             target: object.constructor,

@@ -18,7 +18,7 @@ export function Patch(route?: string, options?: HandlerOptions): Function;
  * Must be applied on a controller action.
  */
 export function Patch(route?: string | RegExp, options?: HandlerOptions): Function {
-    return function (object: Object, methodName: string) {
+    return function (object: object, methodName: string) {
         NodeBootToolkit.getMetadataArgsStorage().actions.push({
             type: "patch",
             target: object.constructor,

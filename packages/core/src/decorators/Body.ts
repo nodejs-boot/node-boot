@@ -6,7 +6,7 @@ import {BodyOptions} from "@nodeboot/context";
  * Must be applied on a controller action parameter.
  */
 export function Body(options?: BodyOptions): Function {
-    return function (object: Object, methodName: string, index: number) {
+    return function (object: object, methodName: string, index: number) {
         NodeBootToolkit.getMetadataArgsStorage().params.push({
             type: "body",
             object: object,

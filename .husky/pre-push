@@ -3,4 +3,4 @@
 
 # Ensure Typescript files have no errors before pushing
 # Ensure there is no linting or formatting errors before pushing
-pnpm turbo run --parallel lint format typecheck
+pnpm turbo run --parallel lint format tsc

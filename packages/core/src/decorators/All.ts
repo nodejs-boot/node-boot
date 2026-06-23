@@ -18,7 +18,7 @@ export function All(route?: string): Function;
  * Must be applied on a controller action.
  */
 export function All(route?: string | RegExp, options?: ControllerOptions): Function {
-    return function (object: Object, methodName: string) {
+    return function (object: object, methodName: string) {
         NodeBootToolkit.getMetadataArgsStorage().actions.push({
             type: "all",
             target: object.constructor,

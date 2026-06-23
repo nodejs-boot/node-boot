@@ -5,9 +5,10 @@ export class DependenciesLoader {
     static loadSession() {
         try {
             return require("@fastify/session");
-        } catch (e) {
+        } catch (e: any) {
             throw new Error(
                 "@fastify/session package was not found installed. Try to install it: npm install @fastify/session --save",
+                e,
             );
         }
     }
@@ -18,9 +19,10 @@ export class DependenciesLoader {
     static loadCookie() {
         try {
             return require("@fastify/cookie");
-        } catch (e) {
+        } catch (e: any) {
             throw new Error(
                 "@fastify/cookie package was not found installed. Try to install it: npm install @fastify/cookie --save",
+                e,
             );
         }
     }
@@ -31,9 +33,10 @@ export class DependenciesLoader {
     static loadMultipart() {
         try {
             return require("@fastify/multipart");
-        } catch (e) {
+        } catch (e: any) {
             throw new Error(
                 "@fastify/multipart package was not found installed. Try to install it: npm install @fastify/multipart --save",
+                e,
             );
         }
     }
@@ -44,9 +47,10 @@ export class DependenciesLoader {
     static loadCors() {
         try {
             return require("@fastify/cors");
-        } catch (e) {
+        } catch (e: any) {
             throw new Error(
                 "@fastify/cors package was not found installed. Try to install it: npm install @fastify/cors --save",
+                e,
             );
         }
     }
@@ -57,9 +61,10 @@ export class DependenciesLoader {
     static loadView() {
         try {
             return require("@fastify/view");
-        } catch (e) {
+        } catch (e: any) {
             throw new Error(
                 "@fastify/view package was not found installed. Try to install it: npm install @fastify/view --save",
+                e,
             );
         }
     }

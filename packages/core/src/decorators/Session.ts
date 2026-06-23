@@ -6,7 +6,7 @@ import {ParamOptions} from "@nodeboot/context";
  * Must be applied on a controller action parameter.
  */
 export function Session(options?: ParamOptions): Function {
-    return function (object: Object, methodName: string, index: number) {
+    return function (object: object, methodName: string, index: number) {
         NodeBootToolkit.getMetadataArgsStorage().params.push({
             type: "session",
             object: object,

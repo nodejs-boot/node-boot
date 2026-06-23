@@ -26,7 +26,6 @@ import multer from "@koa/multer";
 
 import {KoaServerConfigs} from "../types";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const templateUrl = require("template-url");
 
 type KoaServerOptions = {
@@ -61,7 +60,6 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
      * Initializes the things driver needs before routes and middleware registration.
      */
     initialize() {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const bodyParser = require("koa-bodyparser");
         this.app.use(bodyParser());
 
