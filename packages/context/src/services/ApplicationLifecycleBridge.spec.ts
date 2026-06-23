@@ -1,14 +1,16 @@
-import {describe, expect, it} from "@jest/globals";
+import {describe, it, mock} from "node:test";
+import assert from "node:assert/strict";
 import EventEmitter from "node:events";
+
 import {ApplicationLifecycleBridge} from "./ApplicationLifecycleBridge";
 import {Config} from "./Config";
 import {LifecycleType} from "../types";
 
 // Minimal mock logger matching the subset used
 const mockLogger = {
-    info: jest.fn(),
-    debug: jest.fn(),
-} as any; // Winston logger subset
+    info: mock.fn(),
+    debug: mock.fn(),
+} as any;
 
 // Minimal mock config implementing required methods
 const mockConfig: Config = {
@@ -35,37 +37,52 @@ const lifecycleEvent: LifecycleType = "application.started";
 describe("ApplicationLifecycleBridge", () => {
     it("resolves awaitEvent after publish", async () => {
         const bridge = new ApplicationLifecycleBridge(mockLogger, mockConfig, new EventEmitter());
+
         setTimeout(() => bridge.publish(lifecycleEvent), 10);
-        await expect(bridge.awaitEvent(lifecycleEvent, 100)).resolves.toBeUndefined();
+
+        await assert.doesNotReject(bridge.awaitEvent(lifecycleEvent, 100));
     });
 
     it("resolves immediately if event already fired (awaitEvent)", async () => {
         const bridge = new ApplicationLifecycleBridge(mockLogger, mockConfig, new EventEmitter());
+
         await bridge.publish(lifecycleEvent);
+
         const start = Date.now();
         await bridge.awaitEvent(lifecycleEvent, 50);
-        expect(Date.now() - start).toBeLessThan(10); // Should be near-immediate
+
+        assert.ok(Date.now() - start < 10);
     });
 
     it("invokes subscriber immediately if event already fired", () => {
         const bridge = new ApplicationLifecycleBridge(mockLogger, mockConfig, new EventEmitter());
+
         bridge.publish(lifecycleEvent);
-        const listener = jest.fn();
+
+        const listener = mock.fn();
+
         bridge.subscribe(lifecycleEvent, listener);
-        expect(listener).toHaveBeenCalledTimes(1);
+
+        assert.equal(listener.mock.callCount(), 1);
     });
 
     it("subscribes normally before event fires", () => {
         const bridge = new ApplicationLifecycleBridge(mockLogger, mockConfig, new EventEmitter());
-        const listener = jest.fn();
+
+        const listener = mock.fn();
+
         bridge.subscribe(lifecycleEvent, listener);
-        expect(listener).not.toHaveBeenCalled();
+
+        assert.equal(listener.mock.callCount(), 0);
+
         bridge.publish(lifecycleEvent);
-        expect(listener).toHaveBeenCalledTimes(1);
+
+        assert.equal(listener.mock.callCount(), 1);
     });
 
     it("rejects awaitEvent after timeout if not fired", async () => {
         const bridge = new ApplicationLifecycleBridge(mockLogger, mockConfig, new EventEmitter());
-        await expect(bridge.awaitEvent(lifecycleEvent, 20)).rejects.toThrow(/Timeout/);
+
+        await assert.rejects(bridge.awaitEvent(lifecycleEvent, 20), /Timeout/);
     });
 });
