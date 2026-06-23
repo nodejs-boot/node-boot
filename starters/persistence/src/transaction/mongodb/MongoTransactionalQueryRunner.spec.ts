@@ -1,26 +1,29 @@
+import {describe, it, mock} from "node:test";
+import assert from "node:assert/strict";
+
 import {MongoTransactionalQueryRunner} from "./MongoTransactionalQueryRunner";
 
 describe("MongoTransactionalQueryRunner", () => {
     const createRunner = () => {
         const session = {
-            startTransaction: jest.fn(),
-            commitTransaction: jest.fn(async () => undefined),
-            abortTransaction: jest.fn(async () => undefined),
-            endSession: jest.fn(async () => undefined),
+            startTransaction: mock.fn(),
+            commitTransaction: mock.fn(async () => undefined),
+            abortTransaction: mock.fn(async () => undefined),
+            endSession: mock.fn(async () => undefined),
         };
 
         const collection = {
-            insertOne: jest.fn(async () => ({acknowledged: true})),
-            updateOne: jest.fn(async () => ({acknowledged: true})),
+            insertOne: mock.fn(async () => ({acknowledged: true})),
+            updateOne: mock.fn(async () => ({acknowledged: true})),
         };
 
         const db = {
-            collection: jest.fn(() => collection),
+            collection: mock.fn(() => collection),
         };
 
         const client = {
-            startSession: jest.fn(() => session),
-            db: jest.fn(() => db),
+            startSession: mock.fn(() => session),
+            db: mock.fn(() => db),
         };
 
         const dataSource = {
@@ -45,14 +48,16 @@ describe("MongoTransactionalQueryRunner", () => {
         const {runner, session, client} = createRunner();
 
         await runner.startTransaction();
-        expect(client.startSession).toHaveBeenCalledTimes(1);
-        expect(session.startTransaction).toHaveBeenCalledTimes(1);
-        expect(runner.isTransactionActive).toBe(true);
+
+        assert.equal(client.startSession.mock.callCount(), 1);
+        assert.equal(session.startTransaction.mock.callCount(), 1);
+        assert.equal(runner.isTransactionActive, true);
 
         await runner.commitTransaction();
-        expect(session.commitTransaction).toHaveBeenCalledTimes(1);
-        expect(session.endSession).toHaveBeenCalledTimes(1);
-        expect(runner.isTransactionActive).toBe(false);
+
+        assert.equal(session.commitTransaction.mock.callCount(), 1);
+        assert.equal(session.endSession.mock.callCount(), 1);
+        assert.equal(runner.isTransactionActive, false);
     });
 
     it("rolls back an active transaction", async () => {
@@ -61,20 +66,26 @@ describe("MongoTransactionalQueryRunner", () => {
         await runner.startTransaction();
         await runner.rollbackTransaction();
 
-        expect(session.abortTransaction).toHaveBeenCalledTimes(1);
-        expect(session.endSession).toHaveBeenCalledTimes(1);
-        expect(runner.isTransactionActive).toBe(false);
+        assert.equal(session.abortTransaction.mock.callCount(), 1);
+        assert.equal(session.endSession.mock.callCount(), 1);
+        assert.equal(runner.isTransactionActive, false);
     });
 
     it("injects session into operations executed inside a transaction", async () => {
         const {runner, collection, session} = createRunner();
 
         await runner.startTransaction();
+
         await runner.insertOne("users", {name: "neo"});
         await runner.updateOne("users", {name: "neo"}, {$set: {name: "neo-v2"}} as any);
 
-        expect(collection.insertOne).toHaveBeenCalledWith({name: "neo"}, {session});
-        expect(collection.updateOne).toHaveBeenCalledWith({name: "neo"}, {$set: {name: "neo-v2"}}, {session});
+        assert.deepEqual(collection?.insertOne?.mock?.calls?.[0]?.arguments, [{name: "neo"}, {session}]);
+
+        assert.deepEqual(collection?.insertOne?.mock?.calls?.[0]?.arguments, [
+            {name: "neo"},
+            {$set: {name: "neo-v2"}},
+            {session},
+        ]);
     });
 
     it("supports nested transactional depth without committing on inner commit", async () => {
@@ -84,9 +95,11 @@ describe("MongoTransactionalQueryRunner", () => {
         await runner.startTransaction();
 
         await runner.commitTransaction();
-        expect(session.commitTransaction).not.toHaveBeenCalled();
+
+        assert.equal(session.commitTransaction.mock.callCount(), 0);
 
         await runner.commitTransaction();
-        expect(session.commitTransaction).toHaveBeenCalledTimes(1);
+
+        assert.equal(session.commitTransaction.mock.callCount(), 1);
     });
 });

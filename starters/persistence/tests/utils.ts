@@ -1,6 +1,5 @@
 import {QueryBuilder} from "typeorm";
-
-import {Counter} from "./entities/Counter.entity";
+import {Counter} from "./setup/postgres.setup";
 
 interface IQueryable {
     query(query: string, parameters?: string[]): Promise<any>;

@@ -7,13 +7,11 @@ import {
     runInTransaction,
     TransactionalError,
 } from "../src/transaction";
-import {User} from "./entities/User.entity";
-import {Counter} from "./entities/Counter.entity";
-import {UserRepository} from "./repositories/user.repository";
 import {sleep, getCurrentTransactionId} from "./utils";
 import {runOnTransactionCommit, runOnTransactionComplete, runOnTransactionRollback} from "../src";
 import {describe, test, before, after, afterEach} from "node:test";
 import * as assert from "node:assert";
+import {Counter, User, UserRepository} from "./setup/postgres.setup";
 
 /**
  * NodeBoot Transaction Tests
