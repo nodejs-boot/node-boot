@@ -1,0 +1,68 @@
+{
+    "name": "@nodeboot/native-http-supabase-sample",
+    "version": "1.3.16",
+    "description": "Node-Boot sample project using native HTTP server with Supabase persistence. This project demonstrates how to create a simple HTTP server using Node.js and TypeScript with Supabase database integration for data persistence.",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "private": "true",
+    "keywords": [
+        "nodeboot",
+        "typescript",
+        "http",
+        "native",
+        "server",
+        "sample",
+        "supabase",
+        "persistence"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "start": "pnpm run clean:build && pnpm run build && node dist/server.js",
+        "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
+        "dev": "NODE_ENV=development nodemon",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "build": "tsc -p tsconfig.build.json",
+        "postbuild": "npx @nodeboot/aot node-boot-aot",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/http-server": "workspace:*",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/starter-openapi": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/starter-actuator": "workspace:*",
+        "@nodeboot/starter-supabase": "workspace:*",
+        "@nodeboot/starter-http": "workspace:*",
+        "@nodeboot/starter-validation": "workspace:*",
+        "@nodeboot/aot": "^1.4.0",
+        "reflect-metadata": "^0.2.1",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0",
+        "@supabase/supabase-js": "^2.43.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.13.4"
+    }
+}

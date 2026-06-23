@@ -1,0 +1,51 @@
+{
+    "name": "@nodeboot/starter-supabase",
+    "version": "1.0.0",
+    "description": "Node-Boot starter package for Supabase",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "monorepo",
+        "typescript",
+        "supabase",
+        "nodeboot"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "postbuild": "npx @nodeboot/aot node-boot-aot",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/engine": "workspace:*"
+    },
+    "peerDependencies": {
+        "winston": ">=3.10.0",
+        "@supabase/supabase-js": ">=2.0.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}

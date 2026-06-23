@@ -1,0 +1,11 @@
+# Local configuration overrides
+# Copy SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY from your Supabase project settings
+
+server:
+    port: 3000
+    hostname: localhost
+
+integrations:
+    supabase:
+        url: ${SUPABASE_URL}
+        serviceRoleKey: ${SUPABASE_SERVICE_ROLE_KEY}

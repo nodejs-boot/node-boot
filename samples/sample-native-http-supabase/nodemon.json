@@ -1,0 +1,10 @@
+{
+    "env": {
+        "NODE_ENV": "development",
+        "TS_NODE_PROJECT": "tsconfig.json"
+    },
+    "exec": "ts-node --require reflect-metadata",
+    "ext": "ts",
+    "watch": ["src"],
+    "ignore": ["src/**/*.spec.ts"]
+}
