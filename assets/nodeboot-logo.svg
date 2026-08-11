@@ -1,0 +1,70 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hexGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#8ED45F"/>
+      <stop offset="50%" stop-color="#48A23C"/>
+      <stop offset="100%" stop-color="#1B6430"/>
+    </linearGradient>
+    <linearGradient id="facetTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="facetBottom" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFE07D"/>
+      <stop offset="55%" stop-color="#FDBA47"/>
+      <stop offset="100%" stop-color="#F2861F"/>
+    </linearGradient>
+    <radialGradient id="windowGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#8ED45F"/>
+      <stop offset="100%" stop-color="#2C7A38"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Hexagon badge with faceted shading -->
+  <polygon points="512,42 919,277 919,747 512,982 105,747 105,277" fill="url(#hexGrad)"/>
+  <polygon points="512,42 919,277 512,512" fill="url(#facetTop)"/>
+  <polygon points="105,277 512,42 512,512" fill="url(#facetTop)" opacity="0.6"/>
+  <polygon points="512,982 919,747 512,512" fill="url(#facetBottom)"/>
+  <polygon points="105,747 512,982 512,512" fill="url(#facetBottom)" opacity="0.6"/>
+
+  <!-- Rocket -->
+  <g>
+    <!-- flame -->
+    <path d="M 512 668
+             C 478 705, 466 758, 512 826
+             C 558 758, 546 705, 512 668 Z" fill="url(#flame)"/>
+    <path d="M 512 690
+             C 494 715, 488 748, 512 792
+             C 536 748, 530 715, 512 690 Z" fill="#FFF3D6" opacity="0.85"/>
+
+    <g fill="#FFFFFF">
+      <!-- left fin -->
+      <path d="M 470 560
+               L 460 655
+               C 410 665, 355 700, 322 748
+               C 358 660, 405 605, 470 560 Z"/>
+      <!-- right fin -->
+      <path d="M 554 560
+               L 564 655
+               C 614 665, 669 700, 702 748
+               C 666 660, 619 605, 554 560 Z"/>
+
+      <!-- body -->
+      <path d="M 512 224
+               C 600 300, 640 410, 628 510
+               C 621 578, 597 632, 561 668
+               C 546 683, 529 692, 512 696
+               C 495 692, 478 683, 463 668
+               C 427 632, 403 578, 396 510
+               C 384 410, 424 300, 512 224 Z"/>
+    </g>
+  </g>
+
+  <!-- window ring -->
+  <circle cx="512" cy="420" r="54" fill="url(#windowGrad)" stroke="#FFFFFF" stroke-width="16"/>
+  <circle cx="500" cy="405" r="14" fill="#FFFFFF" opacity="0.55"/>
+</svg>

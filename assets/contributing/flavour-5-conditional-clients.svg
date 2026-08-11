@@ -1,0 +1,41 @@
+<svg width="1220" height="430" viewBox="0 0 1220 430" xmlns="http://www.w3.org/2000/svg"><defs>
+  <linearGradient id="gGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#8ED45F"/><stop offset="100%" stop-color="#1B6430"/>
+  </linearGradient>
+  <linearGradient id="gAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#F2861F"/><stop offset="100%" stop-color="#C2600F"/>
+  </linearGradient>
+  <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#3E7FB5"/><stop offset="100%" stop-color="#255E8C"/>
+  </linearGradient>
+  <linearGradient id="gPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#7C5CBF"/><stop offset="100%" stop-color="#5A3F94"/>
+  </linearGradient>
+  <linearGradient id="gSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#22303C"/><stop offset="100%" stop-color="#0F171D"/>
+  </linearGradient>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#5B6B79"/>
+  </marker>
+  <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#C2600F"/>
+  </marker>
+</defs><rect x="0" y="0" width="1220" height="430" fill="#FFFFFF"/><text x="610.0" y="42" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#22303C" text-anchor="middle">Flavour 5 - Conditional Clients Based on Configuration</text>
+<rect x="330.0" y="100" width="560" height="90" rx="16" fill="url(#gAmber)" stroke="none" stroke-width="2"/>
+<text x="610.0" y="134" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">@Configuration({ onConfig })</text>
+<text x="610.0" y="158" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">checks e.g. "integrations.aws.s3.region"</text>
+<line x1="610.0" y1="190" x2="610.0" y2="226" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="329.40000000000003" y1="226" x2="890.6" y2="226" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="329.40000000000003" y1="226" x2="329.40000000000003" y2="260" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="890.6" y1="226" x2="890.6" y2="260" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="259.40000000000003" y="218" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1B6430" text-anchor="end">path exists</text>
+<text x="960.6" y="218" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6B79" text-anchor="start">path missing</text>
+<rect x="109.40000000000003" y="260" width="440" height="110" rx="16" fill="url(#gGreen)" stroke="none" stroke-width="2"/>
+<text x="329.40000000000003" y="294" font-family="Helvetica, Arial, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">@Bean() Client Created</text>
+<text x="329.40000000000003" y="318" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">e.g. S3Client registered</text>
+<text x="329.40000000000003" y="338" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="11" font-weight="400" fill="#EAF4EC" text-anchor="middle">iocContainer.set(S3Client, ...)</text>
+<rect x="670.6" y="260" width="440" height="110" rx="16" fill="#F4F7F5" stroke="#CBD8CF" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="890.6" y="294" font-family="Helvetica, Arial, sans-serif" font-size="15.5" font-weight="700" fill="#22303C" text-anchor="middle">Bean Skipped</text>
+<text x="890.6" y="318" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6B79" text-anchor="middle">no client registered</text>
+<text x="890.6" y="338" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="11" font-weight="400" fill="#5B6B79" text-anchor="middle">logger.warn(...)</text>
+<text x="610.0" y="410" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6B79" text-anchor="middle">Multiple conditional beans (S3, SQS, SNS, DynamoDB...) can coexist in one starter</text></svg>

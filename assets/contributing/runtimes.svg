@@ -1,0 +1,47 @@
+<svg width="1300" height="480" viewBox="0 0 1300 480" xmlns="http://www.w3.org/2000/svg"><defs>
+  <linearGradient id="gGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#8ED45F"/><stop offset="100%" stop-color="#1B6430"/>
+  </linearGradient>
+  <linearGradient id="gAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#F2861F"/><stop offset="100%" stop-color="#C2600F"/>
+  </linearGradient>
+  <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#3E7FB5"/><stop offset="100%" stop-color="#255E8C"/>
+  </linearGradient>
+  <linearGradient id="gPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#7C5CBF"/><stop offset="100%" stop-color="#5A3F94"/>
+  </linearGradient>
+  <linearGradient id="gSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#22303C"/><stop offset="100%" stop-color="#0F171D"/>
+  </linearGradient>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#5B6B79"/>
+  </marker>
+  <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#C2600F"/>
+  </marker>
+</defs><rect x="0" y="0" width="1300" height="480" fill="#FFFFFF"/><text x="650.0" y="46" font-family="Helvetica, Arial, sans-serif" font-size="23" font-weight="700" fill="#22303C" text-anchor="middle">Runtimes — Wrapping a Built Node-Boot App</text>
+<text x="650.0" y="72" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6B79" text-anchor="middle">Anything that can wrap a Node.js process can wrap a Node-Boot application</text>
+<rect x="440.0" y="106" width="420" height="84" rx="16" fill="url(#gSlate)" stroke="none" stroke-width="2"/>
+<text x="650.0" y="141.28" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">Node-Boot App (dist/)</text>
+<text x="650.0" y="163.28" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">built, production-ready bundle</text>
+<line x1="650.0" y1="190" x2="650.0" y2="226" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="650.0" y1="226" x2="250.0" y2="226" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="250.0" y1="226" x2="250.0" y2="260" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="650.0" y1="226" x2="650.0" y2="226" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="650.0" y1="226" x2="650.0" y2="260" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<line x1="650.0" y1="226" x2="1050.0" y2="226" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="1050.0" y1="226" x2="1050.0" y2="260" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="70.0" y="260" width="360" height="130" rx="16" fill="url(#gBlue)" stroke="none" stroke-width="2"/>
+<text x="250.0" y="294" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle">Kubernetes</text>
+<text x="250.0" y="318" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">Dockerfile + manifests/Helm</text>
+<text x="250.0" y="336" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">liveness/readiness via /actuator</text>
+<rect x="470.0" y="260" width="360" height="130" rx="16" fill="url(#gGreen)" stroke="none" stroke-width="2"/>
+<text x="650.0" y="294" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle">PM2</text>
+<text x="650.0" y="318" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">ecosystem.config.js</text>
+<text x="650.0" y="336" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">clustering + zero-downtime reload</text>
+<rect x="870.0" y="260" width="360" height="130" rx="16" fill="url(#gAmber)" stroke="none" stroke-width="2"/>
+<text x="1050.0" y="294" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle">Platformatic (Watt)</text>
+<text x="1050.0" y="318" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">Watt service wrapper</text>
+<text x="1050.0" y="336" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">runs the built app as a service</text>
+<text x="650.0" y="430" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#5B6B79" text-anchor="middle">Contributions here are samples &amp; infra templates — not framework code</text></svg>

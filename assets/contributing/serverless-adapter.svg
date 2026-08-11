@@ -1,0 +1,44 @@
+<svg width="1500" height="360" viewBox="0 0 1500 360" xmlns="http://www.w3.org/2000/svg"><defs>
+  <linearGradient id="gGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#8ED45F"/><stop offset="100%" stop-color="#1B6430"/>
+  </linearGradient>
+  <linearGradient id="gAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#F2861F"/><stop offset="100%" stop-color="#C2600F"/>
+  </linearGradient>
+  <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#3E7FB5"/><stop offset="100%" stop-color="#255E8C"/>
+  </linearGradient>
+  <linearGradient id="gPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#7C5CBF"/><stop offset="100%" stop-color="#5A3F94"/>
+  </linearGradient>
+  <linearGradient id="gSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#22303C"/><stop offset="100%" stop-color="#0F171D"/>
+  </linearGradient>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#5B6B79"/>
+  </marker>
+  <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#C2600F"/>
+  </marker>
+</defs><rect x="0" y="0" width="1500" height="360" fill="#FFFFFF"/><text x="750.0" y="46" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#22303C" text-anchor="middle">Serverless Adapter Pattern</text>
+<text x="750.0" y="72" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6B79" text-anchor="middle">App is built once (cold start) and reused across warm invocations</text>
+<rect x="40.0" y="140" width="264.8" height="110" rx="16" fill="url(#gBlue)" stroke="none" stroke-width="2"/>
+<text x="172.4" y="186.2" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">Platform Event</text>
+<text x="172.4" y="206.2" font-family="Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">Lambda / CF / Vercel req</text>
+<rect x="328.8" y="140" width="264.8" height="110" rx="16" fill="url(#gAmber)" stroke="none" stroke-width="2"/>
+<text x="461.20000000000005" y="186.2" font-family="Helvetica, Arial, sans-serif" font-size="14.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">createHandler(App)</text>
+<text x="461.20000000000005" y="206.2" font-family="Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">cold start: build app once</text>
+<rect x="617.6" y="140" width="264.8" height="110" rx="16" fill="url(#gAmber)" stroke="none" stroke-width="2"/>
+<text x="750.0" y="186.2" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">NodeBootDriver</text>
+<text x="750.0" y="206.2" font-family="Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">translate event &lt;-&gt; Action</text>
+<rect x="906.4000000000001" y="140" width="264.8" height="110" rx="16" fill="url(#gSlate)" stroke="none" stroke-width="2"/>
+<text x="1038.8000000000002" y="186.2" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Node-Boot App</text>
+<text x="1038.8000000000002" y="206.2" font-family="Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">controller executes</text>
+<rect x="1195.2" y="140" width="264.8" height="110" rx="16" fill="url(#gBlue)" stroke="none" stroke-width="2"/>
+<text x="1327.6000000000001" y="186.2" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">Platform Response</text>
+<text x="1327.6000000000001" y="206.2" font-family="Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">native response shape</text>
+<line x1="307.8" y1="195.0" x2="325.8" y2="195.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="596.6" y1="195.0" x2="614.6" y2="195.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="885.4000000000001" y1="195.0" x2="903.4000000000001" y2="195.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="1174.2" y1="195.0" x2="1192.2" y2="195.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="750.0" y="292" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="13" font-weight="400" fill="#5B6B79" text-anchor="middle">export const handler = createHandler(MyNodeBootApp);</text></svg>

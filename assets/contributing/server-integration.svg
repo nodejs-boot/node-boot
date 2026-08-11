@@ -1,0 +1,46 @@
+<svg width="1360" height="440" viewBox="0 0 1360 440" xmlns="http://www.w3.org/2000/svg"><defs>
+  <linearGradient id="gGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#8ED45F"/><stop offset="100%" stop-color="#1B6430"/>
+  </linearGradient>
+  <linearGradient id="gAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#F2861F"/><stop offset="100%" stop-color="#C2600F"/>
+  </linearGradient>
+  <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#3E7FB5"/><stop offset="100%" stop-color="#255E8C"/>
+  </linearGradient>
+  <linearGradient id="gPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#7C5CBF"/><stop offset="100%" stop-color="#5A3F94"/>
+  </linearGradient>
+  <linearGradient id="gSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#22303C"/><stop offset="100%" stop-color="#0F171D"/>
+  </linearGradient>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#5B6B79"/>
+  </marker>
+  <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#C2600F"/>
+  </marker>
+</defs><rect x="0" y="0" width="1360" height="440" fill="#FFFFFF"/><rect x="40.0" y="150" width="297.5" height="110" rx="16" fill="url(#gSlate)" stroke="none" stroke-width="2"/>
+<text x="188.75" y="196.2" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">Your Application</text>
+<text x="188.75" y="218.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">@Controller · @Get · @Middleware</text>
+<rect x="367.5" y="150" width="297.5" height="110" rx="16" fill="url(#gAmber)" stroke="none" stroke-width="2"/>
+<text x="516.25" y="196.2" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">NodeBootDriver</text>
+<text x="516.25" y="218.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">@nodeboot/engine contract</text>
+<rect x="695.0" y="150" width="297.5" height="110" rx="16" fill="url(#gBlue)" stroke="none" stroke-width="2"/>
+<text x="843.75" y="196.2" font-family="Helvetica, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle">XxxServer + XxxDriver</text>
+<text x="843.75" y="218.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">BaseServer + driver impl</text>
+<rect x="1022.5" y="150" width="297.5" height="110" rx="16" fill="url(#gBlue)" stroke="none" stroke-width="2"/>
+<text x="1171.25" y="196.2" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">Framework Runtime</text>
+<text x="1171.25" y="218.2" font-family="Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#EAF4EC" text-anchor="middle">the concrete server engine</text>
+<line x1="341.5" y1="205.0" x2="363.5" y2="205.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="669.0" y1="205.0" x2="691.0" y2="205.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="996.5" y1="205.0" x2="1018.5" y2="205.0" stroke="#5B6B79" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="1171.25" y="286" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5B6B79" text-anchor="middle">implemented by</text>
+<rect x="1024.5" y="291.0" width="49.1" height="30" rx="8" fill="#F4F7F5" stroke="#CBD8CF" stroke-width="1.5"/><text x="1049.05" y="311" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="12.5" fill="#22303C" text-anchor="middle">Express</text>
+<rect x="1085.6" y="291.0" width="49.1" height="30" rx="8" fill="#F4F7F5" stroke="#CBD8CF" stroke-width="1.5"/><text x="1110.1499999999999" y="311" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="12.5" fill="#22303C" text-anchor="middle">Fastify</text>
+<rect x="1146.7" y="291.0" width="49.1" height="30" rx="8" fill="#F4F7F5" stroke="#CBD8CF" stroke-width="1.5"/><text x="1171.25" y="311" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="12.5" fill="#22303C" text-anchor="middle">Koa</text>
+<rect x="1207.8" y="291.0" width="49.1" height="30" rx="8" fill="#F4F7F5" stroke="#CBD8CF" stroke-width="1.5"/><text x="1232.35" y="311" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="12.5" fill="#22303C" text-anchor="middle">node:http</text>
+<rect x="1268.9" y="291.0" width="49.1" height="30" rx="8" fill="#F4F7F5" stroke="#CBD8CF" stroke-width="1.5"/><text x="1293.45" y="311" font-family="SFMono-Regular, Consolas, Menlo, monospace" font-size="12.5" fill="#22303C" text-anchor="middle">Encore.ts</text>
+<text x="680.0" y="50" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#22303C" text-anchor="middle">Server Integration — HTTP Adapter Pattern</text>
+<text x="680.0" y="78" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6B79" text-anchor="middle">Your controllers stay the same — only the adapter changes per runtime</text>
+<text x="680.0" y="360" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5B6B79" text-anchor="middle">HTTP Request  -&gt;  routed through the adapter  -&gt;  HTTP Response</text></svg>

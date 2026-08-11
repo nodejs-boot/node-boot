@@ -1,0 +1,40 @@
+<svg width="1360" height="470" viewBox="0 0 1360 470" xmlns="http://www.w3.org/2000/svg"><defs>
+  <linearGradient id="gGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#8ED45F"/><stop offset="100%" stop-color="#1B6430"/>
+  </linearGradient>
+  <linearGradient id="gAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#F2861F"/><stop offset="100%" stop-color="#C2600F"/>
+  </linearGradient>
+  <linearGradient id="gBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#3E7FB5"/><stop offset="100%" stop-color="#255E8C"/>
+  </linearGradient>
+  <linearGradient id="gPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#7C5CBF"/><stop offset="100%" stop-color="#5A3F94"/>
+  </linearGradient>
+  <linearGradient id="gSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#22303C"/><stop offset="100%" stop-color="#0F171D"/>
+  </linearGradient>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#5B6B79"/>
+  </marker>
+  <marker id="arrowAmber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <path d="M0,0 L10,5 L0,10 Z" fill="#C2600F"/>
+  </marker>
+</defs><rect x="0" y="0" width="1360" height="470" fill="#FFFFFF"/><text x="680.0" y="42" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#22303C" text-anchor="middle">Flavour 4 - Registering New Decorators with AOT / Component Scan</text>
+<rect x="170.0" y="100" width="480" height="90" rx="16" fill="url(#gGreen)" stroke="none" stroke-width="2"/>
+<text x="410.0" y="134" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Core Decorator</text>
+<text x="410.0" y="158" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">add to MAIN_DECORATORS in packages/aot</text>
+<rect x="710.0" y="100" width="480" height="90" rx="16" fill="url(#gBlue)" stroke="none" stroke-width="2"/>
+<text x="950.0" y="134" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Starter / Custom Decorator</text>
+<text x="950.0" y="158" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">pass via customDecorators: [...]</text>
+<line x1="410.0" y1="190" x2="410.0" y2="230" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="950.0" y1="190" x2="950.0" y2="230" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="410.0" y1="230" x2="950.0" y2="230" stroke="#5B6B79" stroke-width="2.5"/>
+<line x1="680.0" y1="230" x2="680.0" y2="264" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="450.0" y="264" width="460" height="90" rx="16" fill="url(#gAmber)" stroke="none" stroke-width="2"/>
+<text x="680.0" y="298" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">@EnableComponentScan()</text>
+<text x="680.0" y="322" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">scans dist/ or node-boot-beans.json</text>
+<line x1="680.0" y1="354" x2="680.0" y2="388" stroke="#5B6B79" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="450.0" y="388" width="460" height="90" rx="16" fill="url(#gSlate)" stroke="none" stroke-width="2"/>
+<text x="680.0" y="422" font-family="Helvetica, Arial, sans-serif" font-size="15.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Classes Registered as Beans</text>
+<text x="680.0" y="446" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#EAF4EC" text-anchor="middle">recognized &amp; imported at startup</text></svg>
