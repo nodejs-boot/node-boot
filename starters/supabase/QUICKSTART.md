@@ -149,6 +149,8 @@ Your Node-Boot application with Supabase is now running! 🚀
 -   **Storage**: Add file upload functionality
 -   **Realtime**: Subscribe to data changes
 -   **Edge Functions**: Call serverless functions
+-   **Direct Postgres/TypeORM access**: This starter only talks to Supabase through its client (PostgREST/Auth/Storage/Realtime). If you need TypeORM entities, repositories, or migrations against the same Postgres database, see [Connecting Node-Boot to the Underlying Supabase Postgres Database Directly](./README.md#connecting-node-boot-to-the-underlying-supabase-postgres-database-directly) in the full README.
+-   **Protecting controllers with Supabase Auth**: See [Authorization in Node-Boot Controllers with Supabase Auth](./README.md#-authorization-in-node-boot-controllers-with-supabase-auth) to enforce `@Authorized()` / `@CurrentUser()` using Supabase access tokens.
 
 ## Common Use Cases
 

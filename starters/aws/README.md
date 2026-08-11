@@ -7,7 +7,7 @@ dependency injection and auto-configuration for AWS clients such as DynamoDB, S3
 
 ## Enabling AWS Services
 
-1. Firs install the AWS Starter package for NodeBoot:
+1. First install the AWS Starter package for NodeBoot:
 
 ```sh
 npm install @nodeboot/starter-aws
@@ -21,7 +21,7 @@ import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
 import {EnableDI} from "@nodeboot/di";
-import {EnableComponentScan} from "@nodeboot/scan";
+import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableAws} from "@nodeboot/starter-aws";
 
 @EnableDI(Container)
@@ -92,6 +92,10 @@ region=us-east-1
 > For more information regarding AWS SDK configuration options, please refer
 > to
 > [Setting_AWS_Credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/configuring-the-jssdk.html#Setting_AWS_Credentials)
+
+> ⚠️ If `integrations.aws.credentials` is not set in `app-config.yaml`, each client is still created — the starter
+> logs a warning and falls back to the AWS SDK's default credentials provider chain (environment variables, shared
+> `~/.aws/credentials` file, or an attached IAM role), so explicit config is optional in environments like EC2/ECS/Lambda.
 
 ## AWS Service-Specific Instructions
 
@@ -297,6 +301,31 @@ com:
         aws:
             sqs:
                 queue-url: "https://sqs.us-east-1.amazonaws.com/123456789012/my-queue"
+```
+
+> `@SqsListener` only registers when the current active profiles satisfy any `@Profile(...)` metadata declared on the
+> target class (see `@nodeboot/core`'s `@Profile` decorator). If the profiles don't match, or AWS SQS isn't enabled
+> via `@EnableAws()`/`integrations.aws.sqs.region`, the listener logs a warning and is skipped instead of throwing.
+
+#### The `MessageEnvelop` Payload
+
+Every `@SqsListener` handler receives a `MessageEnvelop<M>` — a parsed wrapper around the raw SQS message body,
+rather than the raw `sqs-consumer` `Message` object:
+
+```typescript
+type MessageEnvelop<M = JsonObject> = {
+    messageId: string; // AWS-assigned message ID
+    timestamp: string; // SNS/SQS delivery timestamp
+    signature: string; // SNS signature, when the message originated from an SNS->SQS subscription
+    message: M; // The actual, JSON-parsed message payload
+};
+```
+
+```typescript
+@SqsListener("${com.example.aws.sqs.queue-url}")
+async onMessage(envelop: MessageEnvelop<{orderId: string}>): Promise<void> {
+    console.log(`Processing order ${envelop.message.orderId} (messageId=${envelop.messageId})`);
+}
 ```
 
 #### SQS Message Handling
