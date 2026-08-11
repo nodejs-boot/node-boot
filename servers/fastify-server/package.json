@@ -36,6 +36,14 @@
         "@nodeboot/error": "workspace:*",
         "template-url": "^1.0.0"
     },
+    "devDependencies": {
+        "fastify": "^5.6.0",
+        "@fastify/cookie": "^11.0.2",
+        "@fastify/session": "^11.1.0",
+        "@fastify/multipart": "^9.2.1",
+        "@fastify/view": "^11.1.1",
+        "@fastify/cors": "^11.1.0"
+    },
     "peerDependencies": {
         "fastify": ">=5.6.0",
         "@fastify/cookie": ">=11.0.2",
