@@ -1,0 +1,14 @@
+# Copy this file to `terraform.tfvars` to deploy against REAL AWS infrastructure
+# (make sure your AWS credentials are configured, e.g. via `aws configure` or env vars).
+#
+#   cp terraform.tfvars.example terraform.tfvars
+#   terraform init
+#   terraform apply
+
+aws_region    = "us-east-1"
+function_name = "nodeboot-lambda-sample"
+stage_name    = "prod"
+
+# environment_variables = {
+#   LOG_LEVEL = "info"
+# }

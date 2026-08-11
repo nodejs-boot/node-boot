@@ -1,0 +1,74 @@
+{
+    "name": "@nodeboot/lambda-sample",
+    "version": "1.0.0",
+    "description": "Node-Boot sample project deployed as an AWS Lambda function",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "private": "true",
+    "keywords": [
+        "node-boot",
+        "aws",
+        "lambda",
+        "serverless"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/handler.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "dev": "pnpm run build && NODE_ENV=development serverless offline --reloadHandler",
+        "invoke:local": "ts-node src/local-invoke.ts",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "build": "tsc -p tsconfig.build.json",
+        "postbuild": "npx @nodeboot/aot node-boot-aot",
+        "package": "bash scripts/build-zip.sh",
+        "clean:build": "rimraf ./dist ./lambda.zip",
+        "deploy:serverless": "pnpm run clean:build && pnpm run build && serverless deploy",
+        "remove:serverless": "serverless remove",
+        "localstack:up": "docker compose -f docker-compose.localstack.yml up -d --wait",
+        "localstack:down": "docker compose -f docker-compose.localstack.yml down -v",
+        "localstack:logs": "docker compose -f docker-compose.localstack.yml logs -f",
+        "deploy:localstack": "bash scripts/deploy-localstack.sh",
+        "terraform:init": "terraform -chdir=terraform init",
+        "terraform:plan": "terraform -chdir=terraform plan -var-file=localstack.tfvars",
+        "terraform:apply": "terraform -chdir=terraform apply -var-file=localstack.tfvars",
+        "terraform:destroy": "terraform -chdir=terraform destroy -var-file=localstack.tfvars",
+        "terraform:apply:aws": "terraform -chdir=terraform apply",
+        "terraform:destroy:aws": "terraform -chdir=terraform destroy",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/lambda-server": "workspace:*",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/starter-validation": "workspace:*",
+        "@nodeboot/aot": "^1.4.0",
+        "reflect-metadata": "^0.2.1",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.17.0"
+    },
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.155",
+        "@types/node": "^22.13.4",
+        "serverless": "^3.40.0",
+        "serverless-offline": "^13.9.0"
+    }
+}

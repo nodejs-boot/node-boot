@@ -1,0 +1,40 @@
+service: nodeboot-lambda-sample
+
+frameworkVersion: "3"
+
+provider:
+    name: aws
+    runtime: nodejs20.x
+    region: ${opt:region, "us-east-1"}
+    stage: ${opt:stage, "dev"}
+    memorySize: 256
+    timeout: 15
+    environment:
+        NODE_ENV: production
+    httpApi:
+        cors: true
+
+package:
+    individually: false
+    patterns:
+        - "!**"
+        - "dist/**"
+        - "node_modules/**"
+        - "app-config.yaml"
+        - "!**/*.map"
+
+functions:
+    api:
+        handler: dist/handler.handler
+        events:
+            # Catch-all proxy so NodeBoot's own router (find-my-way) handles
+            # every HTTP method and path for this service.
+            - httpApi:
+                  method: ANY
+                  path: /
+            - httpApi:
+                  method: ANY
+                  path: /{proxy+}
+
+plugins:
+    - serverless-offline

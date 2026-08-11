@@ -1,0 +1,27 @@
+# App configurations
+app:
+    name: "lambda-sample"
+    platform: "node-boot"
+    environment: "development"
+    defaultErrorHandler: false
+
+api:
+    routePrefix: "/api"
+    nullResultCode: 200
+    undefinedResultCode: 204
+    paramOptions:
+        required: false
+    validations:
+        enableDebugMessages: false
+        skipUndefinedProperties: false
+        skipNullProperties: false
+        skipMissingProperties: false
+        whitelist: true
+        forbidNonWhitelisted: true
+        forbidUnknownValues: true
+        stopAtFirstError: false
+
+# Winston logger configurations.
+# On Lambda, logs are shipped straight to CloudWatch Logs, so we simply log to stdout.
+logger:
+    level: "info"
