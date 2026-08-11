@@ -1,6 +1,6 @@
 ---
 name: nodeboot-starter-persistence-mongodb
-description: Use when the user wants MongoDB persistence in a Node-Boot app via `@nodeboot/starter-persistence` and TypeORM's Mongo driver — `persistence.type: mongodb`. Covers Mongo entity shape (`@ObjectIdColumn`/`_id`), `MongoRepository<T>`, `MongoPagingAndSortingRepository<T>` cursor-based paging, entity subscribers, and injecting `MongoClient` directly. This is the MongoDB flavour of `nodeboot-starter-persistence`; use `nodeboot-starter-persistence-sql` instead for relational databases.
+description: Use when the user wants MongoDB persistence in a Node-Boot app via `@nodeboot/starter-persistence` and TypeORM's Mongo driver — `persistence.type mongodb`. Covers Mongo entity shape (`@ObjectIdColumn`/`_id`), `MongoRepository<T>`, `MongoPagingAndSortingRepository<T>` cursor-based paging, entity subscribers, and injecting `MongoClient` directly. This is the MongoDB flavour of `nodeboot-starter-persistence`; use `nodeboot-starter-persistence-sql` instead for relational databases.
 ---
 
 # `@nodeboot/starter-persistence` — MongoDB flavour

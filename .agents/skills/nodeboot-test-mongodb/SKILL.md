@@ -1,6 +1,6 @@
 ---
 name: nodeboot-test-mongodb
-description: Use when writing integration tests for a Node-Boot app that uses MongoDB persistence (`@nodeboot/starter-persistence` with `persistence.type: mongodb`) — deciding between `useMongoMemoryServer` (fast in-memory), `useMongoMemoryReplSet` (replica set, needed for transactions/change streams), or `useMongoContainer` (real `mongo` Docker image via testcontainers) inside `@nodeboot/node-test`. Load `nodeboot-test-framework` first for the base `useNodeBoot()` pattern.
+description: Use when writing integration tests for a Node-Boot app that uses MongoDB persistence (`@nodeboot/starter-persistence` with `persistence.type mongodb`) — deciding between `useMongoMemoryServer` (fast in-memory), `useMongoMemoryReplSet` (replica set, needed for transactions/change streams), or `useMongoContainer` (real `mongo` Docker image via testcontainers) inside `@nodeboot/node-test`. Load `nodeboot-test-framework` first for the base `useNodeBoot()` pattern.
 ---
 
 # Testing Node-Boot apps backed by MongoDB

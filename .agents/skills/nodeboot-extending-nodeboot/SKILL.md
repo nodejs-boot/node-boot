@@ -1,6 +1,6 @@
 ---
 name: nodeboot-extending-nodeboot
-description: Use when contributing to Node-Boot itself rather than just consuming it — adding a new HTTP/serverless/desktop server adapter, changing core framework packages, adding an infra/runtime integration guide (Kubernetes, PM2, Platformatic), or building a new starter package (any of its 6 "flavours": SDK/client auto-configuration, method-decorator-with-lifecycle-adapter, class-decorator-with-lifecycle-adapter, AOT/component-scan decorator registration, application-level custom decorators, conditional beans, or multi-bean factories). This is the "extension flavours" skill mirroring CONTRIBUTING.md.
+description: Use when contributing to Node-Boot itself rather than just consuming it — adding a new HTTP/serverless/desktop server adapter, changing core framework packages, adding an infra/runtime integration guide (Kubernetes, PM2, Platformatic), or building a new starter package (any of its 6 "flavours" SDK/client auto-configuration, method-decorator-with-lifecycle-adapter, class-decorator-with-lifecycle-adapter, AOT/component-scan decorator registration, application-level custom decorators, conditional beans, or multi-bean factories). This is the extension flavours skill mirroring CONTRIBUTING.md.
 ---
 
 # Extending Node-Boot
