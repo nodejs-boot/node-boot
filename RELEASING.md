@@ -123,10 +123,11 @@ With this setup, **pnpm + Changesets** will properly manage versioning and publi
 ## Handy scripts
 
 The Node-Boot parent `package.jon` provides some scripts to help in the release process by using `pnpm` + `changesets`.
-| Command | Description |
-|---------|------------|
+
+| Command                  | Description                                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------- |
 | `pnpm release:changeset` | Creates a new changeset for the monorepo workspaces by detecting changed packages automatically |
-| `pnpm release:status` | Shows pending changesets to be released |
-| `pnpm release:version` | Applies version bumps for changed packages in the monorepo, according to pending changesets |
-| `pnpm release:publish` | Publishes updated packages |
-| `pnpm release` | Applies version bumps for changed packages in the monorepo and publishes them to NPM |
+| `pnpm release:status`    | Shows pending changesets to be released                                                         |
+| `pnpm release:version`   | Applies version bumps for changed packages in the monorepo, according to pending changesets     |
+| `pnpm release:publish`   | Publishes updated packages                                                                      |
+| `pnpm release`           | Applies version bumps for changed packages in the monorepo and publishes them to NPM            |
