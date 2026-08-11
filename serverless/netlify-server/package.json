@@ -1,0 +1,51 @@
+{
+    "name": "@nodeboot/netlify-server",
+    "version": "1.0.0",
+    "description": "Node-Boot Netlify Functions server package. It provides a simple way to create Netlify Functions handlers using NodeBoot, with support for routing, middleware, and request handling.",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "nodeboot",
+        "netlify",
+        "netlify-functions",
+        "serverless"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/engine": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "find-my-way": "^9.3.0",
+        "cookie": "^1.0.2"
+    },
+    "devDependencies": {
+        "@types/node": "^24.0.1",
+        "@netlify/functions": "^4.3.0"
+    },
+    "files": [
+        "dist/**/*",
+        "README.md",
+        "LICENSE"
+    ]
+}
