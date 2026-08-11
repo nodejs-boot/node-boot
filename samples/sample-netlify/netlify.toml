@@ -1,0 +1,12 @@
+[build]
+  functions = "netlify/functions"
+  command = "pnpm run build"
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api"
+  status = 200
