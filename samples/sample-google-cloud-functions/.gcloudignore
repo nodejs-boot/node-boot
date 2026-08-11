@@ -1,0 +1,14 @@
+# Files/directories excluded from the source uploaded to Cloud Build when running
+# `gcloud functions deploy` (see the `deploy` script in package.json).
+#
+# NOTE: `src/**/*.ts` and `package.json` must NOT be excluded here - the Node.js buildpack
+# runs `npm install` followed by the `gcp-build` script (`tsc`) remotely to produce `dist/`.
+.git
+.gitignore
+.eslintignore
+.prettierignore
+.lintstagedrc.js
+node_modules
+dist
+*.log
+README.md

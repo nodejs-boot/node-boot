@@ -1,0 +1,59 @@
+{
+    "name": "@nodeboot/google-cloud-functions-sample",
+    "version": "1.0.0",
+    "description": "Node-Boot sample project deployed as a Google Cloud Function",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "private": "true",
+    "keywords": [
+        "node-boot",
+        "google-cloud-functions",
+        "gcf",
+        "gcp",
+        "serverless"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "dev": "pnpm run build && functions-framework --target=api --source=dist --port=8080",
+        "invoke:local": "ts-node src/local-invoke.ts",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "build": "tsc -p tsconfig.build.json",
+        "gcp-build": "npm run build",
+        "clean:build": "rimraf ./dist",
+        "deploy": "gcloud functions deploy api --gen2 --runtime=nodejs20 --region=us-central1 --source=. --entry-point=api --trigger-http --allow-unauthenticated",
+        "remove": "gcloud functions delete api --gen2 --region=us-central1",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "tsc": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/google-cloud-functions-server": "workspace:*",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/starter-validation": "workspace:*",
+        "@google-cloud/functions-framework": "^5.0.5",
+        "reflect-metadata": "^0.2.1",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.17.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.13.4",
+        "ts-node": "^10.9.2"
+    }
+}
