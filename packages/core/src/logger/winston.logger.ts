@@ -43,6 +43,13 @@ export function createRootLogger(options: winston.LoggerOptions = {}, env = proc
                     transports: [
                         new winston.transports.Console({
                             silent: env["JEST_WORKER_ID"] !== undefined && !env["LOG_LEVEL"],
+                            // Always write via the global `console.log/warn/error` functions instead of
+                            // `console._stdout`/`console._stderr` (Node's raw process streams). This is a
+                            // no-op in normal Node.js (where `console._stdout` is `process.stdout` anyway),
+                            // but it's required in sandboxed runtimes like Cloudflare Workers, where
+                            // `nodejs_compat` exposes a `console._stdout`-shaped stream whose `_write` is
+                            // not implemented, while the native `console.log` global works natively.
+                            forceConsole: true,
                         }),
                     ],
                 },

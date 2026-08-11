@@ -140,9 +140,9 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
                     result = await interceptorFn(action, result);
                 });
             }
-            this.driver.handleSuccess(result, action, actionMetadata);
+            return this.driver.handleSuccess(result, action, actionMetadata);
         } catch (e) {
-            await this.driver.handleError(e, action, actionMetadata);
+            return await this.driver.handleError(e, action, actionMetadata);
         }
     }
 

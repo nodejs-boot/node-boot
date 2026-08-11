@@ -33,10 +33,6 @@ export async function loadNodeBootConfig(options: {
         .flat()
         .map(arg => (isValidUrl(arg) ? {url: arg} : {path: resolvePath(arg)}));
 
-    const paths = findPaths(__dirname);
-
-    let currentCancelFunc: (() => void) | undefined = undefined;
-
     const config = new ConfigService();
 
     const additionalConfigs: AppConfig[] = [];
@@ -45,27 +41,46 @@ export async function loadNodeBootConfig(options: {
         additionalConfigs.push({context: "runtime-configs", data: options.additionalConfigData});
     }
 
-    const {appConfigs} = await loadConfig({
-        configRoot: paths.targetRoot,
-        configTargets: configTargets,
-        remote: options.remote,
-        watch: {
-            onChange(newConfigs) {
-                console.info(`Reloaded config from ${newConfigs.map(c => c.context).join(", ")}`);
-                const configsToMerge = [...newConfigs];
-                configsToMerge.push(...additionalConfigs);
-                config.setConfig(ConfigReader.fromConfigs(configsToMerge));
-            },
-            stopSignal: new Promise(resolve => {
-                if (currentCancelFunc) {
-                    currentCancelFunc();
-                }
-                currentCancelFunc = resolve;
-            }),
-        },
-    });
+    let appConfigs: AppConfig[] = [];
 
-    console.info(`Loaded config from ${appConfigs.map(c => c.context).join(", ")}`);
+    try {
+        const paths = findPaths(__dirname);
+
+        let currentCancelFunc: (() => void) | undefined = undefined;
+
+        ({appConfigs} = await loadConfig({
+            configRoot: paths.targetRoot,
+            configTargets: configTargets,
+            remote: options.remote,
+            watch: {
+                onChange(newConfigs) {
+                    console.info(`Reloaded config from ${newConfigs.map(c => c.context).join(", ")}`);
+                    const configsToMerge = [...newConfigs];
+                    configsToMerge.push(...additionalConfigs);
+                    config.setConfig(ConfigReader.fromConfigs(configsToMerge));
+                },
+                stopSignal: new Promise(resolve => {
+                    if (currentCancelFunc) {
+                        currentCancelFunc();
+                    }
+                    currentCancelFunc = resolve;
+                }),
+            },
+        }));
+
+        console.info(`Loaded config from ${appConfigs.map(c => c.context).join(", ")}`);
+    } catch (error) {
+        // File-system based config discovery/loading isn't available in every runtime
+        // (e.g. Cloudflare Workers and other edge/sandboxed environments have no real
+        // filesystem, no `__dirname`/`package.json` to walk up to). In those cases, fall
+        // back to whatever configuration was supplied at runtime via `additionalConfigData`
+        // instead of failing the whole application startup.
+        console.warn(
+            `Skipping filesystem-based config discovery (no app-config.yaml found or unsupported runtime): ${
+                (error as Error).message
+            }`,
+        );
+    }
 
     const finalAppConfigs = [...appConfigs];
     finalAppConfigs.push(...additionalConfigs);

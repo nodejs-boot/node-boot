@@ -62,7 +62,13 @@ export class CoreInfoService {
             const packageFile = fs.readFileSync("./package.json", "utf8");
             return JSON.parse(packageFile);
         } catch (e: any) {
-            this.logger.error(`Error getting and parsing application package.json`, e);
+            // Reading `./package.json` from disk is expected to fail in filesystem-less runtimes
+            // (e.g. Cloudflare Workers and other edge/sandboxed environments). This is a
+            // non-fatal, best-effort lookup used only to populate optional build/version info in
+            // the startup banner, so we log it as a warning rather than an error.
+            this.logger.warn(
+                `Could not read application package.json to populate build info (this is expected in filesystem-less runtimes): ${e.message}`,
+            );
         }
     }
 }
