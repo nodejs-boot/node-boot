@@ -17,7 +17,16 @@ const compat = new FlatCompat({
 export default [
     // Global ignores
     {
-        ignores: ["dist/", "node_modules/", "coverage/", "scripts/", "**/*.d.ts", "**/*.js"],
+        ignores: [
+            "dist/",
+            "node_modules/",
+            "coverage/",
+            "scripts/",
+            "**/*.d.ts",
+            "**/*.js",
+            "**/.encore/**",
+            "**/encore.gen/**",
+        ],
     },
 
     // Base ESLint recommended rules

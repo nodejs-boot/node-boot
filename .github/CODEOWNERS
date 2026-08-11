@@ -1,0 +1,40 @@
+# CODEOWNERS file for nodejs-boot/node-boot
+# This file defines who is responsible for code in this repository.
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+#
+# More details: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+# These owners will be requested for review when someone opens a pull request.
+* @nodejs-boot/core-team
+
+# Package-specific ownership
+/packages/aot/ @nodejs-boot/core-team
+/packages/authorization/ @nodejs-boot/core-team
+/packages/config/ @nodejs-boot/core-team
+/packages/context/ @nodejs-boot/core-team
+/packages/core/ @nodejs-boot/core-team
+/packages/di/ @nodejs-boot/core-team
+/packages/engine/ @nodejs-boot/core-team
+/packages/error/ @nodejs-boot/core-team
+/packages/tools/ @nodejs-boot/core-team
+
+# Sample applications
+/samples/ @nodejs-boot/core-team
+/servers/ @nodejs-boot/core-team
+/starters/ @nodejs-boot/core-team
+/serverless/ @nodejs-boot/core-team
+
+# Configuration files
+/.github/ @nodejs-boot/core-team
+/.husky/ @nodejs-boot/core-team
+*.json @nodejs-boot/core-team
+*.yaml @nodejs-boot/core-team
+*.yml @nodejs-boot/core-team
+*.js @nodejs-boot/core-team
+*.mjs @nodejs-boot/core-team
+*.ts @nodejs-boot/core-team
+
+# Documentation
+*.md @nodejs-boot/core-team

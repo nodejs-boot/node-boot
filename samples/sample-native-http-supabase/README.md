@@ -100,6 +100,30 @@ src/
 -   **RLS Policies**: Implement Row Level Security in Supabase
 -   **Secrets**: Store sensitive keys in environment variables
 
+## 🔐 Authorization Implementation
+
+This sample wires `@nodeboot/authorization` up to Supabase Auth directly (no separate JWT library needed), following
+the pattern documented in the [`@nodeboot/authorization` production use cases](../../packages/authorization/README.md#-production-use-cases)
+and the [Supabase starter's Auth section](../../starters/supabase/README.md#-authorization-in-node-boot-controllers-with-supabase-auth).
+Both resolvers inject the auto-configured `SupabaseClient` bean from `@nodeboot/starter-supabase` and are typed
+against Node's native `IncomingMessage`/`ServerResponse` (since this sample runs on `@nodeboot/http-server`):
+
+-   **`LoggedInUserResolver`** (`CurrentUserChecker`) — extracts the `Authorization: Bearer <token>` header, verifies
+    it via `supabase.auth.getUser(token)`, and enriches the result with the user's `profiles` row (name, `roles`,
+    etc.) for `@CurrentUser()` injection.
+-   **`DefaultAuthorizationResolver`** (`AuthorizationChecker`) — re-verifies the token the same way, then checks the
+    caller's `roles` (fetched from the `profiles` table) against the roles required by `@Authorized(...)` on the
+    target controller action.
+
+```typescript
+@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
+@EnableSupabase()
+// ...
+```
+
+`@Authorized()` is applied to `getUsers`, `getUserById`, `updateUser`, and `deleteUser` in `UserController` —
+`createUser` is intentionally left open (public sign-up), matching the real controller code.
+
 ## Available Scripts
 
 -   `pnpm run dev` - Start development server with hot reload
