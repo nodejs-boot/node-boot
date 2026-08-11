@@ -1,0 +1,22 @@
+name = "nodeboot-cloudflare-sample"
+main = "src/worker.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+# `@nodeboot/engine`'s directory-scanning utility (unused by this sample, since beans are
+# imported explicitly in `src/app.ts`) depends on `glob`, which needs Node's filesystem
+# APIs unavailable in the Workers runtime. Alias it to a no-op stub so esbuild can bundle
+# the Worker; see `stubs/glob-stub.js` for details.
+[alias]
+"glob" = "./stubs/glob-stub.js"
+
+# Add environment bindings (KV namespaces, D1 databases, secrets, service bindings, etc.)
+# here as needed. They are accessible in controllers/services via the injected
+# `CloudflareContext` (`action.response.env`).
+#
+# [[kv_namespaces]]
+# binding = "MY_KV"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
