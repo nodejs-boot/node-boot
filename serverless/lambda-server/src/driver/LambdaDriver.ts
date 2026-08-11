@@ -94,8 +94,8 @@ export class LambdaDriver extends NodeBootDriver<void, Action<APIGatewayProxyEve
                         await this.checkAuthorization(event, context, actionMetadata);
                     }
 
-                    const result = await executeAction(action);
-                    return this.handleSuccess(result, action, actionMetadata);
+                    // The engine already builds the final APIGatewayProxyResult via handleSuccess/handleError
+                    return await executeAction(action);
                 } catch (error) {
                     return await this.handleError(error, action, actionMetadata);
                 }
