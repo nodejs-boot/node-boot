@@ -58,7 +58,7 @@
         "@nodeboot/di": "workspace:*",
         "@nodeboot/error": "workspace:*",
         "@nodeboot/starter-validation": "workspace:*",
-        "@nodeboot/aot": "^1.4.0",
+        "@nodeboot/aot": "1.4.0",
         "reflect-metadata": "^0.2.1",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
