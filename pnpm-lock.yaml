@@ -773,7 +773,7 @@ importers:
   samples/sample-express:
     dependencies:
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
@@ -897,7 +897,7 @@ importers:
   samples/sample-express-mongodb:
     dependencies:
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
@@ -1042,7 +1042,7 @@ importers:
         specifier: ^11.1.1
         version: 11.1.1
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
@@ -1121,7 +1121,7 @@ importers:
   samples/sample-ghost-server:
     dependencies:
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/config':
         specifier: workspace:*
@@ -1249,7 +1249,7 @@ importers:
         specifier: ^14.0.0
         version: 14.0.0
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
@@ -1355,7 +1355,7 @@ importers:
   samples/sample-lambda:
     dependencies:
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
@@ -1413,7 +1413,7 @@ importers:
   samples/sample-native-http:
     dependencies:
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
@@ -1492,7 +1492,7 @@ importers:
   samples/sample-native-http-supabase:
     dependencies:
       '@nodeboot/aot':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0(@swc/core@1.12.1)
       '@nodeboot/authorization':
         specifier: workspace:*
