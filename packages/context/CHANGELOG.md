@@ -1,5 +1,15 @@
 # @nodeboot/context
 
+## 2.4.0
+
+### Minor Changes
+
+-   7a74fda: Performance improvements
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+
 ## 2.3.0
 
 ### Minor Changes

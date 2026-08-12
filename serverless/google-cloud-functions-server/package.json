@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/google-cloud-functions-server",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Node-Boot Google Cloud Functions server package. It provides a simple way to create Google Cloud Functions HTTP handlers using NodeBoot, with support for routing, middleware, and request handling.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

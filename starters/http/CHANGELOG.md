@@ -1,5 +1,14 @@
 # @nodeboot/starter-http
 
+## 3.5.8
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/error@1.3.1
+
 ## 3.5.7
 
 ### Patch Changes

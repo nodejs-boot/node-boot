@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot-benchmark/nodeboot-koa",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "private": true,
     "description": "Node-Boot benchmark app on Koa + @nodeboot/starter-persistence (Postgres/TypeORM), mirroring samples/sample-koa conventions.",
     "main": "dist/server.js",

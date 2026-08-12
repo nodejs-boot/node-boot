@@ -1,5 +1,20 @@
 # @nodeboot/starter-persistence
 
+## 1.14.0
+
+### Minor Changes
+
+-   7a74fda: Hnadle async init correctly
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/config@1.3.8
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/core@1.16.4
+    -   @nodeboot/di@1.4.8
+
 ## 1.13.5
 
 ### Patch Changes

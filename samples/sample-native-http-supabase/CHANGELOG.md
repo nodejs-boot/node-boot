@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.3.17
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/aot@1.4.1
+    -   @nodeboot/authorization@1.3.8
+    -   @nodeboot/config@1.3.8
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/core@1.16.4
+    -   @nodeboot/di@1.4.8
+    -   @nodeboot/error@1.3.1
+    -   @nodeboot/http-server@1.5.0
+    -   @nodeboot/starter-actuator@1.7.8
+    -   @nodeboot/starter-http@3.5.8
+    -   @nodeboot/starter-openapi@2.4.9
+    -   @nodeboot/starter-supabase@1.1.0
+    -   @nodeboot/starter-validation@1.2.9
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

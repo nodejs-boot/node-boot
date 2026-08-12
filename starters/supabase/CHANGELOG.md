@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+-   066f8ea: Supabase starter package implementation
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/config@1.3.8
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/core@1.16.4
+    -   @nodeboot/engine@1.7.0
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/cloudflare-server",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Node-Boot Cloudflare Workers server package. It provides a simple way to create Cloudflare Workers fetch handlers using NodeBoot, with support for routing, middleware, and request handling.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

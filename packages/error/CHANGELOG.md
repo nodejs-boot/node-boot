@@ -1,5 +1,11 @@
 # @nodeboot/error
 
+## 1.3.1
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+
 ## 1.3.0
 
 ### Minor Changes

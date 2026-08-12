@@ -1,7 +1,7 @@
 {
     "name": "@nodeboot/encore-sample",
     "private": true,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Node-Boot sample project running as an Encore.ts service",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

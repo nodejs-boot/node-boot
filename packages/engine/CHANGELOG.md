@@ -1,5 +1,18 @@
 # @nodeboot/engine
 
+## 1.7.0
+
+### Minor Changes
+
+-   7a74fda: Performance improvements
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/error@1.3.1
+
 ## 1.6.6
 
 ### Patch Changes

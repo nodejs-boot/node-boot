@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/netlify-server",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Node-Boot Netlify Functions server package. It provides a simple way to create Netlify Functions handlers using NodeBoot, with support for routing, middleware, and request handling.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

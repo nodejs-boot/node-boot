@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot-benchmark/raw-express",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "private": true,
     "description": "Plain Express + TypeORM baseline (no Node-Boot), written the way the Express community typically structures a small REST API: express.Router() per resource, a central error handler, and a TypeORM DataSource module.",
     "main": "dist/server.js",

@@ -1,5 +1,22 @@
 # @nodeboot/express-ghost-server
 
+## 2.3.14
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.14.0
+    -   @nodeboot/aot@1.4.1
+    -   @nodeboot/config@1.3.8
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/core@1.16.4
+    -   @nodeboot/di@1.4.8
+    -   @nodeboot/error@1.3.1
+    -   @nodeboot/ghost-server@1.3.8
+    -   @nodeboot/starter-http@3.5.8
+    -   @nodeboot/starter-scheduler@1.6.7
+
 ## 2.3.13
 
 ### Patch Changes

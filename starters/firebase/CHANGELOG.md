@@ -1,5 +1,16 @@
 # @nodeboot/starter-firebase
 
+## 1.2.9
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+-   Updated dependencies
+    -   @nodeboot/config@1.3.8
+    -   @nodeboot/context@2.4.0
+    -   @nodeboot/core@1.16.4
+    -   @nodeboot/engine@1.7.0
+
 ## 1.2.8
 
 ### Patch Changes

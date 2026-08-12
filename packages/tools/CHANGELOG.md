@@ -1,5 +1,11 @@
 # @nodeboot/tools
 
+## 1.2.2
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+
 ## 1.2.1
 
 ### Patch Changes

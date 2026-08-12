@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 1.4.1
+
+### Patch Changes
+
+-   066f8ea: Nodeboot official release from github actions. Several improvements and documentation
+
 ## 1.4.0
 
 ### Minor Changes
