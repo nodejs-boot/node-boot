@@ -7,7 +7,9 @@
     "scripts": {
         "build": "tsc -p tsconfig.json",
         "start": "node dist/server.js",
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write ."
     },
     "dependencies": {
         "koa": "^2.15.3",
