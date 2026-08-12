@@ -1,0 +1,48 @@
+{
+    "name": "@nodeboot/encore-sample",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Node-Boot sample project running as an Encore.ts service",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "type": "module",
+    "keywords": [
+        "node-boot",
+        "encore",
+        "encore.ts"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "scripts": {
+        "dev": "encore run",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "build:docker": "encore build docker nodeboot-encore-sample:latest",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "encore test"
+    },
+    "dependencies": {
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/encore-server": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/starter-validation": "workspace:*",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "encore.dev": "^1.57.13",
+        "reflect-metadata": "^0.2.1",
+        "typedi": "^0.10.0",
+        "winston": "^3.17.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.5.7",
+        "typescript": "^5.2.2"
+    }
+}
