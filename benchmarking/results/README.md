@@ -46,7 +46,6 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
 <div class="chart">
     <h4>Total req/sec across all endpoints (higher is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-fastify</text>
         <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
         <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">87191.5 req/s</text>
@@ -77,11 +76,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
 ## Endpoint: `hello`
 
 <div style="display:flex;flex-wrap:wrap;gap:24px;">
-
 <div class="chart">
     <h4>Req/sec (higher is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-fastify</text>
         <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
         <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">53825.5 req/s</text>
@@ -108,11 +105,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <text x="397.0244542266801" y="314" font-size="12" font-family="monospace" fill="#0f172a">29472.7 req/s</text>
     </svg>
 </div>
-
 <div class="chart">
     <h4>Latency p99 ms (lower is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-http</text>
         <rect x="170" y="30" width="133.33333333333331" height="28" fill="#475569" rx="3" />
         <text x="311.3333333333333" y="48" font-size="12" font-family="monospace" fill="#0f172a">1.0 ms</text>
@@ -138,8 +133,7 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <rect x="170" y="296" width="400" height="28" fill="#1d4ed8" rx="3" />
         <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">3.0 ms</text>
     </svg>
-</div>
-</div>
+</div></div>
 
 | App                | Req/sec | Latency p50 (ms) | Latency p99 (ms) | Errors |
 | ------------------ | ------: | ---------------: | ---------------: | -----: |
@@ -164,11 +158,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
 ## Endpoint: `todos-create`
 
 <div style="display:flex;flex-wrap:wrap;gap:24px;">
-
 <div class="chart">
     <h4>Req/sec (higher is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-koa</text>
         <rect x="170" y="30" width="400" height="28" fill="#b45309" rx="3" />
         <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">5849.6 req/s</text>
@@ -195,11 +187,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <text x="480.82547302056196" y="314" font-size="12" font-family="monospace" fill="#0f172a">4428.6 req/s</text>
     </svg>
 </div>
-
 <div class="chart">
     <h4>Latency p99 ms (lower is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-fastify</text>
         <rect x="170" y="30" width="228.57142857142856" height="28" fill="#047857" rx="3" />
         <text x="406.57142857142856" y="48" font-size="12" font-family="monospace" fill="#0f172a">12.0 ms</text>
@@ -225,8 +215,7 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <rect x="170" y="296" width="400" height="28" fill="#34d399" rx="3" />
         <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">21.0 ms</text>
     </svg>
-</div>
-</div>
+</div></div>
 
 | App                | Req/sec | Latency p50 (ms) | Latency p99 (ms) | Errors |
 | ------------------ | ------: | ---------------: | ---------------: | -----: |
@@ -251,11 +240,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
 ## Endpoint: `todos-get`
 
 <div style="display:flex;flex-wrap:wrap;gap:24px;">
-
 <div class="chart">
     <h4>Req/sec (higher is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-fastify</text>
         <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
         <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">14884.0 req/s</text>
@@ -282,11 +269,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <text x="510.78446654125236" y="314" font-size="12" font-family="monospace" fill="#0f172a">12382.9 req/s</text>
     </svg>
 </div>
-
 <div class="chart">
     <h4>Latency p99 ms (lower is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-fastify</text>
         <rect x="170" y="30" width="320" height="28" fill="#047857" rx="3" />
         <text x="498" y="48" font-size="12" font-family="monospace" fill="#0f172a">4.0 ms</text>
@@ -312,8 +297,7 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <rect x="170" y="296" width="400" height="28" fill="#fbbf24" rx="3" />
         <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
     </svg>
-</div>
-</div>
+</div></div>
 
 | App                | Req/sec | Latency p50 (ms) | Latency p99 (ms) | Errors |
 | ------------------ | ------: | ---------------: | ---------------: | -----: |
@@ -338,11 +322,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
 ## Endpoint: `todos-list`
 
 <div style="display:flex;flex-wrap:wrap;gap:24px;">
-
 <div class="chart">
     <h4>Req/sec (higher is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-fastify</text>
         <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
         <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">14053.5 req/s</text>
@@ -369,11 +351,9 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <text x="448.78939990578834" y="314" font-size="12" font-family="monospace" fill="#0f172a">9513.8 req/s</text>
     </svg>
 </div>
-
 <div class="chart">
     <h4>Latency p99 ms (lower is better)</h4>
     <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
-        
         <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-fastify</text>
         <rect x="170" y="30" width="285.7142857142857" height="28" fill="#047857" rx="3" />
         <text x="463.7142857142857" y="48" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
@@ -399,8 +379,7 @@ Analysis computed directly from this run's data (not a fixed narrative) — each
         <rect x="170" y="296" width="400" height="28" fill="#1d4ed8" rx="3" />
         <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">7.0 ms</text>
     </svg>
-</div>
-</div>
+</div></div>
 
 | App                | Req/sec | Latency p50 (ms) | Latency p99 (ms) | Errors |
 | ------------------ | ------: | ---------------: | ---------------: | -----: |

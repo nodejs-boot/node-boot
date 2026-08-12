@@ -59,6 +59,18 @@ function escapeHtml(str) {
     );
 }
 
+// GitHub (and CommonMark generally) treats a run of raw HTML lines as a single HTML block only
+// while there is no blank line in between — a blank line closes the block early, which then
+// causes the remaining lines (e.g. the <svg>/<rect>/<text> tags) to be reparsed as markdown
+// text/paragraphs instead of raw HTML, visually "cutting" the chart. Stripping blank lines from
+// embedded chart HTML keeps it as one contiguous block when spliced into results/README.md.
+function stripBlankLines(html) {
+    return html
+        .split("\n")
+        .filter(line => line.trim() !== "")
+        .join("\n");
+}
+
 // Renders a simple horizontal SVG bar chart: one bar per row, proportional to `value`, with a
 // numeric label at the end of each bar. No external chart library required.
 function svgBarChart({rows, title, unit, width = 640, barHeight = 28, gap = 10}) {
@@ -527,11 +539,13 @@ ${findings
     readmeLines.push("## Overall summary");
     readmeLines.push("");
     readmeLines.push(
-        svgBarChart({
-            rows: summaryRows,
-            title: "Total req/sec across all endpoints (higher is better)",
-            unit: " req/s",
-        }),
+        stripBlankLines(
+            svgBarChart({
+                rows: summaryRows,
+                title: "Total req/sec across all endpoints (higher is better)",
+                unit: " req/s",
+            }),
+        ),
     );
     readmeLines.push("");
 
@@ -618,10 +632,14 @@ ${findings
 
         readmeLines.push(`## Endpoint: \`${endpoint}\``);
         readmeLines.push("");
-        readmeLines.push(`<div style="display:flex;flex-wrap:wrap;gap:24px;">`);
-        readmeLines.push(svgBarChart({rows: throughputRows, title: "Req/sec (higher is better)", unit: " req/s"}));
-        readmeLines.push(svgBarChart({rows: latencyRows, title: "Latency p99 ms (lower is better)", unit: " ms"}));
-        readmeLines.push(`</div>`);
+        readmeLines.push(
+            stripBlankLines(
+                `<div style="display:flex;flex-wrap:wrap;gap:24px;">` +
+                    svgBarChart({rows: throughputRows, title: "Req/sec (higher is better)", unit: " req/s"}) +
+                    svgBarChart({rows: latencyRows, title: "Latency p99 ms (lower is better)", unit: " ms"}) +
+                    `</div>`,
+            ),
+        );
         readmeLines.push("");
         readmeLines.push(...lines.slice(endpointStart));
     }
