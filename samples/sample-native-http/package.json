@@ -54,7 +54,7 @@
         "@nodeboot/starter-scheduler": "workspace:*",
         "@nodeboot/starter-http": "workspace:*",
         "@nodeboot/starter-validation": "workspace:*",
-        "@nodeboot/aot": "1.4.0",
+        "@nodeboot/aot": "workspace:*",
         "reflect-metadata": "^0.2.1",
         "typeorm": "^1.0.0",
         "better-sqlite3": "^12.10.0",
