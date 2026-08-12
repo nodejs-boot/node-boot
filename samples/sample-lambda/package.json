@@ -25,7 +25,7 @@
         "invoke:local": "ts-node src/local-invoke.ts",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
         "build": "tsc -p tsconfig.build.json",
-        "postbuild": "npx @nodeboot/aot node-boot-aot",
+        "postbuild": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot.js",
         "package": "bash scripts/build-zip.sh",
         "clean:build": "rimraf ./dist ./lambda.zip",
         "deploy:serverless": "pnpm run clean:build && pnpm run build && serverless deploy",

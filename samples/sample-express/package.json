@@ -26,7 +26,7 @@
         "model-gen": "node ../../packages/aot/dist/scripts/node-boot-aot-model-schema.js",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
         "build": "tsc -p tsconfig.build.json",
-        "postbuild": "npx @nodeboot/aot node-boot-aot",
+        "postbuild": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot.js",
         "clean:build": "rimraf ./dist",
         "lint": "eslint . --ext .js,.ts",
         "lint:fix": "pnpm lint --fix",
