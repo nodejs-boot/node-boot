@@ -1,0 +1,23 @@
+{
+    "name": "@nodeboot-benchmark/raw-http",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Plain Node.js `http` module + TypeORM baseline (Postgres) (no framework, no Node-Boot), written the way a minimal zero-dependency Node API is typically structured: manual method/path matching in a single request handler.",
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node dist/server.js",
+        "clean": "rimraf dist"
+    },
+    "dependencies": {
+        "typeorm": "^0.3.20",
+        "reflect-metadata": "^0.2.1",
+        "pg": "^8.13.1"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.0",
+        "rimraf": "^5.0.7",
+        "typescript": "^5.5.0",
+        "@types/pg": "^8.11.10"
+    }
+}

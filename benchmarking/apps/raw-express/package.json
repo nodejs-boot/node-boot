@@ -1,0 +1,25 @@
+{
+    "name": "@nodeboot-benchmark/raw-express",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Plain Express + TypeORM baseline (no Node-Boot), written the way the Express community typically structures a small REST API: express.Router() per resource, a central error handler, and a TypeORM DataSource module.",
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node dist/server.js",
+        "clean": "rimraf dist"
+    },
+    "dependencies": {
+        "express": "^4.21.2",
+        "typeorm": "^0.3.20",
+        "reflect-metadata": "^0.2.1",
+        "pg": "^8.13.1"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.14.0",
+        "rimraf": "^5.0.7",
+        "typescript": "^5.5.0",
+        "@types/pg": "^8.11.10"
+    }
+}

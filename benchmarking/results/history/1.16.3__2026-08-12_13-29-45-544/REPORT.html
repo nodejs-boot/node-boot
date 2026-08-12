@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Node-Boot Benchmarking Report</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                max-width: 900px;
+                margin: 40px auto;
+                padding: 0 20px;
+                color: #0f172a;
+            }
+            h1 {
+                border-bottom: 2px solid #e2e8f0;
+                padding-bottom: 8px;
+            }
+            h2 {
+                margin-top: 48px;
+                border-bottom: 1px solid #e2e8f0;
+                padding-bottom: 6px;
+            }
+            h3 {
+                margin-top: 24px;
+            }
+            .chart-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+            .chart {
+                margin: 16px 0;
+            }
+            .chart h4 {
+                margin: 0 0 8px;
+                font-size: 14px;
+                color: #475569;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin: 12px 0;
+                font-size: 13px;
+            }
+            th,
+            td {
+                border: 1px solid #e2e8f0;
+                padding: 6px 10px;
+                text-align: right;
+            }
+            th:first-child,
+            td:first-child {
+                text-align: left;
+            }
+            th {
+                background: #f8fafc;
+            }
+            td.negative {
+                color: #b91c1c;
+            }
+            td.positive {
+                color: #047857;
+            }
+            .legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin: 16px 0;
+                font-size: 13px;
+            }
+            .legend span {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .swatch {
+                width: 12px;
+                height: 12px;
+                border-radius: 3px;
+                display: inline-block;
+            }
+            .meta {
+                color: #64748b;
+                font-size: 13px;
+            }
+            .findings {
+                list-style: none;
+                padding: 0;
+                margin: 16px 0;
+            }
+            .findings li {
+                padding: 10px 14px;
+                margin-bottom: 8px;
+                border-radius: 6px;
+                border-left: 4px solid;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            .findings li.expected {
+                background: #ecfdf5;
+                border-color: #10b981;
+            }
+            .findings li.concerning {
+                background: #fef2f2;
+                border-color: #ef4444;
+            }
+            .findings li.info {
+                background: #eff6ff;
+                border-color: #3b82f6;
+            }
+            .badge {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 999px;
+                margin-right: 8px;
+            }
+            .badge.expected {
+                background: #10b981;
+                color: white;
+            }
+            .badge.concerning {
+                background: #ef4444;
+                color: white;
+            }
+            .badge.info {
+                background: #3b82f6;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Node-Boot Benchmarking Report</h1>
+        <p class="meta">Generated: 2026-08-12T13:29:45.544Z &middot; Node-Boot version: <strong>1.16.3</strong></p>
+        <div class="legend">
+            <span><span class="swatch" style="background: #94a3b8"></span>raw-http</span>
+            <span><span class="swatch" style="background: #60a5fa"></span>raw-express</span>
+            <span><span class="swatch" style="background: #34d399"></span>raw-fastify</span>
+            <span><span class="swatch" style="background: #fbbf24"></span>raw-koa</span>
+            <span><span class="swatch" style="background: #475569"></span>nodeboot-http</span>
+            <span><span class="swatch" style="background: #1d4ed8"></span>nodeboot-express</span>
+            <span><span class="swatch" style="background: #047857"></span>nodeboot-fastify</span>
+            <span><span class="swatch" style="background: #b45309"></span>nodeboot-koa</span>
+        </div>
+
+        <h2>Benchmark setup</h2>
+        <p class="meta">
+            Service under test: a minimal REST API (native <code>http</code>/Express/Fastify/Koa, both a raw framework
+            baseline and the equivalent Node-Boot app) exposing the 4 endpoints below, backed by a real
+            <strong>PostgreSQL</strong> database via TypeORM (one dedicated database per app, seeded with 1,000 rows
+            before each run — see <code>docker-compose.yaml</code> and <code>scripts/run-all.sh</code>).
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Path</th>
+                    <th>Behaviour</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>hello</code></td>
+                    <td>GET</td>
+                    <td><code>/hello</code></td>
+                    <td>No DB access — pure framework/routing overhead</td>
+                </tr>
+                <tr>
+                    <td><code>todos-get</code></td>
+                    <td>GET</td>
+                    <td><code>/todos/1</code></td>
+                    <td>Single-row SELECT by primary key</td>
+                </tr>
+                <tr>
+                    <td><code>todos-list</code></td>
+                    <td>GET</td>
+                    <td><code>/todos</code></td>
+                    <td>List (SELECT ... LIMIT 20, ORDER BY id DESC) from a 1,000-row `todo` table</td>
+                </tr>
+                <tr>
+                    <td><code>todos-create</code></td>
+                    <td>POST</td>
+                    <td><code>/todos</code></td>
+                    <td>Single-row INSERT</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="meta">
+            <strong>Load test parameters</strong> (via <a href="https://github.com/mcollina/autocannon">autocannon</a>):
+            50 concurrent connections, 10s duration, applied identically to every app/endpoint combination.
+            <code>todos-create</code> request body: <code>{&quot;title&quot;:&quot;Load test todo&quot;}</code>. Each
+            app is benchmarked one at a time (never concurrently with another app).
+        </p>
+
+        <h2>Technical summary</h2>
+        <p class="meta">
+            Analysis computed directly from this run's data (not a fixed narrative) — each point is labeled Expected or
+            Concerning based on whether it matches the pattern you'd expect from a routing/DI layer sitting on top of
+            the same HTTP server and ORM calls.
+        </p>
+        <ul class="findings">
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> Zero errors, timeouts, or non-2xx responses across all 8
+                apps and all 4 endpoints — every app handled the full load cleanly.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>express</strong>: Node-Boot&#39;s throughput
+                overhead shrinks from -28.3% on <code>hello</code> (routing/DI only) to -1.8% on
+                <code>todos-create</code> (DB write). This is the expected pattern: Node-Boot&#39;s fixed per-request
+                cost (decorators, DI resolution, interceptor pipeline) becomes proportionally smaller once real I/O
+                (TypeORM + PostgreSQL) dominates total request time.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>fastify</strong>: Node-Boot&#39;s throughput
+                overhead shrinks from -29.1% on <code>hello</code> (routing/DI only) to 29.0% on
+                <code>todos-create</code> (DB write). This is the expected pattern: Node-Boot&#39;s fixed per-request
+                cost (decorators, DI resolution, interceptor pipeline) becomes proportionally smaller once real I/O
+                (TypeORM + PostgreSQL) dominates total request time.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>http</strong>: Node-Boot&#39;s throughput
+                overhead shrinks from -1.4% on <code>hello</code> (routing/DI only) to -0.9% on
+                <code>todos-create</code> (DB write). This is the expected pattern: Node-Boot&#39;s fixed per-request
+                cost (decorators, DI resolution, interceptor pipeline) becomes proportionally smaller once real I/O
+                (TypeORM + PostgreSQL) dominates total request time.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>koa</strong>: Node-Boot&#39;s throughput
+                overhead shrinks from -13.8% on <code>hello</code> (routing/DI only) to 2.2% on
+                <code>todos-create</code> (DB write). This is the expected pattern: Node-Boot&#39;s fixed per-request
+                cost (decorators, DI resolution, interceptor pipeline) becomes proportionally smaller once real I/O
+                (TypeORM + PostgreSQL) dominates total request time.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>express</strong>: relative p99 latency overhead
+                shrinks (or stays flat) from +50.0% on <code>hello</code> to +8.3% on <code>todos-create</code>,
+                mirroring the throughput trend — consistent with a fixed per-request routing/DI cost rather than one
+                that scales with I/O work.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>fastify</strong>: relative p99 latency overhead
+                shrinks (or stays flat) from +100.0% on <code>hello</code> to +-42.9% on <code>todos-create</code>,
+                mirroring the throughput trend — consistent with a fixed per-request routing/DI cost rather than one
+                that scales with I/O work.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>http</strong>: relative p99 latency overhead
+                shrinks (or stays flat) from +0.0% on <code>hello</code> to +0.0% on <code>todos-create</code>,
+                mirroring the throughput trend — consistent with a fixed per-request routing/DI cost rather than one
+                that scales with I/O work.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> <strong>koa</strong>: relative p99 latency overhead
+                shrinks (or stays flat) from +0.0% on <code>hello</code> to +-7.7% on <code>todos-create</code>,
+                mirroring the throughput trend — consistent with a fixed per-request routing/DI cost rather than one
+                that scales with I/O work.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> Averaged across all endpoints, <strong>http</strong> has
+                the smallest Node-Boot overhead (-1.2%) and <strong>express</strong> the largest (-17.2%). Adapters with
+                fewer built-in middleware layers (native <code>http</code>) or a leaner request lifecycle typically show
+                less relative overhead than adapters with more middleware indirection (Express) — a ranking that flips
+                between versions is worth investigating, a stable ranking is expected.
+            </li>
+            <li class="expected">
+                <span class="badge expected">✅ Expected</span> All frameworks stay under 50% average overhead,
+                consistent with Node-Boot adding a routing/DI/decorator layer on top of the same underlying HTTP server
+                and ORM, rather than duplicating work.
+            </li>
+            <li class="info">
+                <span class="badge info">ℹ️ Note</span> This report reflects a single benchmark run on a shared
+                development machine, not a dedicated/isolated benchmarking host. Absolute req/sec numbers will vary
+                between machines; focus on the *relative* raw-vs-nodeboot deltas and their trend across endpoints, and
+                re-run multiple times before treating any single data point as conclusive.
+            </li>
+        </ul>
+
+        <div class="chart">
+            <h4>Total req/sec across all endpoints (higher is better)</h4>
+            <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    raw-fastify
+                </text>
+                <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
+                <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">87191.5 req/s</text>
+                <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    raw-http
+                </text>
+                <rect x="170" y="68" width="388.6081975679501" height="28" fill="#94a3b8" rx="3" />
+                <text x="566.6081975679501" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                    84708.3 req/s
+                </text>
+                <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    nodeboot-http
+                </text>
+                <rect x="170" y="106" width="383.7148289849913" height="28" fill="#475569" rx="3" />
+                <text x="561.7148289849913" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                    83641.6 req/s
+                </text>
+                <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    raw-koa
+                </text>
+                <rect x="170" y="144" width="344.19467867671" height="28" fill="#fbbf24" rx="3" />
+                <text x="522.19467867671" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                    75027.1 req/s
+                </text>
+                <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    raw-express
+                </text>
+                <rect x="170" y="182" width="338.8580557249465" height="28" fill="#60a5fa" rx="3" />
+                <text x="516.8580557249466" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                    73863.8 req/s
+                </text>
+                <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    nodeboot-fastify
+                </text>
+                <rect x="170" y="220" width="322.0957738182417" height="28" fill="#047857" rx="3" />
+                <text x="500.0957738182417" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                    70210.0 req/s
+                </text>
+                <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    nodeboot-koa
+                </text>
+                <rect x="170" y="258" width="298.6890346039584" height="28" fill="#b45309" rx="3" />
+                <text x="476.6890346039584" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                    65107.8 req/s
+                </text>
+                <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                    nodeboot-express
+                </text>
+                <rect x="170" y="296" width="261.479981929425" height="28" fill="#1d4ed8" rx="3" />
+                <text x="439.479981929425" y="314" font-size="12" font-family="monospace" fill="#0f172a">
+                    56997.1 req/s
+                </text>
+            </svg>
+        </div>
+        <h2>Endpoint: <code>hello</code></h2>
+        <div class="chart-row">
+            <div class="chart">
+                <h4>Req/sec (higher is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
+                    <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">53825.5 req/s</text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="68" width="376.0681283541283" height="28" fill="#94a3b8" rx="3" />
+                    <text x="554.0681283541282" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        50605.1 req/s
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="106" width="370.92283094282897" height="28" fill="#475569" rx="3" />
+                    <text x="548.922830942829" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        49912.7 req/s
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="144" width="309.9797010559687" height="28" fill="#fbbf24" rx="3" />
+                    <text x="487.9797010559687" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        41712.0 req/s
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="182" width="305.4830186309602" height="28" fill="#60a5fa" rx="3" />
+                    <text x="483.4830186309602" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        41106.9 req/s
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="220" width="283.62652172410606" height="28" fill="#047857" rx="3" />
+                    <text x="461.62652172410606" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        38165.8 req/s
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="258" width="267.10987699872885" height="28" fill="#b45309" rx="3" />
+                    <text x="445.10987699872885" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        35943.3 req/s
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="296" width="219.02445422668012" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="397.0244542266801" y="314" font-size="12" font-family="monospace" fill="#0f172a">
+                        29472.7 req/s
+                    </text>
+                </svg>
+            </div>
+
+            <div class="chart">
+                <h4>Latency p99 ms (lower is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="30" width="133.33333333333331" height="28" fill="#475569" rx="3" />
+                    <text x="311.3333333333333" y="48" font-size="12" font-family="monospace" fill="#0f172a">
+                        1.0 ms
+                    </text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="68" width="133.33333333333331" height="28" fill="#34d399" rx="3" />
+                    <text x="311.3333333333333" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        1.0 ms
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="106" width="133.33333333333331" height="28" fill="#94a3b8" rx="3" />
+                    <text x="311.3333333333333" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        1.0 ms
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="144" width="266.66666666666663" height="28" fill="#047857" rx="3" />
+                    <text x="444.66666666666663" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        2.0 ms
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="182" width="266.66666666666663" height="28" fill="#b45309" rx="3" />
+                    <text x="444.66666666666663" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        2.0 ms
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="220" width="266.66666666666663" height="28" fill="#60a5fa" rx="3" />
+                    <text x="444.66666666666663" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        2.0 ms
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="258" width="266.66666666666663" height="28" fill="#fbbf24" rx="3" />
+                    <text x="444.66666666666663" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        2.0 ms
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="296" width="400" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">3.0 ms</text>
+                </svg>
+            </div>
+        </div>
+        <h3>Node-Boot overhead vs raw framework</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Framework</th>
+                    <th>Raw req/sec</th>
+                    <th>Node-Boot req/sec</th>
+                    <th>Throughput delta</th>
+                    <th>Raw p99 (ms)</th>
+                    <th>Node-Boot p99 (ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>express</td>
+                    <td>41106.9</td>
+                    <td>29472.7</td>
+                    <td class="negative">-28.3%</td>
+                    <td>2.0</td>
+                    <td>3.0</td>
+                </tr>
+                <tr>
+                    <td>fastify</td>
+                    <td>53825.5</td>
+                    <td>38165.8</td>
+                    <td class="negative">-29.1%</td>
+                    <td>1.0</td>
+                    <td>2.0</td>
+                </tr>
+                <tr>
+                    <td>http</td>
+                    <td>50605.1</td>
+                    <td>49912.7</td>
+                    <td class="negative">-1.4%</td>
+                    <td>1.0</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>koa</td>
+                    <td>41712.0</td>
+                    <td>35943.3</td>
+                    <td class="negative">-13.8%</td>
+                    <td>2.0</td>
+                    <td>2.0</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Endpoint: <code>todos-create</code></h2>
+        <div class="chart-row">
+            <div class="chart">
+                <h4>Req/sec (higher is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="30" width="400" height="28" fill="#b45309" rx="3" />
+                    <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">5849.6 req/s</text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="68" width="399.83315212560086" height="28" fill="#94a3b8" rx="3" />
+                    <text x="577.8331521256009" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        5847.2 req/s
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="106" width="396.17070452198766" height="28" fill="#475569" rx="3" />
+                    <text x="574.1707045219877" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        5793.6 req/s
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="144" width="392.06788793840303" height="28" fill="#60a5fa" rx="3" />
+                    <text x="570.067887938403" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        5733.6 req/s
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="182" width="391.396393624223" height="28" fill="#fbbf24" rx="3" />
+                    <text x="569.396393624223" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        5723.8 req/s
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="220" width="390.77481691180986" height="28" fill="#047857" rx="3" />
+                    <text x="568.7748169118099" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        5714.7 req/s
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="258" width="384.81684342968117" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="562.8168434296812" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        5627.6 req/s
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="296" width="302.82547302056196" height="28" fill="#34d399" rx="3" />
+                    <text x="480.82547302056196" y="314" font-size="12" font-family="monospace" fill="#0f172a">
+                        4428.6 req/s
+                    </text>
+                </svg>
+            </div>
+
+            <div class="chart">
+                <h4>Latency p99 ms (lower is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="30" width="228.57142857142856" height="28" fill="#047857" rx="3" />
+                    <text x="406.57142857142856" y="48" font-size="12" font-family="monospace" fill="#0f172a">
+                        12.0 ms
+                    </text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="68" width="228.57142857142856" height="28" fill="#475569" rx="3" />
+                    <text x="406.57142857142856" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        12.0 ms
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="106" width="228.57142857142856" height="28" fill="#b45309" rx="3" />
+                    <text x="406.57142857142856" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        12.0 ms
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="144" width="228.57142857142856" height="28" fill="#60a5fa" rx="3" />
+                    <text x="406.57142857142856" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        12.0 ms
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="182" width="228.57142857142856" height="28" fill="#94a3b8" rx="3" />
+                    <text x="406.57142857142856" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        12.0 ms
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="220" width="247.61904761904762" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="425.6190476190476" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        13.0 ms
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="258" width="247.61904761904762" height="28" fill="#fbbf24" rx="3" />
+                    <text x="425.6190476190476" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        13.0 ms
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="296" width="400" height="28" fill="#34d399" rx="3" />
+                    <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">21.0 ms</text>
+                </svg>
+            </div>
+        </div>
+        <h3>Node-Boot overhead vs raw framework</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Framework</th>
+                    <th>Raw req/sec</th>
+                    <th>Node-Boot req/sec</th>
+                    <th>Throughput delta</th>
+                    <th>Raw p99 (ms)</th>
+                    <th>Node-Boot p99 (ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>express</td>
+                    <td>5733.6</td>
+                    <td>5627.6</td>
+                    <td class="negative">-1.8%</td>
+                    <td>12.0</td>
+                    <td>13.0</td>
+                </tr>
+                <tr>
+                    <td>fastify</td>
+                    <td>4428.6</td>
+                    <td>5714.7</td>
+                    <td class="positive">29.0%</td>
+                    <td>21.0</td>
+                    <td>12.0</td>
+                </tr>
+                <tr>
+                    <td>http</td>
+                    <td>5847.2</td>
+                    <td>5793.6</td>
+                    <td class="negative">-0.9%</td>
+                    <td>12.0</td>
+                    <td>12.0</td>
+                </tr>
+                <tr>
+                    <td>koa</td>
+                    <td>5723.8</td>
+                    <td>5849.6</td>
+                    <td class="positive">2.2%</td>
+                    <td>13.0</td>
+                    <td>12.0</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Endpoint: <code>todos-get</code></h2>
+        <div class="chart-row">
+            <div class="chart">
+                <h4>Req/sec (higher is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
+                    <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">14884.0 req/s</text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="68" width="398.0260682612201" height="28" fill="#475569" rx="3" />
+                    <text x="576.0260682612201" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        14810.5 req/s
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="106" width="391.18516527815103" height="28" fill="#94a3b8" rx="3" />
+                    <text x="569.1851652781511" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        14556.0 req/s
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="144" width="387.8430529427573" height="28" fill="#fbbf24" rx="3" />
+                    <text x="565.8430529427574" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        14431.6 req/s
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="182" width="385.5563020693362" height="28" fill="#60a5fa" rx="3" />
+                    <text x="563.5563020693362" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        14346.5 req/s
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="220" width="378.0314431604407" height="28" fill="#047857" rx="3" />
+                    <text x="556.0314431604406" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        14066.5 req/s
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="258" width="358.25181402848693" height="28" fill="#b45309" rx="3" />
+                    <text x="536.2518140284869" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        13330.5 req/s
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="296" width="332.78446654125236" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="510.78446654125236" y="314" font-size="12" font-family="monospace" fill="#0f172a">
+                        12382.9 req/s
+                    </text>
+                </svg>
+            </div>
+
+            <div class="chart">
+                <h4>Latency p99 ms (lower is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="30" width="320" height="28" fill="#047857" rx="3" />
+                    <text x="498" y="48" font-size="12" font-family="monospace" fill="#0f172a">4.0 ms</text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="68" width="320" height="28" fill="#475569" rx="3" />
+                    <text x="498" y="86" font-size="12" font-family="monospace" fill="#0f172a">4.0 ms</text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="106" width="400" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="578" y="124" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="144" width="400" height="28" fill="#b45309" rx="3" />
+                    <text x="578" y="162" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="182" width="400" height="28" fill="#60a5fa" rx="3" />
+                    <text x="578" y="200" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="220" width="400" height="28" fill="#34d399" rx="3" />
+                    <text x="578" y="238" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="258" width="400" height="28" fill="#94a3b8" rx="3" />
+                    <text x="578" y="276" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="296" width="400" height="28" fill="#fbbf24" rx="3" />
+                    <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">5.0 ms</text>
+                </svg>
+            </div>
+        </div>
+        <h3>Node-Boot overhead vs raw framework</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Framework</th>
+                    <th>Raw req/sec</th>
+                    <th>Node-Boot req/sec</th>
+                    <th>Throughput delta</th>
+                    <th>Raw p99 (ms)</th>
+                    <th>Node-Boot p99 (ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>express</td>
+                    <td>14346.5</td>
+                    <td>12382.9</td>
+                    <td class="negative">-13.7%</td>
+                    <td>5.0</td>
+                    <td>5.0</td>
+                </tr>
+                <tr>
+                    <td>fastify</td>
+                    <td>14884.0</td>
+                    <td>14066.5</td>
+                    <td class="negative">-5.5%</td>
+                    <td>5.0</td>
+                    <td>4.0</td>
+                </tr>
+                <tr>
+                    <td>http</td>
+                    <td>14556.0</td>
+                    <td>14810.5</td>
+                    <td class="positive">1.7%</td>
+                    <td>5.0</td>
+                    <td>4.0</td>
+                </tr>
+                <tr>
+                    <td>koa</td>
+                    <td>14431.6</td>
+                    <td>13330.5</td>
+                    <td class="negative">-7.6%</td>
+                    <td>5.0</td>
+                    <td>5.0</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Endpoint: <code>todos-list</code></h2>
+        <div class="chart-row">
+            <div class="chart">
+                <h4>Req/sec (higher is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="30" width="400" height="28" fill="#34d399" rx="3" />
+                    <text x="578" y="48" font-size="12" font-family="monospace" fill="#0f172a">14053.5 req/s</text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="68" width="389.9395593682979" height="28" fill="#94a3b8" rx="3" />
+                    <text x="567.939559368298" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        13700.0 req/s
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="106" width="374.5594323390824" height="28" fill="#fbbf24" rx="3" />
+                    <text x="552.5594323390824" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        13159.6 req/s
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="144" width="373.5657980312322" height="28" fill="#475569" rx="3" />
+                    <text x="551.5657980312321" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        13124.7 req/s
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="182" width="360.8144898124732" height="28" fill="#60a5fa" rx="3" />
+                    <text x="538.8144898124732" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        12676.7 req/s
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="220" width="349.0360381002259" height="28" fill="#047857" rx="3" />
+                    <text x="527.0360381002258" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        12262.9 req/s
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="258" width="284.1825429467192" height="28" fill="#b45309" rx="3" />
+                    <text x="462.1825429467192" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        9984.4 req/s
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="296" width="270.78939990578834" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="448.78939990578834" y="314" font-size="12" font-family="monospace" fill="#0f172a">
+                        9513.8 req/s
+                    </text>
+                </svg>
+            </div>
+
+            <div class="chart">
+                <h4>Latency p99 ms (lower is better)</h4>
+                <svg width="640" height="344" viewBox="0 0 640 344" xmlns="http://www.w3.org/2000/svg">
+                    <text x="162" y="48" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-fastify
+                    </text>
+                    <rect x="170" y="30" width="285.7142857142857" height="28" fill="#047857" rx="3" />
+                    <text x="463.7142857142857" y="48" font-size="12" font-family="monospace" fill="#0f172a">
+                        5.0 ms
+                    </text>
+                    <text x="162" y="86" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-http
+                    </text>
+                    <rect x="170" y="68" width="285.7142857142857" height="28" fill="#475569" rx="3" />
+                    <text x="463.7142857142857" y="86" font-size="12" font-family="monospace" fill="#0f172a">
+                        5.0 ms
+                    </text>
+                    <text x="162" y="124" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-express
+                    </text>
+                    <rect x="170" y="106" width="285.7142857142857" height="28" fill="#60a5fa" rx="3" />
+                    <text x="463.7142857142857" y="124" font-size="12" font-family="monospace" fill="#0f172a">
+                        5.0 ms
+                    </text>
+                    <text x="162" y="162" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-fastify
+                    </text>
+                    <rect x="170" y="144" width="285.7142857142857" height="28" fill="#34d399" rx="3" />
+                    <text x="463.7142857142857" y="162" font-size="12" font-family="monospace" fill="#0f172a">
+                        5.0 ms
+                    </text>
+                    <text x="162" y="200" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-http
+                    </text>
+                    <rect x="170" y="182" width="285.7142857142857" height="28" fill="#94a3b8" rx="3" />
+                    <text x="463.7142857142857" y="200" font-size="12" font-family="monospace" fill="#0f172a">
+                        5.0 ms
+                    </text>
+                    <text x="162" y="238" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        raw-koa
+                    </text>
+                    <rect x="170" y="220" width="285.7142857142857" height="28" fill="#fbbf24" rx="3" />
+                    <text x="463.7142857142857" y="238" font-size="12" font-family="monospace" fill="#0f172a">
+                        5.0 ms
+                    </text>
+                    <text x="162" y="276" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-koa
+                    </text>
+                    <rect x="170" y="258" width="342.85714285714283" height="28" fill="#b45309" rx="3" />
+                    <text x="520.8571428571429" y="276" font-size="12" font-family="monospace" fill="#0f172a">
+                        6.0 ms
+                    </text>
+                    <text x="162" y="314" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">
+                        nodeboot-express
+                    </text>
+                    <rect x="170" y="296" width="400" height="28" fill="#1d4ed8" rx="3" />
+                    <text x="578" y="314" font-size="12" font-family="monospace" fill="#0f172a">7.0 ms</text>
+                </svg>
+            </div>
+        </div>
+        <h3>Node-Boot overhead vs raw framework</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Framework</th>
+                    <th>Raw req/sec</th>
+                    <th>Node-Boot req/sec</th>
+                    <th>Throughput delta</th>
+                    <th>Raw p99 (ms)</th>
+                    <th>Node-Boot p99 (ms)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>express</td>
+                    <td>12676.7</td>
+                    <td>9513.8</td>
+                    <td class="negative">-25.0%</td>
+                    <td>5.0</td>
+                    <td>7.0</td>
+                </tr>
+                <tr>
+                    <td>fastify</td>
+                    <td>14053.5</td>
+                    <td>12262.9</td>
+                    <td class="negative">-12.7%</td>
+                    <td>5.0</td>
+                    <td>5.0</td>
+                </tr>
+                <tr>
+                    <td>http</td>
+                    <td>13700.0</td>
+                    <td>13124.7</td>
+                    <td class="negative">-4.2%</td>
+                    <td>5.0</td>
+                    <td>5.0</td>
+                </tr>
+                <tr>
+                    <td>koa</td>
+                    <td>13159.6</td>
+                    <td>9984.4</td>
+                    <td class="negative">-24.1%</td>
+                    <td>5.0</td>
+                    <td>6.0</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

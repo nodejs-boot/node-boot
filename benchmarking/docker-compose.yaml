@@ -1,0 +1,20 @@
+# Single shared Postgres instance for the whole benchmark suite. Every app gets its own database
+# (created by docker/init-databases.sh on first boot) so switching between apps never mixes data,
+# the same way each app previously owned its own *.sqlite file.
+services:
+    postgres:
+        image: postgres:16-alpine
+        ports:
+            - "5433:5432"
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        volumes:
+            - ./docker/init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh:ro
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 1s
+            timeout: 5s
+            retries: 20
+            start_period: 3s

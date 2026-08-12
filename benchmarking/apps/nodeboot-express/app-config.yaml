@@ -1,0 +1,23 @@
+app:
+    name: "nodeboot-express"
+    platform: "node-boot-benchmark"
+    environment: "production"
+    port: 4012
+
+api:
+    routePrefix: ""
+    nullResultCode: 200
+    undefinedResultCode: 204
+
+logger:
+    level: "warn"
+
+persistence:
+    type: "postgres"
+    postgres:
+        host: "localhost"
+        port: 5433
+        username: "postgres"
+        password: "postgres"
+        database: "nodeboot_express"
+        synchronize: true

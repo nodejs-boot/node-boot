@@ -1,0 +1,12 @@
+{
+    "name": "@nodeboot-benchmark/runner",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "bin": {
+        "bench": "./bench.mjs"
+    },
+    "dependencies": {
+        "autocannon": "^7.15.0"
+    }
+}

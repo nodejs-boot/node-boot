@@ -1,0 +1,18 @@
+{
+    "app": "raw-http",
+    "endpoint": "hello",
+    "url": "http://localhost:4001/hello",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 50605.1,
+    "latencyMs": {
+        "p50": 0,
+        "p99": 1,
+        "avg": 0.31
+    },
+    "throughputBytesPerSec": 10931479.28,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

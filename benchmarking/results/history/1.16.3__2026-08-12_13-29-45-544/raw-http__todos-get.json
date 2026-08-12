@@ -1,0 +1,18 @@
+{
+    "app": "raw-http",
+    "endpoint": "todos-get",
+    "url": "http://localhost:4001/todos/1",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 14556,
+    "latencyMs": {
+        "p50": 3,
+        "p99": 5,
+        "avg": 3.07
+    },
+    "throughputBytesPerSec": 3464378.19,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

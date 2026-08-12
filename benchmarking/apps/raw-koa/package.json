@@ -1,0 +1,29 @@
+{
+    "name": "@nodeboot-benchmark/raw-koa",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Plain Koa + TypeORM baseline (no Node-Boot), written the way the Koa community structures apps: @koa/router per resource, koa-bodyparser, and centralized error-handling middleware.",
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "start": "node dist/server.js",
+        "clean": "rimraf dist"
+    },
+    "dependencies": {
+        "koa": "^2.15.3",
+        "@koa/router": "^12.0.1",
+        "koa-bodyparser": "^4.4.1",
+        "typeorm": "^0.3.20",
+        "reflect-metadata": "^0.2.1",
+        "pg": "^8.13.1"
+    },
+    "devDependencies": {
+        "@types/koa": "^2.15.0",
+        "@types/koa__router": "^12.0.4",
+        "@types/koa-bodyparser": "^4.3.12",
+        "@types/node": "^20.14.0",
+        "rimraf": "^5.0.7",
+        "typescript": "^5.5.0",
+        "@types/pg": "^8.11.10"
+    }
+}
