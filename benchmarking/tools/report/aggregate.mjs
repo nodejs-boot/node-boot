@@ -4,6 +4,9 @@
 //                         raw-vs-nodeboot overhead delta for each matching framework pair
 //   - results/REPORT.html the same data as a self-contained HTML page with inline SVG bar
 //                         charts (no CDN/external JS needed, so it renders fully offline)
+//   - results/README.md   a GitHub-renderable wrapper around REPORT.html's content (inline SVG
+//                         bar charts + the same markdown tables as REPORT.md) so the charts show
+//                         up directly in the GitHub UI without downloading REPORT.html
 // Every run is also archived under results/history/<nodeboot-version>__<timestamp>/ (raw JSON +
 // both reports) so past runs can be diffed/compared as the @nodeboot/* packages evolve, and
 // results/history/index.md is updated with a row linking to that run.
@@ -19,6 +22,7 @@ const HISTORY_DIR = path.join(RESULTS_DIR, "history");
 const HISTORY_INDEX_FILE = path.join(HISTORY_DIR, "index.md");
 const REPORT_FILE = path.join(RESULTS_DIR, "REPORT.md");
 const HTML_REPORT_FILE = path.join(RESULTS_DIR, "REPORT.html");
+const README_FILE = path.join(RESULTS_DIR, "README.md");
 
 const APP_COLORS = {
     "raw-http": "#94a3b8",
@@ -356,12 +360,15 @@ function main() {
     const endpoints = [...new Set(results.map(r => r.endpoint))].sort();
     const lines = [];
     const htmlSections = [];
+    const readmeLines = [];
 
     lines.push("# Node-Boot Benchmarking Report");
     lines.push("");
     lines.push(`Generated: ${generatedAt.toISOString()}`);
     lines.push(`Node-Boot version: \`${nodeBootVersion}\``);
     lines.push("");
+
+    const introStart = lines.length;
 
     const orderedEndpoints = IO_INTENSITY_ORDER.filter(e => endpoints.includes(e)).concat(
         endpoints.filter(e => !IO_INTENSITY_ORDER.includes(e)),
@@ -505,9 +512,35 @@ ${findings
         }),
     );
 
+    readmeLines.push("# Node-Boot Benchmarking Report");
+    readmeLines.push("");
+    readmeLines.push(
+        "> GitHub-renderable version of [REPORT.html](./REPORT.html) (same inline SVG bar " +
+            "charts), for when you just want to glance at the numbers without downloading the " +
+            "file. See [REPORT.md](./REPORT.md) for a plain-text/table-only version.",
+    );
+    readmeLines.push("");
+    readmeLines.push(`Generated: ${generatedAt.toISOString()}`);
+    readmeLines.push(`Node-Boot version: \`${nodeBootVersion}\``);
+    readmeLines.push("");
+    readmeLines.push(...lines.slice(introStart));
+    readmeLines.push("## Overall summary");
+    readmeLines.push("");
+    readmeLines.push(
+        svgBarChart({
+            rows: summaryRows,
+            title: "Total req/sec across all endpoints (higher is better)",
+            unit: " req/s",
+        }),
+    );
+    readmeLines.push("");
+
     for (const endpoint of endpoints) {
         lines.push(`## Endpoint: \`${endpoint}\``);
         lines.push("");
+
+        const endpointStart = lines.length;
+
         lines.push("| App | Req/sec | Latency p50 (ms) | Latency p99 (ms) | Errors |");
         lines.push("| --- | ---: | ---: | ---: | ---: |");
 
@@ -582,6 +615,15 @@ ${findings
                 </tbody>
             </table>`);
         }
+
+        readmeLines.push(`## Endpoint: \`${endpoint}\``);
+        readmeLines.push("");
+        readmeLines.push(`<div style="display:flex;flex-wrap:wrap;gap:24px;">`);
+        readmeLines.push(svgBarChart({rows: throughputRows, title: "Req/sec (higher is better)", unit: " req/s"}));
+        readmeLines.push(svgBarChart({rows: latencyRows, title: "Latency p99 ms (lower is better)", unit: " ms"}));
+        readmeLines.push(`</div>`);
+        readmeLines.push("");
+        readmeLines.push(...lines.slice(endpointStart));
     }
 
     fs.writeFileSync(REPORT_FILE, lines.join("\n"));
@@ -638,6 +680,9 @@ ${htmlSections.join("\n")}
     fs.writeFileSync(HTML_REPORT_FILE, html);
     console.log(`Wrote ${HTML_REPORT_FILE}`);
 
+    fs.writeFileSync(README_FILE, readmeLines.join("\n"));
+    console.log(`Wrote ${README_FILE}`);
+
     archiveRun({nodeBootVersion, generatedAt, results});
 }
 
@@ -651,6 +696,7 @@ function archiveRun({nodeBootVersion, generatedAt, results}) {
 
     fs.copyFileSync(REPORT_FILE, path.join(runDir, "REPORT.md"));
     fs.copyFileSync(HTML_REPORT_FILE, path.join(runDir, "REPORT.html"));
+    fs.copyFileSync(README_FILE, path.join(runDir, "README.md"));
     for (const file of fs.readdirSync(RESULTS_DIR)) {
         if (file.endsWith(".json")) {
             fs.copyFileSync(path.join(RESULTS_DIR, file), path.join(runDir, file));

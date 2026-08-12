@@ -16,6 +16,18 @@ A standalone benchmarking suite that answers two questions:
 > [Extracting this into its own repo](#extracting-this-into-its-own-repo) for how to go back to
 > published-version-only dependencies if this ever needs to be split out standalone.
 
+## Latest results
+
+See [`results/`](./results) for the most recent benchmark run:
+
+-   [`results/README.md`](./results/README.md) — chart-enabled report that renders directly in the
+    GitHub UI (recommended starting point).
+-   [`results/REPORT.md`](./results/REPORT.md) — the same data as plain markdown tables, no charts.
+-   [`results/REPORT.html`](./results/REPORT.html) — a self-contained, fully offline HTML report
+    (download/open locally for the interactive version).
+-   [`results/history/`](./results/history) — every past run, archived by Node-Boot version and
+    timestamp, so results can be diffed across releases.
+
 ## Methodology
 
 ### Why new minimal apps instead of `samples/*`?
