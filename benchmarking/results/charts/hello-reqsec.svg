@@ -1,0 +1,29 @@
+<svg width="640" height="376" viewBox="0 0 640 376" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="640" height="376" fill="#ffffff" />
+    <text x="20" y="28" font-size="14" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="600" fill="#0f172a">Req/sec (higher is better)</text>
+    
+        <text x="162" y="74" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-fastify</text>
+        <rect x="170" y="56" width="400" height="28" fill="#34d399" rx="3" />
+        <text x="578" y="74" font-size="12" font-family="monospace" fill="#0f172a">53825.5 req/s</text>
+        <text x="162" y="112" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-http</text>
+        <rect x="170" y="94" width="376.0681283541283" height="28" fill="#94a3b8" rx="3" />
+        <text x="554.0681283541282" y="112" font-size="12" font-family="monospace" fill="#0f172a">50605.1 req/s</text>
+        <text x="162" y="150" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-http</text>
+        <rect x="170" y="132" width="370.92283094282897" height="28" fill="#475569" rx="3" />
+        <text x="548.922830942829" y="150" font-size="12" font-family="monospace" fill="#0f172a">49912.7 req/s</text>
+        <text x="162" y="188" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-koa</text>
+        <rect x="170" y="170" width="309.9797010559687" height="28" fill="#fbbf24" rx="3" />
+        <text x="487.9797010559687" y="188" font-size="12" font-family="monospace" fill="#0f172a">41712.0 req/s</text>
+        <text x="162" y="226" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">raw-express</text>
+        <rect x="170" y="208" width="305.4830186309602" height="28" fill="#60a5fa" rx="3" />
+        <text x="483.4830186309602" y="226" font-size="12" font-family="monospace" fill="#0f172a">41106.9 req/s</text>
+        <text x="162" y="264" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-fastify</text>
+        <rect x="170" y="246" width="283.62652172410606" height="28" fill="#047857" rx="3" />
+        <text x="461.62652172410606" y="264" font-size="12" font-family="monospace" fill="#0f172a">38165.8 req/s</text>
+        <text x="162" y="302" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-koa</text>
+        <rect x="170" y="284" width="267.10987699872885" height="28" fill="#b45309" rx="3" />
+        <text x="445.10987699872885" y="302" font-size="12" font-family="monospace" fill="#0f172a">35943.3 req/s</text>
+        <text x="162" y="340" text-anchor="end" font-size="12" font-family="monospace" fill="#334155">nodeboot-express</text>
+        <rect x="170" y="322" width="219.02445422668012" height="28" fill="#1d4ed8" rx="3" />
+        <text x="397.0244542266801" y="340" font-size="12" font-family="monospace" fill="#0f172a">29472.7 req/s</text>
+</svg>

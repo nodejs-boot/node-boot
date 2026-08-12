@@ -4,9 +4,11 @@
 //                         raw-vs-nodeboot overhead delta for each matching framework pair
 //   - results/REPORT.html the same data as a self-contained HTML page with inline SVG bar
 //                         charts (no CDN/external JS needed, so it renders fully offline)
-//   - results/README.md   a GitHub-renderable wrapper around REPORT.html's content (inline SVG
-//                         bar charts + the same markdown tables as REPORT.md) so the charts show
-//                         up directly in the GitHub UI without downloading REPORT.html
+//   - results/README.md   a GitHub-renderable wrapper around REPORT.html's content (the same
+//                         markdown tables as REPORT.md, plus the bar charts as linked images —
+//                         GitHub strips inline <svg>/<style> from README content, so each chart is
+//                         also written as its own file under results/charts/*.svg and referenced
+//                         via a plain markdown image instead of embedded inline)
 // Every run is also archived under results/history/<nodeboot-version>__<timestamp>/ (raw JSON +
 // both reports) so past runs can be diffed/compared as the @nodeboot/* packages evolve, and
 // results/history/index.md is updated with a row linking to that run.
@@ -23,6 +25,7 @@ const HISTORY_INDEX_FILE = path.join(HISTORY_DIR, "index.md");
 const REPORT_FILE = path.join(RESULTS_DIR, "REPORT.md");
 const HTML_REPORT_FILE = path.join(RESULTS_DIR, "REPORT.html");
 const README_FILE = path.join(RESULTS_DIR, "README.md");
+const CHARTS_DIR = path.join(RESULTS_DIR, "charts");
 
 const APP_COLORS = {
     "raw-http": "#94a3b8",
@@ -59,29 +62,17 @@ function escapeHtml(str) {
     );
 }
 
-// GitHub (and CommonMark generally) treats a run of raw HTML lines as a single HTML block only
-// while there is no blank line in between — a blank line closes the block early, which then
-// causes the remaining lines (e.g. the <svg>/<rect>/<text> tags) to be reparsed as markdown
-// text/paragraphs instead of raw HTML, visually "cutting" the chart. Stripping blank lines from
-// embedded chart HTML keeps it as one contiguous block when spliced into results/README.md.
-function stripBlankLines(html) {
-    return html
-        .split("\n")
-        .filter(line => line.trim() !== "")
-        .join("\n");
-}
-
-// Renders a simple horizontal SVG bar chart: one bar per row, proportional to `value`, with a
-// numeric label at the end of each bar. No external chart library required.
-function svgBarChart({rows, title, unit, width = 640, barHeight = 28, gap = 10}) {
+// GitHub sanitizes markdown/README HTML and strips raw <svg>/<style> tags entirely (they render
+// fine in more permissive viewers like IntelliJ's markdown preview, but not on github.com) — so
+// charts embedded in results/README.md can't be inline <svg>. Instead each chart is written out
+// as its own standalone .svg *file* under results/charts/ and referenced from the README via a
+// plain markdown image (`![]()`), which GitHub renders as a normal image/asset instead of raw
+// inline markup.
+function renderBars({rows, unit, width, leftLabelWidth, chartWidth, barHeight, gap, top}) {
     const maxValue = Math.max(...rows.map(r => r.value), 1);
-    const leftLabelWidth = 170;
-    const chartWidth = width - leftLabelWidth - 70;
-    const height = rows.length * (barHeight + gap) + 40;
-
-    const bars = rows
+    return rows
         .map((r, i) => {
-            const y = 30 + i * (barHeight + gap);
+            const y = top + i * (barHeight + gap);
             const barWidth = Math.max((r.value / maxValue) * chartWidth, 1);
             const color = APP_COLORS[r.app] ?? "#94a3b8";
             return `
@@ -94,6 +85,15 @@ function svgBarChart({rows, title, unit, width = 640, barHeight = 28, gap = 10})
             }" font-size="12" font-family="monospace" fill="#0f172a">${r.value.toFixed(1)}${unit}</text>`;
         })
         .join("");
+}
+
+// Renders a simple horizontal SVG bar chart: one bar per row, proportional to `value`, with a
+// numeric label at the end of each bar. No external chart library required.
+function svgBarChart({rows, title, unit, width = 640, barHeight = 28, gap = 10}) {
+    const leftLabelWidth = 170;
+    const chartWidth = width - leftLabelWidth - 70;
+    const height = rows.length * (barHeight + gap) + 40;
+    const bars = renderBars({rows, unit, width, leftLabelWidth, chartWidth, barHeight, gap, top: 30});
 
     return `
 <div class="chart">
@@ -102,6 +102,26 @@ function svgBarChart({rows, title, unit, width = 640, barHeight = 28, gap = 10})
         ${bars}
     </svg>
 </div>`;
+}
+
+// Renders a fully standalone/self-contained SVG document (white background, title baked in as
+// an SVG <text> element) suitable for writing to its own .svg file and referencing via a plain
+// markdown image, e.g. `![Req/sec](./charts/hello-reqsec.svg)` — the only way to get these charts
+// to render on github.com, since GitHub strips inline <svg>/<style> tags from README content.
+function standaloneSvgChart({rows, title, unit, width = 640, barHeight = 28, gap = 10}) {
+    const leftLabelWidth = 170;
+    const chartWidth = width - leftLabelWidth - 70;
+    const top = 56;
+    const height = rows.length * (barHeight + gap) + top + 16;
+    const bars = renderBars({rows, unit, width, leftLabelWidth, chartWidth, barHeight, gap, top});
+
+    return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="${width}" height="${height}" fill="#ffffff" />
+    <text x="20" y="28" font-size="14" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-weight="600" fill="#0f172a">${escapeHtml(
+        title,
+    )}</text>
+    ${bars}
+</svg>`;
 }
 
 function loadResults() {
@@ -374,6 +394,14 @@ function main() {
     const htmlSections = [];
     const readmeLines = [];
 
+    fs.mkdirSync(CHARTS_DIR, {recursive: true});
+    // Writes a chart to results/charts/<name>.svg and returns the markdown image snippet that
+    // references it (relative to results/README.md).
+    function writeChartFile(name, chart) {
+        fs.writeFileSync(path.join(CHARTS_DIR, `${name}.svg`), standaloneSvgChart(chart));
+        return `![${chart.title}](./charts/${name}.svg)`;
+    }
+
     lines.push("# Node-Boot Benchmarking Report");
     lines.push("");
     lines.push(`Generated: ${generatedAt.toISOString()}`);
@@ -527,9 +555,8 @@ ${findings
     readmeLines.push("# Node-Boot Benchmarking Report");
     readmeLines.push("");
     readmeLines.push(
-        "> GitHub-renderable version of [REPORT.html](./REPORT.html) (same inline SVG bar " +
-            "charts), for when you just want to glance at the numbers without downloading the " +
-            "file. See [REPORT.md](./REPORT.md) for a plain-text/table-only version.",
+        "> Chart-enabled version of [REPORT.html](./REPORT.html) for the GitHub UI. See " +
+            "[REPORT.md](./REPORT.md) for a plain-text/table-only version.",
     );
     readmeLines.push("");
     readmeLines.push(`Generated: ${generatedAt.toISOString()}`);
@@ -539,13 +566,11 @@ ${findings
     readmeLines.push("## Overall summary");
     readmeLines.push("");
     readmeLines.push(
-        stripBlankLines(
-            svgBarChart({
-                rows: summaryRows,
-                title: "Total req/sec across all endpoints (higher is better)",
-                unit: " req/s",
-            }),
-        ),
+        writeChartFile("summary-total-reqsec", {
+            rows: summaryRows,
+            title: "Total req/sec across all endpoints (higher is better)",
+            unit: " req/s",
+        }),
     );
     readmeLines.push("");
 
@@ -633,12 +658,17 @@ ${findings
         readmeLines.push(`## Endpoint: \`${endpoint}\``);
         readmeLines.push("");
         readmeLines.push(
-            stripBlankLines(
-                `<div style="display:flex;flex-wrap:wrap;gap:24px;">` +
-                    svgBarChart({rows: throughputRows, title: "Req/sec (higher is better)", unit: " req/s"}) +
-                    svgBarChart({rows: latencyRows, title: "Latency p99 ms (lower is better)", unit: " ms"}) +
-                    `</div>`,
-            ),
+            writeChartFile(`${endpoint}-reqsec`, {
+                rows: throughputRows,
+                title: "Req/sec (higher is better)",
+                unit: " req/s",
+            }) +
+                " " +
+                writeChartFile(`${endpoint}-latency-p99`, {
+                    rows: latencyRows,
+                    title: "Latency p99 ms (lower is better)",
+                    unit: " ms",
+                }),
         );
         readmeLines.push("");
         readmeLines.push(...lines.slice(endpointStart));
@@ -715,6 +745,7 @@ function archiveRun({nodeBootVersion, generatedAt, results}) {
     fs.copyFileSync(REPORT_FILE, path.join(runDir, "REPORT.md"));
     fs.copyFileSync(HTML_REPORT_FILE, path.join(runDir, "REPORT.html"));
     fs.copyFileSync(README_FILE, path.join(runDir, "README.md"));
+    fs.cpSync(CHARTS_DIR, path.join(runDir, "charts"), {recursive: true});
     for (const file of fs.readdirSync(RESULTS_DIR)) {
         if (file.endsWith(".json")) {
             fs.copyFileSync(path.join(RESULTS_DIR, file), path.join(runDir, file));

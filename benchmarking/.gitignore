@@ -7,4 +7,6 @@ results/*.json
 !results/REPORT.md
 !results/REPORT.html
 !results/README.md
+!results/charts/
+!results/charts/*.svg
 .DS_Store
