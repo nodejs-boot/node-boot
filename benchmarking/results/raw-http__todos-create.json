@@ -1,0 +1,19 @@
+{
+    "app": "raw-http",
+    "endpoint": "todos-create",
+    "url": "http://localhost:4001/todos",
+    "method": "POST",
+    "body": "{\"title\":\"Load test todo\"}",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 5847.2,
+    "latencyMs": {
+        "p50": 8,
+        "p99": 12,
+        "avg": 8.08
+    },
+    "throughputBytesPerSec": 1425715.2,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

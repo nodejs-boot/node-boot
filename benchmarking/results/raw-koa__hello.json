@@ -1,0 +1,18 @@
+{
+    "app": "raw-koa",
+    "endpoint": "hello",
+    "url": "http://localhost:4004/hello",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 41712,
+    "latencyMs": {
+        "p50": 1,
+        "p99": 2,
+        "avg": 0.86
+    },
+    "throughputBytesPerSec": 8217506.91,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

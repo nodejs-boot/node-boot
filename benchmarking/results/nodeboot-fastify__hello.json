@@ -1,0 +1,18 @@
+{
+    "app": "nodeboot-fastify",
+    "endpoint": "hello",
+    "url": "http://localhost:4013/hello",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 38165.82,
+    "latencyMs": {
+        "p50": 1,
+        "p99": 2,
+        "avg": 1.04
+    },
+    "throughputBytesPerSec": 7556933.82,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

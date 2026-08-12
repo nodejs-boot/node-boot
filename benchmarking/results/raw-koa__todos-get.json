@@ -1,0 +1,18 @@
+{
+    "app": "raw-koa",
+    "endpoint": "todos-get",
+    "url": "http://localhost:4004/todos/1",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 14431.64,
+    "latencyMs": {
+        "p50": 3,
+        "p99": 5,
+        "avg": 3.08
+    },
+    "throughputBytesPerSec": 3160529.46,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

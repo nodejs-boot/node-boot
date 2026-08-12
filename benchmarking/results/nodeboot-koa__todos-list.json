@@ -1,0 +1,18 @@
+{
+    "app": "nodeboot-koa",
+    "endpoint": "todos-list",
+    "url": "http://localhost:4014/todos",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 9984.37,
+    "latencyMs": {
+        "p50": 4,
+        "p99": 6,
+        "avg": 4.51
+    },
+    "throughputBytesPerSec": 12490193.46,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

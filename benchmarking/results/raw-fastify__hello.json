@@ -1,0 +1,18 @@
+{
+    "app": "raw-fastify",
+    "endpoint": "hello",
+    "url": "http://localhost:4003/hello",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 53825.46,
+    "latencyMs": {
+        "p50": 0,
+        "p99": 1,
+        "avg": 0.35
+    },
+    "throughputBytesPerSec": 10657419.64,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

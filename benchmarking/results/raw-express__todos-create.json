@@ -1,0 +1,19 @@
+{
+    "app": "raw-express",
+    "endpoint": "todos-create",
+    "url": "http://localhost:4002/todos",
+    "method": "POST",
+    "body": "{\"title\":\"Load test todo\"}",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 5733.64,
+    "latencyMs": {
+        "p50": 8,
+        "p99": 12,
+        "avg": 8.24
+    },
+    "throughputBytesPerSec": 1661812.37,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

@@ -1,0 +1,18 @@
+{
+    "app": "nodeboot-fastify",
+    "endpoint": "todos-list",
+    "url": "http://localhost:4013/todos",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 12262.91,
+    "latencyMs": {
+        "p50": 3,
+        "p99": 5,
+        "avg": 3.52
+    },
+    "throughputBytesPerSec": 15352180.37,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}

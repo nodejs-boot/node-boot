@@ -1,0 +1,18 @@
+{
+    "app": "raw-fastify",
+    "endpoint": "todos-list",
+    "url": "http://localhost:4003/todos",
+    "method": "GET",
+    "connections": 50,
+    "duration": 10,
+    "requestsPerSec": 14053.46,
+    "latencyMs": {
+        "p50": 3,
+        "p99": 5,
+        "avg": 3.14
+    },
+    "throughputBytesPerSec": 17593064.73,
+    "errors": 0,
+    "timeouts": 0,
+    "non2xx": 0
+}
