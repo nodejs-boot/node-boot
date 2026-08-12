@@ -52,7 +52,7 @@ export class PersistenceConfiguration {
 
         dataSource
             .initialize()
-            .then(() => {
+            .then(async () => {
                 logger.info("Persistence DataSource successfully initialized");
 
                 const {synchronizeDatabase, migrationsRun} = PersistenceContext.get();
@@ -81,10 +81,11 @@ export class PersistenceConfiguration {
                         initializationPromises.push(PersistenceConfiguration.runDatabaseSync(logger, dataSource));
                     }
 
-                    // Validate database consistency
-                    Promise.all(initializationPromises).then(_ =>
-                        PersistenceConfiguration.ensureDatabase(logger, dataSource),
-                    );
+                    // Validate database consistency. Awaited so that "persistence.started" (published in the
+                    // .finally() below) only fires once migrations/synchronize have actually completed -
+                    // otherwise dependents (e.g. @PostConstruct consumers) can run before the schema exists.
+                    await Promise.all(initializationPromises);
+                    await PersistenceConfiguration.ensureDatabase(logger, dataSource);
                 }
             })
             .catch(err => {

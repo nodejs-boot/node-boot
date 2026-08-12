@@ -93,10 +93,8 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
      * Executes given controller action.
      */
     protected async executeAction(actionMetadata: ActionMetadata, action: Action, interceptorFns: Function[]) {
-        // compute all parameters
-        const paramsPromises = actionMetadata.params
-            .sort((param1, param2) => param1.index - param2.index)
-            .map(param => this.parameterHandler.handle(action, param));
+        // compute all parameters (actionMetadata.params is pre-sorted once at boot in ActionMetadata.build())
+        const paramsPromises = actionMetadata.params.map(param => this.parameterHandler.handle(action, param));
 
         // after all parameters are computed
         try {

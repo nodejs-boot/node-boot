@@ -82,10 +82,16 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
             method.toUpperCase() as HTTPMethod,
             route.toString(),
             async (req, res, params, store, searchParams) => {
-                const start = process.hrtime();
-                this.logger.debug(
-                    `==> Incoming HTTP request: ${req.method} ${req.url} | ${req.socket.remoteAddress} | ${req.headers["user-agent"]}`,
-                );
+                // Guard eager message construction (string interpolation, socket/header access,
+                // hrtime timing) behind a cheap level check so it's not paid on every request
+                // when debug logging is disabled (the common case in production).
+                const debugEnabled = this.logger.isLevelEnabled ? this.logger.isLevelEnabled("debug") : true;
+                const start = debugEnabled ? process.hrtime() : undefined;
+                if (debugEnabled) {
+                    this.logger.debug(
+                        `==> Incoming HTTP request: ${req.method} ${req.url} | ${req.socket.remoteAddress} | ${req.headers["user-agent"]}`,
+                    );
+                }
 
                 const action: Action<IncomingMessage, ServerResponse> = {
                     request: req,
@@ -108,11 +114,13 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
                     await this.handleError(error, action, actionMetadata);
                 }
 
-                const [sec, nano] = process.hrtime(start);
-                const ms = (sec * 1e3 + nano / 1e6).toFixed(2);
-                this.logger.debug(
-                    `<== Outgoing HTTP response: ${req.method} ${req.url} ${res.statusCode} - ${ms}ms | ${req.socket.remoteAddress} | ${req.headers["user-agent"]}`,
-                );
+                if (debugEnabled) {
+                    const [sec, nano] = process.hrtime(start);
+                    const ms = (sec * 1e3 + nano / 1e6).toFixed(2);
+                    this.logger.debug(
+                        `<== Outgoing HTTP response: ${req.method} ${req.url} ${res.statusCode} - ${ms}ms | ${req.socket.remoteAddress} | ${req.headers["user-agent"]}`,
+                    );
+                }
             },
         );
     }

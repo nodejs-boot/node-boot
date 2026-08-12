@@ -160,9 +160,6 @@ export class ExpressDriver extends NodeBootDriver<Application> {
 
         // prepare route and route handler function
         const route = ActionMetadata.appendBaseRoute(this.routePrefix, actionMetadata.fullRoute);
-        const routeHandler = async (request: any, response: any, next: Function) => {
-            return await executeCallback({request, response, next});
-        };
 
         // This ensures that a request is only processed once to prevent unhandled rejections saying
         // "Can't set headers after they are sent"
@@ -171,21 +168,26 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         //   Reference: https://expressjs.com/en/4x/api.html#router.METHOD
         //   This causes a double execution on our side.
         // * Multiple routes match the request (e.g. GET /users/me matches both @All(/users/me) and @Get(/users/:id)).
-        // The following middleware only starts an action processing if the request has not been processed before.
-        const routeGuard = function routeGuard(
+        // The guard is folded directly into the route handler (instead of a separate middleware
+        // registered ahead of it) so the common case (a request matches exactly once) doesn't pay
+        // for an extra Express middleware/layer dispatch on every single request - Express's own
+        // layer matching is already the most expensive part of its request lifecycle. On the rare
+        // double-dispatch edge cases above, before-middlewares may still run twice, but the
+        // controller action itself is still only ever executed once, preserving the original
+        // "no double action execution / no double response" guarantee.
+        const routeHandler = async (
             request: Request & {routingControllersStarted?: boolean},
-            _: unknown,
+            response: any,
             next: Function,
-        ) {
-            if (!request.routingControllersStarted) {
-                request.routingControllersStarted = true;
-                return next();
-            }
+        ) => {
+            if (request.routingControllersStarted) return;
+            request.routingControllersStarted = true;
+            return await executeCallback({request, response, next});
         };
 
         // finally register action in express
         this.app[actionMetadata.type.toLowerCase()](
-            ...[route, routeGuard, ...beforeMiddlewares, ...defaultMiddlewares, routeHandler, ...afterMiddlewares],
+            ...[route, ...beforeMiddlewares, ...defaultMiddlewares, routeHandler, ...afterMiddlewares],
         );
     }
 

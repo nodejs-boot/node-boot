@@ -172,6 +172,10 @@ export class ActionMetadata {
      * Action metadata can be used only after its build.
      */
     build(responseHandlers: ResponseHandlerMetadata[]) {
+        // Sort params once at boot (this array is static after registration) instead of
+        // re-sorting on every single request in the hot path (see NodeBootEngine.executeAction).
+        this.params = this.params.sort((param1, param2) => param1.index - param2.index);
+
         const classTransformerResponseHandler = responseHandlers.find(
             handler => handler.type === "response-class-transform-options",
         );

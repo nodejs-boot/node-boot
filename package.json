@@ -49,6 +49,7 @@
         "changeset:format": "pnpm prettier --write '{packages,samples,serverless,servers,starters}/*/{package.json,CHANGELOG.md}'",
         "release:status": "pnpm changeset status",
         "release:publish": "pnpm changeset publish",
+        "bench:all": "pnpm --dir benchmarking run bench:all",
         "nodeboot:update": "turbo run nodeboot:update",
         "nodeboot:check:type-deps": "node ./node_modules/@nodeboot/tools/dist/check-type-dependencies.js",
         "nodeboot:check:local-deps": "node ./node_modules/@nodeboot/tools/dist/verify-local-dependencies.js",

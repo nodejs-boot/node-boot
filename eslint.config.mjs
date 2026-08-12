@@ -26,6 +26,7 @@ export default [
             "**/*.js",
             "**/.encore/**",
             "**/encore.gen/**",
+            "benchmarking/**",
         ],
     },
 

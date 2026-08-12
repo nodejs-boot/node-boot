@@ -105,6 +105,387 @@ importers:
         specifier: ^8.44.1
         version: 8.61.0(eslint@10.4.1(jiti@2.7.0))(typescript@5.9.2)
 
+  benchmarking: {}
+
+  benchmarking/apps/nodeboot-express:
+    dependencies:
+      '@nodeboot/config':
+        specifier: workspace:*
+        version: link:../../../packages/config
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../../packages/di
+      '@nodeboot/express-server':
+        specifier: workspace:*
+        version: link:../../../servers/express-server
+      '@nodeboot/starter-persistence':
+        specifier: workspace:*
+        version: link:../../../starters/persistence
+      body-parser:
+        specifier: ^1.20.3
+        version: 1.20.3
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
+      cookie:
+        specifier: ^0.7.0
+        version: 0.7.0
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.5
+      express:
+        specifier: ^4.21.2
+        version: 4.21.2
+      express-session:
+        specifier: ^1.17.3
+        version: 1.18.1
+      multer:
+        specifier: ^2.0.2
+        version: 2.0.2
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+      winston:
+        specifier: ^3.17.0
+        version: 3.17.0
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/nodeboot-fastify:
+    dependencies:
+      '@nodeboot/config':
+        specifier: workspace:*
+        version: link:../../../packages/config
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../../packages/di
+      '@nodeboot/fastify-server':
+        specifier: workspace:*
+        version: link:../../../servers/fastify-server
+      '@nodeboot/starter-persistence':
+        specifier: workspace:*
+        version: link:../../../starters/persistence
+      fastify:
+        specifier: ^5.6.0
+        version: 5.6.0
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+      winston:
+        specifier: ^3.17.0
+        version: 3.17.0
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/nodeboot-http:
+    dependencies:
+      '@nodeboot/config':
+        specifier: workspace:*
+        version: link:../../../packages/config
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../../packages/di
+      '@nodeboot/http-server':
+        specifier: workspace:*
+        version: link:../../../servers/http-server
+      '@nodeboot/starter-persistence':
+        specifier: workspace:*
+        version: link:../../../starters/persistence
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+      winston:
+        specifier: ^3.17.0
+        version: 3.17.0
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/nodeboot-koa:
+    dependencies:
+      '@koa/cors':
+        specifier: ^5.0.0
+        version: 5.0.0
+      '@koa/multer':
+        specifier: ^3.0.2
+        version: 3.1.0(multer@2.0.2)
+      '@koa/router':
+        specifier: ^12.0.1
+        version: 12.0.2
+      '@nodeboot/config':
+        specifier: workspace:*
+        version: link:../../../packages/config
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../../packages/di
+      '@nodeboot/koa-server':
+        specifier: workspace:*
+        version: link:../../../servers/koa-server
+      '@nodeboot/starter-persistence':
+        specifier: workspace:*
+        version: link:../../../starters/persistence
+      koa:
+        specifier: ^2.15.3
+        version: 2.16.1
+      koa-cookies:
+        specifier: ^4.0.2
+        version: 4.0.3
+      koa-session:
+        specifier: ^6.4.0
+        version: 6.4.0
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+      winston:
+        specifier: ^3.17.0
+        version: 3.17.0
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/raw-express:
+    dependencies:
+      express:
+        specifier: ^4.21.2
+        version: 4.21.2
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+    devDependencies:
+      '@types/express':
+        specifier: ^4.17.21
+        version: 4.17.23
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/raw-fastify:
+    dependencies:
+      fastify:
+        specifier: ^5.6.0
+        version: 5.6.0
+      fastify-plugin:
+        specifier: ^5.0.1
+        version: 5.0.1
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/raw-http:
+    dependencies:
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+    devDependencies:
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/apps/raw-koa:
+    dependencies:
+      '@koa/router':
+        specifier: ^12.0.1
+        version: 12.0.2
+      koa:
+        specifier: ^2.15.3
+        version: 2.16.1
+      koa-bodyparser:
+        specifier: ^4.4.1
+        version: 4.4.1
+      pg:
+        specifier: ^8.13.1
+        version: 8.21.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typeorm:
+        specifier: ^0.3.20
+        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+    devDependencies:
+      '@types/koa':
+        specifier: ^2.15.0
+        version: 2.15.0
+      '@types/koa-bodyparser':
+        specifier: ^4.3.12
+        version: 4.3.12
+      '@types/koa__router':
+        specifier: ^12.0.4
+        version: 12.0.4
+      '@types/node':
+        specifier: ^20.14.0
+        version: 20.19.43
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.21.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+
+  benchmarking/tools/report: {}
+
+  benchmarking/tools/runner:
+    dependencies:
+      autocannon:
+        specifier: ^7.15.0
+        version: 7.15.0
+
   packages/aot:
     dependencies:
       typescript-json-schema:
@@ -1927,6 +2308,9 @@ packages:
     resolution: {integrity: sha512-UQFQ6SgyJ6LX42W8rHCs8KVc0JS0tzVL9ct4XYedJukskYVWTo49tNiMEK9C2HTyarbNiT/RVIRSY82vH+6sTg==}
     engines: {node: '>=4'}
 
+  '@assemblyscript/loader@0.19.23':
+    resolution: {integrity: sha512-ulkCYfFbYj01ie1MDOyxv2F6SpRN1TOj7fQxbP07D6HmeR+gr2JLSmINKjga2emB+b1L2KGrFKBTc+e00p54nw==}
+
   '@aws-crypto/crc32@5.2.0':
     resolution: {integrity: sha512-nLbCWqQNgUiwwtFsen1AdzAtvuLRsQS8rYgMuxCrdKf9kOssamGLuPwyTY9wyYblNr9+1XM8v6zoDTPPSIeANg==}
     engines: {node: '>=16.0.0'}
@@ -2344,6 +2728,10 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@colors/colors@1.5.0':
+    resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
+    engines: {node: '>=0.1.90'}
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -4138,6 +4526,9 @@ packages:
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
 
+  '@types/pg@8.21.0':
+    resolution: {integrity: sha512-AYdtudzabjLZgVgRZmAnU8bAnVUXzuJX2IYHeSIiIHm68olD+LgQYCGWdtcNYnP0uq9c4S4NibVG3Ni7VbKW7Q==}
+
   '@types/qs@6.14.0':
     resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
 
@@ -4729,6 +5120,10 @@ packages:
     resolution: {integrity: sha512-kNOjDqAh7px0XWNI+4QbzoiR/nTkHAWNud2uvnJquD1/x5a7EQZMJT0AczqK0Qn67oY/TTQ1LbUKajZpp3I9tQ==}
     engines: {node: '>=8.0.0'}
 
+  autocannon@7.15.0:
+    resolution: {integrity: sha512-NaP2rQyA+tcubOJMFv2+oeW9jv2pq/t+LM6BL3cfJic0HEfscEcnWgAyU5YovE/oTHUzAgTliGdLPR+RQAWUbg==}
+    hasBin: true
+
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
@@ -5006,6 +5401,9 @@ packages:
     resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
+  char-spinner@1.0.1:
+    resolution: {integrity: sha512-acv43vqJ0+N0rD+Uw3pDHSxP30FHrywu2NO6/wBaHChJIizpDeBUd6NjqhNhy9LGaEAhZAXn46QzmlAvIWd16g==}
+
   character-entities@2.0.2:
     resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==}
 
@@ -5092,6 +5490,10 @@ packages:
     resolution: {integrity: sha512-BbEjY9BEdA6wagVwTqPvmAwGB24U93rQPBFZUT8lNCDxXzre5LFHQUTJc70czjgUomVg8u8R5kW8oY9DYRFNeg==}
     engines: {node: '>=6.0'}
 
+  cli-table3@0.6.5:
+    resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
+    engines: {node: 10.* || >= 12.*}
+
   cli-truncate@3.1.0:
     resolution: {integrity: sha512-wfOBkjXteqSnI59oPcJkcPl/ZmwvMMOj340qUIY1SKZCv0B9Cf4D4fAucRkIKQmsIuYK3x1rrgU7MeGRruiuiA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -5145,6 +5547,10 @@ packages:
 
   color-string@1.9.1:
     resolution: {integrity: sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==}
+
+  color-support@1.1.3:
+    resolution: {integrity: sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==}
+    hasBin: true
 
   color@3.2.1:
     resolution: {integrity: sha512-aBl7dZI9ENN6fUGC7mWpMTPNHmWUSNan9tuWN6ahh5ZLNk9baLJOnSMlrQkHcrfFgz2/RigjUVAjdx36VcemKA==}
@@ -5326,6 +5732,9 @@ packages:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
     engines: {node: '>=12.0.0'}
     deprecated: v4 is no longer maintained, upgrade to v5
+
+  cross-argv@2.0.0:
+    resolution: {integrity: sha512-YIaY9TR5Nxeb8SMdtrU8asWVM4jqJDNDYlKV21LxtYcfNJhp1kEsgSa6qXwXgzN0WQWGODps0+TlGp2xQSHwOg==}
 
   cross-fetch@4.1.0:
     resolution: {integrity: sha512-uKm5PU+MHTootlWEY+mZ4vvXoCn4fLQxT9dSc1sXVMSFkINTJVN8cAQROpwcKm8bJ/c7rgZVIBWzH5T78sNZZw==}
@@ -5515,10 +5924,6 @@ packages:
 
   detect-indent@6.1.0:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
-    engines: {node: '>=8'}
-
-  detect-libc@2.0.4:
-    resolution: {integrity: sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA==}
     engines: {node: '>=8'}
 
   detect-libc@2.1.2:
@@ -6563,6 +6968,9 @@ packages:
     resolution: {integrity: sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==}
     engines: {node: '>=14.0.0'}
 
+  has-async-hooks@1.0.0:
+    resolution: {integrity: sha512-YF0VPGjkxr7AyyQQNykX8zK4PvtEDsUJAPqwu06UFz1lb6EvI53sPh5H1kWxg8NXI5LsfRCZ8uX9NkYDZBb/mw==}
+
   has-bigints@1.1.0:
     resolution: {integrity: sha512-R3pbpkcIqv2Pm3dUwgjclDRVmWpTJW2DcMzcIhEXEx1oh/CEMObMm3KLmRJOdvhM7o4uQBnwr8pzRK2sJWIqfg==}
     engines: {node: '>= 0.4'}
@@ -6597,6 +7005,13 @@ packages:
   hasown@2.0.4:
     resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
+
+  hdr-histogram-js@3.0.1:
+    resolution: {integrity: sha512-l3GSdZL1Jr1C0kyb461tUjEdrRPZr8Qry7jByltf5JGrA0xvqOSrxRBfcrJqqV/AMEtqqhHhC6w8HW0gn76tRQ==}
+    engines: {node: '>=14'}
+
+  hdr-histogram-percentiles-obj@3.0.0:
+    resolution: {integrity: sha512-7kIufnBqdsBGcSZLPJwqHT3yhk1QTsSlFsVD3kx5ixH/AlgBs9yM1q6DPhXZ8f8gtdqgh7N7/5btRLpQsS2gHw==}
 
   helmet@7.2.0:
     resolution: {integrity: sha512-ZRiwvN089JfMXokizgqEPXsl2Guk094yExfoDXR0cBYWxtBbaSww/w+vT4WEJsBW2iTUi1GgZ6swmoug3Oy4Xw==}
@@ -6679,6 +7094,9 @@ packages:
     resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
     hasBin: true
+
+  hyperid@3.3.0:
+    resolution: {integrity: sha512-7qhCVT4MJIoEsNcbhglhdmBKb09QtcmJNiIQGq7js/Khf5FtQQ9bzcAuloeqBeee7XD7JqDeve9KNlQya5tSGQ==}
 
   iceberg-js@0.8.1:
     resolution: {integrity: sha512-1dhVQZXhcHje7798IVM+xoo/1ZdVfzOMIc8/rgVSijRK38EDqOJoGula9N/8ZI5RD8QTxNQtK/Gozpr+qUqRRA==}
@@ -7313,6 +7731,9 @@ packages:
   lodash.capitalize@4.2.1:
     resolution: {integrity: sha512-kZzYOKspf8XVX5AvmQF94gQW0lejFVgb80G85bU4ZWzoJ6C03PQg3coYAUpSTpQWelrZELd3XWgHzw4Ck5kaIw==}
 
+  lodash.chunk@4.2.0:
+    resolution: {integrity: sha512-ZzydJKfUHJwHa+hF5X66zLFCBrWn5GeF28OHEr4WVWtNDXlQ/IjWKPBiikqKo2ne0+v6JgCgJ0GzJp8k8bHC7w==}
+
   lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
 
@@ -7438,6 +7859,9 @@ packages:
 
   make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
+
+  manage-path@2.0.0:
+    resolution: {integrity: sha512-NJhyB+PJYTpxhxZJ3lecIGgh4kwIY2RAh44XvAz9UlqthlQwtPBf62uBVR8XaD8CRuSjQ6TnZH2lNJkbLPZM2A==}
 
   matchit@1.1.0:
     resolution: {integrity: sha512-+nGYoOlfHmxe5BW5tE0EMJppXEwdSf8uBA1GTZC7Q77kbT35+VKLYJMzVNWCHSsga1ps1tPYFtFyvxvKzWVmMA==}
@@ -7959,6 +8383,10 @@ packages:
     resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
     engines: {node: '>= 0.8'}
 
+  on-net-listen@1.1.2:
+    resolution: {integrity: sha512-y1HRYy8s/RlcBvDUwKXSmkODMdx4KSuIvloCnQYJ2LdBBC1asY4HtfhXwe3UWknLakATZDnbzht2Ijw3M1EqFg==}
+    engines: {node: '>=9.4.0 || ^8.9.4'}
+
   once@1.3.3:
     resolution: {integrity: sha512-6vaNInhu+CHxtONf3zw3vq4SP2DOQhjBvIa3rNcG0+P7eKWlYH6Peu7rHizSloRU2EwMz6GraLieis9Ac9+p1w==}
 
@@ -8378,6 +8806,10 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  pretty-bytes@5.6.0:
+    resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
+    engines: {node: '>=6'}
+
   pretty-format@28.1.3:
     resolution: {integrity: sha512-8gFb/To0OmxHR9+ZTb14Df2vNxdGCX8g1xWGUTqUw5TiZvcQf5sHKObd5UcPyLLyowNwDAMTF3XWOG1B6mxl1Q==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
@@ -8402,6 +8834,10 @@ packages:
   process@0.11.10:
     resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
     engines: {node: '>= 0.6.0'}
+
+  progress@2.0.3:
+    resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
+    engines: {node: '>=0.4.0'}
 
   prom-client@14.2.0:
     resolution: {integrity: sha512-sF308EhTenb/pDRPakm+WgiN+VdM/T1RaHj1x+MvAuT8UiQP8JmOEbxVqtkbfR4LrvOg5n7ic01kRBDGXjYikA==}
@@ -8578,6 +9014,9 @@ packages:
     resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
     engines: {node: '>= 0.4'}
 
+  reinterval@1.1.0:
+    resolution: {integrity: sha512-QIRet3SYrGp0HUHO88jVskiG6seqUGC5iAG7AwI/BV4ypGcuqk9Du6YQBUOUqm9c8pw1eyLoIaONifRua1lsEQ==}
+
   remark-parse@11.0.0:
     resolution: {integrity: sha512-FCxlKLNGknS5ba/1lmpYijMUzX2esxW5xQqjWxw2eHFfS2MSdaHVINFmhjo+qN1WhZhNimq0dZATN9pH0IDrpA==}
 
@@ -8636,6 +9075,9 @@ packages:
   ret@0.5.0:
     resolution: {integrity: sha512-I1XxrZSQ+oErkRR4jYbAyEEu2I0avBvvMM5JN+6EBprOGRCs63ENqZ3vjavq8fBw2+62G5LF5XelKwuJpcvcxw==}
     engines: {node: '>=10'}
+
+  retimer@3.0.0:
+    resolution: {integrity: sha512-WKE0j11Pa0ZJI5YIk0nflGI7SQsfl2ljihVy7ogh7DeQSeYAUi0ubZ/yEueGtDfUPk6GH5LRw1hBdLq4IwUBWA==}
 
   retry-request@7.0.2:
     resolution: {integrity: sha512-dUOvLMJ0/JJYEn8NrpOaGNE7X3vpI5XlZS/u0ANjqtcZVKnIxP7IgCFwrKTxENw29emmwug53awKtaMm4i9g5w==}
@@ -9097,6 +9539,9 @@ packages:
   stubs@3.0.0:
     resolution: {integrity: sha512-PdHt7hHUJKxvTCgbKX9C1V/ftOcjJQgz8BZwNfV5c4B6dcGqlpelTbJ999jBGZ2jYiPAwcX5dP6oBwVlBlUbxw==}
 
+  subarg@1.0.0:
+    resolution: {integrity: sha512-RIrIdRY0X1xojthNcVtgT9sjpOGagEUKpZdgBUi054OEPFo282yg+zE+t1Rj3+RqKq2xStL7uUHhY+AjbC4BXg==}
+
   superagent@10.3.0:
     resolution: {integrity: sha512-B+4Ik7ROgVKrQsXTV0Jwp2u+PXYLSlqtDAhYnkkD+zn3yg8s/zjA2MeGayPoY/KICrbitwneDHrjSotxKL+0XQ==}
     engines: {node: '>=14.18.0'}
@@ -9136,9 +9581,6 @@ packages:
 
   swagger-ui-dist@5.24.1:
     resolution: {integrity: sha512-ITeWc7CCAfK53u8jnV39UNqStQZjSt+bVYtJHsOEL3vVj/WV9/8HmsF8Ej4oD8r+Xk1HpWyeW/t59r1QNeAcUQ==}
-
-  tar-fs@2.1.3:
-    resolution: {integrity: sha512-090nwYJDmlhwFwEW3QQl+vaNnxsO2yVsd45eTKRBzSzu+hlb1w2K9inVq5b0ngXuLVqQ4ApvsUHHnu/zQNkWAg==}
 
   tar-fs@2.1.4:
     resolution: {integrity: sha512-mDAjwmZdh7LTT6pNleZ05Yt65HC3E+NiQzl672vQG38jIrehtJk/J3mNwIg+vShQPcLF/LV7CMnDW6vjj6sfYQ==}
@@ -9212,6 +9654,10 @@ packages:
   timers-ext@0.1.8:
     resolution: {integrity: sha512-wFH7+SEAcKfJpfLPkrgMPvvwnEtj8W4IurvEyrKsDleXnKLCDw71w8jltvfLa8Rm4qQxxT4jmDBYbJG/z7qoww==}
     engines: {node: '>=0.12'}
+
+  timestring@6.0.0:
+    resolution: {integrity: sha512-wMctrWD2HZZLuIlchlkE2dfXJh7J2KDI9Dwl+2abPYg0mswQHfOAyQW3jJg1pY5VfttSINZuKcXoB3FGypVklA==}
+    engines: {node: '>=8'}
 
   tinyexec@0.3.2:
     resolution: {integrity: sha512-KQQR9yN7R5+OSwaK0XQoj22pwHoTlgYqmUscPYoknOoWCWfj/5/ABTMRi69FrKU5ffPVh5QcFikpWJI/P1ocHA==}
@@ -9711,6 +10157,9 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
+  uuid-parse@1.1.0:
+    resolution: {integrity: sha512-OdmXxA8rDsQ7YpNVbKSJkNzTw2I+S5WsbMDnCtIWSQaosNAcWtFuI/YK1TjzUI6nbkgiqEyh8gWngfcv8Asd9A==}
+
   uuid@10.0.0:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
     deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
@@ -10059,6 +10508,8 @@ snapshots:
       es5-ext: 0.10.64
 
   '@arr/every@1.0.1': {}
+
+  '@assemblyscript/loader@0.19.23': {}
 
   '@aws-crypto/crc32@5.2.0':
     dependencies:
@@ -11045,7 +11496,7 @@ snapshots:
       outdent: 0.5.0
       prettier: 2.8.8
       resolve-from: 5.0.0
-      semver: 7.8.3
+      semver: 7.8.5
 
   '@changesets/assemble-release-plan@6.0.8':
     dependencies:
@@ -11054,7 +11505,7 @@ snapshots:
       '@changesets/should-skip-package': 0.1.2
       '@changesets/types': 6.1.0
       '@manypkg/get-packages': 1.1.3
-      semver: 7.8.3
+      semver: 7.8.5
 
   '@changesets/changelog-git@0.2.1':
     dependencies:
@@ -11110,7 +11561,7 @@ snapshots:
       '@changesets/types': 6.1.0
       '@manypkg/get-packages': 1.1.3
       picocolors: 1.1.1
-      semver: 7.8.3
+      semver: 7.8.5
 
   '@changesets/get-release-plan@4.0.12':
     dependencies:
@@ -11194,6 +11645,9 @@ snapshots:
     optional: true
 
   '@cloudflare/workerd-windows-64@1.20260804.1':
+    optional: true
+
+  '@colors/colors@1.5.0':
     optional: true
 
   '@colors/colors@1.6.0': {}
@@ -11516,7 +11970,7 @@ snapshots:
       '@lukeed/ms': 2.0.2
       escape-html: 1.0.3
       fast-decode-uri-component: 1.0.1
-      http-errors: 2.0.0
+      http-errors: 2.0.1
       mime: 3.0.0
 
   '@fastify/session@11.1.0':
@@ -12262,7 +12716,7 @@ snapshots:
       '@nodeboot/engine': 1.6.6(class-transformer@0.5.1)(class-validator@0.14.2)(winston@3.17.0)
       class-transformer: 0.5.1
       class-validator: 0.14.2
-      glob: 10.4.5
+      glob: 10.5.0
       lodash.merge: 4.6.2
       logform: 2.7.0
       reflect-metadata: 0.2.2
@@ -13400,6 +13854,12 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/pg@8.21.0':
+    dependencies:
+      '@types/node': 22.15.31
+      pg-protocol: 1.14.0
+      pg-types: 2.2.0
+
   '@types/qs@6.14.0': {}
 
   '@types/range-parser@1.2.7': {}
@@ -14021,8 +14481,7 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  app-root-path@3.1.0:
-    optional: true
+  app-root-path@3.1.0: {}
 
   append-field@1.0.0: {}
 
@@ -14194,6 +14653,32 @@ snapshots:
   at-least-node@1.0.0: {}
 
   atomic-sleep@1.0.0: {}
+
+  autocannon@7.15.0:
+    dependencies:
+      chalk: 4.1.2
+      char-spinner: 1.0.1
+      cli-table3: 0.6.5
+      color-support: 1.1.3
+      cross-argv: 2.0.0
+      form-data: 4.0.5
+      has-async-hooks: 1.0.0
+      hdr-histogram-js: 3.0.1
+      hdr-histogram-percentiles-obj: 3.0.0
+      http-parser-js: 0.5.10
+      hyperid: 3.3.0
+      lodash.chunk: 4.2.0
+      lodash.clonedeep: 4.5.0
+      lodash.flatten: 4.4.0
+      manage-path: 2.0.0
+      on-net-listen: 1.1.2
+      pretty-bytes: 5.6.0
+      progress: 2.0.3
+      reinterval: 1.1.0
+      retimer: 3.0.0
+      semver: 7.8.5
+      subarg: 1.0.0
+      timestring: 6.0.0
 
   available-typed-arrays@1.0.7:
     dependencies:
@@ -14492,6 +14977,8 @@ snapshots:
 
   chalk@5.6.2: {}
 
+  char-spinner@1.0.1: {}
+
   character-entities@2.0.2: {}
 
   chardet@0.7.0: {}
@@ -14599,6 +15086,12 @@ snapshots:
       sprintf-kit: 2.0.2
       supports-color: 6.1.0
 
+  cli-table3@0.6.5:
+    dependencies:
+      string-width: 4.2.3
+    optionalDependencies:
+      '@colors/colors': 1.5.0
+
   cli-truncate@3.1.0:
     dependencies:
       slice-ansi: 5.0.0
@@ -14661,6 +15154,8 @@ snapshots:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
+
+  color-support@1.1.3: {}
 
   color@3.2.1:
     dependencies:
@@ -14826,6 +15321,8 @@ snapshots:
   cron-parser@4.9.0:
     dependencies:
       luxon: 3.7.2
+
+  cross-argv@2.0.0: {}
 
   cross-fetch@4.1.0:
     dependencies:
@@ -15019,8 +15516,6 @@ snapshots:
   destroy@1.2.0: {}
 
   detect-indent@6.1.0: {}
-
-  detect-libc@2.0.4: {}
 
   detect-libc@2.1.2: {}
 
@@ -15235,7 +15730,7 @@ snapshots:
       has-property-descriptors: 1.0.2
       has-proto: 1.2.0
       has-symbols: 1.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       internal-slot: 1.1.0
       is-array-buffer: 3.0.5
       is-callable: 1.2.7
@@ -15283,11 +15778,11 @@ snapshots:
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
       has-tostringtag: 1.0.2
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   es-shim-unscopables@1.1.0:
     dependencies:
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   es-to-primitive@1.3.0:
     dependencies:
@@ -16106,7 +16601,7 @@ snapshots:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       es-set-tostringtag: 2.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       mime-types: 2.1.35
 
   formidable@2.1.5:
@@ -16196,7 +16691,7 @@ snapshots:
       call-bound: 1.0.4
       define-properties: 1.2.1
       functions-have-names: 1.2.3
-      hasown: 2.0.2
+      hasown: 2.0.4
       is-callable: 1.2.7
 
   functional-red-black-tree@1.0.1:
@@ -16250,7 +16745,7 @@ snapshots:
       get-proto: 1.0.1
       gopd: 1.2.0
       has-symbols: 1.1.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       math-intrinsics: 1.1.0
 
   get-port@7.2.0: {}
@@ -16414,6 +16909,8 @@ snapshots:
       - encoding
       - supports-color
 
+  has-async-hooks@1.0.0: {}
+
   has-bigints@1.1.0: {}
 
   has-flag@3.0.0: {}
@@ -16441,6 +16938,14 @@ snapshots:
   hasown@2.0.4:
     dependencies:
       function-bind: 1.1.2
+
+  hdr-histogram-js@3.0.1:
+    dependencies:
+      '@assemblyscript/loader': 0.19.23
+      base64-js: 1.5.1
+      pako: 1.0.11
+
+  hdr-histogram-percentiles-obj@3.0.0: {}
 
   helmet@7.2.0: {}
 
@@ -16548,6 +17053,12 @@ snapshots:
 
   husky@8.0.3: {}
 
+  hyperid@3.3.0:
+    dependencies:
+      buffer: 5.7.1
+      uuid: 8.3.2
+      uuid-parse: 1.1.0
+
   iceberg-js@0.8.1: {}
 
   iconv-lite@0.4.24:
@@ -16617,7 +17128,7 @@ snapshots:
   internal-slot@1.1.0:
     dependencies:
       es-errors: 1.3.0
-      hasown: 2.0.2
+      hasown: 2.0.4
       side-channel: 1.1.0
 
   interpret@1.4.0: {}
@@ -16677,7 +17188,7 @@ snapshots:
 
   is-core-module@2.16.1:
     dependencies:
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   is-core-module@2.16.2:
     dependencies:
@@ -16758,7 +17269,7 @@ snapshots:
       call-bound: 1.0.4
       gopd: 1.2.0
       has-tostringtag: 1.0.2
-      hasown: 2.0.2
+      hasown: 2.0.4
 
   is-set@2.0.3: {}
 
@@ -17119,7 +17630,7 @@ snapshots:
       content-disposition: 0.5.4
       content-type: 1.0.5
       cookies: 0.9.1
-      debug: 4.4.1
+      debug: 4.4.3
       delegates: 1.0.0
       depd: 2.0.0
       destroy: 1.2.0
@@ -17236,6 +17747,8 @@ snapshots:
   lodash.camelcase@4.3.0: {}
 
   lodash.capitalize@4.2.1: {}
+
+  lodash.chunk@4.2.0: {}
 
   lodash.clonedeep@4.5.0: {}
 
@@ -17358,6 +17871,8 @@ snapshots:
       semver: 7.8.5
 
   make-error@1.3.6: {}
+
+  manage-path@2.0.0: {}
 
   matchit@1.1.0:
     dependencies:
@@ -17732,6 +18247,19 @@ snapshots:
 
   mute-stream@0.0.8: {}
 
+  mysql2@3.22.4(@types/node@20.19.43):
+    dependencies:
+      '@types/node': 20.19.43
+      aws-ssl-profiles: 1.1.2
+      denque: 2.1.0
+      generate-function: 2.3.1
+      iconv-lite: 0.7.2
+      long: 5.3.2
+      lru.min: 1.1.4
+      named-placeholders: 1.1.6
+      sql-escaper: 1.3.3
+    optional: true
+
   mysql2@3.22.4(@types/node@22.15.31):
     dependencies:
       '@types/node': 22.15.31
@@ -17935,6 +18463,8 @@ snapshots:
       ee-first: 1.1.1
 
   on-headers@1.0.2: {}
+
+  on-net-listen@1.1.2: {}
 
   once@1.3.3:
     dependencies:
@@ -18300,7 +18830,7 @@ snapshots:
 
   prebuild-install@7.1.3:
     dependencies:
-      detect-libc: 2.0.4
+      detect-libc: 2.1.2
       expand-template: 2.0.3
       github-from-package: 0.0.0
       minimist: 1.2.8
@@ -18310,7 +18840,7 @@ snapshots:
       pump: 3.0.2
       rc: 1.2.8
       simple-get: 4.0.1
-      tar-fs: 2.1.3
+      tar-fs: 2.1.4
       tunnel-agent: 0.6.0
 
   precinct@12.3.2:
@@ -18342,6 +18872,8 @@ snapshots:
 
   prettier@2.8.8: {}
 
+  pretty-bytes@5.6.0: {}
+
   pretty-format@28.1.3:
     dependencies:
       '@jest/schemas': 28.1.3
@@ -18367,6 +18899,8 @@ snapshots:
   process-warning@5.0.0: {}
 
   process@0.11.10: {}
+
+  progress@2.0.3: {}
 
   prom-client@14.2.0:
     dependencies:
@@ -18580,6 +19114,8 @@ snapshots:
       gopd: 1.2.0
       set-function-name: 2.0.2
 
+  reinterval@1.1.0: {}
+
   remark-parse@11.0.0:
     dependencies:
       '@types/mdast': 4.0.4
@@ -18642,6 +19178,8 @@ snapshots:
 
   ret@0.5.0: {}
 
+  retimer@3.0.0: {}
+
   retry-request@7.0.2:
     dependencies:
       '@types/request': 2.48.12
@@ -18663,7 +19201,7 @@ snapshots:
 
   rimraf@5.0.10:
     dependencies:
-      glob: 10.4.5
+      glob: 10.5.0
 
   router@2.2.0:
     dependencies:
@@ -18935,7 +19473,6 @@ snapshots:
       inherits: 2.0.4
       safe-buffer: 5.2.1
       to-buffer: 1.2.2
-    optional: true
 
   sharp@0.35.2:
     dependencies:
@@ -19287,6 +19824,10 @@ snapshots:
   stubs@3.0.0:
     optional: true
 
+  subarg@1.0.0:
+    dependencies:
+      minimist: 1.2.8
+
   superagent@10.3.0:
     dependencies:
       component-emitter: 1.3.1
@@ -19350,13 +19891,6 @@ snapshots:
   swagger-ui-dist@5.24.1:
     dependencies:
       '@scarf/scarf': 1.4.0
-
-  tar-fs@2.1.3:
-    dependencies:
-      chownr: 1.1.4
-      mkdirp-classic: 0.5.3
-      pump: 3.0.2
-      tar-stream: 2.2.0
 
   tar-fs@2.1.4:
     dependencies:
@@ -19500,6 +20034,8 @@ snapshots:
       es5-ext: 0.10.64
       next-tick: 1.1.0
 
+  timestring@6.0.0: {}
+
   tinyexec@0.3.2: {}
 
   tinyglobby@0.2.16:
@@ -19622,6 +20158,27 @@ snapshots:
       yn: 3.1.1
     optionalDependencies:
       '@swc/core': 1.12.1
+
+  ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.11
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 20.19.43
+      acorn: 8.16.0
+      acorn-walk: 8.3.4
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.9.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    optionalDependencies:
+      '@swc/core': 1.12.1
+    optional: true
 
   ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2):
     dependencies:
@@ -19794,6 +20351,32 @@ snapshots:
   typedarray@0.0.6: {}
 
   typedi@0.10.0: {}
+
+  typeorm@0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3)):
+    dependencies:
+      '@sqltools/formatter': 1.2.5
+      ansis: 4.3.0
+      app-root-path: 3.1.0
+      buffer: 6.0.3
+      dayjs: 1.11.20
+      debug: 4.4.3
+      dedent: 1.7.2
+      dotenv: 16.6.1
+      glob: 10.5.0
+      reflect-metadata: 0.2.2
+      sha.js: 2.4.12
+      sql-highlight: 6.1.0
+      tslib: 2.8.1
+      uuid: 11.1.1
+      yargs: 17.7.2
+    optionalDependencies:
+      better-sqlite3: 12.10.0
+      mysql2: 3.22.4(@types/node@20.19.43)
+      pg: 8.21.0
+      ts-node: 10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
 
   typeorm@0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2)):
     dependencies:
@@ -20019,6 +20602,8 @@ snapshots:
       which-typed-array: 1.1.19
 
   utils-merge@1.0.1: {}
+
+  uuid-parse@1.1.0: {}
 
   uuid@10.0.0: {}
 
