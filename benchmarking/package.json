@@ -11,6 +11,8 @@
     "scripts": {
         "build": "turbo run build --filter=@nodeboot-benchmark/*",
         "bench:all": "bash scripts/run-all.sh",
-        "report": "node tools/report/aggregate.mjs"
+        "report": "node tools/report/aggregate.mjs",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write ."
     }
 }
