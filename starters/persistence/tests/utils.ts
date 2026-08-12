@@ -8,6 +8,7 @@ interface IQueryable {
 export const getCurrentTransactionId = async (
     queryable: IQueryable | (() => QueryBuilder<any>),
 ): Promise<number | null> => {
+    // eslint-disable-next-line no-useless-assignment
     let id: string | null = null;
 
     if (typeof queryable === "function") {

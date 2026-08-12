@@ -2,11 +2,4 @@ node_modules/
 dist/
 *.tsbuildinfo
 .turbo/
-results/*.json
-!results/.gitkeep
-!results/REPORT.md
-!results/REPORT.html
-!results/README.md
-!results/charts/
-!results/charts/*.svg
 .DS_Store
