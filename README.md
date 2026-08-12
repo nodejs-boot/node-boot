@@ -69,6 +69,16 @@ That's a running, typed, auto-wired HTTP service. Add `@EnableOpenApi()`, `@Enab
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## 📊 Benchmarking
+
+Node-Boot ships with a dedicated [`benchmarking/`](./benchmarking) suite comparing every HTTP server adapter (Express, Fastify, Koa, native `http`) against its equivalent raw-framework baseline, backed by a real PostgreSQL database.
+
+See the [Req/s overview](./benchmarking/results/README.md#overall-summary) for the at-a-glance chart, or the full [benchmark report](./benchmarking/results/README.md) for per-endpoint throughput/latency numbers and overhead analysis. Want to run it yourself? Head to [`benchmarking/`](./benchmarking) for setup and usage instructions.
+
+![Benchmarking Overview](./benchmarking/results/charts/summary-total-reqsec.svg)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## 📖 How to Use
 
 Node-Boot applications are built by composing decorators from `@nodeboot/core` (controllers, routing, DI, configuration, middlewares, models, ...) with `@Enable...()` decorators from the starters you opt into. Decorate your entry-point class, define `@Controller` classes with `@Get`/`@Post`/etc. actions, inject request data with parameter decorators like `@Param`/`@Body`/`@QueryParam`, and register cross-cutting concerns with `@Middleware`, `@ErrorHandler`, or `@Interceptor`.
