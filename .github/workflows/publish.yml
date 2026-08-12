@@ -4,6 +4,8 @@ on:
     push:
         tags:
             - "v-*"
+    release:
+        types: [published]
 
 permissions:
     id-token: write # Required for OIDC
@@ -12,6 +14,7 @@ permissions:
 jobs:
     publish:
         runs-on: ubuntu-latest
+        if: github.event_name == 'push' || startsWith(github.event.release.tag_name, 'v-')
         steps:
             - name: Checkout repository
               uses: actions/checkout@v6
