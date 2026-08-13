@@ -21,7 +21,6 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
-        "postbuild": "npx @nodeboot/aot node-boot-aot",
         "clean:build": "rimraf ./dist",
         "lint": "eslint . --ext .js,.ts",
         "lint:fix": "pnpm lint --fix",
