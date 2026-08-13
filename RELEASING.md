@@ -109,6 +109,26 @@ This ensures the **latest workspace versions** are published.
 
 ---
 
+> ## ⚠️ IMPORTANT: First-time publishing of a new package
+>
+> The primary way to publish packages is through the GitHub Actions [`publish.yml`](.github/workflows/publish.yml) workflow, which authenticates to npm using **OIDC (`id-token: write`)** instead of a static npm token. This trust relationship, however, is configured **per package** on npmjs.com, and npm only lets you configure trusted publishing for a package **that already exists** in the registry.
+>
+> This creates a bootstrapping problem for **brand-new packages**: there is no way to create the package, configure the GitHub Actions trust relationship, and publish it from CI in one shot — CI will fail with an authentication/permission error because the package doesn't exist yet and no trust relationship can be attached to it.
+>
+> **Workaround — do this once for every new package before it can ever be released from CI:**
+>
+> 1. Publish the package **manually from your local CLI** first:
+>     ```sh
+>     npm publish
+>     ```
+>     This will prompt browser-based authentication (npm login/OTP) — complete it to let the package publish and get created on the registry.
+> 2. Go to the package page on [npmjs.com](https://www.npmjs.com/), open **Settings → Trusted Publisher**, and configure the trust relationship for this repository's `publish.yml` GitHub Actions workflow (same as already done for existing packages).
+> 3. From this point on, subsequent releases of that package from the CI/CD pipeline (`pnpm release:publish` in `publish.yml`) will publish successfully via OIDC, with no further manual steps required.
+>
+> Skipping step 1 (i.e. trying to configure trust before the package exists) is not possible — npm has nothing to attach the trust relationship to yet.
+
+---
+
 ## **Summary of Commands**
 
 | Command                  | Description                |
