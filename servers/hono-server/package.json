@@ -1,0 +1,69 @@
+{
+    "name": "@nodeboot/hono-server",
+    "version": "1.0.0",
+    "description": "Node-Boot server adapter for Hono - a small, simple, and ultrafast web framework built on Web Standards",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "node-boot",
+        "hono",
+        "server",
+        "http"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "pretest": "pnpm run clean:build && pnpm run build",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/engine": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "template-url": "^1.0.0"
+    },
+    "peerDependencies": {
+        "hono": "^4.0.0",
+        "@hono/node-server": "^2.0.0",
+        "hono-sessions": "^0.8.0"
+    },
+    "peerDependenciesMeta": {
+        "hono-sessions": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "hono": "^4.13.5",
+        "@hono/node-server": "^2.1.1",
+        "hono-sessions": "^0.8.1",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "axios": "^1.12.2",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "reflect-metadata": "^0.2.1",
+        "typedi": "^0.10.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md",
+        "config.d.ts"
+    ]
+}

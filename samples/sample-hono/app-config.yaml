@@ -1,0 +1,66 @@
+# App configurations
+app:
+    name: "facts-service"
+    platform: "tech-insights"
+    environment: "development"
+    defaultErrorHandler: false
+    port: 3000
+
+api:
+    routePrefix: "/api"
+    nullResultCode: 200
+    undefinedResultCode: 200
+    paramOptions:
+        required: false
+    validations:
+        enableDebugMessages: false
+        skipUndefinedProperties: false
+        skipNullProperties: false
+        skipMissingProperties: false
+        whitelist: false
+        forbidNonWhitelisted: false
+        forbidUnknownValues: true
+        stopAtFirstError: false
+
+# Server configurations
+server:
+    cors:
+        origin: "*"
+        allowMethods:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+        credentials: true
+        maxAge: 55000
+    multipart:
+        all: true
+
+openapi:
+    info:
+        contact:
+            name: "Manuel Santos"
+            email: "ney.br.santos@gmail.com"
+            url: "https://www.linkedin.com/in/manuel-brito-dos-santos-a7a20a6b/"
+        license:
+            name: MIT
+            url: "https://github.com/nodejs-boot/node-boot/blob/main/LICENSE"
+    servers:
+        - url: http://localhost:3000
+          description: Localhost server
+    externalDocs:
+        url: "https://nodeboot.gitbook.io/"
+        description: "Node-Boot official documentation"
+    securitySchemes:
+        basicAuth:
+            scheme: "basic"
+            type: "http"
+
+# Storage configurations
+persistence:
+    type: "better-sqlite3"
+    synchronize: false # False, meaning that the application rely on migrations
+    cache: true
+    migrationsRun: true
+    better-sqlite3:
+        database: "hono-sample.db"

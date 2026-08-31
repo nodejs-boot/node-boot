@@ -1,0 +1,2 @@
+credentials:
+    $include: app-credentials.local.yaml
