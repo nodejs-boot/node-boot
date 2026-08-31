@@ -1,6 +1,7 @@
 name: Publish Package
 
 on:
+    workflow_dispatch:
     push:
         tags:
             - "v-*"
@@ -14,7 +15,6 @@ permissions:
 jobs:
     publish:
         runs-on: ubuntu-latest
-        if: github.event_name == 'push' || startsWith(github.event.release.tag_name, 'v-')
         steps:
             - name: Checkout repository
               uses: actions/checkout@v6
