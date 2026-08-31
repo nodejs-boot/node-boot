@@ -108,6 +108,7 @@ themselves are organized (foundational, then each orchestrator with its concrete
 | `nodeboot-server-express`              | `ExpressServer`/`ExpressDriver` — broadest middleware ecosystem             |
 | `nodeboot-server-fastify`              | `FastifyServer`/`FastifyDriver` — plugins, hooks, high throughput           |
 | `nodeboot-server-koa`                  | `KoaServer`/`KoaDriver` — async-first middleware style                      |
+| `nodeboot-server-hono`                 | `HonoServer`/`HonoDriver` — Web Standards (Fetch API) based, ultrafast      |
 | `nodeboot-server-native-http`          | `HttpServer`/`HttpDriver` — zero framework dependency, find-my-way routing  |
 | `nodeboot-server-encore`               | `EncoreServer`/`EncoreDriver` — Encore.ts cloud infra & observability       |
 | `nodeboot-server-ghost`                | `GhostServer`/`GhostDriver` — no real HTTP transport (CLI/worker/embedding) |

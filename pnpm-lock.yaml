@@ -19,10 +19,10 @@ importers:
         version: 10.0.1(eslint@10.4.1(jiti@2.7.0))
       '@nodeboot/node-test':
         specifier: ^2.14.0
-        version: 2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))(winston@3.17.0)
+        version: 2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mongodb-memory-server@10.4.3)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))(winston@3.17.0)
       '@nodeboot/test':
         specifier: ^2.14.0
-        version: 2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))
+        version: 2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mongodb-memory-server@10.4.3)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))
       '@nodeboot/tools':
         specifier: ^1.2.0
         version: 1.2.0
@@ -68,6 +68,9 @@ importers:
       memwatch-next:
         specifier: ^0.3.0
         version: 0.3.0
+      mongodb-memory-server:
+        specifier: ^10.1.2
+        version: 10.4.3
       node-test-reporter:
         specifier: ^1.2.0
         version: 1.2.0
@@ -162,7 +165,7 @@ importers:
         version: 0.10.0
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -214,7 +217,7 @@ importers:
         version: 0.10.0
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -263,7 +266,7 @@ importers:
         version: 0.10.0
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -330,7 +333,7 @@ importers:
         version: 0.10.0
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
       winston:
         specifier: ^3.17.0
         version: 3.17.0
@@ -361,7 +364,7 @@ importers:
         version: 0.2.2
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
     devDependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -395,7 +398,7 @@ importers:
         version: 0.2.2
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
     devDependencies:
       '@types/node':
         specifier: ^20.14.0
@@ -420,7 +423,7 @@ importers:
         version: 0.2.2
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
     devDependencies:
       '@types/node':
         specifier: ^20.14.0
@@ -454,7 +457,7 @@ importers:
         version: 0.2.2
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
+        version: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3))
     devDependencies:
       '@types/koa':
         specifier: ^2.15.0
@@ -1237,6 +1240,97 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.3)
 
+  samples/sample-hono:
+    dependencies:
+      '@hono/node-server':
+        specifier: ^2.1.1
+        version: 2.1.1(hono@4.13.5)
+      '@nodeboot/aot':
+        specifier: workspace:*
+        version: link:../../packages/aot
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
+      '@nodeboot/error':
+        specifier: workspace:*
+        version: link:../../packages/error
+      '@nodeboot/hono-server':
+        specifier: workspace:*
+        version: link:../../servers/hono-server
+      '@nodeboot/starter-actuator':
+        specifier: workspace:*
+        version: link:../../starters/actuator
+      '@nodeboot/starter-http':
+        specifier: workspace:*
+        version: link:../../starters/http
+      '@nodeboot/starter-openapi':
+        specifier: workspace:*
+        version: link:../../starters/openapi
+      '@nodeboot/starter-persistence':
+        specifier: workspace:*
+        version: link:../../starters/persistence
+      '@nodeboot/starter-scheduler':
+        specifier: workspace:*
+        version: link:../../starters/scheduler
+      '@nodeboot/starter-validation':
+        specifier: workspace:*
+        version: link:../../starters/validation
+      better-sqlite3:
+        specifier: ^12.10.0
+        version: 12.10.0
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
+      hono:
+        specifier: ^4.13.5
+        version: 4.13.5
+      katxupa:
+        specifier: ^1.10.4
+        version: 1.10.4
+      luxon:
+        specifier: ^3.0.0
+        version: 3.7.2
+      minimist:
+        specifier: ^1.2.8
+        version: 1.2.8
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
+      typeorm:
+        specifier: ^1.0.0
+        version: 1.0.0(better-sqlite3@12.10.0)(mongodb@7.2.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.3))
+      winston:
+        specifier: ^3.10.0
+        version: 3.17.0
+    devDependencies:
+      '@types/luxon':
+        specifier: ^3.0.0
+        version: 3.7.1
+      '@types/node':
+        specifier: ^22.13.4
+        version: 22.15.31
+      '@types/supertest':
+        specifier: ^2.0.12
+        version: 2.0.16
+
   samples/sample-koa:
     dependencies:
       '@koa/cors':
@@ -1806,12 +1900,33 @@ importers:
         specifier: ^9.3.0
         version: 9.3.0
     devDependencies:
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
       '@types/node':
         specifier: ^24.0.1
         version: 24.0.1
+      axios:
+        specifier: ^1.12.2
+        version: 1.12.2
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
       encore.dev:
         specifier: ^1.48.7
         version: 1.57.13
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   servers/express-server:
     dependencies:
@@ -1849,6 +1964,12 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
     devDependencies:
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
       '@types/body-parser':
         specifier: ^1.19.2
         version: 1.19.6
@@ -1867,6 +1988,21 @@ importers:
       '@types/multer':
         specifier: ^2.0.0
         version: 2.0.0
+      axios:
+        specifier: ^1.12.2
+        version: 1.12.2
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   servers/fastify-server:
     dependencies:
@@ -1901,9 +2037,30 @@ importers:
       '@fastify/view':
         specifier: ^11.1.1
         version: 11.1.1
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
+      axios:
+        specifier: ^1.12.2
+        version: 1.12.2
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
       fastify:
         specifier: ^5.6.0
         version: 5.6.0
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   servers/ghost-server:
     dependencies:
@@ -1919,6 +2076,55 @@ importers:
       '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
+
+  servers/hono-server:
+    dependencies:
+      '@nodeboot/context':
+        specifier: workspace:*
+        version: link:../../packages/context
+      '@nodeboot/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@nodeboot/engine':
+        specifier: workspace:*
+        version: link:../../packages/engine
+      '@nodeboot/error':
+        specifier: workspace:*
+        version: link:../../packages/error
+      template-url:
+        specifier: ^1.0.0
+        version: 1.0.0
+    devDependencies:
+      '@hono/node-server':
+        specifier: ^2.1.1
+        version: 2.1.1(hono@4.13.5)
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
+      axios:
+        specifier: ^1.12.2
+        version: 1.12.2
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
+      hono:
+        specifier: ^4.13.5
+        version: 4.13.5
+      hono-sessions:
+        specifier: ^0.8.1
+        version: 0.8.1(hono@4.13.5)
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   servers/http-server:
     dependencies:
@@ -1941,12 +2147,33 @@ importers:
         specifier: ^9.3.0
         version: 9.3.0
     devDependencies:
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
       '@types/cookie':
         specifier: ^0.4.1
         version: 0.4.1
       '@types/node':
         specifier: ^24.0.1
         version: 24.0.1
+      axios:
+        specifier: ^1.12.2
+        version: 1.12.2
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   servers/koa-server:
     dependencies:
@@ -1987,6 +2214,12 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
     devDependencies:
+      '@nodeboot/authorization':
+        specifier: workspace:*
+        version: link:../../packages/authorization
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
       '@types/koa':
         specifier: ^2.13.12
         version: 2.15.0
@@ -2002,6 +2235,21 @@ importers:
       '@types/koa__router':
         specifier: ^12.0.4
         version: 12.0.4
+      axios:
+        specifier: ^1.12.2
+        version: 1.12.2
+      class-transformer:
+        specifier: ^0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: ^0.14.0
+        version: 0.14.2
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   starters/actuator:
     dependencies:
@@ -2046,6 +2294,9 @@ importers:
       fastify:
         specifier: '>=5.6.0'
         version: 5.6.0
+      hono:
+        specifier: '>=4.0.0'
+        version: 4.13.5
       koa:
         specifier: '>=2.14.2'
         version: 2.16.1
@@ -2211,6 +2462,9 @@ importers:
       fastify:
         specifier: ^5.6.0
         version: 5.6.0
+      hono:
+        specifier: ^4.0.0
+        version: 4.13.5
       koa:
         specifier: ^2.14.2
         version: 2.16.1
@@ -3357,6 +3611,12 @@ packages:
 
   '@hapi/wreck@18.1.2':
     resolution: {integrity: sha512-3dMnV2pfhQiyEqu8DL3VBmxkdLiRDiiUDuG79Dp+UK1gL9ZxAfDOUhB6k3D5MLqcgJJ1IARyGFhwoc1NITr/pg==}
+
+  '@hono/node-server@2.1.1':
+    resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      hono: ^4
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -4589,6 +4849,9 @@ packages:
   '@types/webidl-conversions@7.0.3':
     resolution: {integrity: sha512-CiJJvcRtIgzadHCYXw7dqEnMNRjhGZlYK05Mj9OyktqV8uVT8fD2BFOB7S1uwBE3Kj2Z+4UyPmFw/Ixgw/LAlA==}
 
+  '@types/whatwg-url@11.0.5':
+    resolution: {integrity: sha512-coYR071JRaHa+xoEvvYqvnIHaVqaYrLPbsufM9BF63HkwI5Lgmy2QR8Q5K/lYDYo5AK82wOvSOS0UsLTpTG7uQ==}
+
   '@types/whatwg-url@13.0.0':
     resolution: {integrity: sha512-N8WXpbE6Wgri7KUSvrmQcqrMllKZ9uxkYWMt+mCSGwNc0Hsw9VQTW7ApqI4XNrx6/SaM2QQJCzMPDEXE058s+Q==}
 
@@ -5096,6 +5359,9 @@ packages:
   async-lock@1.4.1:
     resolution: {integrity: sha512-Az2ZTpuytrtqENulXwO3GGv1Bztugx6TT37NIo7imr/Qo0gsYiGtSdBa2B6fsXhTpVZDNfu1Qn3pk531e3q+nQ==}
 
+  async-mutex@0.5.0:
+    resolution: {integrity: sha512-1A94B18jkJ3DYq284ohPxoXbfTA5HsQ7/Mf4DEhcyLx3Bz27Rh59iScbB6EPiP+B+joue6YCxcMXSbFC1tZKwA==}
+
   async-retry@1.3.3:
     resolution: {integrity: sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw==}
 
@@ -5277,6 +5543,10 @@ packages:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
 
+  bson@6.10.4:
+    resolution: {integrity: sha512-WIsKqkSC0ABoBJuT1LEX+2HEvNmNKKgnTAyd0fL8qzK4SH2i9NXg+t08YtdZp/V9IZ33cxe3iV4yM0qg8lMQng==}
+    engines: {node: '>=16.20.1'}
+
   bson@7.2.0:
     resolution: {integrity: sha512-YCEo7KjMlbNlyHhz7zAZNDpIpQbd+wOEHJYezv0nMYTn4x31eIUM2yomNNubclAt63dObUzKHWsBLJ9QcZNSnQ==}
     engines: {node: '>=20.19.0'}
@@ -5373,6 +5643,10 @@ packages:
   callsites@3.1.0:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
+
+  camelcase@6.3.0:
+    resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
+    engines: {node: '>=10'}
 
   camelcase@7.0.1:
     resolution: {integrity: sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==}
@@ -5589,6 +5863,9 @@ packages:
 
   common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
+
+  commondir@1.0.1:
+    resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
 
   component-emitter@1.3.1:
     resolution: {integrity: sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==}
@@ -6671,6 +6948,10 @@ packages:
     resolution: {integrity: sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==}
     engines: {node: '>= 18.0.0'}
 
+  find-cache-dir@3.3.2:
+    resolution: {integrity: sha512-wXZV5emFEjrridIgED11OoUKLxiYjAcqot/NJdAkOhlJ+vGzwhOAfcG5OX1jP+S0PcjEn8bdMJv+g2jwQ3Onig==}
+    engines: {node: '>=8'}
+
   find-my-way@9.3.0:
     resolution: {integrity: sha512-eRoFWQw+Yv2tuYlK2pjFS2jGXSxSppAs3hSQjfxVKxM5amECzIgYYc1FEI8ZmhSh/Ig+FrKEz43NLRKJjYCZVg==}
     engines: {node: '>=20'}
@@ -6715,6 +6996,15 @@ packages:
 
   follow-redirects@1.15.9:
     resolution: {integrity: sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+
+  follow-redirects@1.16.0:
+    resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -7017,6 +7307,15 @@ packages:
     resolution: {integrity: sha512-jOiHyAZsmnr8LqoPGmCjYAaiuWwjAPLgY8ZX2XrmHawt99/u1y6RgrZMTeoPfpUbV96HOalYgz1qzkRbw54Pmg==}
     engines: {node: '>=18.0.0'}
 
+  hono-sessions@0.8.1:
+    resolution: {integrity: sha512-YLSKuIP13yhXTQe2x3sCc1JWsqt1Z3WZB2DWE+oX+YpOsC3lv8uCHnCoNHcY9DPyflDw4XQJN+MFVvcp5QwWdw==}
+    peerDependencies:
+      hono: ^4.0.0
+
+  hono@4.13.5:
+    resolution: {integrity: sha512-O6+/eCYRkzzzy0rPWwKLiGBR1nFuUPZynnwjxN1MBA62NNqbT0wQEzQyK2gSO5yDIDB336sXQleAhOHrzlYyKw==}
+    engines: {node: '>=16.9.0'}
+
   hosted-git-info@7.0.2:
     resolution: {integrity: sha512-puUZAUKT5m8Zzvs72XWy3HtvVbTWljRE66cP60bxJzAqf2DgICo7lYTY2IHUmLnNpjYvw5bvmoHvPc0QO2a62w==}
     engines: {node: ^16.14.0 || >=18.0.0}
@@ -7184,6 +7483,9 @@ packages:
   ipaddr.js@2.2.0:
     resolution: {integrity: sha512-Ag3wB2o37wslZS19hZqorUnrnzSkpOVy+IiiDEiTqNubEYpYuHWIf6K4psgN2ZWKExS4xhVCrRVfb/wfW8fWJA==}
     engines: {node: '>= 10'}
+
+  iron-webcrypto@1.2.1:
+    resolution: {integrity: sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==}
 
   is-arguments@1.2.0:
     resolution: {integrity: sha512-7bVbi0huj/wrIAOzb8U1aszg9kdi3KN/CyU19CTI7tAoZYEZoL9yCDXpbXN+uPsuWnP02cyug1gleqq+TU+YCA==}
@@ -7849,6 +8151,10 @@ packages:
     resolution: {integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==}
     engines: {node: '>=4'}
 
+  make-dir@3.1.0:
+    resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
+    engines: {node: '>=8'}
+
   make-dir@4.0.0:
     resolution: {integrity: sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw==}
     engines: {node: '>=10'}
@@ -8128,9 +8434,47 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  mongodb-connection-string-url@3.0.2:
+    resolution: {integrity: sha512-rMO7CGo/9BFwyZABcKAWL8UJwH/Kc2x0g72uhDWzG48URRax5TCIcJ7Rc3RZqffZzO/Gwff/jyKwCU9TN8gehA==}
+
   mongodb-connection-string-url@7.0.1:
     resolution: {integrity: sha512-h0AZ9A7IDVwwHyMxmdMXKy+9oNlF0zFoahHiX3vQ8e3KFcSP3VmsmfvtRSuLPxmyv2vjIDxqty8smTgie/SNRQ==}
     engines: {node: '>=20.19.0'}
+
+  mongodb-memory-server-core@10.4.3:
+    resolution: {integrity: sha512-IPjlw73IoSYopnqBibQKxmAXMbOEPf5uGAOsBcaUiNH/TOI7V19WO+K7n5KYtnQ9FqzLGLpvwCGuPOTBSg4s5Q==}
+    engines: {node: '>=16.20.1'}
+
+  mongodb-memory-server@10.4.3:
+    resolution: {integrity: sha512-CDZvFisXvGIigsIw5gqH6r9NI/zxGa/uRdutgUL/isuJh+inj0YXb7Ykw6oFMFzqgTJWb7x0I5DpzrqCstBWpg==}
+    engines: {node: '>=16.20.1'}
+
+  mongodb@6.21.0:
+    resolution: {integrity: sha512-URyb/VXMjJ4da46OeSXg+puO39XH9DeQpWCslifrRn9JWugy0D+DvvBvkm2WxmHe61O/H19JM66p1z7RHVkZ6A==}
+    engines: {node: '>=16.20.1'}
+    peerDependencies:
+      '@aws-sdk/credential-providers': ^3.188.0
+      '@mongodb-js/zstd': ^1.1.0 || ^2.0.0
+      gcp-metadata: ^5.2.0
+      kerberos: ^2.0.1
+      mongodb-client-encryption: '>=6.0.0 <7'
+      snappy: ^7.3.2
+      socks: ^2.7.1
+    peerDependenciesMeta:
+      '@aws-sdk/credential-providers':
+        optional: true
+      '@mongodb-js/zstd':
+        optional: true
+      gcp-metadata:
+        optional: true
+      kerberos:
+        optional: true
+      mongodb-client-encryption:
+        optional: true
+      snappy:
+        optional: true
+      socks:
+        optional: true
 
   mongodb@7.2.0:
     resolution: {integrity: sha512-F/2+BMZtLVhY30ioZp0dAmZ+IRZMBqI+nrv6t5+9/1AIwCa8sMRC3jBf81lpxMhnZgqq8CoUD503Z1oZWq1/sw==}
@@ -8224,6 +8568,10 @@ packages:
   negotiator@1.0.0:
     resolution: {integrity: sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==}
     engines: {node: '>= 0.6'}
+
+  new-find-package-json@2.0.0:
+    resolution: {integrity: sha512-lDcBsjBSMlj3LXH2v/FW3txlh2pYTjmbOXPYJD93HI5EwuLzI11tdHSIpUMmfq/IOsldj4Ps8M8flhm+pCK4Ew==}
+    engines: {node: '>=12.22.0'}
 
   next-tick@1.1.0:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
@@ -8366,6 +8714,9 @@ packages:
 
   obliterator@1.6.1:
     resolution: {integrity: sha512-9WXswnqINnnhOG/5SLimUlzuU1hFJUc8zkwyD59Sd+dPOMf05PmnYG/d6Q7HZ+KmgkZJa1PxRso6QdM3sTNHig==}
+
+  ohash@2.0.12:
+    resolution: {integrity: sha512-65S/5gk9YSsaRjcyf7Nfa6h/d3E8/1gslpXfI4W7Dxn/oap8IKRuNT5VXkLQ1YFKIEg4apRY4Pj6aiwFzrDdmw==}
 
   on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
@@ -8735,6 +9086,10 @@ packages:
     resolution: {integrity: sha512-cengSmBxtCyaJqtRSvJorIIZXMXg+lJ3sIljGmtBGUVonMnMsVJbnzl6jGN1HkOWwxNuJynCJ2hXxxqCQrFDdw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
+
+  pkg-dir@4.2.0:
+    resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
+    engines: {node: '>=8'}
 
   polka@0.5.2:
     resolution: {integrity: sha512-FVg3vDmCqP80tOrs+OeNlgXYmFppTXdjD5E7I4ET1NjvtNmQrb1/mJibybKkb/d4NA7YWAr1ojxuhpL3FHqdlw==}
@@ -10459,6 +10814,10 @@ packages:
 
   yauzl@2.10.0:
     resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
+
+  yauzl@3.4.0:
+    resolution: {integrity: sha512-jIH9yLR9wqr0wOS0TpBvo/g/2UgZH5qePVbjgRliiF0BYvOZyaBknKsF+x9Iht0O6sqgnB93rCICdOZFecJuDw==}
+    engines: {node: '>=12'}
 
   ylru@1.4.0:
     resolution: {integrity: sha512-2OQsPNEmBCvXuFlIni/a+Rn+R2pHW9INm0BxXJ4hVDA8TirqMj+J/Rp9ItLatT/5pZqWwefVrTQcHpixsxnVlA==}
@@ -12271,6 +12630,10 @@ snapshots:
       '@hapi/bourne': 3.0.0
       '@hapi/hoek': 11.0.7
 
+  '@hono/node-server@2.1.1(hono@4.13.5)':
+    dependencies:
+      hono: 4.13.5
+
   '@humanfs/core@0.19.2':
     dependencies:
       '@humanfs/types': 0.15.0
@@ -12738,11 +13101,11 @@ snapshots:
 
   '@nodeboot/error@1.3.0': {}
 
-  '@nodeboot/node-test@2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))(winston@3.17.0)':
+  '@nodeboot/node-test@2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mongodb-memory-server@10.4.3)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))(winston@3.17.0)':
     dependencies:
       '@nodeboot/context': 2.3.0(class-transformer@0.5.1)(class-validator@0.14.2)(winston@3.17.0)
       '@nodeboot/core': 1.16.3(@swc/core@1.12.1)(class-transformer@0.5.1)(class-validator@0.14.2)(winston@3.17.0)
-      '@nodeboot/test': 2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))
+      '@nodeboot/test': 2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mongodb-memory-server@10.4.3)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))
       '@sinonjs/fake-timers': 11.3.1
     transitivePeerDependencies:
       - '@google-cloud/spanner'
@@ -12773,7 +13136,7 @@ snapshots:
       - typeorm-aurora-data-api-driver
       - winston
 
-  '@nodeboot/test@2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))':
+  '@nodeboot/test@2.14.0(@swc/core@1.12.1)(@testcontainers/toxiproxy@11.14.0)(better-sqlite3@12.10.0)(class-transformer@0.5.1)(class-validator@0.14.2)(mongodb-memory-server@10.4.3)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(testcontainers@11.14.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))':
     dependencies:
       '@nodeboot/config': 1.3.7(@swc/core@1.12.1)(class-transformer@0.5.1)(class-validator@0.14.2)(winston@3.17.0)
       '@nodeboot/context': 2.3.0(class-transformer@0.5.1)(class-validator@0.14.2)(winston@3.17.0)
@@ -12783,10 +13146,11 @@ snapshots:
     optionalDependencies:
       '@testcontainers/toxiproxy': 11.14.0
       axios: 1.12.2
+      mongodb-memory-server: 10.4.3
       pactum: 3.9.1
       supertest: 7.2.2
       testcontainers: 11.14.0
-      typeorm: 0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))
+      typeorm: 0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2))
     transitivePeerDependencies:
       - '@google-cloud/spanner'
       - '@sap/hana-client'
@@ -13924,6 +14288,10 @@ snapshots:
 
   '@types/webidl-conversions@7.0.3': {}
 
+  '@types/whatwg-url@11.0.5':
+    dependencies:
+      '@types/webidl-conversions': 7.0.3
+
   '@types/whatwg-url@13.0.0':
     dependencies:
       '@types/webidl-conversions': 7.0.3
@@ -14628,6 +14996,10 @@ snapshots:
 
   async-lock@1.4.1: {}
 
+  async-mutex@0.5.0:
+    dependencies:
+      tslib: 2.8.1
+
   async-retry@1.3.3:
     dependencies:
       retry: 0.13.1
@@ -14851,6 +15223,8 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
+  bson@6.10.4: {}
+
   bson@7.2.0: {}
 
   buffer-alloc-unsafe@1.1.0: {}
@@ -14942,6 +15316,8 @@ snapshots:
   callsite@1.0.0: {}
 
   callsites@3.1.0: {}
+
+  camelcase@6.3.0: {}
 
   camelcase@7.0.1: {}
 
@@ -15177,6 +15553,8 @@ snapshots:
   comment-parser@1.4.7: {}
 
   common-path-prefix@3.0.0: {}
+
+  commondir@1.0.1: {}
 
   component-emitter@1.3.1: {}
 
@@ -16492,6 +16870,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  find-cache-dir@3.3.2:
+    dependencies:
+      commondir: 1.0.1
+      make-dir: 3.1.0
+      pkg-dir: 4.2.0
+
   find-my-way@9.3.0:
     dependencies:
       fast-deep-equal: 3.1.3
@@ -16552,6 +16936,10 @@ snapshots:
   fn.name@1.1.0: {}
 
   follow-redirects@1.15.9: {}
+
+  follow-redirects@1.16.0(debug@4.4.3):
+    optionalDependencies:
+      debug: 4.4.3
 
   for-each@0.3.5:
     dependencies:
@@ -16940,6 +17328,14 @@ snapshots:
 
   helmet@8.1.0: {}
 
+  hono-sessions@0.8.1(hono@4.13.5):
+    dependencies:
+      hono: 4.13.5
+      iron-webcrypto: 1.2.1
+      ohash: 2.0.12
+
+  hono@4.13.5: {}
+
   hosted-git-info@7.0.2:
     dependencies:
       lru-cache: 10.4.3
@@ -17132,6 +17528,8 @@ snapshots:
   ipaddr.js@1.9.1: {}
 
   ipaddr.js@2.2.0: {}
+
+  iron-webcrypto@1.2.1: {}
 
   is-arguments@1.2.0:
     dependencies:
@@ -17855,6 +18253,10 @@ snapshots:
     dependencies:
       pify: 3.0.0
 
+  make-dir@3.1.0:
+    dependencies:
+      semver: 6.3.1
+
   make-dir@4.0.0:
     dependencies:
       semver: 7.8.5
@@ -18203,10 +18605,65 @@ snapshots:
       ast-module-types: 6.0.2
       node-source-walk: 7.0.2
 
+  mongodb-connection-string-url@3.0.2:
+    dependencies:
+      '@types/whatwg-url': 11.0.5
+      whatwg-url: 14.2.0
+
   mongodb-connection-string-url@7.0.1:
     dependencies:
       '@types/whatwg-url': 13.0.0
       whatwg-url: 14.2.0
+
+  mongodb-memory-server-core@10.4.3:
+    dependencies:
+      async-mutex: 0.5.0
+      camelcase: 6.3.0
+      debug: 4.4.3
+      find-cache-dir: 3.3.2
+      follow-redirects: 1.16.0(debug@4.4.3)
+      https-proxy-agent: 7.0.6
+      mongodb: 6.21.0
+      new-find-package-json: 2.0.0
+      semver: 7.8.5
+      tar-stream: 3.2.0
+      tslib: 2.8.1
+      yauzl: 3.4.0
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - '@mongodb-js/zstd'
+      - bare-abort-controller
+      - bare-buffer
+      - gcp-metadata
+      - kerberos
+      - mongodb-client-encryption
+      - react-native-b4a
+      - snappy
+      - socks
+      - supports-color
+
+  mongodb-memory-server@10.4.3:
+    dependencies:
+      mongodb-memory-server-core: 10.4.3
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - '@mongodb-js/zstd'
+      - bare-abort-controller
+      - bare-buffer
+      - gcp-metadata
+      - kerberos
+      - mongodb-client-encryption
+      - react-native-b4a
+      - snappy
+      - socks
+      - supports-color
+
+  mongodb@6.21.0:
+    dependencies:
+      '@mongodb-js/saslprep': 1.3.0
+      bson: 6.10.4
+      mongodb-connection-string-url: 3.0.2
 
   mongodb@7.2.0:
     dependencies:
@@ -18293,6 +18750,12 @@ snapshots:
   negotiator@0.6.3: {}
 
   negotiator@1.0.0: {}
+
+  new-find-package-json@2.0.0:
+    dependencies:
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
 
   next-tick@1.1.0: {}
 
@@ -18444,6 +18907,8 @@ snapshots:
 
   obliterator@1.6.1:
     optional: true
+
+  ohash@2.0.12: {}
 
   on-exit-leak-free@2.1.2: {}
 
@@ -18786,6 +19251,10 @@ snapshots:
       thread-stream: 3.1.0
 
   pinst@3.0.0: {}
+
+  pkg-dir@4.2.0:
+    dependencies:
+      find-up: 4.1.0
 
   polka@0.5.2:
     dependencies:
@@ -20341,7 +20810,7 @@ snapshots:
 
   typedi@0.10.0: {}
 
-  typeorm@0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3)):
+  typeorm@0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@20.19.43))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3)):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 4.3.0
@@ -20360,6 +20829,7 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       better-sqlite3: 12.10.0
+      mongodb: 6.21.0
       mysql2: 3.22.4(@types/node@20.19.43)
       pg: 8.21.0
       ts-node: 10.9.2(@swc/core@1.12.1)(@types/node@20.19.43)(typescript@5.9.3)
@@ -20367,7 +20837,7 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  typeorm@0.3.30(better-sqlite3@12.10.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2)):
+  typeorm@0.3.30(better-sqlite3@12.10.0)(mongodb@6.21.0)(mysql2@3.22.4(@types/node@22.15.31))(pg@8.21.0)(ts-node@10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2)):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 4.3.0
@@ -20386,6 +20856,7 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       better-sqlite3: 12.10.0
+      mongodb: 6.21.0
       mysql2: 3.22.4(@types/node@22.15.31)
       pg: 8.21.0
       ts-node: 10.9.2(@swc/core@1.12.1)(@types/node@22.15.31)(typescript@5.9.2)
@@ -20917,6 +21388,10 @@ snapshots:
     dependencies:
       buffer-crc32: 0.2.13
       fd-slicer: 1.1.0
+
+  yauzl@3.4.0:
+    dependencies:
+      pend: 1.2.0
 
   ylru@1.4.0: {}
 

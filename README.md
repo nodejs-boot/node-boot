@@ -32,7 +32,7 @@ If you've used **Spring Boot**, Node-Boot will feel like home. If you haven't, h
 
 -   🧩 **Decorator-driven** — define controllers, beans, configuration, and cross-cutting concerns declaratively (`@Controller`, `@Get`, `@Configuration`, `@Bean`, `@EnableDI`, ...).
 -   ⚙️ **Auto-configuration** — enable a feature with a single `@Enable...()` decorator on your app entry point; Node-Boot wires the rest.
--   🔌 **Server-agnostic** — the same application code runs on Express, Fastify, Koa, native HTTP, or "ghost" (no HTTP) mode — just swap the server adapter.
+-   🔌 **Server-agnostic** — the same application code runs on Express, Fastify, Koa, Hono, native HTTP, or "ghost" (no HTTP) mode — just swap the server adapter.
 -   ☁️ **Serverless-ready** — deploy the exact same app to AWS Lambda, Cloudflare Workers, Vercel, Netlify, or Google Cloud Functions.
 -   🧠 **Batteries included, opt-in** — persistence (TypeORM), validation, scheduling, OpenAPI/Swagger, authorization, HTTP clients, actuator/observability, and more, each as an independent starter you enable only when you need it.
 -   🛡️ **Strict TypeScript** end to end, with fast builds (Turborepo + SWC) and a monorepo you can actually navigate.
@@ -130,7 +130,7 @@ Node-Boot is a **pnpm + Turborepo monorepo** organized into five layers:
 | Layer                            | Location                                         | What it does                                                                                                       |
 | -------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
 | **Core Framework**               | [`packages/*`](#-core-framework-packages)        | Bootstrap, DI, config, context, decorators, engine/driver contracts, errors, AOT tooling                           |
-| **Server Adapters**              | [`servers/*`](#-server-adapters)                 | Bind Node-Boot to a concrete HTTP runtime (Express, Fastify, Koa, native HTTP, Encore.ts, ghost)                   |
+| **Server Adapters**              | [`servers/*`](#-server-adapters)                 | Bind Node-Boot to a concrete HTTP runtime (Express, Fastify, Koa, Hono, native HTTP, Encore.ts, ghost)             |
 | **Serverless Adapters**          | [`serverless/*`](#%EF%B8%8F-serverless-adapters) | Bind Node-Boot to FaaS platforms (Lambda, Cloudflare Workers, Vercel, Netlify, Google Cloud Functions)             |
 | **Desktop Adapters** _(planned)_ | —                                                | Embed Node-Boot in native desktop app shells (Electron, Tauri) — on the roadmap, not yet published                 |
 | **Starters**                     | [`starters/*`](#-starters-opt-in-features)       | Opt-in, auto-configured features (persistence, validation, scheduling, OpenAPI, auth, actuator, HTTP clients, ...) |
@@ -163,6 +163,7 @@ Pick the HTTP runtime that fits your project — your application code stays the
 | [`@nodeboot/express-server`](servers/express-server/README.md) | Express adapter — the most battle-tested option                       |
 | [`@nodeboot/fastify-server`](servers/fastify-server/README.md) | Fastify adapter for high-throughput services                          |
 | [`@nodeboot/koa-server`](servers/koa-server/README.md)         | Koa adapter with middleware/session/cookie support                    |
+| [`@nodeboot/hono-server`](servers/hono-server/README.md)       | Hono adapter — Web Standards (Fetch API) based, ultrafast             |
 | [`@nodeboot/http-server`](servers/http-server/README.md)       | Native Node.js `http` adapter — no framework dependency               |
 | [`@nodeboot/encore-server`](servers/encore-server/README.md)   | Encore.ts adapter for Encore-based backends                           |
 | [`@nodeboot/ghost-server`](servers/ghost-server/README.md)     | No-HTTP "ghost" runtime for pure IoC apps, background jobs, and tests |
@@ -212,6 +213,7 @@ Full reference applications — the fastest way to see everything working togeth
 | [sample-express](samples/sample-express)                               | Flagship sample — persistence, OpenAPI/Swagger, validation, authorization, scheduling, HTTP clients, actuator |
 | [sample-fastify](samples/sample-fastify)                               | Same feature set, running on Fastify                                                                          |
 | [sample-koa](samples/sample-koa)                                       | Same feature set, running on Koa                                                                              |
+| [sample-hono](samples/sample-hono)                                     | Same feature set, running on Hono                                                                             |
 | [sample-native-http](samples/sample-native-http)                       | Running on the native Node.js `http` server                                                                   |
 | [sample-ghost-server](samples/sample-ghost-server)                     | Pure IoC application without an HTTP layer                                                                    |
 | [sample-encore](samples/sample-encore)                                 | Running on Encore.ts                                                                                          |
@@ -258,7 +260,7 @@ pnpm dev
 
 ### Start your own app
 
-The quickest path is to copy the sample closest to your target server (Express, Fastify, Koa, native HTTP, or a serverless adapter) and trim it down, or install the packages directly:
+The quickest path is to copy the sample closest to your target server (Express, Fastify, Koa, Hono, native HTTP, or a serverless adapter) and trim it down, or install the packages directly:
 
 ```sh
 pnpm add @nodeboot/core @nodeboot/di @nodeboot/express-server

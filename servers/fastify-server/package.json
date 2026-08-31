@@ -42,7 +42,14 @@
         "@fastify/session": "^11.1.0",
         "@fastify/multipart": "^9.2.1",
         "@fastify/view": "^11.1.1",
-        "@fastify/cors": "^11.1.0"
+        "@fastify/cors": "^11.1.0",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "axios": "^1.12.2",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "reflect-metadata": "^0.2.1",
+        "typedi": "^0.10.0"
     },
     "peerDependencies": {
         "fastify": ">=5.6.0",

@@ -435,15 +435,18 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     }
 
     private applyRedirect(result: any, options: Action<FastifyRequest, FastifyReply>, action: ActionMetadata) {
-        // if redirect is set then do it
+        // `reply.redirect(url)` reuses any status code already set via `.code(...)` instead of
+        // defaulting to 302 (see fastify's `Reply.prototype.redirect`) - since `applyResponseStatus`
+        // always runs first and would have set e.g. 204 for an undefined result, the redirect status
+        // must be passed explicitly here or it gets silently overridden.
         if (typeof result === "string") {
-            options.response.redirect(result);
+            options.response.redirect(result, 302);
         } else if (result instanceof Object) {
             // This is a simple URI template implementation following the
             // RFC 6570 URI Template specification: https://datatracker.ietf.org/doc/html/rfc6570.
-            options.response.redirect(templateUrl(action.redirect, result));
+            options.response.redirect(templateUrl(action.redirect, result), 302);
         } else {
-            options.response.redirect(action.redirect);
+            options.response.redirect(action.redirect, 302);
         }
     }
 

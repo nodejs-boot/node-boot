@@ -276,12 +276,15 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
                 return request.headers;
 
             case "cookie":
-                if (!context.cookies) return;
-                return context.cookies[param.name];
+                // `koa-cookies`'s `parseCookie()` middleware parses the incoming `Cookie` header
+                // into `ctx.cookie` (singular) - not `ctx.cookies`, which is Koa's own built-in
+                // cookie *jar* (get/set API backed by the `cookies` package) and stays empty here.
+                if (!context.cookie) return;
+                return context.cookie[param.name];
 
             case "cookies":
-                if (!context.cookies) return {};
-                return context.cookies;
+                if (!context.cookie) return {};
+                return context.cookie;
         }
     }
 
@@ -296,6 +299,15 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
 
         // transform result if needed
         result = this.resultTransformer.transformResult(result, actionMetadata);
+
+        // set http status code first, so branches that need a different status (redirect) can
+        // override it afterward instead of having it clobbered by a blanket recompute at the end
+        this.applyResponseStatus(result, action, actionMetadata);
+
+        // apply http headers
+        Object.keys(actionMetadata.headers).forEach(name => {
+            action.response.set(name, actionMetadata.headers[name]);
+        });
 
         if (actionMetadata.redirect) {
             // if redirect is set then do it
@@ -323,14 +335,6 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
             // send regular result
             action.response.body = result;
         }
-
-        // set http status code
-        this.applyResponseStatus(result, action, actionMetadata);
-
-        // apply http headers
-        Object.keys(actionMetadata.headers).forEach(name => {
-            action.response.set(name, actionMetadata.headers[name]);
-        });
     }
 
     /**

@@ -1013,7 +1013,7 @@ On bootstrap, Node-Boot logs both URLs so you can jump straight to them:
 
 ### `@EnableOpenApi()`
 
-**Purpose:** Turns on automatic OpenAPI spec generation for the application. Applied to the entry-point class, it inspects all registered controllers/actions/models and exposes the resulting spec at `/api-docs/swagger.json`. Supported on Express, Fastify, Koa, and native HTTP server adapters. Spec metadata (`info`, `servers`, `externalDocs`, `securitySchemes`, ...) can be customized via the `openapi` section of `app-config.yaml`.
+**Purpose:** Turns on automatic OpenAPI spec generation for the application. Applied to the entry-point class, it inspects all registered controllers/actions/models and exposes the resulting spec at `/api-docs/swagger.json`. Supported on Express, Fastify, Koa, Hono, and native HTTP server adapters. Spec metadata (`info`, `servers`, `externalDocs`, `securitySchemes`, ...) can be customized via the `openapi` section of `app-config.yaml`.
 
 **Example:**
 
@@ -1463,7 +1463,7 @@ export class CreateUserDto {
 
 ### `@EnableActuator()`
 
-**Purpose:** Adds Spring Boot Actuator–style operational endpoints (health checks, application info, metrics) to your app, without you having to hand-write monitoring routes. Applied to the entry-point class, it registers the default actuator adapter that exposes these endpoints. Supported on Express, Fastify, Koa, and native HTTP.
+**Purpose:** Adds Spring Boot Actuator–style operational endpoints (health checks, application info, metrics) to your app, without you having to hand-write monitoring routes. Applied to the entry-point class, it registers the default actuator adapter that exposes these endpoints. Supported on Express, Fastify, Koa, Hono, and native HTTP.
 
 **Example:**
 

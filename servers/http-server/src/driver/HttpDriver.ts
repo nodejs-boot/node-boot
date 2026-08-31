@@ -12,7 +12,12 @@ import {
     ParamMetadata,
 } from "@nodeboot/context";
 import {GlobalErrorHandler, NodeBootDriver} from "@nodeboot/engine";
-import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError} from "@nodeboot/error";
+import {
+    AccessDeniedError,
+    AuthorizationCheckerNotDefinedError,
+    AuthorizationRequiredError,
+    NotFoundError,
+} from "@nodeboot/error";
 import {applyCorsHeaders} from "../cors";
 import {HttpServerConfigs} from "../types";
 
@@ -105,10 +110,10 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
 
                 try {
                     if (actionMetadata.isAuthorizedUsed) {
-                        await this.checkAuthorization(req, res, actionMetadata);
+                        const isAuthorized = await this.checkAuthorization(req, res, actionMetadata);
+                        if (!isAuthorized) return;
                     }
 
-                    // You can add authorization check here
                     await executeAction(action);
                 } catch (error) {
                     await this.handleError(error, action, actionMetadata);
@@ -210,7 +215,15 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
         }
     }
 
-    async checkAuthorization(request: IncomingMessage, response: ServerResponse, actionMetadata: ActionMetadata) {
+    /**
+     * @returns `true` if the request is authorized and processing should continue, `false` if the
+     * request has already been rejected (response written) and the caller must stop processing.
+     */
+    async checkAuthorization(
+        request: IncomingMessage,
+        response: ServerResponse,
+        actionMetadata: ActionMetadata,
+    ): Promise<boolean> {
         if (!this.authorizationChecker) throw new AuthorizationCheckerNotDefinedError();
 
         const action = {request, response: response};
@@ -224,9 +237,12 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
                         : new AccessDeniedError(action.request.method ?? "GET", action.request.url ?? "/");
 
                 await this.handleError(error, action, actionMetadata);
+                return false;
             }
+            return true;
         } catch (error: any) {
             await this.handleError(error, action, actionMetadata);
+            return false;
         }
     }
 
@@ -322,8 +338,10 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
 
         // Handle undefined, null, buffers, streams, etc.
         if (result === undefined) {
-            res.end("Not Found");
-            return;
+            // throw NotFoundError on undefined response, consistent with every other adapter,
+            // so it's routed through the custom error handler (if any) with the correct 404 status
+            // instead of writing a plain-text "Not Found" body with whatever status was just applied.
+            throw new NotFoundError();
         }
 
         if (result === null) {

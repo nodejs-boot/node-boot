@@ -52,7 +52,11 @@ export class ServerConfig<T extends ServerConfigOptions> {
         const options = this.value?.[optionsName];
         if (options) {
             if (options.enabled !== undefined) {
-                return options.enabled ? Optional.of(options.options) : Optional.empty();
+                // `Optional.of(undefined)` is indistinguishable from `Optional.empty()`, so a
+                // feature enabled with no extra sub-options (e.g. `cookie: {enabled: true}`)
+                // must not collapse `options.options` to `undefined` here, or callers relying on
+                // `ifXxx(...)` would see it as "not configured" despite being explicitly enabled.
+                return options.enabled ? Optional.of(options.options ?? ({} as C)) : Optional.empty();
             } else if (options.options) {
                 return Optional.of(options.options);
             }

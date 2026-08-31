@@ -18,7 +18,7 @@ import {
     NotFoundError,
 } from "@nodeboot/error";
 import {Application, Request, Response} from "express";
-import cookie from "cookie";
+import {parse as parseCookie} from "cookie";
 import cors from "cors";
 import multer from "multer";
 import session from "express-session";
@@ -243,11 +243,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
                 return request.files;
 
             case "cookie":
-                if (request.headers.cookie) return;
-                return cookie.parse(request.headers.cookie, this.configs?.cookie?.options)[param.name];
+                if (!request.headers.cookie) return;
+                return parseCookie(request.headers.cookie, this.configs?.cookie?.options)[param.name];
             case "cookies":
                 if (!request.headers.cookie) return;
-                return cookie.parse(request.headers.cookie, this.configs?.cookie?.options);
+                return parseCookie(request.headers.cookie, this.configs?.cookie?.options);
         }
     }
 
@@ -368,7 +368,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
             // send error content
             response.json(parsedError);
         }
-        action.next?.(error);
+        // Note: `action.next` must NOT be called here - the response has already been fully sent
+        // above (by the custom handler or `response.json()`). Calling Express's `next(error)`
+        // afterward hands the request to Express's own error-handling middleware, which tries to
+        // write to the response again after it's already finished, corrupting the connection for
+        // any subsequent request that reuses the same keep-alive socket.
     }
 
     /**

@@ -61,7 +61,8 @@ Server integrations bind Node-Boot's decorator/engine model to a concrete runtim
 ![HTTP Server Adapter Pattern](assets/contributing/server-integration.png)
 
 Location: `servers/*` — e.g. [`express-server`](servers/express-server), [`fastify-server`](servers/fastify-server),
-[`koa-server`](servers/koa-server), [`http-server`](servers/http-server), [`encore-server`](servers/encore-server).
+[`koa-server`](servers/koa-server), [`hono-server`](servers/hono-server), [`http-server`](servers/http-server),
+[`encore-server`](servers/encore-server).
 
 An HTTP server adapter has two responsibilities:
 

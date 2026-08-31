@@ -50,7 +50,14 @@
         "@types/koa-session": "^6.4.5",
         "@types/koa__multer": "^2.0.7",
         "@types/koa__cors": "^5.0.0",
-        "@types/koa__router": "^12.0.4"
+        "@types/koa__router": "^12.0.4",
+        "@nodeboot/authorization": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "axios": "^1.12.2",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "reflect-metadata": "^0.2.1",
+        "typedi": "^0.10.0"
     },
     "files": [
         "dist",

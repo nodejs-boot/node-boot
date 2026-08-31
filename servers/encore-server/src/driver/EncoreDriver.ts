@@ -12,7 +12,12 @@ import {
     ParamMetadata,
 } from "@nodeboot/context";
 import {GlobalErrorHandler, NodeBootDriver} from "@nodeboot/engine";
-import {AccessDeniedError, AuthorizationCheckerNotDefinedError, AuthorizationRequiredError} from "@nodeboot/error";
+import {
+    AccessDeniedError,
+    AuthorizationCheckerNotDefinedError,
+    AuthorizationRequiredError,
+    NotFoundError,
+} from "@nodeboot/error";
 import {applyCorsHeaders} from "../cors";
 import {EncoreServerConfigs} from "../types";
 
@@ -345,8 +350,10 @@ export class EncoreDriver extends NodeBootDriver<void, Action<IncomingMessage, S
 
         // Handle undefined, null, buffers, streams, etc.
         if (result === undefined) {
-            res.end("Not Found");
-            return;
+            // throw NotFoundError on undefined response, consistent with every other adapter,
+            // so it's routed through the custom error handler (if any) with the correct 404 status
+            // instead of writing a plain-text "Not Found" body with whatever status was just applied.
+            throw new NotFoundError();
         }
 
         if (result === null) {
