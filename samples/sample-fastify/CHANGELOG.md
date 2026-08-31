@@ -1,5 +1,29 @@
 # @nodeboot/fastify-sample
 
+## 2.3.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/aot@1.5.0
+    -   @nodeboot/authorization@1.4.0
+    -   @nodeboot/config@1.4.0
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/core@1.17.0
+    -   @nodeboot/di@1.5.0
+    -   @nodeboot/error@1.4.0
+    -   @nodeboot/fastify-server@1.10.0
+    -   @nodeboot/starter-actuator@1.8.0
+    -   @nodeboot/starter-http@3.6.0
+    -   @nodeboot/starter-openapi@2.5.0
+    -   @nodeboot/starter-persistence@1.15.0
+    -   @nodeboot/starter-scheduler@1.7.0
+    -   @nodeboot/starter-validation@1.3.0
+
 ## 2.2.17
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @nodeboot/starter-actuator
 
+## 1.8.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.4.0
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/engine@1.8.0
+
 ## 1.7.8
 
 ### Patch Changes

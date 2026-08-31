@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/native-http-supabase-sample",
-    "version": "1.3.17",
+    "version": "1.4.0",
     "description": "Node-Boot sample project using native HTTP server with Supabase persistence. This project demonstrates how to create a simple HTTP server using Node.js and TypeScript with Supabase database integration for data persistence.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

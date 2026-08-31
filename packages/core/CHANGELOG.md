@@ -1,5 +1,19 @@
 # @nodeboot/core
 
+## 1.17.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.4.0
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/di@1.5.0
+    -   @nodeboot/engine@1.8.0
+
 ## 1.16.4
 
 ### Patch Changes

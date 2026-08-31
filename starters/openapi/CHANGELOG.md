@@ -1,5 +1,17 @@
 # @nodeboot/starter-openapi
 
+## 2.5.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/engine@1.8.0
+
 ## 2.4.9
 
 ### Patch Changes

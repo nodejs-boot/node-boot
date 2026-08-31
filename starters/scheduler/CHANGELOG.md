@@ -1,5 +1,16 @@
 # @nodeboot/starter-scheduler
 
+## 1.7.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.5.0
+
 ## 1.6.7
 
 ### Patch Changes

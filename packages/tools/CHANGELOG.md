@@ -1,5 +1,11 @@
 # @nodeboot/tools
 
+## 1.3.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
 ## 1.2.2
 
 ### Patch Changes

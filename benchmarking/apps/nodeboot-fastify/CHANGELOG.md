@@ -1,5 +1,21 @@
 # @nodeboot-benchmark/nodeboot-fastify
 
+## 0.2.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.4.0
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/core@1.17.0
+    -   @nodeboot/di@1.5.0
+    -   @nodeboot/fastify-server@1.10.0
+    -   @nodeboot/starter-persistence@1.15.0
+
 ## 0.1.1
 
 ### Patch Changes

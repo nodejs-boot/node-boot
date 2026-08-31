@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot-benchmark/nodeboot-express",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "private": true,
     "description": "Node-Boot benchmark app on Express + @nodeboot/starter-persistence (Postgres/TypeORM), mirroring samples/sample-express conventions.",
     "main": "dist/server.js",

@@ -1,5 +1,17 @@
 # @nodeboot/starter-http
 
+## 1.4.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/core@1.17.0
+
 ## 1.3.9
 
 ### Patch Changes

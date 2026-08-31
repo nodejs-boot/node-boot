@@ -1,5 +1,19 @@
 # @nodeboot/starter-firebase
 
+## 1.3.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/config@1.4.0
+    -   @nodeboot/context@2.5.0
+    -   @nodeboot/core@1.17.0
+    -   @nodeboot/engine@1.8.0
+
 ## 1.2.9
 
 ### Patch Changes

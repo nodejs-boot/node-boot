@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 2.5.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
 ## 2.4.0
 
 ### Minor Changes

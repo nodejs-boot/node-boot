@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 1.5.0
+
+### Minor Changes
+
+-   9d7981e: Enabling serverless and other features
+
 ## 1.4.1
 
 ### Patch Changes

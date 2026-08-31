@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot-benchmark/raw-fastify",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "private": true,
     "description": "Plain Fastify + TypeORM baseline (no Node-Boot), written the way the Fastify community structures apps: encapsulated plugins registered via fastify-plugin, one plugin per resource.",
     "main": "dist/server.js",
