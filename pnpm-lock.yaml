@@ -2076,6 +2076,16 @@ importers:
       '@nodeboot/error':
         specifier: workspace:*
         version: link:../../packages/error
+    devDependencies:
+      '@nodeboot/di':
+        specifier: workspace:*
+        version: link:../../packages/di
+      reflect-metadata:
+        specifier: ^0.2.1
+        version: 0.2.2
+      typedi:
+        specifier: ^0.10.0
+        version: 0.10.0
 
   servers/hono-server:
     dependencies:

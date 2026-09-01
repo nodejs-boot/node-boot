@@ -1,6 +1,6 @@
-import {Component} from "@nodeboot/core";
+import {Service} from "@nodeboot/core";
 
-@Component()
+@Service()
 export class GreetingService {
     greet(name: string): string {
         return `Hello, ${name}!`;

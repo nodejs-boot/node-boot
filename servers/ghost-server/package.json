@@ -37,6 +37,11 @@
         "@nodeboot/engine": "workspace:*",
         "@nodeboot/error": "workspace:*"
     },
+    "devDependencies": {
+        "@nodeboot/di": "workspace:*",
+        "reflect-metadata": "^0.2.1",
+        "typedi": "^0.10.0"
+    },
     "files": [
         "dist",
         "package.json",

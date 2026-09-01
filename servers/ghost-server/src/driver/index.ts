@@ -1,1 +1,1 @@
-export {GhostDriver} from "./GhostDriver";
+export {GhostDriver, GhostServerRequest, GhostServerResponse} from "./GhostDriver";

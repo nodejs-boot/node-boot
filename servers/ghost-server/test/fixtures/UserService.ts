@@ -1,4 +1,4 @@
-import {Component} from "@nodeboot/core";
+import {Service} from "@nodeboot/core";
 import {Inject} from "@nodeboot/di";
 import {GreetingService} from "./GreetingService";
 
@@ -7,7 +7,7 @@ import {GreetingService} from "./GreetingService";
  * both work in "pure IoC" mode - `GhostServer` never binds an HTTP layer, so this is the only way
  * to exercise the container from a test.
  */
-@Component()
+@Service()
 export class UserService {
     @Inject()
     private greetingService: GreetingService;

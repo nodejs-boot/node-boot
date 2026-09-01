@@ -79,12 +79,15 @@ export class GhostDriver extends NodeBootDriver<null, Action<GhostServerRequest,
             response,
         };
 
-        // Authorization check if needed
-        if (actionMetadata.isAuthorizedUsed) {
-            await this.checkAuthorization(action.request, action.response, actionMetadata);
-        }
-
         try {
+            // Authorization check if needed - inside the same try/catch as the action itself, so a
+            // failed check (which throws) is turned into a proper error response instead of
+            // rejecting this method's promise and breaking its documented `Promise<GhostServerResponse>`
+            // contract.
+            if (actionMetadata.isAuthorizedUsed) {
+                await this.checkAuthorization(action.request, action.response, actionMetadata);
+            }
+
             const result = await executeAction(action);
             this.handleSuccess(result, action, actionMetadata);
         } catch (error: any) {

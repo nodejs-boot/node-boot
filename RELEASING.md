@@ -117,13 +117,17 @@ This ensures the **latest workspace versions** are published.
 >
 > **Workaround — do this once for every new package before it can ever be released from CI:**
 >
-> 1. Publish the package **manually from your local CLI** first:
+> 1. Login with npm registry via terminal and follow instructions (normally a browser url for authentication):
+>     ```sh
+>     npm login
+>     ```
+> 2. Publish the package **manually from your local CLI** first:
 >     ```sh
 >     npm publish
 >     ```
 >     This will prompt browser-based authentication (npm login/OTP) — complete it to let the package publish and get created on the registry.
-> 2. Go to the package page on [npmjs.com](https://www.npmjs.com/), open **Settings → Trusted Publisher**, and configure the trust relationship for this repository's `publish.yml` GitHub Actions workflow (same as already done for existing packages).
-> 3. From this point on, subsequent releases of that package from the CI/CD pipeline (`pnpm release:publish` in `publish.yml`) will publish successfully via OIDC, with no further manual steps required.
+> 3. Go to the package page on [npmjs.com](https://www.npmjs.com/), open **Settings → Trusted Publisher**, and configure the trust relationship for this repository's `publish.yml` GitHub Actions workflow (same as already done for existing packages).
+> 4. From this point on, subsequent releases of that package from the CI/CD pipeline (`pnpm release:publish` in `publish.yml`) will publish successfully via OIDC, with no further manual steps required.
 >
 > Skipping step 1 (i.e. trying to configure trust before the package exists) is not possible — npm has nothing to attach the trust relationship to yet.
 
