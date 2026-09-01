@@ -1,5 +1,11 @@
 # @nodeboot/context
 
+## 2.5.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+
 ## 2.5.0
 
 ### Minor Changes

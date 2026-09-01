@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/encore-server",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Node-Boot Encore.ts server package. It lets you run a NodeBoot application as an Encore.ts service by exposing a raw endpoint handler, with support for routing, middleware, and request handling.",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",

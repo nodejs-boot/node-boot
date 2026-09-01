@@ -1,5 +1,13 @@
 # @nodeboot/config
 
+## 1.4.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+-   Updated dependencies
+    -   @nodeboot/context@2.5.1
+
 ## 1.4.0
 
 ### Minor Changes

@@ -1,5 +1,20 @@
 # @nodeboot/encore-server
 
+## 1.3.0
+
+### Minor Changes
+
+-   38d3d9e: Several server bugfixes + integration tests for all servers
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+-   Updated dependencies
+    -   @nodeboot/context@2.5.1
+    -   @nodeboot/core@1.17.1
+    -   @nodeboot/engine@1.9.0
+    -   @nodeboot/error@1.4.1
+
 ## 1.2.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot-benchmark/raw-koa",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "private": true,
     "description": "Plain Koa + TypeORM baseline (no Node-Boot), written the way the Koa community structures apps: @koa/router per resource, koa-bodyparser, and centralized error-handling middleware.",
     "main": "dist/server.js",

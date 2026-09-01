@@ -1,5 +1,11 @@
 # @nodeboot/tools
 
+## 1.3.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+
 ## 1.3.0
 
 ### Minor Changes

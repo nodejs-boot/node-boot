@@ -1,5 +1,14 @@
 # @nodeboot/starter-http
 
+## 3.6.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+-   Updated dependencies
+    -   @nodeboot/context@2.5.1
+    -   @nodeboot/error@1.4.1
+
 ## 3.6.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # @nodeboot/starter-openapi
 
+## 2.6.0
+
+### Minor Changes
+
+-   38d3d9e: Several server bugfixes + integration tests for all servers
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+-   Updated dependencies
+    -   @nodeboot/context@2.5.1
+    -   @nodeboot/engine@1.9.0
+
 ## 2.5.0
 
 ### Minor Changes

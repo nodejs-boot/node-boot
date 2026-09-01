@@ -1,5 +1,22 @@
 # @nodeboot/express-ghost-server
 
+## 2.4.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+-   Updated dependencies
+    -   @nodeboot/aot@1.5.1
+    -   @nodeboot/config@1.4.1
+    -   @nodeboot/context@2.5.1
+    -   @nodeboot/core@1.17.1
+    -   @nodeboot/di@1.5.1
+    -   @nodeboot/error@1.4.1
+    -   @nodeboot/ghost-server@1.4.1
+    -   @nodeboot/starter-http@3.6.1
+    -   @nodeboot/starter-persistence@1.15.1
+    -   @nodeboot/starter-scheduler@1.7.1
+
 ## 2.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @nodeboot/scan
 
+## 1.5.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+
 ## 1.5.0
 
 ### Minor Changes

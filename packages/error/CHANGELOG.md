@@ -1,5 +1,11 @@
 # @nodeboot/error
 
+## 1.4.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+
 ## 1.4.0
 
 ### Minor Changes

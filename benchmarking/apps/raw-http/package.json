@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot-benchmark/raw-http",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "private": true,
     "description": "Plain Node.js `http` module + TypeORM baseline (Postgres) (no framework, no Node-Boot), written the way a minimal zero-dependency Node API is typically structured: manual method/path matching in a single request handler.",
     "main": "dist/server.js",

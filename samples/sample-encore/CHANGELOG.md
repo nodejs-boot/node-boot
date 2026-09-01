@@ -1,5 +1,20 @@
 # @nodeboot/encore-sample
 
+## 1.1.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+-   Updated dependencies
+    -   @nodeboot/authorization@1.4.1
+    -   @nodeboot/config@1.4.1
+    -   @nodeboot/context@2.5.1
+    -   @nodeboot/core@1.17.1
+    -   @nodeboot/di@1.5.1
+    -   @nodeboot/error@1.4.1
+    -   @nodeboot/encore-server@1.3.0
+    -   @nodeboot/starter-validation@1.3.1
+
 ## 1.1.0
 
 ### Minor Changes

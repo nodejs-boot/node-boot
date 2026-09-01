@@ -1,5 +1,11 @@
 # @nodeboot-benchmark/runner
 
+## 0.2.1
+
+### Patch Changes
+
+-   239b1ab: prepareng for release
+
 ## 0.2.0
 
 ### Minor Changes
