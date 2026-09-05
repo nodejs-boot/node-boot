@@ -1,17 +1,18 @@
-# @nodeboot/ai-anthropic
+# @nodeboot/ai-bedrock
 
-Anthropic Claude Chat model adapter for Node-Boot AI.
+Amazon Bedrock model adapters for Node-Boot AI, covering 2 Spring-AI-style model categories:
 
--   **Chat** — `AnthropicChatModel` (`ChatModel`)
+-   **Chat** — `BedrockChatModel` (`ChatModel`, Converse API)
+-   **Embedding** — `BedrockEmbeddingModel` (`EmbeddingModel`, Titan and Cohere)
 
 ## Usage
 
 ```typescript
 import {EnableAi} from "@nodeboot/ai-core";
-import {EnableAnthropicModels} from "@nodeboot/ai-anthropic";
+import {EnableBedrockModels} from "@nodeboot/ai-bedrock";
 
 @EnableAi()
-@EnableAnthropicModels()
+@EnableBedrockModels()
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
     start() {
@@ -20,38 +21,43 @@ export class MyApp implements NodeBootApp {
 }
 ```
 
-The chat model is registered in the DI container by its concrete class (`AnthropicChatModel`), so you can inject
-it directly with a typed constructor parameter — see the "Injecting the Registered Models" section below. A
-default `ChatClient` is also registered.
+Each model is registered in the DI container by its concrete class (e.g. `BedrockChatModel`,
+`BedrockEmbeddingModel`), so you can inject it directly with a typed constructor parameter — see the "Injecting
+the Registered Models" section below.
 
 ### In `app-config.yaml`:
 
 ```yaml
 ai:
-    anthropic:
-        apiKey: "sk-ant-..."
+    bedrock:
+        region: "us-east-1"
         chat:
             options:
-                model: "claude-3-5-sonnet-20241022"
+                modelId: "anthropic.claude-3-5-sonnet-20241022-v2:0"
                 temperature: 0.7
-                maxTokens: 4096
+        embedding:
+            options:
+                model: "amazon.titan-embed-text-v2:0"
+                provider: "titan"
+                dimensions: 1024
 ```
 
 ## Injecting the Registered Models into Your Services
 
-Enabling this package registers every supported model in the DI container by its concrete class (`AnthropicChatModel`), plus a default `ChatClient` (as `ChatClient`). Inject them into any `@Service`/`@Controller` simply as a constructor parameter typed with the class (Node-Boot resolves it via reflection, no decorator needed), or with `@Inject()`:
+Enabling this package registers every supported model in the DI container by its concrete class (`BedrockChatModel`, `BedrockEmbeddingModel`), plus a default `ChatClient` (as `ChatClient`). Inject them into any `@Service`/`@Controller` simply as a constructor parameter typed with the class (Node-Boot resolves it via reflection, no decorator needed), or with `@Inject()`:
 
 ```typescript
 import {Inject, Service} from "@nodeboot/core";
 import {ChatClient} from "@nodeboot/ai-core";
-import {AnthropicChatModel} from "@nodeboot/ai-anthropic";
+import {BedrockChatModel, BedrockEmbeddingModel} from "@nodeboot/ai-bedrock";
 
 @Service()
 export class MyAiService {
     constructor(
         // Inject any provider model directly by its concrete class — Node-Boot
         // resolves it via reflection, no decorator needed for class-based injection
-        private readonly chatModel: AnthropicChatModel,
+        private readonly chatModel: BedrockChatModel,
+        private readonly bedrockEmbeddingModel: BedrockEmbeddingModel,
         // The default ChatClient is also ready to use out of the box
         @Inject() private readonly chatClient: ChatClient,
     ) {}
@@ -69,7 +75,7 @@ export class MyAiService {
 ## Using the Fluent `ChatClient` API
 
 The default `ChatClient` registered by this package is the recommended, higher-level way to talk to
-`AnthropicChatModel` — it supports fluent prompt building, `{param}` templating, structured output parsing, default
+`BedrockChatModel` — it supports fluent prompt building, `{param}` templating, structured output parsing, default
 tools/advisors, and automatic multi-turn tool-calling:
 
 ```typescript
@@ -143,10 +149,10 @@ import {EnableAi} from "@nodeboot/ai-core";
 import {EnableMcp} from "@nodeboot/mcp";
 import {NodeBoot} from "@nodeboot/engine";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableAnthropicModels} from "@nodeboot/ai-anthropic";
+import {EnableBedrockModels} from "@nodeboot/ai-bedrock";
 
 @EnableAi()
-@EnableAnthropicModels()
+@EnableBedrockModels()
 @EnableMcp() // expose every @Tool as a real MCP server, and/or consume external MCP tool servers
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
@@ -157,7 +163,7 @@ export class MyApp implements NodeBootApp {
 ```
 
 -   **As an MCP server**: `@EnableMcp()` with `mcp.server.enabled: true` in `app-config.yaml` exposes every
-    `@Tool` in your app (including tools that call this package's `AnthropicChatModel`-backed `ChatClient`) to external
+    `@Tool` in your app (including tools that call this package's `BedrockChatModel`-backed `ChatClient`) to external
     MCP clients like Claude Desktop or IDE agents.
 -   **As an MCP client**: configure `mcp.clients` to connect to external MCP servers — their tools are merged
     into the same `ToolRegistry` and become callable by this package's `ChatClient` exactly like local `@Tool`s.
