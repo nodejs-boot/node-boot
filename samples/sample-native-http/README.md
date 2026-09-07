@@ -276,7 +276,7 @@ From `package.json`:
 -   `pnpm run lint:fix` — run ESLint with `--fix`
 -   `pnpm run format` — check Prettier formatting
 -   `pnpm run format:fix` — apply Prettier formatting
--   `pnpm run test` — run Jest (`--passWithNoTests`)
+-   `pnpm run test` — run tests with `node --test`
 -   `pnpm run tsc` — run TypeScript compiler
 -   `pnpm run rebuild:sqlite` — rebuild `better-sqlite3`
 -   `pnpm run create:migration` — create a TypeORM migration under `src/persistence/migrations/`

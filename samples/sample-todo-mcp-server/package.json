@@ -1,0 +1,69 @@
+{
+    "name": "@nodeboot/todo-mcp-server-sample",
+    "version": "1.0.0",
+    "description": "Node-Boot sample project: a Todo list exposed as a Model Context Protocol (MCP) server",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "private": "true",
+    "keywords": [
+        "node-boot",
+        "mcp",
+        "model-context-protocol",
+        "todo",
+        "ai"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "src/index.ts",
+    "scripts": {
+        "start": "pnpm run clean:build && pnpm run build && node dist/server.js",
+        "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
+        "dev": "NODE_ENV=development nodemon",
+        "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "build": "tsc -p tsconfig.build.json",
+        "postbuild": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot.js",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "pretest:coverage": "mkdir -p coverage",
+        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc",
+        "rebuild:sqlite": "npm rebuild better-sqlite3"
+    },
+    "dependencies": {
+        "@nodeboot/config": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/error": "workspace:*",
+        "@nodeboot/express-server": "workspace:*",
+        "@nodeboot/starter-persistence": "workspace:*",
+        "@nodeboot/ai-core": "workspace:*",
+        "@nodeboot/mcp": "workspace:*",
+        "@nodeboot/aot": "workspace:*",
+        "@modelcontextprotocol/sdk": "^1.30.0",
+        "express": "^4.21.2",
+        "zod": "^3.24.1",
+        "reflect-metadata": "^0.2.1",
+        "typeorm": "^1.0.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0",
+        "better-sqlite3": "^12.10.0",
+        "typedi": "^0.10.0",
+        "winston": "^3.10.0"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.17",
+        "@types/node": "^22.13.4",
+        "@nodeboot/node-test": "^2.14.0"
+    }
+}

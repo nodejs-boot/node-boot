@@ -1,0 +1,36 @@
+# App configurations
+app:
+    name: "todo-mcp-server"
+    platform: "node-boot-samples"
+    environment: "development"
+    port: 3000
+
+api:
+    paramOptions:
+        required: false
+
+# Storage configurations: Todos are persisted in a local SQLite database
+persistence:
+    type: "better-sqlite3"
+    cache: true
+    better-sqlite3:
+        database: "todo-mcp-server.db"
+        synchronize: true # Demo-only convenience; use migrations in production (see sample-express)
+
+# NodeBoot AI (@nodeboot/ai-core) core configuration.
+# Required so every @Tool-decorated method below is discovered and registered in the
+# global ToolRegistry, which @nodeboot/mcp then exposes as MCP tools.
+ai:
+    provider: "custom"
+
+# Model Context Protocol (@nodeboot/mcp) server configuration.
+# Starts a real MCP server over streamable-HTTP (stateless mode), exposing every @Tool as a
+# callable MCP tool, every @Resource as a readable MCP resource and every @Prompt as an MCP
+# prompt template for any MCP client (Claude Desktop, VS Code/IDE agents, other Node-Boot apps).
+mcp:
+    server:
+        enabled: true
+        name: "todo-mcp-server"
+        version: "1.0.0"
+        transport: "http"
+        stateless: true

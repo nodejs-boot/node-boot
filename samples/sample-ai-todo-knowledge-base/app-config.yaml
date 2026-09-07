@@ -1,0 +1,76 @@
+# App configurations
+app:
+    name: "ai-todo-knowledge-base"
+    platform: "node-boot-samples"
+    environment: "development"
+    defaultErrorHandler: false
+    port: 3000
+
+api:
+    routePrefix: "/api"
+    nullResultCode: 200
+    undefinedResultCode: 200
+    paramOptions:
+        required: false
+    validations:
+        enableDebugMessages: false
+        skipUndefinedProperties: false
+        skipNullProperties: false
+        skipMissingProperties: false
+        whitelist: false
+        forbidNonWhitelisted: false
+        forbidUnknownValues: true
+        stopAtFirstError: false
+
+# Server configurations
+server:
+    cors:
+        origin: "*"
+        methods:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+        credentials: true
+        maxAge: 55000
+        cacheControl: 4096
+        preflightContinue: true
+        optionsSuccessStatus: 204
+        preflight: true
+        strictPreflight: false
+
+openapi:
+    info:
+        contact:
+            name: "Manuel Santos"
+            email: "ney.br.santos@gmail.com"
+            url: "https://www.linkedin.com/in/manuel-brito-dos-santos-a7a20a6b/"
+        license:
+            name: MIT
+            url: "https://github.com/nodejs-boot/node-boot/blob/main/LICENSE"
+    servers:
+        - url: http://localhost:3000
+          description: Localhost server
+    externalDocs:
+        url: "https://nodeboot.gitbook.io/"
+        description: "Node-Boot official documentation"
+
+# Storage configurations: Todos are persisted in a local SQLite database
+persistence:
+    type: "better-sqlite3"
+    cache: true
+    better-sqlite3:
+        database: "ai-todo-knowledge-base.db"
+        synchronize: true # Demo-only convenience; use migrations in production (see sample-express)
+
+# NodeBoot AI (@nodeboot/ai-core) core configuration
+ai:
+    provider: "gemini"
+    # Google GenAI (Gemini) model configuration (@nodeboot/ai-google-genai)
+    google-genai:
+        # Reads from the Google AI Studio default env variable. Get a key at https://aistudio.google.com/apikey
+        apiKey: ${GOOGLE_API_KEY}
+        chat:
+            options:
+                model: "gemini-3.5-flash-lite"
+                temperature: 0.4
