@@ -42,7 +42,7 @@ export function createRootLogger(options: winston.LoggerOptions = {}, env = proc
                     format: env["NODE_ENV"] === "production" ? winston.format.json() : colorFormat(),
                     transports: [
                         new winston.transports.Console({
-                            silent: env["JEST_WORKER_ID"] !== undefined && !env["LOG_LEVEL"],
+                            silent: env["TEST_WORKER_ID"] !== undefined && !env["LOG_LEVEL"],
                             // Always write via the global `console.log/warn/error` functions instead of
                             // `console._stdout`/`console._stderr` (Node's raw process streams). This is a
                             // no-op in normal Node.js (where `console._stdout` is `process.stdout` anyway),
