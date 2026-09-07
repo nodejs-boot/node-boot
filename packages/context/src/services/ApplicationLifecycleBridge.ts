@@ -429,6 +429,9 @@ export class ApplicationLifecycleBridge {
         this.eventBus.once("persistence.started", () => {
             this.enqueueLifecycle("persistence.started");
         });
+        this.eventBus.once("application.adapters.bound", () => {
+            this.enqueueLifecycle("application.adapters.bound");
+        });
     }
 
     /**

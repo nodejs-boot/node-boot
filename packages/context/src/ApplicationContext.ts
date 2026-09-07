@@ -28,7 +28,7 @@ export class ApplicationContext {
     repositoriesAdapter?: RepositoriesAdapter;
     configurationAdapters: ConfigurationAdapter[] = [];
     configurationPropertiesAdapters: ConfigurationPropertiesAdapter[] = [];
-    applicationFeatures = {};
+    applicationFeatures: Record<string | symbol, any> = {};
     applicationFeatureAdapters: ApplicationFeatureAdapter[] = [];
     controllerClasses: Function[] = [];
     interceptorClasses: Function[] = [];
