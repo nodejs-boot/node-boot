@@ -3,8 +3,7 @@ import assert from "node:assert/strict";
 import "reflect-metadata";
 import {RepositoryType} from "@nodeboot/starter-persistence";
 import {AssistantMessage, SystemMessage, UserMessage} from "@nodeboot/ai-core";
-import {MongoChatMemoryRepository} from "../src/repository/MongoChatMemoryRepository";
-import {ChatMemoryMongoMessageEntity} from "../src/entity/ChatMemoryMongoMessageEntity";
+import {ChatMemoryMongoMessageEntity, MongoChatMemoryRepository} from "../src";
 
 /**
  * `MongoChatMemoryRepository` is exercised here against a hand-rolled fake shaped like a TypeORM

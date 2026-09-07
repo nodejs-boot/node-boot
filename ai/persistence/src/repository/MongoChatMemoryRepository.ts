@@ -1,6 +1,6 @@
 import {MongoRepository} from "typeorm";
 import {useMongoCollection} from "@nodeboot/starter-persistence";
-import {ChatMemoryMongoMessageEntity} from "../entity/ChatMemoryMongoMessageEntity";
+import {ChatMemoryMongoMessageEntity} from "../entity";
 import {BaseTypeOrmChatMemoryRepository} from "./BaseTypeOrmChatMemoryRepository";
 
 /**

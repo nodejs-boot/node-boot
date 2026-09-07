@@ -3,10 +3,7 @@ import assert from "node:assert/strict";
 import "reflect-metadata";
 import {ApplicationContext} from "@nodeboot/context";
 import {PersistenceContext} from "@nodeboot/starter-persistence";
-import {EnableChatMemory} from "../src/decorator/EnableChatMemory";
-import {ChatMemoryAdapter} from "../src/adapter/ChatMemoryAdapter";
-import {ChatMemoryMessageEntity} from "../src/entity/ChatMemoryMessageEntity";
-import {ChatMemoryMongoMessageEntity} from "../src/entity/ChatMemoryMongoMessageEntity";
+import {ChatMemoryAdapter, ChatMemoryMessageEntity, ChatMemoryMongoMessageEntity, EnableChatMemory} from "../src";
 
 function decorate(options?: Parameters<typeof EnableChatMemory>[0]) {
     @EnableChatMemory(options)

@@ -1,10 +1,9 @@
-import {describe, it, before, after} from "node:test";
+import {after, before, describe, it} from "node:test";
 import assert from "node:assert/strict";
 import "reflect-metadata";
 import {DataSource} from "typeorm";
 import {AssistantMessage, SystemMessage, UserMessage} from "@nodeboot/ai-core";
-import {ChatMemoryMessageEntity} from "../src/entity/ChatMemoryMessageEntity";
-import {SqlChatMemoryRepository} from "../src/repository/SqlChatMemoryRepository";
+import {ChatMemoryMessageEntity, SqlChatMemoryRepository} from "../src";
 
 describe("SqlChatMemoryRepository (real TypeORM DataSource, better-sqlite3 in-memory)", () => {
     let dataSource: DataSource;

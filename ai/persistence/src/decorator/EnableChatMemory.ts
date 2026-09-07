@@ -1,10 +1,8 @@
 import {ApplicationContext} from "@nodeboot/context";
 import {DataRepository} from "@nodeboot/starter-persistence";
-import {ChatMemoryMessageEntity} from "../entity/ChatMemoryMessageEntity";
-import {ChatMemoryMongoMessageEntity} from "../entity/ChatMemoryMongoMessageEntity";
-import {ChatMemoryMessageRepository} from "../repository/ChatMemoryMessageRepository";
-import {ChatMemoryMongoMessageRepository} from "../repository/ChatMemoryMongoMessageRepository";
-import {ChatMemoryAdapter} from "../adapter/ChatMemoryAdapter";
+import {ChatMemoryMessageEntity, ChatMemoryMongoMessageEntity} from "../entity";
+import {ChatMemoryMessageRepository, ChatMemoryMongoMessageRepository} from "../repository";
+import {ChatMemoryAdapter} from "../adapter";
 import {ChatMemoryBackend, ChatMemoryOptions} from "./ChatMemoryOptions";
 
 export * from "./ChatMemoryOptions";

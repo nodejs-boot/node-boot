@@ -1,7 +1,7 @@
 import {describe, it} from "node:test";
 import assert from "node:assert/strict";
 import {AssistantMessage, SystemMessage, ToolResponseMessage, UserMessage} from "@nodeboot/ai-core";
-import {applyMessageToRow, ChatMemoryMessageRow, rowToMessage} from "../src/mapping/ChatMemoryRowMapper";
+import {applyMessageToRow, ChatMemoryMessageRow, rowToMessage} from "../src";
 
 function emptyRow(): ChatMemoryMessageRow {
     return {

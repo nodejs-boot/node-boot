@@ -1,6 +1,6 @@
 import {Repository} from "typeorm";
 import {ChatMemoryRepository, Message} from "@nodeboot/ai-core";
-import {applyMessageToRow, ChatMemoryMessageRow, rowToMessage} from "../mapping/ChatMemoryRowMapper";
+import {applyMessageToRow, ChatMemoryMessageRow, rowToMessage} from "../mapping";
 
 /**
  * Shared `ChatMemoryRepository` implementation for both SQL and Mongo backends. Concrete

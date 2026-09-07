@@ -1,5 +1,5 @@
 import {Repository} from "typeorm";
-import {ChatMemoryMessageEntity} from "../entity/ChatMemoryMessageEntity";
+import {ChatMemoryMessageEntity} from "../entity";
 import {BaseTypeOrmChatMemoryRepository} from "./BaseTypeOrmChatMemoryRepository";
 
 /**

@@ -10,11 +10,13 @@ import {
     InMemoryChatMemoryRepository,
     MessageWindowChatMemory,
 } from "@nodeboot/ai-core";
-import {ChatMemoryBackend, ChatMemoryOptions} from "../decorator/ChatMemoryOptions";
-import {ChatMemoryMessageRepository} from "../repository/ChatMemoryMessageRepository";
-import {ChatMemoryMongoMessageRepository} from "../repository/ChatMemoryMongoMessageRepository";
-import {SqlChatMemoryRepository} from "../repository/SqlChatMemoryRepository";
-import {MongoChatMemoryRepository} from "../repository/MongoChatMemoryRepository";
+import {ChatMemoryBackend, ChatMemoryOptions} from "../decorator";
+import {
+    ChatMemoryMessageRepository,
+    ChatMemoryMongoMessageRepository,
+    MongoChatMemoryRepository,
+    SqlChatMemoryRepository,
+} from "../repository";
 
 /**
  * Application lifecycle adapter that builds and registers the `ChatMemory` bean configured through
