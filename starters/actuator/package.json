@@ -24,9 +24,9 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "pretest": "pnpm run clean:build && pnpm run build",
         "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
-        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "pretest:coverage": "mkdir -p coverage",
+        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
         "tsc": "tsc"
     },
     "dependencies": {
@@ -48,10 +48,23 @@
         "koa": ">=2.14.2"
     },
     "devDependencies": {
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/express-server": "workspace:*",
+        "@nodeboot/fastify-server": "workspace:*",
+        "@nodeboot/hono-server": "workspace:*",
+        "@nodeboot/http-server": "workspace:*",
+        "@nodeboot/koa-server": "workspace:*",
+        "@koa/router": "^12.0.0",
         "@types/express": "^4.17.21",
         "@types/koa": "^2.13.11",
         "@types/koa__router": "^12.0.4",
-        "hono": "^4.13.5"
+        "express": "^4.18.2",
+        "fastify": "^5.6.0",
+        "hono": "^4.13.5",
+        "koa": "^2.14.2",
+        "reflect-metadata": "^0.2.1",
+        "typedi": "^0.10.0"
     },
     "files": [
         "dist",

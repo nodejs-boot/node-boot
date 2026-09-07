@@ -28,16 +28,16 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
             name: "app_http_request_count",
             help: "Count of HTTP requests received by the app",
             labelNames: ["method", "route", "statusCode"],
+            registers: [this.register],
         });
-        this.register.registerMetric(http_request_counter);
 
         const http_request_duration_milliseconds = new Prometheus.Histogram({
             name: "app_http_request_duration_milliseconds",
             help: "Duration of HTTP requests in milliseconds.",
             labelNames: ["method", "route", "code"],
             buckets: [1, 2, 3, 4, 5, 10, 25, 50, 100, 250, 500, 1000],
+            registers: [this.register],
         });
-        this.register.registerMetric(http_request_duration_milliseconds);
 
         const context: MetricsContext = {
             register: this.register,
@@ -48,15 +48,23 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
     }
 
     bind(options: ActuatorOptions, server: any, router: any): void {
-        const context = this.setupMetrics(options);
-        const metadataService = new MetadataService();
-
         const iocContainer = ApplicationContext.get().diOptions?.iocContainer;
         if (!iocContainer) {
             throw new Error(
                 `IOC Container is required for Actuator module. Please @EnableDI(Container) in your Application class.`,
             );
         }
+
+        const allowedServers = ["express", "koa", "fastify", "native-http", "hono"];
+        if (!allowedServers.includes(options.serverType)) {
+            throw new Error(
+                "Actuator feature is only allowed for express, koa, fastify, hono and native-http (node:http) servers. " +
+                    "Please remove @EnableActuator from your application",
+            );
+        }
+
+        const context = this.setupMetrics(options);
+        const metadataService = new MetadataService();
         const configService = iocContainer.get(ConfigService);
         const infoService = iocContainer.get(CoreInfoService);
         const logger = iocContainer.get(Logger);

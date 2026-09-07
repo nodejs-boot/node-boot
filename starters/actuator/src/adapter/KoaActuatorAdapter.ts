@@ -55,7 +55,7 @@ export class KoaActuatorAdapter implements ActuatorAdapter {
         router.get("/actuator/git", async ctx => {
             const gitInfo = await this.gitService.getGit("simple");
             ctx.status = 200;
-            ctx.body = gitInfo;
+            ctx.body = gitInfo ?? {};
         });
 
         router.get("/actuator/config", async ctx => {

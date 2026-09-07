@@ -19,13 +19,15 @@ export class FastifyActuatorAdapter implements ActuatorAdapter {
         router.addHook("onRequest", (request, _reply, done) => {
             // Start a timer for every request made
             request.log.info({event: "onRequest"}, "Request received");
+            request["locals"] = request["locals"] ?? {};
             request["locals"].startEpoch = Date.now();
             done();
         });
 
         router.addHook("onSend", (request, reply, payload, done) => {
             // Retrieve data from the request context
-            const responseTimeInMilliseconds = Date.now() - request["locals"].startEpoch;
+            const startEpoch = request["locals"]?.startEpoch ?? Date.now();
+            const responseTimeInMilliseconds = Date.now() - startEpoch;
 
             setImmediate(() => {
                 //Offload the metrics recording to the event loop
