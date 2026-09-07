@@ -4,8 +4,6 @@ dist
 /dist
 .pnpm-store
 pnpm-lock.yaml
-jest.config.js
-jest.setup.js
 .lintstagedrc.js
 **.d.ts
 /tests/docker/mongodb/init-replica-set.js

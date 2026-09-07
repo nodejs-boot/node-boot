@@ -112,7 +112,7 @@ describe("Database Initialization & Consistency (Integration)", () => {
                 database: "test",
                 entities: [User, Counter],
                 synchronize: true,
-                dropSchema: true, // Clean slate
+                dropSchema: false,
             });
 
             await dataSource.initialize();

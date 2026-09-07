@@ -4,10 +4,8 @@
  * Provides helper functions for setting up integration tests with persistence.
  * Simplifies test setup by handling DataSource initialization and container management.
  */
-import {Container} from "typedi";
 import {DataSource} from "typeorm";
-import {User} from "./postgres/entities/User.entity";
-import {Counter} from "./postgres/entities/Counter.entity";
+import {User, Counter} from "./setup/postgres.setup";
 
 export interface PersistenceTestSetup {
     dataSource: DataSource;
@@ -51,11 +49,11 @@ export async function initializePersistence(options?: {
 }): Promise<PersistenceTestSetup> {
     const {
         type = "postgres",
-        host = process.env.DB_HOST || "localhost",
-        port = parseInt(process.env.DB_PORT || "5435"),
-        username = process.env.DB_USER || "postgres",
-        password = process.env.DB_PASSWORD || "postgres",
-        database = process.env.DB_NAME || "test",
+        host = process.env["DB_HOST"] || "localhost",
+        port = parseInt(process.env["DB_PORT"] || "5435"),
+        username = process.env["DB_USER"] || "postgres",
+        password = process.env["DB_PASSWORD"] || "postgres",
+        database = process.env["DB_NAME"] || "test",
     } = options || {};
 
     const dataSource = new DataSource({
@@ -72,16 +70,12 @@ export async function initializePersistence(options?: {
 
     await dataSource.initialize();
 
-    // Register in container for injection
-    Container.set(DataSource, dataSource);
-
     return {
         dataSource,
         cleanup: async () => {
             if (dataSource.isInitialized) {
                 await dataSource.destroy();
             }
-            Container.remove(DataSource);
         },
     };
 }

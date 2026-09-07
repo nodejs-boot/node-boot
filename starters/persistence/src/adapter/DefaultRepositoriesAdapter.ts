@@ -35,7 +35,7 @@ export class DefaultRepositoriesAdapter implements RepositoriesAdapter {
             if (allowedProfiles(target)) {
                 // MongoDB repositories should only receive 2 parameters (entity, manager)
                 // SQL repositories receive 3 parameters (entity, manager, queryRunner)
-                // Passing a 3rd parameter (even undefined) to MongoDB repos causes hanging in Jest tests
+                // Passing a 3rd parameter (even undefined) to MongoDB repos causes hanging in tests
                 const entityRepositoryInstance =
                     type === RepositoryType.MONGO
                         ? new (target as any)(entity, entityManager)

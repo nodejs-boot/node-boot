@@ -1,8 +1,7 @@
 import {DataSource} from "typeorm";
 import {describe, test, before, after, afterEach} from "node:test";
 import * as assert from "node:assert";
-import {User} from "./postgres/entities/User.entity";
-import {Counter} from "./postgres/entities/Counter.entity";
+import {Counter, User} from "./setup/postgres.setup";
 
 /**
  * Pagination Integration Tests
@@ -25,7 +24,7 @@ describe("Pagination & Sorting (Integration)", () => {
 
         // Seed test data
         const userRepository = dataSource.getRepository(User);
-        const users = [];
+        const users: User[] = [];
         for (let i = 1; i <= 25; i++) {
             users.push(new User(`User ${i}`, i * 100));
         }
@@ -52,8 +51,8 @@ describe("Pagination & Sorting (Integration)", () => {
             });
 
             assert.strictEqual(page1.length, 10);
-            assert.strictEqual(page1[0].name, "User 1");
-            assert.strictEqual(page1[9].name, "User 10");
+            assert.strictEqual(page1[0]!.name, "User 1");
+            assert.strictEqual(page1[9]!.name, "User 10");
         });
 
         test("should get second page", async () => {
@@ -67,8 +66,8 @@ describe("Pagination & Sorting (Integration)", () => {
             });
 
             assert.strictEqual(page2.length, 10);
-            assert.strictEqual(page2[0].name, "User 11");
-            assert.strictEqual(page2[9].name, "User 20");
+            assert.strictEqual(page2[0]!.name, "User 11");
+            assert.strictEqual(page2[9]!.name, "User 20");
         });
 
         test("should get last page with remaining items", async () => {
@@ -81,8 +80,8 @@ describe("Pagination & Sorting (Integration)", () => {
             });
 
             assert.strictEqual(page3.length, 5);
-            assert.strictEqual(page3[0].name, "User 21");
-            assert.strictEqual(page3[4].name, "User 25");
+            assert.strictEqual(page3[0]!.name, "User 21");
+            assert.strictEqual(page3[4]!.name, "User 25");
         });
 
         test("should count total for pagination info", async () => {
@@ -108,8 +107,9 @@ describe("Pagination & Sorting (Integration)", () => {
             });
 
             assert.strictEqual(users.length, 5);
-            assert.strictEqual(users[0].name, "User 1");
-            assert.strictEqual(users[4].name, "User 17");
+            assert.strictEqual(users[0]!.name, "User 1");
+            // Lexicographic (string) ordering: "User 1", "User 10", "User 11", "User 12", "User 13"
+            assert.strictEqual(users[4]!.name, "User 13");
         });
 
         test("should sort by money descending", async () => {
@@ -121,8 +121,8 @@ describe("Pagination & Sorting (Integration)", () => {
             });
 
             assert.strictEqual(users.length, 5);
-            assert.strictEqual(users[0].money, 2500); // User 25
-            assert.strictEqual(users[4].money, 2100); // User 21
+            assert.strictEqual(users[0]!.money, 2500); // User 25
+            assert.strictEqual(users[4]!.money, 2100); // User 21
         });
 
         test("should sort by multiple fields", async () => {
@@ -135,7 +135,7 @@ describe("Pagination & Sorting (Integration)", () => {
 
             assert.ok(users.length > 0);
             // Highest money first
-            assert.strictEqual(users[0].money, 2500);
+            assert.strictEqual(users[0]!.money, 2500);
         });
 
         test("should sort with pagination", async () => {
@@ -154,7 +154,7 @@ describe("Pagination & Sorting (Integration)", () => {
             });
 
             // Verify money is decreasing across pages
-            assert.ok(page1[page1.length - 1].money > page2[0].money);
+            assert.ok(page1[page1.length - 1]!.money > page2[0]!.money);
         });
     });
 
@@ -195,7 +195,7 @@ describe("Pagination & Sorting (Integration)", () => {
 
             // Verify descending order
             for (let i = 1; i < users.length; i++) {
-                assert.ok(users[i - 1].money >= users[i].money);
+                assert.ok(users[i - 1]!.money >= users[i]!.money);
             }
         });
     });

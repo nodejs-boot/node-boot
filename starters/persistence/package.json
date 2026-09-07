@@ -38,8 +38,9 @@
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
         "pretest": "pnpm run clean:build && pnpm run build",
-        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
-        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test": "node --test --test-concurrency=1 --test-reporter node-test-reporter --require ts-node/register 'tests/**/*.{test,it.test}.ts' 'src/**/*.{test,spec}.ts'",
+        "pretest:coverage": "mkdir -p coverage",
+        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-concurrency=1 --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register 'tests/**/*.{test,it.test}.ts' 'src/**/*.{test,spec}.ts'",
         "tsc": "tsc"
     },
     "dependencies": {
@@ -58,8 +59,11 @@
         "mongodb": "^7.2.0"
     },
     "devDependencies": {
+        "@nodeboot/ghost-server": "workspace:*",
         "@types/node": "^22.13.4",
-        "pg": "^8.21.0"
+        "better-sqlite3": "^12.10.0",
+        "pg": "^8.21.0",
+        "typedi": "^0.10.0"
     },
     "files": [
         "dist",

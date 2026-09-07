@@ -81,7 +81,7 @@ describe("MongoTransactionalQueryRunner", () => {
 
         assert.deepEqual(collection?.insertOne?.mock?.calls?.[0]?.arguments, [{name: "neo"}, {session}]);
 
-        assert.deepEqual(collection?.insertOne?.mock?.calls?.[0]?.arguments, [
+        assert.deepEqual(collection?.updateOne?.mock?.calls?.[0]?.arguments, [
             {name: "neo"},
             {$set: {name: "neo-v2"}},
             {session},
