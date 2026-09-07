@@ -69,6 +69,17 @@ export class UserService {
     into `@Lifecycle("application.initialized" | "persistence.started" | "application.started" |
 "application.stopped")` via an `ApplicationFeatureAdapter`. See `nodeboot-extending-nodeboot` for
     when to build one yourself.
+-   **Named vs type-based injection must match how the bean was registered**: if a
+    `@Configuration`/`@Bean` (or auto-configuration) does `iocContainer.set("SomeName", instance)`
+    (a string token — typically used when the DI token can't be a class, e.g. a third-party client
+    or an interface with multiple implementations), every consumer must inject it the same way:
+    `@Inject("SomeName") private readonly x: SomeType`. If it instead does
+    `iocContainer.set(SomeClass, instance)`, inject by concrete type — either a plain constructor
+    parameter typed with the class (`private readonly x: SomeClass`, resolved via reflection, no
+    decorator needed) or `@Inject() private readonly x: SomeClass`. Never mix the two: a bare
+    `@Inject()` against a name-registered bean (or vice versa) fails to resolve. Once a name is used,
+    the declared TS type on the injection site is irrelevant to resolution (just needs to be
+    structurally compatible) — resolution is keyed purely off the string.
 
 ## Validate
 

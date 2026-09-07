@@ -41,4 +41,11 @@ Full docs: [`starters/openapi/README.md`](https://github.com/nodejs-boot/node-bo
 
 ## Validate
 
-`cd samples/sample-express && pnpm dev`
+`cd samples/sample-express && pnpm dev` for a manual check.
+
+For automated proof that `@EnableOpenApi()` actually autowires, see
+`starters/openapi/test/openapi-enabled.it.test.ts`: a `useNodeBoot()`-booted app on a real HTTP
+server (`@nodeboot/http-server`, since serving a spec over `/api-docs/swagger.json` needs an actual
+route, unlike the DI-only starters) asserting the generated spec documents a real fixture
+controller's path/method. See `nodeboot-extending-nodeboot`'s "Testing a starter package" section
+before writing this style of test for a different starter.

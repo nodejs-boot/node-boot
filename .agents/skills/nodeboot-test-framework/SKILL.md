@@ -45,6 +45,44 @@ describe("My App Integration Tests", () => {
 });
 ```
 
+## One `useNodeBoot()` app per file
+
+Never call `useNodeBoot()` more than once in the same test file, even from separate `describe`
+blocks — booting a second app in the same file causes that second app's lifecycle hooks to silently
+fail to complete (the file just reports fewer tests than were written, with no thrown error). If a
+suite needs to compare two app variants (e.g. a feature enabled vs. disabled), split them into
+separate `*.it.test.ts` files with their own fixture app each; multiple such files running together
+in one `node --test` invocation is fine.
+
+Also keep every `*.test.ts`/`*.it.test.ts` file directly under `test/`, not in a subfolder (fixtures
+can go in `test/fixtures/`, since that doesn't match the test-file glob) — see
+`nodeboot-extending-nodeboot`'s "Testing a starter package" section for why a nested test file
+silently breaks the package's `pnpm test` script.
+
+## Resolving beans in tests: standard apps vs. Node-Boot monorepo
+
+-   **Standard apps (outside Node-Boot monorepo)**: Always use `useNodeBoot` return hooks (`const { useService, useRepository, useAppContext } = useNodeBoot(...)`). Calling `useService(MyService)` or `useRepository(MyRepository)` inside test blocks is the preferred, canonical way to access beans in integration tests.
+-   **Node-Boot monorepo internal tests only**: When testing packages inside the Node-Boot monorepo itself, packages resolve `@nodeboot/context`/`core` from local workspace sources while `@nodeboot/node-test` depends on published npm versions. Because `ApplicationContext` is a singleton per module instance, return hooks resolve against `@nodeboot/node-test`'s internal copy instead of the test app. In monorepo package tests only, resolve beans directly via `Container.get(MyClass)` from `typedi`.
+
+## `useTimer()` can't fast-forward a timer scheduled during app boot
+
+`useTimer({toFake: [...]})`'s fake clock is installed during the `beforeTests` phase — _after_ the
+app has already booted (`beforeStart → app starts → afterStart → beforeTests → ...`, per the
+lifecycle order below). Anything that calls the real, unfaked `setTimeout`/`setInterval` while the
+app is starting (e.g. a `node-cron` schedule wired up by a `@Lifecycle`-phase adapter) is already
+running against the real timer by the time the fake clock exists; `advanceTimeBy()` afterward has no
+effect on it (confirmed empirically — it left a scheduled counter at 0). `useTimer()` only helps for
+timers created _after_ `beforeTests` runs, i.e. from code invoked by the test itself. For anything
+scheduled during boot, a real (short) wait is the only thing that works.
+
+## No dedicated "mock outbound HTTP response" hook
+
+`useHttp()`/`HttpClientHook` drive the app's own _inbound_ endpoints, not calls the app itself makes
+to a downstream service. There's no bundled interceptor/mock-adapter hook for that either. To test
+an outbound HTTP client (e.g. `@nodeboot/starter-http`'s `@HttpClient(...)`), spin up a small real
+local `node:http` server as the downstream stand-in and point the client at it — see
+`starters/http/test/fixtures/downstreamServer.ts`.
+
 ## Setup hooks vs. return hooks — don't mix them up
 
 `useNodeBoot(App, setupCallback)` takes a **setup** callback (runs _before_ the app starts) and
@@ -96,6 +134,6 @@ own skill so you don't load them unless needed:
 
 ## Validate
 
-Run the app's own test script (`pnpm test`, usually Jest or `node --test`) after writing/changing
+Run the app's own test script (`pnpm test`, built on Node's `node --test`) after writing/changing
 an integration test. For a hands-on reference, clone and run the
 [demo project](https://github.com/nodejs-boot/node-boot-test-framework/tree/main/demos/node-test-demo).

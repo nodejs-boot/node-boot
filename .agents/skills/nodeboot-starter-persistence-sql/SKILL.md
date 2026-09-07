@@ -84,6 +84,11 @@ persistence:
         database: "express-sample.db"
 ```
 
+When overriding this in a test via `useConfig()` rather than `app-config.yaml`, `synchronize` (and
+`migrationsRun`) must be nested under the dialect key instead — `DataSourceConfiguration` reads them
+off `persistence[type]`, not off `persistence` itself. See [`nodeboot-test-sql`](../nodeboot-test-sql/SKILL.md)'s
+fast-path example, confirmed empirically.
+
 Full docs: [`starters/persistence/README.md`](https://github.com/nodejs-boot/node-boot/blob/main/starters/persistence/README.md)
 (§ "Configure the datasource", "Defining Entities" → SQL, "Migrations", "Paging and Sorting" → SQL).
 Reference sample: [`samples/sample-express`](https://github.com/nodejs-boot/node-boot/blob/main/samples/sample-express).

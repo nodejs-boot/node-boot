@@ -37,4 +37,13 @@ Full docs: [`starters/scheduler/README.md`](https://github.com/nodejs-boot/node-
 
 ## Validate
 
-`cd samples/sample-express && pnpm dev`
+`cd samples/sample-express && pnpm dev` for a manual check.
+
+For automated proof that `@EnableScheduling()` actually autowires, see
+`starters/scheduler/test/scheduling-enabled.it.test.ts` and `scheduling-disabled.it.test.ts`: two
+`useNodeBoot()`-booted apps (on `@nodeboot/ghost-server` - scheduling needs no HTTP transport),
+identical except one applies `@EnableScheduling()`. Only the enabled one ticks a `node-cron` job
+that increments a counter on a `@Service` (standard apps use `useService()`; monorepo tests resolve
+via `Container.get()` from `typedi` due to workspace dependencies). See
+`nodeboot-extending-nodeboot`'s "Testing a starter package" section before writing this style of
+test for a different starter.

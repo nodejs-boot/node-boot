@@ -11,16 +11,27 @@ increasing order of realism/cost. For the app-side SQL starter setup being teste
 
 ## Fast path — sqlite in-memory/file
 
-Cheapest, no Docker required. Override `persistence`/`database` config to point at sqlite instead
-of the app's real driver:
+Cheapest, no Docker required. Override `persistence` config to point at sqlite instead of the app's
+real driver:
 
 ```ts
 const {useRepository} = useNodeBoot(MyApp, ({useConfig}) => {
     useConfig({
-        persistence: {type: "sqlite", database: ":memory:"}, // or a temp file path for cross-connection persistence
+        persistence: {
+            type: "better-sqlite3",
+            "better-sqlite3": {database: ":memory:", synchronize: true}, // or a temp file path
+        },
     });
 });
+
+test("queries repository", async () => {
+    const userRepository = useRepository(UserRepository);
+    const users = await userRepository.find();
+    assert.ok(users);
+});
 ```
+
+For standard applications, retrieve repositories using the `useRepository(MyRepository)` return hook. _(Note: Within Node-Boot monorepo internal package tests only, resolve via `Container.get(MyRepository)` from `typedi` due to monorepo workspace dependencies vs. published `@nodeboot/node-test`)._
 
 Use this for the majority of repository/service tests where you're validating query logic, not
 driver-specific SQL behavior. Note: TypeORM migrations targeting Postgres/MySQL-specific SQL

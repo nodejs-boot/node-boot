@@ -45,4 +45,14 @@ Full docs: [`starters/http/README.md`](https://github.com/nodejs-boot/node-boot/
 
 ## Validate
 
-`cd samples/sample-express && pnpm dev`
+`cd samples/sample-express && pnpm dev` for a manual check.
+
+For automated proof that `@EnableHttpClients()` actually autowires, see
+`starters/http/test/http-client-enabled.it.test.ts` and `http-client-disabled.it.test.ts`: two
+`useNodeBoot()`-booted apps (on `@nodeboot/ghost-server`), identical except one applies
+`@EnableHttpClients()`. (Standard apps use `useService()`; monorepo internal tests resolve via
+`Container.get()` from `typedi` due to workspace package dependencies) and drive it against a small
+local mock server (`test/fixtures/downstreamServer.ts`) — there's no bundled "mock outbound HTTP
+response" hook in `@nodeboot/node-test`, so a real local server is the most direct way to prove the
+round trip. See `nodeboot-extending-nodeboot`'s "Testing a starter package" section before writing
+this style of test for a different starter.

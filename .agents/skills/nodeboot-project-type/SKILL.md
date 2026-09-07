@@ -28,7 +28,7 @@ or inter-service communication — don't monorepo-ify a single-service app pre-e
 
 Reference: [`nodejs-boot/sample-native-http`](https://github.com/nodejs-boot/sample-native-http) —
 a single Node-Boot app (native `node:http` adapter) with the full standard toolchain: ESLint +
-Prettier, Jest, TypeORM migrations, YAML config with local overrides, AOT compilation, and the
+Prettier, the built-in `node:test` runner, TypeORM migrations, YAML config with local overrides, AOT compilation, and the
 standard `pnpm` script set (`dev`, `build`, `lint`, `format`, `test`, `typecheck`,
 `nodeboot:update`). Use this as the standards baseline for _any_ single-app repo, whichever server
 adapter it actually needs (swap the adapter per `nodeboot-servers-http`/`nodeboot-servers-serverless`

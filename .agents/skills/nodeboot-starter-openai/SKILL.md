@@ -41,3 +41,10 @@ Full docs: [`starters/openai/README.md`](https://github.com/nodejs-boot/node-boo
 ## Validate
 
 `cd starters/openai && pnpm test`
+
+For automated proof that `@EnableOpenAI()` actually autowires, see `test/openai-enabled.it.test.ts`
+/ `test/openai-disabled.it.test.ts`: a `useNodeBoot()`-booted app (on `@nodeboot/ghost-server`)
+asserting a real `OpenAI` client is registered with the configured `apiKey`/`baseURL` when
+`integrations.openai` is present, and absent when it isn't. Constructing the SDK client never makes
+a network call by itself. See `nodeboot-extending-nodeboot`'s "Testing a starter package" section
+before writing this style of test for a different starter.

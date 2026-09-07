@@ -42,3 +42,10 @@ Full docs: [`starters/aws/README.md`](https://github.com/nodejs-boot/node-boot/b
 ## Validate
 
 `cd starters/aws && pnpm test`
+
+For automated proof that `@EnableAws()` actually autowires, see `test/aws-s3-enabled.it.test.ts` /
+`test/aws-s3-disabled.it.test.ts`: a `useNodeBoot()`-booted app (on `@nodeboot/ghost-server`)
+asserting a real `S3Client` is registered when `integrations.aws.s3.region` is configured, and
+absent when it isn't. Constructing an AWS SDK v3 client never makes a network call by itself, so
+this needs no real credentials. See `nodeboot-extending-nodeboot`'s "Testing a starter package"
+section before writing this style of test for a different starter.

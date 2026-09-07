@@ -44,4 +44,14 @@ Full docs: [`starters/validation/README.md`](https://github.com/nodejs-boot/node
 
 ## Validate
 
-`cd samples/sample-express && pnpm dev`
+`cd samples/sample-express && pnpm dev` for a manual check.
+
+For automated proof that `@EnableValidations()` actually autowires (not just that `class-validator`
+decorators work, which the framework validates by default with or without this starter), see
+`starters/validation/test/validation-enabled.it.test.ts` and `validation-disabled.it.test.ts`: two
+`useNodeBoot()`-booted apps, identical except one applies `@EnableValidations()` with a custom
+`api.validations` config (`whitelist`/`forbidNonWhitelisted`) and one doesn't — the same request
+(an extra, undeclared body property) is rejected by one and accepted by the other. That contrast is
+what proves the starter's config wiring is the cause, not a coincidence. See
+`nodeboot-extending-nodeboot`'s "Testing a starter package" section before writing this style of
+test for a different starter.

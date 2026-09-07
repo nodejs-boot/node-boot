@@ -23,7 +23,7 @@ src/
   <domain>/               # feature folders: Controller + Service (+ Repository if persistence)
 app-config.yaml            # base config, committed
 app-config.local.yaml      # local overrides, typically gitignored
-jest.config.js              # @swc/jest transform — fast TS test runs without ts-jest
+test/                       # node:test suites (test/**/*.{test,it.test}.ts)
 ```
 
 `app.ts` should stay a thin composition root: only `@Enable...()` decorators + `@NodeBootApplication()`
@@ -60,8 +60,9 @@ application entry point — DI decorators rely on it being loaded before any dec
 
 ## Testing
 
--   Use `jest` with `@swc/jest` as the transform (`jest.config.js`: `transform: {"^.+\\.(t|j)sx?$":
-"@swc/jest"}`) — fast, no separate compile step.
+-   Use the built-in [`node:test`](https://nodejs.org/api/test.html) runner with `ts-node/register`
+    (`test`: `node --test --test-reporter node-test-reporter --require ts-node/register
+test/**/*.{test,it.test}.ts`) — no extra test framework dependency.
 -   Package-level tests live under `tests/` or co-located `*.test.ts` (both patterns exist in the repo
     — follow whichever the package you're touching already uses).
 -   Before opening a PR: `pnpm lint-format && pnpm tsc && pnpm test` from repo root (per

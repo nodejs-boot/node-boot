@@ -37,3 +37,9 @@ Full docs: [`starters/backstage/README.md`](https://github.com/nodejs-boot/node-
 ## Validate
 
 `cd starters/backstage && pnpm test`
+
+For automated proof that `@EnableBackstage()` actually autowires, see
+`test/backstage-enabled.it.test.ts` / `test/backstage-disabled.it.test.ts`: a `useNodeBoot()`-booted
+app (on `@nodeboot/ghost-server`) asserting `CatalogClient`/`PluginDiscoveryService` register when
+`integrations.backstage` is configured, and don't when it isn't. See `nodeboot-extending-nodeboot`'s
+"Testing a starter package" section before writing this style of test for a different starter.

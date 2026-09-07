@@ -68,6 +68,87 @@ before implementing — don't guess the adapter shape.
 For "how do I add a _skill_ for a new starter package" (as opposed to the starter package itself),
 see `nodeboot-starters/resources/authoring-a-starter-skill.md`.
 
+## Testing a starter package (required, not optional)
+
+Unit tests against the starter's own adapter/decorator/`@Bean` factory (mocking `logger`,
+`iocContainer`, `config`) prove the internal logic is correct in isolation, but they do **not**
+prove the starter actually autowires into Node-Boot core — that its `@EnableXxx()` decorator, once
+applied to a real `@NodeBootApplication`, produces the advertised effect end-to-end. Only booting a
+real app proves that. Every new (or newly-tested) starter package must therefore also have an
+integration test using `@nodeboot/node-test`'s `useNodeBoot()` — see `nodeboot-test-framework` for
+the hook API — with both:
+
+-   a **positive** case: a fixture app with the starter enabled (and, where relevant, configured)
+    exercised over real HTTP/DI, asserting the behavior the starter claims to add;
+-   a **negative** case: an otherwise-identical fixture app with the starter left disabled (or
+    default-configured), asserting that behavior is absent. Without this contrast, a positive-only
+    test can't tell the starter's effect apart from a framework default that would happen anyway.
+
+Reference implementations, each under `test/fixtures/` (or `tests/fixtures/` for persistence) with
+a `NodeBootApp` fixture per scenario:
+
+-   **Positive/negative pairs, DI-only on `@nodeboot/ghost-server`** (no HTTP transport needed):
+    `starters/scheduler` (`scheduling-enabled` / `scheduling-disabled` — a real `node-cron` tick
+    invoking a `@Service` method), `starters/http` (`http-client-enabled` / `http-client-disabled`
+    — an outbound `@HttpClient` axios instance doing a real round trip against a local mock server),
+    `starters/aws` (`aws-s3-enabled` / `aws-s3-disabled` — a real `S3Client` bean, conditional on
+    `integrations.aws.s3.region`), `starters/backstage` (`backstage-enabled` / `backstage-disabled`
+    — `CatalogClient`/`PluginDiscoveryService`), `starters/openai` (`openai-enabled` /
+    `openai-disabled` — a real `OpenAI` SDK client bean).
+-   **Positive/negative pair, real HTTP required**: `starters/validation`
+    (`validation-enabled` / `validation-disabled.it.test.ts` on `@nodeboot/http-server` — unlike the
+    DI-only ones above, this starter's whole effect is on how request bodies get validated, so it
+    needs a real request/response cycle to observe).
+-   **Positive-only** (no graceful disabled path to contrast against — the `@Bean` is
+    unconditionally registered on import and either hard-requires its config node or throws
+    synchronously without it, so "disabled" is a boot-time crash, not a toggle):
+    `starters/persistence` (`persistence-auto-configuration.it.test.ts` and friends — see that
+    skill's own "Validate" section for the full breakdown across all six persistence decorators),
+    `starters/supabase` (`supabase-enabled.it.test.ts`), `starters/firebase`
+    (`firebase-enabled.it.test.ts` — uses a synthetic, non-Google-issued RSA key pair, since
+    `admin.credential.cert()` only validates the key is well-formed PEM, never contacts Google).
+-   **Real HTTP server required** (the starter's whole point is exposing routes, not just
+    registering a DI bean): `starters/openapi` (`openapi-enabled.it.test.ts` — hits the real
+    generated `/api-docs/swagger.json` and asserts a fixture controller is documented in it) and
+    `starters/actuator` (`actuator-enabled.it.test.ts` — hits `/actuator/health`, `/actuator/info`,
+    `/actuator/prometheus`), both on `@nodeboot/http-server`.
+
+A recurring, load-bearing fact across the SDK-wrapper starters (AWS, OpenAI, Supabase, Firebase,
+Backstage): constructing the underlying SDK client (`new S3Client(...)`, `new OpenAI(...)`,
+`createClient(...)`, `admin.initializeApp(...)`, `new CatalogClient(...)`) never makes a network
+call or validates credentials by itself — only actually _calling_ a method on the client does. That
+is what makes it safe to boot these in a test with fake credentials/URLs, as long as the test never
+calls out. Firebase is the one exception worth knowing about up front: `admin.database()`'s `@Bean`
+runs unconditionally at boot (not lazily on first use) and throws immediately without a resolvable
+`realtimeDatabaseUrl` in config — supply one even if the test doesn't touch Realtime Database.
+
+Several sharp edges were discovered building these, all silent failure modes — see
+`nodeboot-test-framework` for the full detail on each:
+
+1. **One `useNodeBoot()` app per test file, no exceptions.** Booting a second app in the same file
+   (even in a separate `describe` block) causes the second app's lifecycle hooks to silently fail
+   to complete — the test file reports fewer tests than were written, with no error. Put each app
+   variant in its own `*.it.test.ts` file instead; `@nodeboot/node-test` tolerates multiple such
+   files running in the same process (the framework's `test` script always runs them together).
+2. **Keep every `*.test.ts`/`*.it.test.ts` file directly under `test/`, never in a subfolder**
+   (fixtures/DTOs/controllers _can_ go in `test/fixtures/`, since those don't match the test-file
+   glob). The standard `"test": "node --test ... test/**/*.{test,it.test}.ts"` script runs via
+   `sh`, not bash, and plain `sh`'s `**` does not recurse — it matches exactly one directory level.
+   So once any test file exists one level deep (e.g. `test/integration/foo.it.test.ts`), the shell
+   successfully expands the glob to just that nested file and stops there, silently dropping every
+   top-level `test/*.test.ts` file from the run. (With zero nested matches, the unexpanded literal
+   pattern is passed straight through to `node --test`, which resolves it correctly on its own —
+   which is the only reason the flat layout has been working across this repo's packages so far.)
+   Verify with `pnpm --filter <pkg> test` and check the reported test count matches what you wrote.
+3. **Resolving beans in tests (`useService` vs `Container.get`)**: In standard applications outside
+   this monorepo, always use `useNodeBoot` return hooks (`useService`, `useRepository`, etc.).
+   Inside this monorepo only, local workspace packages diverge from the published packages bundled
+   with `@nodeboot/node-test`, creating an `ApplicationContext` singleton mismatch; resolve beans
+   via `Container.get()` / `Container.set()` (from `typedi`) instead.
+4. **`useTimer()`'s fake clock can't fast-forward a timer already scheduled during app boot**
+   (its `beforeTests` installation runs after the app starts). A real (short) wait is the only thing
+   that works for e.g. a `node-cron` tick wired up by a `@Lifecycle`-phase adapter.
+
 ## Validate
 
 `pnpm lint-format && pnpm tsc && pnpm test` from repo root. New server adapters/starters should also

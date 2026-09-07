@@ -52,3 +52,13 @@ Full docs: [`starters/firebase/README.md`](https://github.com/nodejs-boot/node-b
 ## Validate
 
 `cd starters/firebase && pnpm test`
+
+For automated proof that `@EnableFirebase()` actually autowires, see
+`test/firebase-enabled.it.test.ts`: a `useNodeBoot()`-booted app (on `@nodeboot/ghost-server`)
+asserting the Auth/Firestore beans resolve real Admin SDK service objects. Uses a synthetic,
+non-Google-issued RSA key pair for the service account - `admin.credential.cert()` only validates
+the key is well-formed PEM, it never contacts Google. No negative counterpart: without
+`integrations.firebase` config, the other `@Bean` methods on the same class still run
+unconditionally and throw calling `admin.auth()`/`admin.database()` without an initialized app - a
+boot-time crash, not a graceful disabled path. See `nodeboot-extending-nodeboot`'s "Testing a
+starter package" section before writing this style of test for a different starter.

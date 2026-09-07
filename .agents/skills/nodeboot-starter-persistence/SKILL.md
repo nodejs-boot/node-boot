@@ -58,4 +58,27 @@ Full docs: [`starters/persistence/README.md`](https://github.com/nodejs-boot/nod
 
 ## Validate
 
-`cd samples/sample-express && pnpm dev`
+`cd samples/sample-express && pnpm dev` for a manual check.
+
+For automated proof that every persistence decorator actually autowires into a _running_ app (as
+opposed to just registering metadata), see, all under `starters/persistence/tests/`:
+
+-   `persistence-decorators.test.ts` — annotation-level: each decorator (`@DataRepository`,
+    `@EntityEventSubscriber`, `@Migration`, `@PersistenceCache`, `@PersistenceNamingStrategy`,
+    `@Transactional`) called directly against throwaway classes, asserting on the resulting
+    `PersistenceContext`/`Reflect` metadata — no live database, mirrors the decorator-metadata style
+    used in `packages/core/test`/`packages/di/test`.
+-   `persistence-auto-configuration.it.test.ts` / `persistence-decorators.it.test.ts` — `useNodeBoot()`-
+    booted apps (on `@nodeboot/ghost-server`) proving `@DataRepository`, `@EntityEventSubscriber`,
+    `@PersistenceNamingStrategy`, `@PersistenceCache`, and `@Transactional` (commit _and_ rollback)
+    all take effect together against a real in-memory `better-sqlite3` datasource (see
+    `nodeboot-test-sql`'s fast path). In standard apps use `useRepository()`; inside monorepo starter
+    tests beans are resolved via `Container.get()` from `typedi` due to workspace package dependencies.
+-   `persistence-migration.it.test.ts` — `@Migration` specifically, kept separate because
+    `synchronize`/`migrationsRun` are mutually exclusive: boots with `synchronize: false`, so the
+    only way its table exists is because the migration ran.
+
+Every other test in this package constructs a TypeORM `DataSource` directly, bypassing Node-Boot's
+bootstrap entirely — these are the ones that prove the starter's own auto-configuration chain. See
+`nodeboot-extending-nodeboot`'s "Testing a starter package" section before writing this style of
+test for a different starter.
