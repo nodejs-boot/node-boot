@@ -23,10 +23,23 @@ const SQS_URL_PATTERN =
 
 @Lifecycle("persistence.started")
 export class SqsListenerAdapter implements ApplicationFeatureAdapter {
+    public static consumers: Consumer[] = [];
+    public consumer?: Consumer;
     private readonly options: SqsListenerOptions;
 
     constructor(options: SqsListenerOptions) {
         this.options = options;
+    }
+
+    public static stopAll(): void {
+        for (const consumer of SqsListenerAdapter.consumers) {
+            try {
+                consumer.stop();
+            } catch {
+                // ignore
+            }
+        }
+        SqsListenerAdapter.consumers = [];
     }
 
     private isValidSqsUrl(url: string): boolean {
@@ -94,6 +107,8 @@ export class SqsListenerAdapter implements ApplicationFeatureAdapter {
                         logger.error(`SQS Timeout Error: ${err.message}`);
                     });
 
+                    this.consumer = app;
+                    SqsListenerAdapter.consumers.push(app);
                     app.start();
                 } else {
                     logger.warn(`Invalid SQS queue URL for @SqsListener at function  "${target.constructor.name}:::${listenerFunction.name}()".
