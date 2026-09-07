@@ -790,6 +790,38 @@ The source types for these options live under `src/property/*ConnectionPropertie
 
 ---
 
+## 🧪 Running Tests
+
+Tests in this package run against PostgreSQL and MongoDB containers managed via `tests/docker-compose.yaml`.
+
+### 1️⃣ Start the test databases
+
+```sh
+cd starters/persistence/tests
+docker compose up -d
+```
+
+### 2️⃣ Run tests via CLI
+
+```sh
+pnpm test
+```
+
+> **Note**: The package's `test` script includes `--test-concurrency=1` so test files execute sequentially without colliding on shared tables, schemas, or transaction locks.
+
+### 3️⃣ Running from IntelliJ IDEA / WebStorm
+
+When running this package's test suites from IntelliJ or WebStorm:
+
+1. Open **Run/Debug Configurations** (or **Edit Configuration Templates...** → **Node.js** / **Node test runner**).
+2. In **Node options**, add:
+    ```sh
+    --test-concurrency=1
+    ```
+3. Run the tests.
+
+---
+
 ## 🎉 Conclusion
 
 `@nodeboot/starter-persistence` gives Node-Boot applications a full persistence foundation with very little setup.
