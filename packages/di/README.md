@@ -128,6 +128,31 @@ This is a real pattern used in the repository for injecting application configur
 
 ---
 
+### ⚠️ Registration and injection must match
+
+How a dependency is _registered_ in the container determines how it must be _injected_. This is
+the most common source of `undefined`/resolution errors:
+
+-   **Registered by class** (e.g. `iocContainer.set(SomeClass, instance)`, or an unadorned
+    `@Component()`/`@Service()`): inject by concrete type — either a plain constructor/property
+    typed with the class (resolved via reflection, no decorator needed) or `@Inject()`/`@Inject(SomeClass)`
+    with no name. This is what `@Configuration`/`@Bean` auto-configurations do when there's a single
+    canonical implementation (e.g. `iocContainer.set(OpenAiChatModel, chatModel)`).
+-   **Registered by name/token** (e.g. `iocContainer.set("app-config", value)` — typically used when
+    the token can't be a class, such as config objects, third-party clients, or an interface with
+    multiple possible implementations): inject with `@Inject("app-config")` using that exact string.
+    The declared TypeScript type at the injection site is irrelevant to resolution once a name is
+    used — it only needs to be structurally compatible — because the container resolves purely off
+    the string key, not the type.
+
+Never mix the two: a bare `@Inject()` against a name-registered dependency (or `@Inject("name")`
+against a class-registered one) will fail to resolve. When consuming a bean from a starter or
+auto-configuration, check how that package registers it (its README or source, e.g.
+`iocContainer.set("ChatMemory", ...)` vs `iocContainer.set(ChatClient, ...)`) and match the
+injection style accordingly.
+
+---
+
 ### 4️⃣ Use property injection in framework-managed classes
 
 `@Inject()` also works well in classes that are instantiated indirectly by framework integrations, such as persistence event subscribers.
