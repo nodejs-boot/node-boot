@@ -3,7 +3,7 @@ import {OllamaAutoConfiguration} from "../config";
 /**
  * Enables Ollama models in NodeBoot AI.
  */
-export const EnableOllamaModel = (): ClassDecorator => {
+export const EnableOllamaModels = (): ClassDecorator => {
     return () => {
         new OllamaAutoConfiguration();
     };

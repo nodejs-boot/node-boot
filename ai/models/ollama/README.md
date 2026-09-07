@@ -9,10 +9,10 @@ Ollama model adapters for Node-Boot AI, covering local Spring-AI-style model cat
 
 ```typescript
 import {EnableAi} from "@nodeboot/ai-core";
-import {EnableOllamaModel} from "@nodeboot/ai-ollama";
+import {EnableOllamaModels} from "@nodeboot/ai-ollama";
 
 @EnableAi()
-@EnableOllamaModel()
+@EnableOllamaModels()
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
     start() {
@@ -150,10 +150,10 @@ import {EnableAi} from "@nodeboot/ai-core";
 import {EnableMcp} from "@nodeboot/mcp";
 import {NodeBoot} from "@nodeboot/engine";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableOllamaModel} from "@nodeboot/ai-ollama";
+import {EnableOllamaModels} from "@nodeboot/ai-ollama";
 
 @EnableAi()
-@EnableOllamaModel()
+@EnableOllamaModels()
 @EnableMcp() // expose every @Tool as a real MCP server, and/or consume external MCP tool servers
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {

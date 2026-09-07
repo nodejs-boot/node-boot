@@ -1,1 +1,1 @@
-export * from "./EnableOllamaModel";
+export * from "./EnableOllamaModels";
