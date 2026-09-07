@@ -65,6 +65,15 @@ jobs:
             - name: build all packages
               run: pnpm build
 
-            - name: Test
+            - name: Test with coverage
               run: |
-                  pnpm test
+                  pnpm test:coverage
+
+            - name: Upload coverage to Codecov
+              if: always()
+              uses: codecov/codecov-action@v5
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  slug: nodejs-boot/node-boot
+                  fail_ci_if_error: false
+                  verbose: true
