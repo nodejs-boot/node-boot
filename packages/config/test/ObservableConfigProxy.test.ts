@@ -1,7 +1,7 @@
 import {describe, it} from "node:test";
 import assert from "node:assert/strict";
 import {ConfigReader} from "@backstage/config";
-import {ConfigService} from "./ConfigService";
+import {ConfigService} from "../src";
 
 describe("ObservableConfigProxy", () => {
     it("should notify subscribers", () => {
