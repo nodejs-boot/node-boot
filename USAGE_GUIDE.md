@@ -839,6 +839,12 @@ export class LoggingMiddleware {
 
 > 📖 **Full documentation:** [`@nodeboot/di` README](./packages/di/README.md)
 
+> ⚠️ **Registration and injection must match:** a dependency registered by class
+> (`iocContainer.set(SomeClass, ...)`) is injected by type (plain typed constructor param or
+> `@Inject()`); a dependency registered by name (`iocContainer.set("someName", ...)`) is injected
+> with that exact name (`@Inject("someName")`). Mixing the two fails to resolve — see the
+> [`@nodeboot/di` README](./packages/di/README.md#️-registration-and-injection-must-match) for details.
+
 <p align="right">(<a href="#usage-guide-top">back to top</a>)</p>
 
 ---

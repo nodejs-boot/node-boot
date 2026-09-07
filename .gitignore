@@ -10,7 +10,7 @@ dist
 # Turborepo
 .turbo
 
-# Jest
+# Test coverage
 coverage
 .coverage
 

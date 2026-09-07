@@ -44,7 +44,8 @@
             "dependsOn": ["build"]
         },
         "test:coverage": {
-            "dependsOn": ["build"]
+            "dependsOn": ["build"],
+            "outputs": ["coverage/**"]
         },
         "tsc": {
             "outputs": ["tsconfig.tsbuildinfo"]

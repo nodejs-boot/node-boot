@@ -8,8 +8,6 @@ dist
 # Packages
 /packages
 .eslintrc.js
-jest.config.js
-jest.setup.js
 memory-leak-detector.js
 **.d.ts
 /starters/persistence/tests/docker/mongodb/init-replica-set.js

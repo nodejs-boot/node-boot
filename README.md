@@ -21,6 +21,7 @@
     <img alt="pnpm" src="https://img.shields.io/badge/pnpm-workspace-F69220?logo=pnpm&logoColor=white">
     <img alt="typescript" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white">
     <img alt="license" src="https://img.shields.io/badge/license-MIT-yellow.svg">
+    <a href="https://codecov.io/gh/nodejs-boot/node-boot" target="_blank"><img alt="codecov" src="https://codecov.io/gh/nodejs-boot/node-boot/branch/main/graph/badge.svg"></a>
   </p>
 </div>
 
@@ -224,6 +225,8 @@ Full reference applications — the fastest way to see everything working togeth
 | [sample-vercel](samples/sample-vercel)                                 | Deploying to Vercel                                                                                           |
 | [sample-netlify](samples/sample-netlify)                               | Deploying to Netlify Functions                                                                                |
 | [sample-google-cloud-functions](samples/sample-google-cloud-functions) | Deploying to Google Cloud Functions                                                                           |
+| [sample-ai-todo-knowledge-base](samples/sample-ai-todo-knowledge-base) | Todo REST API + generative AI (chat, summarization, prioritization) powered by Gemini via `@nodeboot/ai-core` |
+| [sample-todo-mcp-server](samples/sample-todo-mcp-server)               | The Todo domain exposed as a Model Context Protocol (MCP) server over stdio via `@nodeboot/mcp`               |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -282,6 +285,14 @@ Then follow the [Documentation](https://nodeboot-1.gitbook.io/node-boot-framewor
 | `pnpm lint-format`     | Lint and check formatting across the repo            |
 | `pnpm lint-format:fix` | Auto-fix lint and formatting issues                  |
 
+### 🧪 Running Tests & IDE Configuration
+
+Node-Boot uses Node.js's built-in `node:test` runner across all packages.
+
+-   **CLI**: Run `pnpm test` from the root or `pnpm --filter <package> test` for a specific package.
+-   **Database integration tests**: Packages with live database tests (like `@nodeboot/starter-persistence`) require `--test-concurrency=1` to prevent parallel test files from colliding on shared tables and database transactions.
+-   **IntelliJ IDEA / WebStorm**: When executing test suites from the IDE, add `--test-concurrency=1` to **Node options** in your Run/Debug Configuration (or under **Edit Configuration Templates...** → **Node.js** / **Node test runner**) so tests execute sequentially against test databases.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🛠️ Built With
@@ -292,7 +303,7 @@ Then follow the [Documentation](https://nodeboot-1.gitbook.io/node-boot-framewor
 -   [Husky](https://typicode.github.io/husky/) — Git hooks
 -   [Prettier](https://prettier.io/) / [ESLint](https://eslint.org/) — formatting & linting
 -   [Nodemon](https://github.com/remy/nodemon) — watch-mode development runtime
--   [Jest](https://jestjs.io/) + [SWC](https://swc.rs/docs/usage/jest) — fast test suite without double type-checking
+-   [`node:test`](https://nodejs.org/api/test.html) — built-in Node.js test runner, no extra dependencies
 -   [Conventional Commits](https://www.conventionalcommits.org/) — commit message standard
 -   [GitHub Actions](https://github.com/features/actions) — CI/CD
 

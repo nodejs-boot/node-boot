@@ -3,6 +3,9 @@ packages:
     - servers/*
     - serverless/*
     - starters/*
+    - ai/*
+    - ai/models/*
+    - ai/vector-stores/*
     - samples/*
     - tests/*
     - benchmarking
