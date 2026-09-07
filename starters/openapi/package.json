@@ -25,9 +25,9 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "pretest": "pnpm run clean:build && pnpm run build",
         "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
-        "test:coverage": "node --experimental-test-coverage --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "pretest:coverage": "mkdir -p coverage",
+        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
         "tsc": "tsc"
     },
     "dependencies": {
@@ -43,15 +43,30 @@
         "swagger-ui-dist": "^5.24.1"
     },
     "devDependencies": {
+        "@fastify/static": "^8.2.0",
+        "@koa/router": "^12.0.0",
+        "@nodeboot/core": "workspace:*",
+        "@nodeboot/di": "workspace:*",
+        "@nodeboot/express-server": "workspace:*",
+        "@nodeboot/fastify-server": "workspace:*",
+        "@nodeboot/hono-server": "workspace:*",
+        "@nodeboot/http-server": "workspace:*",
+        "@nodeboot/koa-server": "workspace:*",
+        "@types/express": "^4.17.21",
+        "@types/koa": "^2.13.11",
+        "@types/koa__router": "^12.0.4",
         "@types/lodash.capitalize": "^4.2.9",
         "@types/lodash.merge": "^4.6.9",
         "@types/lodash.startcase": "^4.4.9",
-        "openapi-types": "^12.1.3",
         "@types/reflect-metadata": "^0.1.0",
         "@types/swagger-ui-dist": "^3.30.5",
-        "@types/express": "^5.0.3",
-        "@types/koa": "^2.15.0",
-        "hono": "^4.13.5"
+        "class-validator": "^0.14.1",
+        "express": "^4.18.2",
+        "fastify": "^5.6.0",
+        "hono": "^4.13.5",
+        "koa": "^2.14.2",
+        "openapi-types": "^12.1.3",
+        "typedi": "^0.10.0"
     },
     "optionalDependencies": {
         "koa": "^2.14.2",

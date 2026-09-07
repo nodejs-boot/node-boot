@@ -34,6 +34,10 @@ export class HonoOpenApi extends BaseOpenApiAdapter {
                 return c.body(generateSwaggerUiHtml());
             });
 
+            // Optional: redirect /docs → /api-docs/ and /api-docs → /api-docs/
+            server.get("/docs", (c: Context) => c.redirect(`${swaggerUiPrefix}/`));
+            server.get(swaggerUiPrefix, (c: Context) => c.redirect(`${swaggerUiPrefix}/`));
+
             // Serve static Swagger UI assets
             server.get(`${swaggerUiPrefix}/*`, (c: Context) => {
                 const file = c.req.path.replace(`${swaggerUiPrefix}/`, "") || "index.html";
@@ -46,11 +50,6 @@ export class HonoOpenApi extends BaseOpenApiAdapter {
                 c.header("Content-Type", getContentType(fullPath));
                 return c.body(Readable.toWeb(createReadStream(fullPath)) as ReadableStream);
             });
-
-            // Optional: redirect /docs → /api-docs/
-            server.get("/docs", (c: Context) => c.redirect(`${swaggerUiPrefix}/`));
-
-            server.get(swaggerUiPrefix, (c: Context) => c.redirect(`${swaggerUiPrefix}/`));
         }
     }
 }
