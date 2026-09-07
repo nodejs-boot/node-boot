@@ -1,0 +1,60 @@
+{
+    "name": "@nodeboot/ai-persistence",
+    "version": "1.0.0",
+    "description": "Database-backed ChatMemory implementations for @nodeboot/ai-core: SqlChatMemoryRepository and MongoChatMemoryRepository, pluggable through the @ChatMemory decorator, following the @nodeboot/starter-persistence repository pattern",
+    "author": "Manuel Santos <ney.br.santos@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "nodeboot",
+        "ai",
+        "spring-ai",
+        "chat-memory",
+        "persistence",
+        "typeorm",
+        "mongodb",
+        "sql"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodejs-boot/node-boot.git"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean:build": "rimraf ./dist",
+        "lint": "eslint . --ext .js,.ts",
+        "lint:fix": "pnpm lint --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write .",
+        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "pretest:coverage": "mkdir -p coverage",
+        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
+        "tsc": "tsc"
+    },
+    "dependencies": {
+        "@nodeboot/ai-core": "workspace:*",
+        "@nodeboot/context": "workspace:*",
+        "@nodeboot/starter-persistence": "workspace:*",
+        "reflect-metadata": "^0.2.1"
+    },
+    "peerDependencies": {
+        "typeorm": ">=1.0.0"
+    },
+    "optionalDependencies": {
+        "mongodb": "^7.2.0"
+    },
+    "devDependencies": {
+        "@types/better-sqlite3": "^7.6.13",
+        "@types/node": "^22.13.4",
+        "better-sqlite3": "^12.10.0"
+    },
+    "files": [
+        "dist",
+        "package.json",
+        "README.md"
+    ]
+}
