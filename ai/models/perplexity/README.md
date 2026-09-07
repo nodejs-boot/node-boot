@@ -10,10 +10,10 @@ and a sensible default model (`sonar`).
 
 ```typescript
 import {EnableAi} from "@nodeboot/ai-core";
-import {EnablePerplexityModel} from "@nodeboot/ai-perplexity";
+import {EnablePerplexityModels} from "@nodeboot/ai-perplexity";
 
 @EnableAi()
-@EnablePerplexityModel()
+@EnablePerplexityModels()
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
     start() {
@@ -141,10 +141,10 @@ import {EnableAi} from "@nodeboot/ai-core";
 import {EnableMcp} from "@nodeboot/mcp";
 import {NodeBoot} from "@nodeboot/engine";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnablePerplexityModel} from "@nodeboot/ai-perplexity";
+import {EnablePerplexityModels} from "@nodeboot/ai-perplexity";
 
 @EnableAi()
-@EnablePerplexityModel()
+@EnablePerplexityModels()
 @EnableMcp() // expose every @Tool as a real MCP server, and/or consume external MCP tool servers
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {

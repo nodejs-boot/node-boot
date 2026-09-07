@@ -1,1 +1,1 @@
-export * from "./EnablePerplexityModel";
+export * from "./EnablePerplexityModels";
