@@ -1,9 +1,7 @@
 import {describe, it} from "node:test";
 import assert from "node:assert/strict";
 import {AssistantMessage, Prompt, SystemMessage, ToolResponseMessage, UserMessage} from "@nodeboot/ai-core";
-import {GoogleGenAiChatModel} from "../src/GoogleGenAiChatModel";
-import {GoogleGenAiEmbeddingModel} from "../src/GoogleGenAiEmbeddingModel";
-import {GoogleGenAiImageModel} from "../src/GoogleGenAiImageModel";
+import {GoogleGenAiChatModel, GoogleGenAiEmbeddingModel, GoogleGenAiImageModel} from "../src";
 
 describe("GoogleGenAiChatModel", () => {
     it("should format messages and call generateContent API", async () => {
