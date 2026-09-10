@@ -26,9 +26,9 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test": "node --test --test-concurrency=1 --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
         "pretest:coverage": "mkdir -p coverage",
-        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
+        "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-concurrency=1 --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
         "tsc": "tsc"
     },
     "dependencies": {

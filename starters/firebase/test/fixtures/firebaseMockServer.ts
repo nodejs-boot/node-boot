@@ -114,6 +114,9 @@ export function createFirebaseMockServer(port = 0): FirebaseMockServerHandle {
         state,
         close: () =>
             new Promise<void>(resolve => {
+                if (typeof server.closeAllConnections === "function") {
+                    server.closeAllConnections();
+                }
                 server.close(() => resolve());
             }),
     };

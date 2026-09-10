@@ -80,10 +80,6 @@ jobs:
               shell: bash
               run: pnpm install --frozen-lockfile
 
-            - name: Build required packages
-              run: |
-                  pnpm turbo run build ${{ matrix.filter }}
-
             - name: Start Docker services
               if: matrix.docker_compose != ''
               run: |

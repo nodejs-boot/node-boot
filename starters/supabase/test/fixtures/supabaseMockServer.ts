@@ -598,6 +598,9 @@ export function createSupabaseMockServer(port = 0): Promise<SupabaseMockServerHa
                 reset,
                 close: () =>
                     new Promise<void>(resClose => {
+                        if (typeof server.closeAllConnections === "function") {
+                            server.closeAllConnections();
+                        }
                         server.close(() => resClose());
                     }),
             });

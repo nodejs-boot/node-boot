@@ -395,6 +395,9 @@ export function createBackstageMockServer(port = 0): BackstageMockServerHandle {
         state,
         close: () =>
             new Promise<void>(resolve => {
+                if (typeof server.closeAllConnections === "function") {
+                    server.closeAllConnections();
+                }
                 server.close(() => resolve());
             }),
     };

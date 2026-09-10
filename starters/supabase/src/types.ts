@@ -80,7 +80,7 @@ export type SupabaseIntegrationConfig = {
         auth?: {
             /**
              * Automatically refresh the authentication token before it expires.
-             * @default true
+             * @default false
              */
             autoRefreshToken?: boolean;
 

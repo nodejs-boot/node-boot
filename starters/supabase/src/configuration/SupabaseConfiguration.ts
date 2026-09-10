@@ -53,7 +53,7 @@ export class SupabaseConfiguration {
         // Create Supabase client with the provided configuration
         const client = createClient(supabaseConfig.url, apiKey, {
             auth: {
-                autoRefreshToken: supabaseConfig.options?.auth?.autoRefreshToken ?? true,
+                autoRefreshToken: supabaseConfig.options?.auth?.autoRefreshToken ?? false,
                 persistSession: supabaseConfig.options?.auth?.persistSession ?? false,
                 detectSessionInUrl: supabaseConfig.options?.auth?.detectSessionInUrl ?? false,
                 ...(supabaseConfig.options?.auth?.storageKey && {

@@ -446,6 +446,9 @@ export function createAwsMockServer(port = 0): AwsMockServerHandle {
         pushSqsMessage,
         close: () =>
             new Promise<void>(resClose => {
+                if (typeof server.closeAllConnections === "function") {
+                    server.closeAllConnections();
+                }
                 server.close(() => resClose());
             }),
     };
