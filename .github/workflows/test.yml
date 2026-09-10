@@ -19,6 +19,7 @@ on:
             - "serverless/**"
             - "servers/**"
             - "starters/**"
+            - "ai/**"
             - "package.json"
             - "pnpm-lock.yaml"
             - "pnpm-workspace.yaml"
@@ -31,12 +32,25 @@ concurrency:
 
 jobs:
     test:
+        name: test (${{ matrix.name }})
         runs-on: [ubuntu-latest]
         if: (!github.event.pull_request || github.event.pull_request.draft == false)
         strategy:
             fail-fast: false
             matrix:
-                shard: [1]
+                include:
+                    - name: packages
+                      filter: "./packages/*"
+                    - name: starters
+                      filter: "./starters/*"
+                    - name: servers
+                      filter: "./servers/*"
+                    - name: serverless
+                      filter: "./serverless/*"
+                    - name: ai
+                      filter: "./ai/**"
+                    - name: samples
+                      filter: "./samples/*"
         env:
             CI: true
             BACKSTAGE_CLI_BUILD_PARALLEL: 1
@@ -62,12 +76,9 @@ jobs:
               shell: bash
               run: pnpm install --frozen-lockfile
 
-            - name: build all packages
-              run: pnpm build
-
             - name: Test with coverage
               run: |
-                  pnpm test:coverage
+                  pnpm turbo run test:coverage --filter="${{ matrix.filter }}"
 
             - name: Upload coverage to Codecov
               if: always()
@@ -77,3 +88,4 @@ jobs:
                   slug: nodejs-boot/node-boot
                   fail_ci_if_error: false
                   verbose: true
+                  flags: ${{ matrix.name }}

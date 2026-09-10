@@ -18,6 +18,7 @@ on:
             - "serverless/**"
             - "servers/**"
             - "starters/**"
+            - "ai/**"
             - "package.json"
             - "pnpm-lock.yaml"
             - "pnpm-workspace.yaml"
