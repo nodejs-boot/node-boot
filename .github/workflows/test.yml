@@ -40,17 +40,21 @@ jobs:
             matrix:
                 include:
                     - name: packages
-                      filter: "./packages/*"
+                      filter: '--filter="./packages/*"'
                     - name: starters
-                      filter: "./starters/*"
+                      filter: '--filter="./starters/*" --filter="!@nodeboot/starter-persistence"'
+                    - name: persistence
+                      filter: '--filter="@nodeboot/starter-persistence"'
+                      docker_compose: "starters/persistence/tests/docker-compose.yaml"
+                      flags: "--concurrency=1"
                     - name: servers
-                      filter: "./servers/*"
+                      filter: '--filter="./servers/*"'
                     - name: serverless
-                      filter: "./serverless/*"
+                      filter: '--filter="./serverless/*"'
                     - name: ai
-                      filter: "./ai/**"
+                      filter: '--filter="./ai/**"'
                     - name: samples
-                      filter: "./samples/*"
+                      filter: '--filter="./samples/*"'
         env:
             CI: true
             BACKSTAGE_CLI_BUILD_PARALLEL: 1
@@ -76,9 +80,14 @@ jobs:
               shell: bash
               run: pnpm install --frozen-lockfile
 
+            - name: Start Docker services
+              if: matrix.docker_compose != ''
+              run: |
+                  docker compose -f ${{ matrix.docker_compose }} up -d --wait
+
             - name: Test with coverage
               run: |
-                  pnpm turbo run test:coverage --filter="${{ matrix.filter }}"
+                  pnpm turbo run test:coverage ${{ matrix.filter }} ${{ matrix.flags }}
 
             - name: Upload coverage to Codecov
               if: always()
