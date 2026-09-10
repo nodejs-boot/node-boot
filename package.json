@@ -58,7 +58,7 @@
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
-            "pnpm tsc",
+            "pnpm build",
             "pnpm nodeboot:check:type-deps",
             "pnpm lint-format:fix"
         ],
