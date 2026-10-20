@@ -8,6 +8,8 @@ permissions:
     contents: write
     issues: write
     pull-requests: write
+    # allow dispatching the publish workflow (releases created with GITHUB_TOKEN do not trigger it)
+    actions: write
 
 jobs:
     release:
@@ -22,18 +24,20 @@ jobs:
             HUSKY: 0
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
+              with:
+                fetch-depth: 0
 
-            - uses: pnpm/action-setup@v4
+            - uses: pnpm/action-setup@v6
               name: Install pnpm
               with:
                   run_install: false
 
             - name: Use node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v7
               with:
-                  node-version: 22.x
-                  cache: "pnpm"
+                node-version-file: .nvmrc
+                cache: "pnpm"
 
             - name: Install dependencies
               shell: bash
@@ -88,3 +92,9 @@ jobs:
                   previousPackages: ${{ steps.start-monorepo-release.outputs.oldPackages }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Trigger publish workflow
+              if: steps.start-monorepo-release.outputs.released
+              run: gh workflow run publish.yml --ref main
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
