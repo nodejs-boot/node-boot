@@ -1,5 +1,11 @@
 # @nodeboot/starter-aws
 
+## 1.6.2
+
+### Patch Changes
+
+-   cfe93fc: fix last release
+
 ## 1.6.1
 
 ### Patch Changes
