@@ -11,7 +11,6 @@ import {SupabaseConfiguration} from "../configuration/SupabaseConfiguration";
  * Apply `@EnableSupabase()` to the main application class to enable Supabase services.
  *
  * ```typescript
- * @EnableDI(Container)
  * @EnableSupabase()
  * @EnableComponentScan()
  * @NodeBootApplication()

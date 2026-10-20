@@ -10,7 +10,6 @@ The application entrypoint is `FactsServiceApp` in `src/app.ts`, and `src/server
 
 | Decorator                                                                  | What it demonstrates                                                                                                         |
 | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `@EnableDI(Container)`                                                     | Uses `typedi` as the dependency injection container.                                                                         |
 | `@EnableOpenApi()`                                                         | Enables generated OpenAPI documentation for the controllers.                                                                 |
 | `@EnableSwaggerUI()`                                                       | Enables the Swagger UI alongside the generated OpenAPI spec.                                                                 |
 | `@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)` | Wires Fastify-typed current-user and authorization checkers into Node-Boot authorization.                                    |

@@ -3,11 +3,11 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {createAwsMockServer} from "./fixtures/awsMockServer";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {S3Client, ListBucketsCommand, PutObjectCommand, GetObjectCommand} from "@aws-sdk/client-s3";
+import {ApplicationContext} from "@nodeboot/context";
 
 const MOCK_PORT = 34971;
 process.env["AWS_ENDPOINT_URL"] = `http://127.0.0.1:${MOCK_PORT}`;
@@ -44,7 +44,7 @@ describe("@nodeboot/starter-aws - S3 operations integration", () => {
     });
 
     test("lists S3 buckets using injected S3Client", async () => {
-        const client = Container.get(S3Client);
+        const client = ApplicationContext.getIocContainer()!.get(S3Client);
         const response = await client.send(new ListBucketsCommand({}));
 
         assert.ok(response.Buckets);
@@ -53,7 +53,7 @@ describe("@nodeboot/starter-aws - S3 operations integration", () => {
     });
 
     test("puts and gets an object in S3 using injected S3Client", async () => {
-        const client = Container.get(S3Client);
+        const client = ApplicationContext.getIocContainer()!.get(S3Client);
         const bucket = "test-bucket";
         const key = "documents/sample.txt";
         const content = "Hello Node-Boot S3 Integration!";

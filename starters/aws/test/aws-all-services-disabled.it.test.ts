@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {S3Client} from "@aws-sdk/client-s3";
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {SNSClient} from "@aws-sdk/client-sns";
@@ -31,11 +30,11 @@ describe("@nodeboot/starter-aws auto-configuration - all services disabled", () 
     });
 
     test("registers no AWS clients in IoC container and enables no feature flags", () => {
-        assert.equal(Container.has(S3Client), false);
-        assert.equal(Container.has(DynamoDBClient), false);
-        assert.equal(Container.has(SNSClient), false);
-        assert.equal(Container.has(SQSClient), false);
-        assert.equal(Container.has(SecretsManagerClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(S3Client), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(DynamoDBClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(SNSClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(SQSClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(SecretsManagerClient), false);
 
         const features = ApplicationContext.get().applicationFeatures;
         assert.equal(features[AWS_S3_FEATURE], undefined);

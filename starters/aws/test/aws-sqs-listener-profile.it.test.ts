@@ -3,11 +3,11 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {ProfiledProdSqsListenerService} from "./fixtures/ProfiledProdSqsListenerService";
 import {SQSClient} from "@aws-sdk/client-sqs";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-aws - SQS listener profile filtering", () => {
     useNodeBoot(AwsEnabledApp as any, ({useConfig, useEnv}) => {
@@ -29,10 +29,10 @@ describe("@nodeboot/starter-aws - SQS listener profile filtering", () => {
     });
 
     test("skips registering @SqsListener when active profile does not match @Profile metadata", async () => {
-        const sqsClient = Container.get(SQSClient);
+        const sqsClient = ApplicationContext.getIocContainer()!.get(SQSClient);
         assert.ok(sqsClient);
 
-        const service = Container.get(ProfiledProdSqsListenerService);
+        const service = ApplicationContext.getIocContainer()!.get(ProfiledProdSqsListenerService);
         assert.ok(service);
         assert.equal(service.receivedMessages.length, 0);
     });

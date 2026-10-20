@@ -20,7 +20,6 @@ In this codebase, the Firebase-specific example is intentionally small: it wires
 
 ### Application decorators in `src/app.ts`
 
--   `@EnableDI(Container)` — uses TypeDI as the application container.
 -   `@EnableOpenApi()` — generates OpenAPI metadata from controllers/models.
 -   `@EnableSwaggerUI()` — enables Swagger UI for the generated spec.
 -   `@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)` — registers the sample current-user and authorization resolvers.

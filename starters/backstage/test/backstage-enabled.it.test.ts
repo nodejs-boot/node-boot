@@ -6,11 +6,11 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {CatalogClient} from "@backstage/catalog-client";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {BackstageEnabledApp} from "./fixtures/BackstageEnabledApp";
 import {BackstageIntegrationConfig, PluginDiscoveryService} from "../src";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-backstage auto-configuration - integrations.backstage configured", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -29,20 +29,20 @@ describe("@nodeboot/starter-backstage auto-configuration - integrations.backstag
     });
 
     test("registers CatalogClient, PluginDiscoveryService, and BackstageIntegrationConfig in IoC container", async () => {
-        // Retrieve straight from `typedi`'s Container
-        assert.equal(Container.has(CatalogClient), true);
-        assert.equal(Container.has(PluginDiscoveryService), true);
-        assert.equal(Container.has(BackstageIntegrationConfig), true);
+        // Retrieve straight from the running app's IoC container
+        assert.equal(ApplicationContext.getIocContainer()!.has(CatalogClient), true);
+        assert.equal(ApplicationContext.getIocContainer()!.has(PluginDiscoveryService), true);
+        assert.equal(ApplicationContext.getIocContainer()!.has(BackstageIntegrationConfig), true);
 
-        const config = Container.get(BackstageIntegrationConfig);
+        const config = ApplicationContext.getIocContainer()!.get(BackstageIntegrationConfig);
         assert.ok(config);
         assert.equal(config.apiUrl, "https://backstage.example.com/api");
         assert.equal(config.apiKey, "test-key");
 
-        const catalogClient = Container.get(CatalogClient);
+        const catalogClient = ApplicationContext.getIocContainer()!.get(CatalogClient);
         assert.ok(catalogClient);
 
-        const discovery = Container.get(PluginDiscoveryService);
+        const discovery = ApplicationContext.getIocContainer()!.get(PluginDiscoveryService);
         assert.ok(discovery);
         assert.equal(await discovery.getPluginUrl("catalog"), "https://backstage.example.com/api/catalog");
         assert.equal(await discovery.getPluginUrl("scaffolder"), "https://backstage.example.com/api/scaffolder");

@@ -3,7 +3,6 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {createAwsMockServer} from "./fixtures/awsMockServer";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
@@ -14,6 +13,7 @@ import {
     SendMessageCommand,
     SQSClient,
 } from "@aws-sdk/client-sqs";
+import {ApplicationContext} from "@nodeboot/context";
 
 const MOCK_PORT = 34975;
 process.env["AWS_ENDPOINT_URL"] = `http://127.0.0.1:${MOCK_PORT}`;
@@ -50,7 +50,7 @@ describe("@nodeboot/starter-aws - SQS operations integration", () => {
     });
 
     test("creates queue and sends message using injected SQSClient", async () => {
-        const client = Container.get(SQSClient);
+        const client = ApplicationContext.getIocContainer()!.get(SQSClient);
         const queueRes = await client.send(
             new CreateQueueCommand({
                 QueueName: "test-queue",
@@ -72,7 +72,7 @@ describe("@nodeboot/starter-aws - SQS operations integration", () => {
     });
 
     test("receives and deletes message from queue using injected SQSClient", async () => {
-        const client = Container.get(SQSClient);
+        const client = ApplicationContext.getIocContainer()!.get(SQSClient);
         const queueUrl = `${mockServer.endpoint}/123456789012/test-queue`;
 
         mockServer.pushSqsMessage(JSON.stringify({greeting: "Hello from SQS!"}));

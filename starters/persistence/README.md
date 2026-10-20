@@ -63,14 +63,10 @@ Use `@EnableRepositories()` on your application class.
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
-
-@EnableDI(Container)
 @EnableRepositories()
 @EnableComponentScan()
 @NodeBootApplication()
@@ -792,9 +788,11 @@ The source types for these options live under `src/property/*ConnectionPropertie
 
 ## 🧪 Running Tests
 
-Tests in this package run against PostgreSQL and MongoDB containers managed via `tests/docker-compose.yaml`.
+Tests in this package run against PostgreSQL and MongoDB containers defined in `tests/docker-compose.yaml`.
 
-### 1️⃣ Start the test databases
+`pnpm test` starts them for you when Docker is available, and stops them again afterwards. If both databases are already reachable (for example you started them yourself), they are used as-is and left running. Set `NODEBOOT_TEST_DB_BOOTSTRAP=false` to disable the automatic start.
+
+### 1️⃣ (Optional) Start the test databases yourself
 
 ```sh
 cd starters/persistence/tests

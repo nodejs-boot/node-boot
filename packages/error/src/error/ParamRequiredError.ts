@@ -8,7 +8,6 @@ export class ParamRequiredError extends BadRequestError {
 
     constructor(action: {method: string; url: string}, param: {type: string; name: string}) {
         super();
-        Object.setPrototypeOf(this, ParamRequiredError.prototype);
 
         let paramName: string;
         switch (param.type) {

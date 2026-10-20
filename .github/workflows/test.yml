@@ -19,7 +19,6 @@ on:
             - "serverless/**"
             - "servers/**"
             - "starters/**"
-            - "ai/**"
             - "package.json"
             - "pnpm-lock.yaml"
             - "pnpm-workspace.yaml"
@@ -51,8 +50,6 @@ jobs:
                       filter: '--filter="./servers/*"'
                     - name: serverless
                       filter: '--filter="./serverless/*"'
-                    - name: ai
-                      filter: '--filter="./ai/**"'
                     - name: samples
                       filter: '--filter="./samples/*"'
         env:

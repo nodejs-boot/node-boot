@@ -1,5 +1,5 @@
 import {Service} from "@nodeboot/core";
-import {Inject} from "typedi";
+import {Inject} from "@nodeboot/di";
 import {CatalogClient} from "@backstage/catalog-client";
 import {Entity} from "@backstage/catalog-model";
 import {BackstageIntegrationConfig, PluginDiscoveryService} from "../../src";

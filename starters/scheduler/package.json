@@ -38,8 +38,7 @@
         "@nodeboot/di": "workspace:*",
         "@nodeboot/ghost-server": "workspace:*",
         "@types/node-cron": "^3.0.11",
-        "reflect-metadata": "^0.2.1",
-        "typedi": "^0.10.0"
+        "reflect-metadata": "^0.2.1"
     },
     "peerDependencies": {
         "winston": ">=3.10.0"

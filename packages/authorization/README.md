@@ -55,16 +55,12 @@ This package exports:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootAppView, NodeBootApplication} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
-
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableComponentScan()
 @NodeBootApplication()
@@ -350,7 +346,6 @@ export class JwtAuthService {
 import {Action, CurrentUserChecker} from "@nodeboot/context";
 import {Component} from "@nodeboot/core";
 import {Inject} from "@nodeboot/di";
-import {Container} from "typedi";
 import {Logger} from "winston";
 import {UserRepository} from "../persistence/UserRepository";
 import {JwtAuthService} from "./JwtAuthService";
@@ -400,7 +395,6 @@ export class LoggedInUserResolver implements CurrentUserChecker<any, any> {
 import {Action, AuthorizationChecker} from "@nodeboot/context";
 import {Component} from "@nodeboot/core";
 import {Inject} from "@nodeboot/di";
-import {Container} from "typedi";
 import {Logger} from "winston";
 import {ForbiddenError, UnauthorizedError} from "@nodeboot/error";
 import {UserRepository} from "../persistence/UserRepository";
@@ -465,10 +459,8 @@ export class DefaultAuthorizationChecker implements AuthorizationChecker<any, an
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootAppView, NodeBootApplication, Configuration, Bean} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {createRemoteJWKSet} from "jose";
@@ -487,8 +479,6 @@ export class AuthConfiguration {
         return {issuer: process.env.AUTH_ISSUER, audience: process.env.AUTH_AUDIENCE};
     }
 }
-
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationChecker)
 @EnableComponentScan()
 @NodeBootApplication()
@@ -532,17 +522,13 @@ If you already use [`@nodeboot/starter-firebase`](https://github.com/nodejs-boot
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootAppView, NodeBootApplication} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableFirebase} from "@nodeboot/starter-firebase";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {FirebaseUserResolver} from "./auth/FirebaseUserResolver";
 import {FirebaseAuthorizationChecker} from "./auth/FirebaseAuthorizationChecker";
-
-@EnableDI(Container)
 @EnableFirebase()
 @EnableAuthorization(FirebaseUserResolver, FirebaseAuthorizationChecker)
 @EnableComponentScan()

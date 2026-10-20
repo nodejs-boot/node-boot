@@ -10,6 +10,5 @@ export class CurrentUserCheckerNotDefinedError extends InternalServerError {
         super(
             `Cannot use @CurrentUser decorator. Please define currentUserChecker function in Node-Boot action before using it.`,
         );
-        Object.setPrototypeOf(this, CurrentUserCheckerNotDefinedError.prototype);
     }
 }

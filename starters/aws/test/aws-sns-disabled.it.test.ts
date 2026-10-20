@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SNSClient} from "@aws-sdk/client-sns";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -16,7 +15,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.sns not co
     });
 
     test("never registers an SNSClient in the IoC container", () => {
-        assert.equal(Container.has(SNSClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(SNSClient), false);
         assert.equal(ApplicationContext.get().applicationFeatures[AWS_SNS_FEATURE], undefined);
     });
 });

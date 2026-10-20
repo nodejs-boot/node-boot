@@ -3,12 +3,12 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {SampleSqsListenerService} from "./fixtures/SampleSqsListenerService";
 import {createAwsMockServer} from "./fixtures/awsMockServer";
 import {SqsListenerAdapter} from "../src/adapter";
+import {ApplicationContext} from "@nodeboot/context";
 
 const SQS_TEST_PORT = 34976;
 process.env["AWS_ENDPOINT_URL"] = `http://127.0.0.1:${SQS_TEST_PORT}`;
@@ -57,7 +57,7 @@ describe("@nodeboot/starter-aws - SQS listener message consumption", () => {
         // Push SQS message in mock server
         mockServer.pushSqsMessage(JSON.stringify(envelope));
 
-        const service = Container.get(SampleSqsListenerService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleSqsListenerService);
         assert.ok(service);
 
         // Wait up to 3 seconds for sqs-consumer polling cycle to pick up and dispatch message

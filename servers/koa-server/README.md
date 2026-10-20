@@ -31,7 +31,7 @@ In practice, this package is the piece that:
 Install the Koa server package together with Node-Boot core and the Koa peer dependencies used by this adapter:
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/koa-server @nodeboot/di @nodeboot/aot reflect-metadata typedi koa @koa/router koa-bodyparser @koa/multer @koa/cors koa-session koa-cookies
+pnpm add @nodeboot/core @nodeboot/koa-server @nodeboot/di @nodeboot/aot reflect-metadata koa @koa/router koa-bodyparser @koa/multer @koa/cors koa-session koa-cookies
 ```
 
 ### Peer dependencies
@@ -56,13 +56,9 @@ A real example from `samples/sample-koa` looks like this:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {KoaServer} from "@nodeboot/koa-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {

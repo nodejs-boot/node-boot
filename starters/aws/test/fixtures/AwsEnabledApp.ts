@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableAws} from "../../src";
@@ -12,7 +10,6 @@ import {EnableAws} from "../../src";
  * client (e.g. `new S3Client({region, credentials})`) never makes a network call by itself - it's
  * safe to do in a test with no real credentials, as long as nothing actually calls the API.
  */
-@EnableDI(Container)
 @EnableAws()
 @NodeBootApplication()
 export class AwsEnabledApp implements NodeBootApp {

@@ -6,7 +6,7 @@ This sample application demonstrates how to create a Node.js HTTP server using N
 
 -   **Native HTTP Server**: Uses Node.js built-in HTTP module
 -   **Supabase Integration**: PostgreSQL database via Supabase
--   **Dependency Injection**: Full DI support using TypeDI
+-   **Dependency Injection**: Full DI support using Nonna
 -   **Type Safety**: Complete TypeScript support
 -   **Auto-configuration**: Automatic component scanning and configuration loading
 -   **OpenAPI/Swagger**: Built-in API documentation

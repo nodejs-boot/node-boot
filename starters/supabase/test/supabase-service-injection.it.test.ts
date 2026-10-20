@@ -3,12 +3,12 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SupabaseClient} from "@supabase/supabase-js";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {SupabaseServiceApp} from "./fixtures/SupabaseServiceApp";
 import {SampleSupabaseService} from "./fixtures/SampleSupabaseService";
 import {createSupabaseMockServer, SupabaseMockServerHandle} from "./fixtures/supabaseMockServer";
+import {ApplicationContext} from "@nodeboot/context";
 
 const SUPABASE_MOCK_PORT = 34982;
 let mockServer: SupabaseMockServerHandle;
@@ -37,7 +37,7 @@ describe("@nodeboot/starter-supabase - Service DI injection and operations", () 
     });
 
     test("injects SupabaseClient into SampleSupabaseService and queries profiles", async () => {
-        const service = Container.get(SampleSupabaseService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleSupabaseService);
 
         assert.ok(service instanceof SampleSupabaseService);
         assert.ok(service.supabase instanceof SupabaseClient);
@@ -50,7 +50,7 @@ describe("@nodeboot/starter-supabase - Service DI injection and operations", () 
     });
 
     test("calls RPC calculateTotal through the injected service", async () => {
-        const service = Container.get(SampleSupabaseService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleSupabaseService);
 
         const total = await service.calculateTotal([
             {price: 25, quantity: 4},

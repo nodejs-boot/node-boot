@@ -11,7 +11,7 @@
  * `@nodeboot/node-test` has no dedicated "mock outbound HTTP response" hook to reach for here -
  * `useHttp()`/`HttpClientHook` only drive the app's own *inbound* endpoints (there are none in
  * this fixture; it's DI-only, no HTTP transport), and `useMock()`/`MockHook` cannot reach this
- * workspace's real running app's IoC container (see the `Container.get()` note below - the same
+ * workspace's real running app's IoC container (see the `ApplicationContext.getIocContainer()!.get()` note below - the same
  * limitation `nodeboot-test-framework` documents for `useService()`). So this spins up a small
  * real local HTTP server (`./fixtures/downstreamServer.ts`) to stand in for the downstream
  * service, and drives the registered client at it directly.
@@ -22,12 +22,12 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {HttpError} from "@nodeboot/error";
 import {HttpClientEnabledApp} from "./fixtures/HttpClientEnabledApp";
 import {EnabledHttpClient} from "./fixtures/EnabledHttpClient";
 import {startDownstreamServer} from "./fixtures/downstreamServer";
+import {ApplicationContext} from "@nodeboot/context";
 
 const DOWNSTREAM_PORT = 34970;
 const downstreamServer = startDownstreamServer(DOWNSTREAM_PORT);
@@ -54,9 +54,8 @@ describe("@nodeboot/starter-http auto-configuration - @EnableHttpClients() appli
     test("registers a working axios client in the IoC container, configured with the resolved baseURL", async () => {
         // `@nodeboot/node-test`'s own `useService()` resolves against a different (published)
         // `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the client's resolved axios instance into.
-        const client = Container.get(EnabledHttpClient);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const client = ApplicationContext.getIocContainer()!.get(EnabledHttpClient);
 
         assert.equal(client.defaults.baseURL, `http://127.0.0.1:${DOWNSTREAM_PORT}`);
 
@@ -66,7 +65,7 @@ describe("@nodeboot/starter-http auto-configuration - @EnableHttpClients() appli
     });
 
     test("maps a downstream error response into an HttpError via the starter's interceptor", async () => {
-        const client = Container.get(EnabledHttpClient);
+        const client = ApplicationContext.getIocContainer()!.get(EnabledHttpClient);
 
         await assert.rejects(
             () => client.get("/boom"),

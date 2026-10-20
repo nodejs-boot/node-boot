@@ -50,14 +50,10 @@ In your main application class, use the `@EnableOpenAI()` decorator to enable Op
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/scan";
 import {EnableOpenAI} from "@nodeboot/starter-openai";
-
-@EnableDI(Container)
 @EnableOpenAI()
 @EnableComponentScan()
 @NodeBootApplication()

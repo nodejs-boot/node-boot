@@ -94,7 +94,7 @@ describe("@Controller", () => {
         assert.equal(controllers[0]!.target, SecureController);
     });
 
-    it("applies DI decoration (decorateDi succeeds because typedi is resolvable from @nodeboot/di's own dist)", () => {
+    it("applies DI decoration (decorateDi registers the class with Nonna)", () => {
         // @Controller calls decorateDi(target) internally but ignores its boolean result.
         // We assert the underlying DI contract directly here since that's what backs the
         // (unobservable-from-outside) DI decoration performed by @Controller/@Service/@Component/etc.

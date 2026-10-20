@@ -19,7 +19,6 @@ The app exposes versioned REST controllers under `/api`, enables OpenAPI + Swagg
 
 It also shows these application-level decorators in `src/app.ts`:
 
--   `@EnableDI(Container)` — enables TypeDI-backed dependency injection.
 -   `@EnableOpenApi()` — generates an OpenAPI spec for the controllers.
 -   `@EnableSwaggerUI()` — serves Swagger UI.
 -   `@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationChecker)` — plugs in current-user resolution and route authorization.

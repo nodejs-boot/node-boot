@@ -9,12 +9,12 @@
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
 import {randomUUID} from "node:crypto";
-import {Container} from "typedi";
 import {SupabaseClient} from "@supabase/supabase-js";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {SupabasePersistenceApp} from "./fixtures/SupabasePersistenceApp";
 import {UserProfileRepository} from "./fixtures/UserProfileRepository";
 import {createSupabaseMockServer, SupabaseMockServerHandle} from "./fixtures/supabaseMockServer";
+import {ApplicationContext} from "@nodeboot/context";
 
 const SUPABASE_PERSISTENCE_MOCK_PORT = 34983;
 let mockServer: SupabaseMockServerHandle;
@@ -50,15 +50,15 @@ describe("@nodeboot/starter-supabase & @nodeboot/starter-persistence - Dual Data
     });
 
     test("wires both SupabaseClient and UserProfileRepository into the DI container", () => {
-        const client = Container.get(SupabaseClient);
-        const repository = Container.get(UserProfileRepository);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
+        const repository = ApplicationContext.getIocContainer()!.get(UserProfileRepository);
 
         assert.ok(client instanceof SupabaseClient);
         assert.ok(repository instanceof UserProfileRepository);
     });
 
     test("performs direct database CRUD operations using Node-Boot repository pattern", async () => {
-        const repository = Container.get(UserProfileRepository);
+        const repository = ApplicationContext.getIocContainer()!.get(UserProfileRepository);
 
         // 1. Create and save entity directly to database
         const userId = randomUUID();
@@ -100,8 +100,8 @@ describe("@nodeboot/starter-supabase & @nodeboot/starter-persistence - Dual Data
     });
 
     test("performs Supabase services (RPC & SDK) alongside repository in the same app context", async () => {
-        const client = Container.get(SupabaseClient);
-        const repository = Container.get(UserProfileRepository);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
+        const repository = ApplicationContext.getIocContainer()!.get(UserProfileRepository);
 
         // 1. Execute Supabase RPC call
         const {data: rpcTotal, error: rpcError} = await client.rpc("calculate_total", {

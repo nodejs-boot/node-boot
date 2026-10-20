@@ -19,7 +19,6 @@ Read [`../_shared/fresh-vs-existing.md`](../_shared/fresh-vs-existing.md) first,
 From [`samples/sample-encore/src/app.ts`](https://github.com/nodejs-boot/node-boot/blob/main/samples/sample-encore/src/app.ts):
 
 ```ts
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableValidations()
 @NodeBootApplication()

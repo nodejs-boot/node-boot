@@ -32,7 +32,7 @@ controllers, middlewares, authorization checks and all.
 ## 🚀 Installation
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/context @nodeboot/encore-server @nodeboot/di typedi reflect-metadata encore.dev
+pnpm add @nodeboot/core @nodeboot/context @nodeboot/encore-server @nodeboot/di reflect-metadata encore.dev
 ```
 
 `find-my-way` and `cookie` are bundled as direct dependencies of `@nodeboot/encore-server`. `encore.dev` is a peer
@@ -45,13 +45,9 @@ dependency - install it as part of setting up your Encore.ts app (`encore app cr
 ```typescript
 // app.ts
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EncoreServer} from "@nodeboot/encore-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {
@@ -245,7 +241,7 @@ The Encore.ts driver resolves Node-Boot action parameters, including:
 
 Encore.ts bundles your application with **esbuild**, which does **not** emit TypeScript's
 `emitDecoratorMetadata` reflection data (`design:type`, `design:paramtypes`, `design:returntype`) even when
-`emitDecoratorMetadata: true` is set in `tsconfig.json`. Since `typedi` (Node-Boot's default DI container) and
+`emitDecoratorMetadata: true` is set in `tsconfig.json`. Since bare `@Inject()` and
 Node-Boot's own parameter metadata rely on this reflection data to auto-infer types, a few patterns are required
 when running under Encore.ts:
 
@@ -257,20 +253,19 @@ when running under Encore.ts:
 
     // ✅ Works - explicit token bypasses type reflection
     @Inject("logger") private logger: Logger;
-    @Inject(() => UserService) private userService: UserService;
+    @Inject(UserService) private userService: UserService;
     ```
 
-2. **Avoid constructor injection - use property injection instead.** Without `design:paramtypes`, typedi invokes
-   constructors with no real arguments (regardless of per-parameter `@Inject()` decorators) and silently appends
-   its internal container instance as an extra argument, producing confusing runtime errors such as
-   `this.userService.findAll is not a function`.
+2. **Give every constructor parameter an explicit `@Inject(Token)`.** Nonna never reads `design:paramtypes`
+   for implicit constructor parameters, so a plain typed parameter is not auto-wired (unless you run the
+   `nodeboot-compile` AOT step to generate the dependency graph).
 
     ```ts
-    // ❌ Breaks under esbuild
-    constructor(@Inject("logger") private logger: Logger) {}
+    // ❌ Not auto-wired
+    constructor(private logger: Logger) {}
 
     // ✅ Works
-    @Inject("logger") private logger: Logger;
+    constructor(@Inject("logger") private logger: Logger) {}
     ```
 
 3. **Pass an explicit `type` to `@Body()` when you need validation/transformation.** Node-Boot infers a body

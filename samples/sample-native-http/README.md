@@ -23,7 +23,6 @@ The application starts on port `3000`, serves its API under `/api`, and defines 
 
 `FactsServiceApp` combines these decorators to enable the sample's features:
 
--   `@EnableDI(Container)` — enables dependency injection with TypeDI.
 -   `@EnableOpenApi()` — generates the OpenAPI spec.
 -   `@EnableSwaggerUI()` — serves the interactive Swagger UI.
 -   `@EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)` — wires the demo current-user and authorization checkers.

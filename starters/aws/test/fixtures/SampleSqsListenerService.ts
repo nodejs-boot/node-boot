@@ -1,4 +1,4 @@
-import {Service} from "typedi";
+import {Service} from "@nodeboot/core";
 import {MessageEnvelop, SqsListener} from "../../src";
 
 @Service()

@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {HttpServer} from "@nodeboot/http-server";
 
@@ -16,7 +14,6 @@ import "./UsersController";
  * own defaults - e.g. unknown properties are neither stripped nor rejected. This app is the
  * baseline the "positive" `StrictApp` behavior is contrasted against.
  */
-@EnableDI(Container)
 @NodeBootApplication()
 export class DefaultApp implements NodeBootApp {
     start(additionalConfig?: JsonObject): Promise<NodeBootAppView> {

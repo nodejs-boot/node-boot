@@ -5,10 +5,10 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SupabaseClient} from "@supabase/supabase-js";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {SupabaseEnabledApp} from "./fixtures/SupabaseEnabledApp";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-supabase auto-configuration - integrations.supabase configured", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -29,9 +29,8 @@ describe("@nodeboot/starter-supabase auto-configuration - integrations.supabase 
     test("registers a real SupabaseClient configured with the URL from app-config", () => {
         // `@nodeboot/node-test`'s own `useService()` resolves against a different (published)
         // `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the client into.
-        const client = Container.get(SupabaseClient);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
 
         assert.ok(client instanceof SupabaseClient);
         assert.equal((client as any).supabaseUrl, "https://example.supabase.co");

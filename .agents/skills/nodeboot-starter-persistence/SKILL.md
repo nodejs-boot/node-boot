@@ -22,7 +22,6 @@ If it's unclear yet, ask, or check an existing app's `persistence.type` in `app-
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableRepositories()
 @EnableComponentScan()
 @NodeBootApplication()
@@ -73,7 +72,7 @@ opposed to just registering metadata), see, all under `starters/persistence/test
     `@PersistenceNamingStrategy`, `@PersistenceCache`, and `@Transactional` (commit _and_ rollback)
     all take effect together against a real in-memory `better-sqlite3` datasource (see
     `nodeboot-test-sql`'s fast path). In standard apps use `useRepository()`; inside monorepo starter
-    tests beans are resolved via `Container.get()` from `typedi` due to workspace package dependencies.
+    tests beans are resolved via `ApplicationContext.getIocContainer()!.get(X)` (from `@nodeboot/context`) due to workspace package dependencies.
 -   `persistence-migration.it.test.ts` — `@Migration` specifically, kept separate because
     `synchronize`/`migrationsRun` are mutually exclusive: boots with `synchronize: false`, so the
     only way its table exists is because the migration ran.

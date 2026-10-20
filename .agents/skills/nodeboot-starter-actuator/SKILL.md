@@ -10,7 +10,6 @@ Use this starter for operational endpoints, not business API routes. `@EnableAct
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableActuator()
 @EnableComponentScan()
 @NodeBootApplication()

@@ -1,9 +1,10 @@
 import "@nodeboot/context";
 import {describe, it} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
+import {Injector} from "@nonnajs/di";
 import {Profile} from "@nodeboot/context";
 import {decorateDi} from "../src/ioc/makeDiDecoration";
+import {createDefaultDiOptions} from "../src/ioc/defaultContainer";
 
 /**
  * Runs `fn` with NODE_BOOT_ACTIVE_PROFILES set to `value`, restoring the previous
@@ -24,32 +25,15 @@ function withActiveProfiles<T>(value: string, fn: () => T): T {
 }
 
 describe("decorateDi", () => {
-    it("returns true and applies the real @Service (typedi) decoration when no active profiles are configured", () => {
+    it("returns true and registers the class with Nonna when no active profiles are configured", () => {
         class AllowedService {}
 
         const result = decorateDi(AllowedService);
 
         assert.equal(result, true);
-        // Verify the actual effect: typedi's Container now knows about this class.
-        assert.equal(Container.has(AllowedService), true);
-    });
-
-    it("registers the target under a custom string id when DiOptions is a string", () => {
-        class NamedService {}
-
-        const result = decorateDi(NamedService, "my-named-service");
-
-        assert.equal(result, true);
-        assert.equal(Container.has("my-named-service"), true);
-    });
-
-    it("registers the target using ServiceOptions (e.g. {id})", () => {
-        class OptionsService {}
-
-        const result = decorateDi(OptionsService, {id: "options-service-id"});
-
-        assert.equal(result, true);
-        assert.equal(Container.has("options-service-id"), true);
+        const injector = Injector.create();
+        injector.refresh();
+        assert.ok(injector.get(AllowedService) instanceof AllowedService);
     });
 
     it("returns false when the target's required profile does not match any active profile", () => {
@@ -59,8 +43,10 @@ describe("decorateDi", () => {
         const result = withActiveProfiles("unrelated-profile", () => decorateDi(RestrictedService));
 
         assert.equal(result, false);
-        // Since allowedProfiles() short-circuited, typedi must never have registered it.
-        assert.equal(Container.has(RestrictedService), false);
+        // Since allowedProfiles() short-circuited, nothing must have been registered.
+        const injector = Injector.create();
+        injector.refresh();
+        assert.throws(() => injector.get(RestrictedService));
     });
 
     it("returns true and decorates when the active profile matches the target's required profile", () => {
@@ -70,7 +56,9 @@ describe("decorateDi", () => {
         const result = withActiveProfiles("matching-profile", () => decorateDi(MatchedService));
 
         assert.equal(result, true);
-        assert.equal(Container.has(MatchedService), true);
+        const injector = Injector.create();
+        injector.refresh();
+        assert.ok(injector.get(MatchedService) instanceof MatchedService);
     });
 
     it("allows classes with no @Profile metadata even when active profiles are configured", () => {
@@ -79,6 +67,53 @@ describe("decorateDi", () => {
         const result = withActiveProfiles("some-active-profile", () => decorateDi(UnrestrictedService));
 
         assert.equal(result, true);
-        assert.equal(Container.has(UnrestrictedService), true);
+        const injector = Injector.create();
+        injector.refresh();
+        assert.ok(injector.get(UnrestrictedService) instanceof UnrestrictedService);
+    });
+
+    describe("Nonna registration", () => {
+        it("also registers the class into Nonna's global registry, resolvable via a fresh Injector", () => {
+            class NonnaAllowedService {}
+
+            decorateDi(NonnaAllowedService);
+
+            const injector = Injector.create();
+            injector.refresh();
+            assert.ok(injector.get(NonnaAllowedService) instanceof NonnaAllowedService);
+        });
+
+        it("resolves a string id as a Nonna alias for the same class instance", () => {
+            class NonnaNamedService {}
+
+            decorateDi(NonnaNamedService, "nonna-named-service");
+
+            const {iocContainer} = createDefaultDiOptions();
+            const byAlias = iocContainer.get<NonnaNamedService>("nonna-named-service");
+            const byClass = iocContainer.get(NonnaNamedService);
+            assert.ok(byAlias instanceof NonnaNamedService);
+            assert.equal(byAlias, byClass);
+        });
+
+        it("resolves a ComponentOptions.id as a Nonna alias for the same class instance", () => {
+            class NonnaOptionsService {}
+
+            decorateDi(NonnaOptionsService, {id: "nonna-options-service-id"});
+
+            const {iocContainer} = createDefaultDiOptions();
+            const byAlias = iocContainer.get<NonnaOptionsService>("nonna-options-service-id");
+            assert.ok(byAlias instanceof NonnaOptionsService);
+        });
+
+        it("does not register with Nonna when the target's required profile does not match any active profile", () => {
+            @Profile(["special-profile"])
+            class NonnaRestrictedService {}
+
+            withActiveProfiles("unrelated-profile", () => decorateDi(NonnaRestrictedService));
+
+            const injector = Injector.create();
+            injector.refresh();
+            assert.throws(() => injector.get(NonnaRestrictedService));
+        });
     });
 });

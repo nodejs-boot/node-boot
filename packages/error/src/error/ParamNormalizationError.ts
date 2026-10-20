@@ -12,7 +12,5 @@ export class InvalidParamError extends BadRequestError {
                 value,
             )}) cannot be parsed into ${parameterType}.`,
         );
-
-        Object.setPrototypeOf(this, InvalidParamError.prototype);
     }
 }

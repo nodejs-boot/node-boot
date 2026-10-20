@@ -4,3 +4,5 @@ dist
 test
 coverage
 
+
+__generated__

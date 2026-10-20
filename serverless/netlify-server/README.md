@@ -27,8 +27,6 @@ npm install @nodeboot/netlify-server
 ```typescript
 import {NetlifyServer} from "@nodeboot/netlify-server";
 import {NodeBootApplication} from "@nodeboot/core";
-
-@EnableDI(Container)
 @EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()

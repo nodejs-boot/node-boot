@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableHttpClients} from "../../src";
@@ -14,7 +12,6 @@ import "./EnabledHttpClient";
  * Boots with `@EnableHttpClients()`. `GhostServer` is used because an outbound HTTP client needs
  * only DI + the application lifecycle, not an inbound HTTP transport - see `nodeboot-server-ghost`.
  */
-@EnableDI(Container)
 @EnableHttpClients()
 @NodeBootApplication()
 export class HttpClientEnabledApp implements NodeBootApp {

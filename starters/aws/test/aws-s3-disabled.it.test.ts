@@ -7,7 +7,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {S3Client} from "@aws-sdk/client-s3";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -20,7 +19,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.s3 not con
     });
 
     test("never registers an S3Client in the IoC container", () => {
-        assert.equal(Container.has(S3Client), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(S3Client), false);
         assert.equal(ApplicationContext.get().applicationFeatures[AWS_S3_FEATURE], undefined);
     });
 });

@@ -9,7 +9,6 @@
 > In `app-config.yaml`, `api.routePrefix` is `/api`, and every controller in this sample is declared with version `"v1"`, so the controller routes resolve under `/api/v1`.
 
 -   [x] **`@NodeBootApplication()`** — defines the application entrypoint and boots the framework with `NodeBoot.run(ExpressServer)`. See [Core](../../packages/core/README.md).
--   [x] **`@EnableDI(Container)`** — enables dependency injection with TypeDI for controllers, services, listeners, and resolvers. See [DI](../../packages/di/README.md).
 -   [x] **`@EnableComponentScan()`** — enables AOT/component scanning so decorated classes are discovered automatically. See [AOT](../../packages/aot/README.md).
 -   [x] **`@EnableOpenApi()`** — generates OpenAPI metadata from controllers, DTOs, and response schemas. See [OpenAPI starter](../../starters/openapi/README.md).
 -   [x] **`@EnableSwaggerUI()`** — exposes interactive Swagger UI for the generated OpenAPI spec. See [OpenAPI starter](../../starters/openapi/README.md).

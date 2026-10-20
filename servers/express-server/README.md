@@ -27,7 +27,7 @@ It bridges **`@nodeboot/core`** and **`@nodeboot/engine`** to an underlying Expr
 Install the server package, Node-Boot core packages, and the Express peer dependencies used by this adapter:
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/context @nodeboot/express-server @nodeboot/aot @nodeboot/di typedi reflect-metadata express body-parser multer cors cookie express-session
+pnpm add @nodeboot/core @nodeboot/context @nodeboot/express-server @nodeboot/aot @nodeboot/di reflect-metadata express body-parser multer cors cookie express-session
 ```
 
 > `express`, `body-parser`, `multer`, `cors`, `cookie`, and `express-session` are peer dependencies of this package.
@@ -42,13 +42,9 @@ This is the real startup pattern used in the repository samples:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {ExpressServer} from "@nodeboot/express-server";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {

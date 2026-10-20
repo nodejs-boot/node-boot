@@ -70,11 +70,8 @@ In your main application class, apply the `@EnableSupabase` decorator to activat
 ```typescript
 import {EnableSupabase} from "@nodeboot/starter-supabase";
 import {NodeBootApplication, NodeBootApp} from "@nodeboot/core";
-import {EnableDI, EnableComponentScan} from "@nodeboot/core";
+import {EnableComponentScan} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {Container} from "typedi";
-
-@EnableDI(Container)
 @EnableSupabase()
 @EnableComponentScan()
 @NodeBootApplication()
@@ -295,17 +292,13 @@ export class SupabaseAuthorizationChecker implements AuthorizationChecker<any, a
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootAppView, NodeBootApplication} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableSupabase} from "@nodeboot/starter-supabase";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {SupabaseUserResolver} from "./auth/SupabaseUserResolver";
 import {SupabaseAuthorizationChecker} from "./auth/SupabaseAuthorizationChecker";
-
-@EnableDI(Container)
 @EnableSupabase()
 @EnableAuthorization(SupabaseUserResolver, SupabaseAuthorizationChecker)
 @EnableComponentScan()
@@ -424,15 +417,11 @@ pnpm add @nodeboot/starter-persistence typeorm pg
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootAppView, NodeBootApplication} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableSupabase} from "@nodeboot/starter-supabase";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
-
-@EnableDI(Container)
 @EnableSupabase() // Supabase client: Auth, Storage, Realtime, Edge Functions
 @EnableRepositories() // TypeORM: direct SQL access to the same Postgres database
 @EnableComponentScan()

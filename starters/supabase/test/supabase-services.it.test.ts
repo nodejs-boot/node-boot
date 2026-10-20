@@ -4,11 +4,11 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SupabaseClient} from "@supabase/supabase-js";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {SupabaseEnabledApp} from "./fixtures/SupabaseEnabledApp";
 import {createSupabaseMockServer, SupabaseMockServerHandle} from "./fixtures/supabaseMockServer";
+import {ApplicationContext} from "@nodeboot/context";
 
 const SUPABASE_MOCK_PORT = 34981;
 let mockServer: SupabaseMockServerHandle;
@@ -40,7 +40,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     // 1. PostgREST / Database CRUD Operations
     // ==========================================
     test("Database: retrieves all rows from a table", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.from("profiles").select("*");
 
         assert.equal(error, null);
@@ -51,7 +51,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Database: finds a single row by filtering (positive case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.from("profiles").select("*").eq("id", "user-1").single();
 
         assert.equal(error, null);
@@ -61,7 +61,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Database: returns error when single row is not found (negative case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.from("profiles").select("*").eq("id", "non-existent-id").single();
 
         assert.equal(data, null);
@@ -70,7 +70,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Database: inserts a new record and returns the inserted representation", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const newProfile = {id: "user-3", email: "user3@example.com", name: "Charlie"};
         const {data, error} = await client.from("profiles").insert([newProfile]).select().single();
 
@@ -85,7 +85,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Database: updates an existing record", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client
             .from("profiles")
             .update({name: "Alice Cooper"})
@@ -99,7 +99,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Database: deletes a record", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {error} = await client.from("profiles").delete().eq("id", "user-2");
 
         assert.equal(error, null);
@@ -113,7 +113,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     // 2. RPC (Remote Procedure Call)
     // ==========================================
     test("RPC: executes a custom procedure with parameters (positive case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.rpc("calculate_total", {
             items: [
                 {price: 15, quantity: 2},
@@ -126,7 +126,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("RPC: executes a procedure returning a structured object", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.rpc("get_service_status");
 
         assert.equal(error, null);
@@ -136,7 +136,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("RPC: returns error when calling a non-existent procedure (negative case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.rpc("unknown_procedure_xyz");
 
         assert.equal(data, null);
@@ -148,7 +148,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     // 3. Auth SDK Operations
     // ==========================================
     test("Auth: signs up a new user", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.auth.signUp({
             email: "newsignup@example.com",
             password: "SecurePassword123!",
@@ -163,7 +163,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Auth: signs in with email and password (positive case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.auth.signInWithPassword({
             email: "user1@example.com",
             password: "CorrectPassword",
@@ -175,7 +175,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Auth: fails to sign in with incorrect password (negative case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.auth.signInWithPassword({
             email: "user1@example.com",
             password: "wrong-password",
@@ -187,7 +187,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Auth: gets current user using access token (positive case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.auth.getUser("valid-token-123");
 
         assert.equal(error, null);
@@ -196,7 +196,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Auth: returns error when getting user with invalid token (negative case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.auth.getUser("invalid-token-xyz");
 
         assert.equal(data.user, null);
@@ -204,7 +204,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Auth Admin: creates, lists, and deletes users via admin API", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
 
         // 1. Create user
         const {data: created, error: createError} = await client.auth.admin.createUser({
@@ -230,7 +230,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     // 4. Storage SDK Operations
     // ==========================================
     test("Storage: creates and lists storage buckets", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
 
         // Create bucket
         const {data: bucket, error: createError} = await client.storage.createBucket("documents", {
@@ -246,7 +246,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Storage: uploads, downloads, lists, and removes files", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const fileContent = Buffer.from("Sample Document Content in PDF");
 
         // Upload
@@ -282,7 +282,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Storage: returns 404 when downloading non-existent file (negative case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.storage.from("avatars").download("non-existent-photo.png");
 
         assert.equal(data, null);
@@ -293,7 +293,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     // 5. Edge Functions SDK Operations
     // ==========================================
     test("Functions: invokes a Supabase Edge Function (positive case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.functions.invoke("hello-world", {
             body: {name: "Node-Boot Monorepo"},
         });
@@ -304,7 +304,7 @@ describe("@nodeboot/starter-supabase - Supabase available services integration t
     });
 
     test("Functions: returns error for non-existent function (negative case)", async () => {
-        const client = Container.get(SupabaseClient);
+        const client = ApplicationContext.getIocContainer()!.get(SupabaseClient);
         const {data, error} = await client.functions.invoke("missing-edge-function");
 
         assert.equal(data, null);

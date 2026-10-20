@@ -1,0 +1,9 @@
+{
+    "injectableDecorators": [
+        "@nodeboot/core#Component",
+        "@nodeboot/core#Service",
+        "@nodeboot/core#Controller",
+        "@nodeboot/core#Middleware",
+        "@nodeboot/core#Interceptor"
+    ]
+}

@@ -1,8 +1,11 @@
 import {InjectionOptions} from "./types";
 
 /**
- * Apply proper @Inject decorator if dependency injection framework is available
- * */
+ * Applies the `@Inject` decorator of the DI plugin library (TypeDI, then Inversify) that is installed.
+ *
+ * Only used once a plugin container was selected with `@EnableDI(container)` - see `plugin.ts`. Returns
+ * `false`, without side effects, when neither library is installed.
+ */
 export function decorateInjection(
     target: object,
     propertyName: string | symbol,
@@ -12,50 +15,37 @@ export function decorateInjection(
     return decorateTypeDi(target, propertyName, index, options) || decorateInversify(target, propertyName, index);
 }
 
-/**
- * Apply @Inject decorator if TypeDI framework is available
- * */
 function decorateTypeDi(
     target: object,
     propertyName: string | symbol,
     index?: number,
     options?: InjectionOptions,
 ): boolean {
-    let decorated: boolean;
+    let inject:
+        | ((options?: unknown) => (target: object, propertyName: string | symbol, index?: number) => void)
+        | undefined;
     try {
-        const {Inject} = require("typedi");
-        Inject(options)(target, propertyName, index);
-        decorated = true;
+        inject = require("typedi").Inject;
+    } catch {
+        return false; // TypeDI is not installed
+    }
+    try {
+        inject!(options)(target, propertyName, index);
+        return true;
     } catch (error) {
-        if ((error as any).name === "CannotInjectValueError") {
+        if ((error as {name?: string}).name === "CannotInjectValueError") {
             throw error;
         }
-
-        // TypeDi is not available
-        console.warn("@Service decorator is only applied if 'TypeDi' dependency is available!");
-        decorated = false;
+        return false;
     }
-    return decorated;
 }
 
-/**
- * Apply @inject decorator if Inversify framework is available
- * */
-function decorateInversify(
-    target: object,
-    propertyName: string | symbol,
-    index?: number,
-    options?: InjectionOptions,
-): boolean {
-    let decorated: boolean;
+function decorateInversify(target: object, propertyName: string | symbol, index?: number): boolean {
     try {
         const {inject} = require("inversify");
-        inject(options)(target, propertyName, index);
-        decorated = true;
-    } catch (error) {
-        // Inversify is not available
-        console.warn("@inject decorator is only applied if 'Inversify' dependency is available!");
-        decorated = false;
+        inject(undefined)(target, propertyName, index);
+        return true;
+    } catch {
+        return false; // Inversify is not installed
     }
-    return decorated;
 }

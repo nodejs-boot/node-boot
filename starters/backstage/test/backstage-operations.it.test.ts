@@ -4,7 +4,6 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {CatalogClient} from "@backstage/catalog-client";
 import {Entity} from "@backstage/catalog-model";
 import {useNodeBoot} from "@nodeboot/node-test";
@@ -15,6 +14,7 @@ import {
     SAMPLE_LOCATIONS,
     startBackstageMockServer,
 } from "./fixtures/backstageMockServer";
+import {ApplicationContext} from "@nodeboot/context";
 
 const BACKSTAGE_MOCK_PORT = 35982;
 let mockServer: BackstageMockServerHandle;
@@ -46,7 +46,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     // 1. Entities Operations
     // ==========================================
     test("Entities: retrieves all entities from catalog", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const {items} = await client.getEntities();
 
         assert.ok(Array.isArray(items));
@@ -56,7 +56,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: finds an entity by string ref (positive case)", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const entity = await client.getEntityByRef("component:default/service-catalog");
 
         assert.ok(entity);
@@ -66,7 +66,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: finds an entity by compound ref object (positive case)", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const entity = await client.getEntityByRef({
             kind: "Component",
             namespace: "default",
@@ -79,14 +79,14 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: returns undefined when entity is not found (negative case)", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const entity = await client.getEntityByRef("component:default/non-existent-entity");
 
         assert.equal(entity, undefined);
     });
 
     test("Entities: retrieves batch entities by refs", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const response = await client.getEntitiesByRefs({
             entityRefs: ["component:default/service-catalog", "component:default/auth-service"],
         });
@@ -98,7 +98,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: queries entities with search parameters and pagination", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const response = await client.queryEntities({
             limit: 2,
         });
@@ -111,7 +111,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: retrieves ancestry for an entity", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const ancestry = await client.getEntityAncestors({
             entityRef: "component:default/service-catalog",
         });
@@ -124,7 +124,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: retrieves entity facets", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const facets = await client.getEntityFacets({
             facets: ["kind"],
         });
@@ -135,7 +135,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: refreshes an entity by ref", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         // refreshEntity resolves void on 200
         await assert.doesNotReject(async () => {
             await client.refreshEntity("component:default/service-catalog");
@@ -143,7 +143,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Entities: removes an entity by UID", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         await assert.doesNotReject(async () => {
             await client.removeEntityByUid("uid-api-openapi-003");
         });
@@ -156,7 +156,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     // 2. Locations Operations
     // ==========================================
     test("Locations: retrieves all locations", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const response = await client.getLocations();
 
         assert.ok(Array.isArray(response.items));
@@ -165,7 +165,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Locations: retrieves a location by ID (positive case)", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const location = await client.getLocationById("loc-001");
 
         assert.ok(location);
@@ -174,14 +174,14 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Locations: returns undefined when location ID is not found (negative case)", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const location = await client.getLocationById("loc-non-existent");
 
         assert.equal(location, undefined);
     });
 
     test("Locations: retrieves a location by location ref string", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const locRef = `url:${SAMPLE_LOCATIONS[0]?.target}`;
         const location = await client.getLocationByRef(locRef);
 
@@ -190,7 +190,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Locations: retrieves location by entity ref", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const location = await client.getLocationByEntity("component:default/service-catalog");
 
         assert.ok(location);
@@ -199,7 +199,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Locations: adds a new location", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const result = await client.addLocation({
             type: "url",
             target: "https://github.com/example/new-service/blob/main/catalog-info.yaml",
@@ -211,7 +211,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Locations: removes a location by ID", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         await assert.doesNotReject(async () => {
             await client.removeLocationById("loc-002");
         });
@@ -224,7 +224,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     // 3. Entity Validation Operations
     // ==========================================
     test("Validation: validates a valid entity schema", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const validEntity: Entity = {
             apiVersion: "backstage.io/v1alpha1",
             kind: "Component",
@@ -238,7 +238,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Validation: returns valid: false with errors for invalid entity schema", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         const invalidEntity = {
             apiVersion: "backstage.io/v1alpha1",
             // missing kind and metadata.name
@@ -254,7 +254,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     // 4. Authentication / Token Forwarding
     // ==========================================
     test("Auth: forwards configured apiKey as default Bearer token header", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         mockServer.state.requests = [];
 
         await client.getEntities();
@@ -265,7 +265,7 @@ describe("@nodeboot/starter-backstage - Backstage Catalog operations integration
     });
 
     test("Auth: forwards custom explicit options token when provided", async () => {
-        const client = Container.get(CatalogClient);
+        const client = ApplicationContext.getIocContainer()!.get(CatalogClient);
         mockServer.state.requests = [];
 
         await client.getEntities(undefined, {token: "custom-override-token-456"});

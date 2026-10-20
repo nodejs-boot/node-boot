@@ -2,60 +2,51 @@
 
 ## Overview
 
-`@nodeboot/di` connects a Node-Boot application to an IoC container.
+`@nodeboot/di` connects a Node-Boot application to its IoC container.
 
-In practice, this package does two things:
+**Node-Boot uses [Nonna](https://github.com/nodejs-boot/node-boot/tree/main/di) — a zero-reflection,
+runtime-agnostic DI container — always on, with no setup.**
 
--   registers the container that Node-Boot should use at runtime via `@EnableDI(...)`
+In practice, this package does three things:
+
+-   ships Node-Boot's container (Nonna), used automatically by every application that doesn't pick another one
 -   exposes `@Inject(...)` so classes can receive dependencies through property or constructor injection
+-   lets you plug in your own container with `@EnableDI(container)` (TypeDI, Inversify, ...)
 
-Node-Boot is designed to work especially well with **TypeDI**. This package also contains runtime fallbacks for **Inversify** when those decorators are available.
+Node-Boot's decorators (`@Component`, `@Service`, `@Controller`, `@Middleware`, `@Interceptor`,
+`@Inject`) need no extra configuration.
 
 ---
 
 ## ✨ Features
 
-✅ **Container activation with `@EnableDI`** – Tell Node-Boot which IoC container to use.  
+✅ **Nonna, zero setup** – DI, auto-configuration, and `@ConfigurationProperties` binding all work out of the box.  
+✅ **Pluggable** – `@EnableDI(container)` swaps Nonna for your own container (TypeDI, Inversify).  
 ✅ **Type-safe injection decorator** – Use `@Inject()` on properties and constructor parameters.  
-✅ **TypeDI-first integration** – Works naturally with `typedi` and `reflect-metadata`.  
-✅ **Inversify fallback** – If TypeDI is not available, decorator application falls back to Inversify.  
+✅ **Ahead-of-time wiring** – `nodeboot-compile` infers constructor dependencies statically.  
 ✅ **Supports Node-Boot core features** – Enables DI-aware auto-configuration, configuration-properties binding, and other container-backed features.
 
 ---
 
 ## 🚀 Installation
 
-For the standard **TypeDI** setup:
-
 ```sh
-pnpm add @nodeboot/di typedi reflect-metadata
+pnpm add @nodeboot/di reflect-metadata
 ```
-
-If you prefer **Inversify**, install it instead of TypeDI:
-
-```sh
-pnpm add @nodeboot/di inversify reflect-metadata
-```
-
-> `typedi` and `inversify` are optional dependencies of this package. In real applications you should install the container you plan to use explicitly.
 
 ---
 
 ## 🔥 Usage
 
-### 1️⃣ Enable DI in your application
+### 1️⃣ Bootstrap your application
 
-The most common setup is to use the TypeDI `Container` and enable it at the application level.
+No DI setup is needed — Node-Boot's container is active by default.
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {
@@ -65,13 +56,11 @@ export class FactsServiceApp implements NodeBootApp {
 }
 ```
 
-This is the switch that tells Node-Boot which container should resolve classes and container-managed values.
-
 ---
 
 ### 2️⃣ Inject class-based dependencies with `@Inject()`
 
-When the dependency can be resolved by type metadata, you can use `@Inject()` with no arguments.
+When the dependency can be resolved by type metadata (`emitDecoratorMetadata`), you can use `@Inject()` with no arguments on a class property.
 
 ```typescript
 import {Action, AuthorizationChecker} from "@nodeboot/context";
@@ -134,9 +123,8 @@ How a dependency is _registered_ in the container determines how it must be _inj
 the most common source of `undefined`/resolution errors:
 
 -   **Registered by class** (e.g. `iocContainer.set(SomeClass, instance)`, or an unadorned
-    `@Component()`/`@Service()`): inject by concrete type — either a plain constructor/property
-    typed with the class (resolved via reflection, no decorator needed) or `@Inject()`/`@Inject(SomeClass)`
-    with no name. This is what `@Configuration`/`@Bean` auto-configurations do when there's a single
+    `@Component()`/`@Service()`): inject by concrete type — `@Inject(SomeClass)` (or a bare
+    `@Inject()` on a property), with no name. This is what `@Configuration`/`@Bean` auto-configurations do when there's a single
     canonical implementation (e.g. `iocContainer.set(OpenAiChatModel, chatModel)`).
 -   **Registered by name/token** (e.g. `iocContainer.set("app-config", value)` — typically used when
     the token can't be a class, such as config objects, third-party clients, or an interface with
@@ -192,68 +180,87 @@ Internally, `@nodeboot/di` records metadata for field injection so Node-Boot int
 
 ---
 
-## 🧠 How `@EnableDI` works
+## 🍰 Nonna
 
-`@EnableDI(iocContainer, options?)` stores your container configuration in the shared `ApplicationContext`.
+Nonna is a **zero-reflection** DI container: it never reads
+`design:paramtypes` for implicit constructor parameters, so a plain `constructor(private readonly fooService: FooService) {}` with no
+decorator is **not** enough for Nonna to resolve `fooService` on its own. A class's constructor dependencies must come from one of:
 
-During application bootstrap, Node-Boot reads that configuration and calls its internal `useContainer(...)` bridge. From that point on, DI-aware parts of the framework resolve instances through your container.
+1. **An explicit `@Inject(token)` on every constructor parameter** — a concrete class, string, or
+   symbol token all work:
 
-Without `@EnableDI(...)`, Node-Boot logs warnings and skips DI-dependent features such as:
+    ```typescript
+    @Service()
+    export class UserService {
+        constructor(
+            @Inject(UserRepository) private readonly userRepo: UserRepository,
+            @Inject("app-name") private readonly appName: string,
+        ) {}
+    }
+    ```
 
--   dependency injection-backed resolution
--   auto-configuration bindings
--   `@ConfigurationProperties` binding
--   some OpenAPI integration paths
+2. **Running Nonna's AOT compiler** (`nonna-compile`) as a build step, which statically scans your
+   TypeScript source with the real compiler and generates the dependency graph ahead of time — no
+   decorators needed for concrete-class parameters. Add `@nonnajs/compiler` as a dev dependency:
+
+    ```json
+    {
+        "scripts": {
+            "compile-deps": "nonna-compile",
+            "prebuild": "npm run compile-deps",
+            "build": "tsc -p tsconfig.build.json"
+        }
+    }
+    ```
+
+    No further configuration is needed: `@nodeboot/core` and `@nodeboot/di` each ship a `.nonna.json`
+    that teaches the compiler Node-Boot's decorators (`@Component`/`@Service`/`@Controller`/
+    `@Middleware`/`@Interceptor` and `@Inject`), and the generated file imports `defineDependencies`
+    from `@nodeboot/di`, so you don't need a direct `@nonnajs/di` dependency either. Import the
+    generated file once at application bootstrap, e.g.
+    `import "./__generated__/nonna-dependencies.generated";`, before `NodeBoot.run(...)`. Note that
+    the compiler rejects a bare `@Inject()` on a constructor parameter — either drop it (a concrete
+    class type is inferred) or pass the token explicitly.
+
+If neither applies, resolving that class throws a clear
+"unresolved constructor dependency" error at startup rather than silently returning `undefined`.
+
+**Property injection is supported.** `@Inject()` on a class _property_ records a field dependency
+with Nonna — common in framework-managed classes like persistence event subscribers. A bare
+`@Inject()` on a field reads the property type from `design:type` (requires
+`emitDecoratorMetadata`); `@Inject(token)` works with an explicit class, string, or symbol token.
 
 ---
 
-## 🔌 IoC container contract
+## 🔌 Using another container (`@EnableDI`)
 
-The container passed to `@EnableDI(...)` must satisfy Node-Boot's container abstraction:
+Nonna is the default. Without `@EnableDI(...)` nothing needs to be configured. To use a different container,
+decorate your application class with `@EnableDI(container)` and install the matching library
+(`typedi` or `inversify`; both are optional dependencies of `@nodeboot/di`, so they install automatically where possible and are never required):
 
--   `get(...)` – resolve a class or named binding
--   `set(...)` – register a class or named binding
--   `has(...)` – check whether a binding exists
--   `reset()` – clear container state
+```typescript
+import {Container} from "typedi";
+import {EnableDI} from "@nodeboot/di";
 
-This shape matches the APIs Node-Boot expects from the runtime container bridge.
+@EnableDI(Container)
+@NodeBootApplication()
+export class MyApp implements NodeBootApp {
+    start() {
+        return NodeBoot.run(ExpressServer);
+    }
+}
+```
 
-### Optional `UseContainerOptions`
-
-`@EnableDI(container, options)` accepts container options that affect fallback behavior:
-
--   `fallback` – use the default container when the user container returns nothing
--   `fallbackOnErrors` – use the default container when the user container throws
-
-These options are forwarded to Node-Boot's internal container bridge.
-
----
-
-## 🏗️ How this relates to TypeDI
-
-TypeDI is the primary integration target of this package.
-
--   Node-Boot applications commonly call `@EnableDI(Container)` using `Container` from `typedi`
--   Node-Boot decorators such as `@Component()` and `@Service()` eventually delegate to `decorateDi(...)`
--   `decorateDi(...)` tries to apply TypeDI's `@Service(...)` decorator first
--   `@Inject(...)` tries to apply TypeDI's `@Inject(...)` decorator first
-
-If TypeDI is not available at runtime, the package attempts to fall back to Inversify's `@injectable()` and `@inject(...)` decorators.
-
-So while `@nodeboot/di` is a Node-Boot package, it is intentionally thin: it acts as the integration layer between Node-Boot and the underlying DI framework.
+`EnableDI` accepts any `IocContainer` (`get`, `set`, `has`, `reset`) and an optional `UseContainerOptions`
+second argument. Beans still register with Nonna, so the default keeps working; when `@EnableDI(...)` is
+present, `@Component`/`@Service`/`@Inject` are additionally applied through the plugin library — for beans
+decorated before `@EnableDI` ran as well as after — so apps that never use `@EnableDI` never touch TypeDI or
+Inversify, even when those libraries are installed. With TypeDI, inject with its own conventions (for example
+`@Inject(() => Dependency)` on properties). The Nonna compiler step is not needed with a plugin container.
 
 ---
 
 ## 📚 API Reference
-
-### `EnableDI(iocContainer, options?)`
-
-Registers the IoC container that Node-Boot should use.
-
-```typescript
-EnableDI(Container);
-EnableDI(Container, {fallback: true, fallbackOnErrors: true});
-```
 
 ### `Inject(...)`
 
@@ -273,9 +280,8 @@ Supported forms from the public API include:
 
 Use `@nodeboot/di` when you want to:
 
--   enable container-backed Node-Boot features
--   wire your application to **TypeDI**
+-   use container-backed Node-Boot features
 -   inject services, configuration values, and named bindings with `@Inject(...)`
 -   support framework-managed classes that still need dependency injection
 
-If you are building a Node-Boot application with TypeDI, this package is the standard entry point for enabling DI.
+If you are building a Node-Boot application, this package is the standard entry point for DI.

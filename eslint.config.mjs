@@ -18,15 +18,20 @@ export default [
     // Global ignores
     {
         ignores: [
-            "dist/",
+            "**/dist/",
             "node_modules/",
             "coverage/",
             "scripts/",
             "**/*.d.ts",
+            "**/*.d.mts",
+            "**/*.d.cts",
             "**/*.js",
+            "**/*.mjs",
+            "**/*.cjs",
             "**/.encore/**",
             "**/encore.gen/**",
             "benchmarking/**",
+            "ai/**",
         ],
     },
 

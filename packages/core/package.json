@@ -51,6 +51,7 @@
         "dist",
         "package.json",
         "README.md",
-        "config.d.ts"
+        "config.d.ts",
+        ".nonna.json"
     ]
 }

@@ -35,7 +35,7 @@ In the overall Node-Boot architecture, `@nodeboot/core` sits in the middle:
 At minimum, install `@nodeboot/core` together with a server adapter and the packages commonly used to power Node-Boot applications:
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/di @nodeboot/aot typedi reflect-metadata winston
+pnpm add @nodeboot/core @nodeboot/di @nodeboot/aot reflect-metadata winston
 ```
 
 Then add the server package you want to run on:
@@ -110,7 +110,6 @@ This is the real startup pattern used in `samples/sample-express/src/app.ts`:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
 import {EnableAuthorization} from "@nodeboot/authorization";
@@ -118,14 +117,11 @@ import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
 import {ExpressServer} from "@nodeboot/express-server";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
-import {EnableDI} from "@nodeboot/di";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableHttpClients} from "@nodeboot/starter-http";
 import {EnableValidations} from "@nodeboot/starter-validation";
 import {EnableActuator} from "@nodeboot/starter-actuator";
-
-@EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
@@ -213,14 +209,10 @@ That keeps the entry point explicit and consistent across samples and starters.
 
 ## 🔍 Component scanning and DI composition
 
-`@nodeboot/core` does **not** itself scan the filesystem. In Node-Boot applications, component discovery is usually enabled with `@EnableComponentScan()` from `@nodeboot/aot` plus `@EnableDI(Container)` from `@nodeboot/di`.
+`@nodeboot/core` does **not** itself scan the filesystem. In Node-Boot applications, component discovery is usually enabled with `@EnableComponentScan()` from `@nodeboot/aot`; DI (Nonna, from `@nodeboot/di`) is always on.
 
 ```typescript
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
-import {Container} from "typedi";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {
@@ -232,9 +224,7 @@ export class SampleApp implements NodeBootApp {
 
 `@EnableComponentScan()` first looks for `dist/node-boot-beans.json` and, if it exists, imports the compiled bean modules listed there. Otherwise it falls back to recursively scanning compiled `.js` files in `dist/` for known decorators.
 
-Once the DI container is available, `BaseServer.configure(...)` calls `useContainer(...)` so controllers, middleware, interceptors, configuration beans, and starter-provided features resolve through the selected IoC container.
-
-> Without `@EnableDI(Container)`, Node-Boot still boots, but DI-dependent features such as auto-configuration, configuration properties, and some starters are skipped.
+Once the DI container is ready, `BaseServer.configure(...)` calls `useContainer(...)` so controllers, middleware, interceptors, configuration beans, and starter-provided features resolve through the IoC container.
 
 ---
 

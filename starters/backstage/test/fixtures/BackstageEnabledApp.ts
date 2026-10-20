@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableBackstage} from "../../src";
@@ -12,7 +10,6 @@ import {EnableBackstage} from "../../src";
  * constructor never makes a network call - it just stores a lazy `discoveryApi.getBaseUrl()`
  * closure, resolved only when an actual catalog method is invoked.
  */
-@EnableDI(Container)
 @EnableBackstage()
 @NodeBootApplication()
 export class BackstageEnabledApp implements NodeBootApp {

@@ -56,7 +56,6 @@ These decorators define the shape of the application itself: its entry point, an
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @EnableActuator()
@@ -794,31 +793,15 @@ export class DevDatabaseConfig {
 
 The low-level DI mechanics that power `@Component`/`@Service` registration and constructor/property injection.
 
-<a name="enabledi"></a>
-
-### `@EnableDI(iocContainer, options?)`
-
-**Purpose:** Node-Boot doesn't ship its own IoC container implementation — it's container-agnostic by design. `@EnableDI` tells the framework which container to actually use (e.g. `typedi`'s `Container`) and lets you pass extra container options. Without it, `@Component`/`@Service`/`@Inject` metadata is recorded but nothing gets instantiated or injected.
-
-**Example:**
-
-```ts
-import {Container} from "typedi";
-
-@EnableDI(Container)
-@NodeBootApplication()
-export class SampleApp implements NodeBootApp {
-    start(): Promise<NodeBootAppView> {
-        return NodeBoot.run(ExpressServer);
-    }
-}
-```
-
 <a name="inject"></a>
 
 ### `@Inject()` / `@Inject(type)` / `@Inject(name)` / `@Inject(token)`
 
-**Purpose:** While constructor parameters are injected automatically based on their TypeScript type, `@Inject` is needed whenever the container can't infer the dependency on its own — injecting by string name/token (e.g. a config bean registered under `"app-config"`), injecting an abstract type/interface, or injecting into a class property instead of a constructor parameter.
+**Purpose:** Node-Boot's container (Nonna) never reads reflection metadata for implicit constructor
+parameters — a constructor param only auto-wires without a decorator if you run the
+`nodeboot-compile` AOT build step; otherwise every param needs an explicit `@Inject(...)`. `@Inject` is also needed for: injecting by string name/token (e.g. a config bean registered
+under `"app-config"`), injecting an abstract type/interface, or injecting into a class property
+(property injection via `@Inject()` on class fields is supported).
 
 **Example:**
 
@@ -981,7 +964,6 @@ getProfile(@CurrentUser({required: true}) user: User) {
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
@@ -1392,7 +1374,6 @@ class MyScheduledService {
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableHttpClients()
 @NodeBootApplication()
 export class SampleBackendApp implements NodeBootApp {
@@ -1561,7 +1542,6 @@ class OrderEventsListener {
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableBackstage()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {
@@ -1588,7 +1568,6 @@ export class SampleApp implements NodeBootApp {
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableSupabase()
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
@@ -1615,7 +1594,6 @@ export class MyApp implements NodeBootApp {
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableFirebase()
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
@@ -1642,7 +1620,6 @@ export class MyApp implements NodeBootApp {
 **Example:**
 
 ```ts
-@EnableDI(Container)
 @EnableOpenAI()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {

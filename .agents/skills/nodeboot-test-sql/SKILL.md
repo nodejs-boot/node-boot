@@ -31,7 +31,7 @@ test("queries repository", async () => {
 });
 ```
 
-For standard applications, retrieve repositories using the `useRepository(MyRepository)` return hook. _(Note: Within Node-Boot monorepo internal package tests only, resolve via `Container.get(MyRepository)` from `typedi` due to monorepo workspace dependencies vs. published `@nodeboot/node-test`)._
+For standard applications, retrieve repositories using the `useRepository(MyRepository)` return hook. _(Note: Within Node-Boot monorepo internal package tests only, resolve via `ApplicationContext.getIocContainer()!.get(MyRepository)` from `@nodeboot/context` due to monorepo workspace dependencies vs. published `@nodeboot/node-test`)._
 
 Use this for the majority of repository/service tests where you're validating query logic, not
 driver-specific SQL behavior. Note: TypeORM migrations targeting Postgres/MySQL-specific SQL

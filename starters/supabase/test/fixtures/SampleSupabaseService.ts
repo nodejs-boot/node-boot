@@ -1,9 +1,10 @@
 import {Service} from "@nodeboot/core";
+import {Inject} from "@nodeboot/di";
 import {SupabaseClient} from "@supabase/supabase-js";
 
 @Service()
 export class SampleSupabaseService {
-    constructor(public readonly supabase: SupabaseClient) {}
+    constructor(@Inject(SupabaseClient) public readonly supabase: SupabaseClient) {}
 
     public async getProfiles() {
         const {data, error} = await this.supabase.from("profiles").select("*");

@@ -61,14 +61,10 @@ Apply `@EnableFirebase()` to your main application class:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootAppView, NodeBootApplication} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableFirebase} from "@nodeboot/starter-firebase";
-
-@EnableDI(Container)
 @EnableFirebase()
 @EnableComponentScan()
 @NodeBootApplication()

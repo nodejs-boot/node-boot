@@ -1,9 +1,8 @@
 import "reflect-metadata";
-import {Container} from "typedi";
+import "./__generated__/nonna-dependencies.generated";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {EnableValidations} from "@nodeboot/starter-validation";
-import {EnableDI} from "@nodeboot/di";
 import {CloudflareServer} from "@nodeboot/cloudflare-server";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
@@ -29,7 +28,6 @@ import {appConfig} from "./app-config";
  * and its `CloudflareServer` exposes a `fetch` handler function that the Cloudflare
  * runtime invokes for every incoming request. See `src/worker.ts`.
  */
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableValidations()
 @NodeBootApplication()

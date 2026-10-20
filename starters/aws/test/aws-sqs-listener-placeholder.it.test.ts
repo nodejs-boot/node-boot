@@ -3,12 +3,12 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {PlaceholderSqsListenerService} from "./fixtures/PlaceholderSqsListenerService";
 import {SQSClient} from "@aws-sdk/client-sqs";
 import {AwsMockServerHandle, startAwsMockServer} from "./fixtures/awsMockServer";
+import {ApplicationContext} from "@nodeboot/context";
 
 let mockServer: AwsMockServerHandle;
 
@@ -46,10 +46,10 @@ describe("@nodeboot/starter-aws - SQS listener placeholder resolution", () => {
     });
 
     test("resolves queue URL from config placeholder and registers listener", async () => {
-        const sqsClient = Container.get(SQSClient);
+        const sqsClient = ApplicationContext.getIocContainer()!.get(SQSClient);
         assert.ok(sqsClient);
 
-        const service = Container.get(PlaceholderSqsListenerService);
+        const service = ApplicationContext.getIocContainer()!.get(PlaceholderSqsListenerService);
         assert.ok(service);
     });
 });

@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -16,7 +15,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.dynamodb n
     });
 
     test("never registers a DynamoDBClient in the IoC container", () => {
-        assert.equal(Container.has(DynamoDBClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(DynamoDBClient), false);
         assert.equal(ApplicationContext.get().applicationFeatures[AWS_DYNAMODB_FEATURE], undefined);
     });
 });

@@ -7,11 +7,11 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {DataSource} from "typeorm";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {MigrationApp} from "./fixtures/MigrationApp";
 import {AuditLogRepository} from "./fixtures/AuditLogRepository";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-persistence auto-configuration - @Migration applied", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -34,8 +34,8 @@ describe("@nodeboot/starter-persistence auto-configuration - @Migration applied"
         //
         // `@nodeboot/node-test`'s own `useRepository()`/`useService()` resolve against a different
         // (published) `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container.
-        const dataSource = Container.get(DataSource);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const dataSource = ApplicationContext.getIocContainer()!.get(DataSource);
 
         const tables: Array<{name: string}> = await dataSource.query(
             "SELECT name FROM sqlite_master WHERE type = 'table'",
@@ -47,7 +47,7 @@ describe("@nodeboot/starter-persistence auto-configuration - @Migration applied"
     });
 
     test("the migration-created table is fully usable through @DataRepository", async () => {
-        const repository = Container.get(AuditLogRepository);
+        const repository = ApplicationContext.getIocContainer()!.get(AuditLogRepository);
 
         const saved = await repository.save(repository.create({action: "user.created"}));
         assert.ok(saved.id);

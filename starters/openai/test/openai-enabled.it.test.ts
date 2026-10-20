@@ -6,10 +6,10 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import OpenAI from "openai";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {OpenAiEnabledApp} from "./fixtures/OpenAiEnabledApp";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-openai auto-configuration - integrations.openai configured", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -25,9 +25,8 @@ describe("@nodeboot/starter-openai auto-configuration - integrations.openai conf
     test("registers a real OpenAI client configured with the baseURL/apiKey from app-config", () => {
         // `@nodeboot/node-test`'s own `useService()` resolves against a different (published)
         // `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the client into.
-        const client = Container.get(OpenAI);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const client = ApplicationContext.getIocContainer()!.get(OpenAI);
 
         assert.ok(client instanceof OpenAI);
         assert.equal(client.baseURL, "https://openai.example.com/v1");

@@ -9,10 +9,10 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {SchedulingDisabledApp} from "./fixtures/SchedulingDisabledApp";
 import {DisabledCounterService} from "./fixtures/DisabledCounterService";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-scheduler auto-configuration - no @EnableScheduling() applied", () => {
     useNodeBoot(SchedulingDisabledApp as any, ({useConfig}) => {
@@ -20,7 +20,7 @@ describe("@nodeboot/starter-scheduler auto-configuration - no @EnableScheduling(
     });
 
     test("the decorated method never runs, even after waiting past its cron interval", async () => {
-        const counter = Container.get(DisabledCounterService);
+        const counter = ApplicationContext.getIocContainer()!.get(DisabledCounterService);
 
         await new Promise(resolve => setTimeout(resolve, 1500));
 

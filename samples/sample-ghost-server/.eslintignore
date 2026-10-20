@@ -3,3 +3,5 @@ node_modules
 dist
 .lintstagedrc.js
 **.d.ts
+
+__generated__

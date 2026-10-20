@@ -10,7 +10,6 @@ Use this starter when the app should create one Supabase client from config and 
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableSupabase()
 @EnableComponentScan()
 @NodeBootApplication()

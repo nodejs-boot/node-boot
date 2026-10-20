@@ -144,7 +144,7 @@ Several sharp edges were discovered building these, all silent failure modes —
    this monorepo, always use `useNodeBoot` return hooks (`useService`, `useRepository`, etc.).
    Inside this monorepo only, local workspace packages diverge from the published packages bundled
    with `@nodeboot/node-test`, creating an `ApplicationContext` singleton mismatch; resolve beans
-   via `Container.get()` / `Container.set()` (from `typedi`) instead.
+   via `ApplicationContext.getIocContainer()!.get(X)` (from `@nodeboot/context`) instead.
 4. **`useTimer()`'s fake clock can't fast-forward a timer already scheduled during app boot**
    (its `beforeTests` installation runs after the app starts). A real (short) wait is the only thing
    that works for e.g. a `node-cron` tick wired up by a `@Lifecycle`-phase adapter.

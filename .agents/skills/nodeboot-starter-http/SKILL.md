@@ -10,7 +10,6 @@ Use this starter for outbound API clients. It is not the skill for selecting the
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableHttpClients()
 @EnableComponentScan()
 @NodeBootApplication()
@@ -51,7 +50,7 @@ For automated proof that `@EnableHttpClients()` actually autowires, see
 `starters/http/test/http-client-enabled.it.test.ts` and `http-client-disabled.it.test.ts`: two
 `useNodeBoot()`-booted apps (on `@nodeboot/ghost-server`), identical except one applies
 `@EnableHttpClients()`. (Standard apps use `useService()`; monorepo internal tests resolve via
-`Container.get()` from `typedi` due to workspace package dependencies) and drive it against a small
+`ApplicationContext.getIocContainer()!.get(X)` from `@nodeboot/context` due to workspace package dependencies) and drive it against a small
 local mock server (`test/fixtures/downstreamServer.ts`) — there's no bundled "mock outbound HTTP
 response" hook in `@nodeboot/node-test`, so a real local server is the most direct way to prove the
 round trip. See `nodeboot-extending-nodeboot`'s "Testing a starter package" section before writing

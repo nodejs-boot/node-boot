@@ -16,10 +16,10 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {SchedulingEnabledApp} from "./fixtures/SchedulingEnabledApp";
 import {EnabledCounterService} from "./fixtures/EnabledCounterService";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-scheduler auto-configuration - @EnableScheduling() applied", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -32,9 +32,8 @@ describe("@nodeboot/starter-scheduler auto-configuration - @EnableScheduling() a
     test("the scheduled method actually runs, resolved from the real DI container", async () => {
         // `@nodeboot/node-test`'s own `useService()` resolves against a different (published)
         // `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the scheduler's resolved bean into.
-        const counter = Container.get(EnabledCounterService);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const counter = ApplicationContext.getIocContainer()!.get(EnabledCounterService);
 
         assert.equal(counter.runCount, 0);
 

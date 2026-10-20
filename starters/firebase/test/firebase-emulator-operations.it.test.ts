@@ -7,13 +7,13 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {auth, storage} from "firebase-admin";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {FirebaseEnabledApp} from "./fixtures/FirebaseEnabledApp";
 import {testServiceAccountPath} from "./fixtures/testServiceAccountFile";
 import {createFirebaseMockServer, FirebaseMockServerHandle} from "./fixtures/firebaseMockServer";
 import {FIREBASE_AUTH_BEAN, FIREBASE_STORAGE_BEAN} from "../src";
+import {ApplicationContext} from "@nodeboot/context";
 
 const MOCK_PORT = 34975;
 process.env["FIREBASE_AUTH_EMULATOR_HOST"] = `127.0.0.1:${MOCK_PORT}`;
@@ -58,7 +58,7 @@ describe("@nodeboot/starter-firebase - emulator operations (positive and negativ
 
     // 1. Firebase Auth operations via emulator
     test("Auth: fetches an existing user successfully (positive case)", async () => {
-        const firebaseAuth = Container.get<auth.Auth>(FIREBASE_AUTH_BEAN);
+        const firebaseAuth = ApplicationContext.getIocContainer()!.get<auth.Auth>(FIREBASE_AUTH_BEAN);
         const user = await firebaseAuth.getUser("test-uid-1");
 
         assert.equal(user.uid, "test-uid-1");
@@ -67,7 +67,7 @@ describe("@nodeboot/starter-firebase - emulator operations (positive and negativ
     });
 
     test("Auth: throws auth/user-not-found when user does not exist (negative case)", async () => {
-        const firebaseAuth = Container.get<auth.Auth>(FIREBASE_AUTH_BEAN);
+        const firebaseAuth = ApplicationContext.getIocContainer()!.get<auth.Auth>(FIREBASE_AUTH_BEAN);
 
         await assert.rejects(
             async () => {
@@ -83,7 +83,7 @@ describe("@nodeboot/starter-firebase - emulator operations (positive and negativ
 
     // 2. Cloud Storage operations via emulator
     test("Storage: retrieves metadata for an existing file (positive case)", async () => {
-        const firebaseStorage = Container.get<storage.Storage>(FIREBASE_STORAGE_BEAN);
+        const firebaseStorage = ApplicationContext.getIocContainer()!.get<storage.Storage>(FIREBASE_STORAGE_BEAN);
         const bucket = firebaseStorage.bucket();
         const file = bucket.file("sample.txt");
 
@@ -94,7 +94,7 @@ describe("@nodeboot/starter-firebase - emulator operations (positive and negativ
     });
 
     test("Storage: throws 404 when file does not exist (negative case)", async () => {
-        const firebaseStorage = Container.get<storage.Storage>(FIREBASE_STORAGE_BEAN);
+        const firebaseStorage = ApplicationContext.getIocContainer()!.get<storage.Storage>(FIREBASE_STORAGE_BEAN);
         const bucket = firebaseStorage.bucket();
         const file = bucket.file("missing-file.txt");
 

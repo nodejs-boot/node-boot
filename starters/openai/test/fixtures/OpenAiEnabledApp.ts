@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableOpenAI} from "../../src";
@@ -12,7 +10,6 @@ import {EnableOpenAI} from "../../src";
  * `OpenAI` SDK client never makes a network call by itself - safe to do in a test with a fake key,
  * as long as nothing actually calls the API.
  */
-@EnableDI(Container)
 @EnableOpenAI()
 @NodeBootApplication()
 export class OpenAiEnabledApp implements NodeBootApp {

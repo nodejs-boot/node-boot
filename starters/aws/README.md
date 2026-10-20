@@ -17,14 +17,10 @@ npm install @nodeboot/starter-aws
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableAws} from "@nodeboot/starter-aws";
-
-@EnableDI(Container)
 @EnableAws()
 @EnableComponentScan()
 @NodeBootApplication()

@@ -1,7 +1,9 @@
 import "@nodeboot/context";
 import {describe, it} from "node:test";
 import assert from "node:assert/strict";
+import {Injector} from "@nonnajs/di";
 import {Inject, REQUIRES_FIELD_INJECTION_KEY} from "../src/decorators/Inject";
+import {decorateDi} from "../src/ioc/makeDiDecoration";
 
 class Dependency {}
 
@@ -69,28 +71,87 @@ describe("Inject decorator", () => {
         assert.equal(Reflect.getMetadata(REQUIRES_FIELD_INJECTION_KEY, Foo.prototype), undefined);
     });
 
-    it("delegates to decorateInjection and still succeeds (returns no error) when a concrete type is given", () => {
-        assert.doesNotThrow(() => {
-            class Foo {
-                @Inject(Dependency)
-                dependency!: Dependency;
-            }
-            void Foo;
-        });
-    });
+    describe("Nonna wiring", () => {
+        it("wires an explicit @Inject(Dependency) constructor param for resolution via Nonna", () => {
+            class NonnaDependency {}
 
-    it("propagates CannotInjectValueError thrown by the underlying typedi Inject when the type cannot be resolved", () => {
-        assert.throws(
-            () => {
-                class Foo {
-                    // No explicit type/token is passed and no design:type metadata is available for
-                    // this manually-declared property, so typedi cannot resolve an injectable type.
-                    @Inject()
-                    dependency!: unknown;
-                }
-                void Foo;
-            },
-            (error: any) => error.name === "CannotInjectValueError",
-        );
+            class NonnaConsumer {
+                constructor(@Inject(NonnaDependency) readonly dependency: NonnaDependency) {}
+            }
+
+            decorateDi(NonnaDependency);
+            decorateDi(NonnaConsumer);
+
+            const injector = Injector.create();
+            injector.refresh();
+
+            const consumer = injector.get(NonnaConsumer);
+            assert.ok(consumer.dependency instanceof NonnaDependency);
+        });
+
+        it("wires an explicit @Inject('string-token') constructor param for resolution via Nonna", () => {
+            class NonnaStringTokenConsumer {
+                constructor(@Inject("nonna-app-name") readonly appName: string) {}
+            }
+
+            decorateDi(NonnaStringTokenConsumer);
+
+            const injector = Injector.create();
+            injector.register({provide: "nonna-app-name", useValue: "my-app"});
+            injector.refresh();
+
+            assert.equal(injector.get(NonnaStringTokenConsumer).appName, "my-app");
+        });
+
+        it("wires an explicit @Inject(Dependency) class field for resolution via Nonna", () => {
+            class NonnaPropDependency {}
+
+            class NonnaPropConsumer {
+                @Inject(NonnaPropDependency)
+                dependency!: NonnaPropDependency;
+            }
+
+            decorateDi(NonnaPropDependency);
+            decorateDi(NonnaPropConsumer);
+
+            const injector = Injector.create();
+            injector.refresh();
+
+            const consumer = injector.get(NonnaPropConsumer);
+            assert.ok(consumer.dependency instanceof NonnaPropDependency);
+        });
+
+        it("wires an explicit @Inject('string-token') class field for resolution via Nonna", () => {
+            class NonnaStringTokenPropConsumer {
+                @Inject("nonna-field-app-name")
+                appName!: string;
+            }
+
+            decorateDi(NonnaStringTokenPropConsumer);
+
+            const injector = Injector.create();
+            injector.register({provide: "nonna-field-app-name", useValue: "my-app"});
+            injector.refresh();
+
+            assert.equal(injector.get(NonnaStringTokenPropConsumer).appName, "my-app");
+        });
+
+        it("a bare @Inject() class field falls back to design:type, just like a bare @Inject() constructor param", () => {
+            class NonnaBareFieldDependency {}
+
+            class NonnaBareFieldConsumer {
+                @Inject()
+                dependency!: NonnaBareFieldDependency;
+            }
+
+            decorateDi(NonnaBareFieldDependency);
+            decorateDi(NonnaBareFieldConsumer);
+
+            const injector = Injector.create();
+            injector.refresh();
+
+            const consumer = injector.get(NonnaBareFieldConsumer);
+            assert.ok(consumer.dependency instanceof NonnaBareFieldDependency);
+        });
     });
 });

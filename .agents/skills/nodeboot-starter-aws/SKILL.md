@@ -10,7 +10,6 @@ Use this starter when a Node-Boot service should inject AWS SDK clients instead 
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableAws()
 @EnableComponentScan()
 @NodeBootApplication()

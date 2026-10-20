@@ -1,0 +1,4 @@
+{
+    "injectDecorators": ["@nodeboot/di#Inject"],
+    "defineDependenciesModule": "@nodeboot/di"
+}

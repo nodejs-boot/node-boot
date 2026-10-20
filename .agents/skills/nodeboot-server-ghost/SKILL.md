@@ -19,7 +19,6 @@ Read [`../_shared/fresh-vs-existing.md`](../_shared/fresh-vs-existing.md) first,
 From [`samples/sample-ghost-server/src/app.ts`](https://github.com/nodejs-boot/node-boot/blob/main/samples/sample-ghost-server/src/app.ts):
 
 ```ts
-@EnableDI(Container)
 @EnableRepositories()
 @EnableScheduling()
 @EnableHttpClients()

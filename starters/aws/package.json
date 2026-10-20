@@ -1,6 +1,6 @@
 {
     "name": "@nodeboot/starter-aws",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "description": "Node-Boot starter package for AWS services",
     "author": "Manuel Santos <ney.br.santos@gmail.com>",
     "license": "MIT",
@@ -51,8 +51,7 @@
     "devDependencies": {
         "@nodeboot/di": "workspace:*",
         "@nodeboot/ghost-server": "workspace:*",
-        "reflect-metadata": "^0.2.1",
-        "typedi": "^0.10.0"
+        "reflect-metadata": "^0.2.1"
     },
     "files": [
         "dist",

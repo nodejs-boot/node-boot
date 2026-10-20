@@ -24,6 +24,8 @@
         "dev": "wrangler dev",
         "invoke:local": "ts-node src/local-invoke.ts",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "compile-deps": "nonna-compile",
+        "prebuild": "npm run compile-deps",
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
         "deploy": "wrangler deploy",
@@ -32,6 +34,7 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
+        "pretsc": "npm run compile-deps",
         "tsc": "tsc"
     },
     "dependencies": {
@@ -46,12 +49,12 @@
         "reflect-metadata": "^0.2.1",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
-        "typedi": "^0.10.0",
         "winston": "^3.17.0"
     },
     "devDependencies": {
         "@types/node": "^22.13.4",
         "ts-node": "^10.9.2",
-        "wrangler": "^4.0.0"
+        "wrangler": "^4.0.0",
+        "@nonnajs/compiler": "^2.0.0"
     }
 }

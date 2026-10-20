@@ -62,7 +62,7 @@ silently breaks the package's `pnpm test` script.
 ## Resolving beans in tests: standard apps vs. Node-Boot monorepo
 
 -   **Standard apps (outside Node-Boot monorepo)**: Always use `useNodeBoot` return hooks (`const { useService, useRepository, useAppContext } = useNodeBoot(...)`). Calling `useService(MyService)` or `useRepository(MyRepository)` inside test blocks is the preferred, canonical way to access beans in integration tests.
--   **Node-Boot monorepo internal tests only**: When testing packages inside the Node-Boot monorepo itself, packages resolve `@nodeboot/context`/`core` from local workspace sources while `@nodeboot/node-test` depends on published npm versions. Because `ApplicationContext` is a singleton per module instance, return hooks resolve against `@nodeboot/node-test`'s internal copy instead of the test app. In monorepo package tests only, resolve beans directly via `Container.get(MyClass)` from `typedi`.
+-   **Node-Boot monorepo internal tests only**: When testing packages inside the Node-Boot monorepo itself, packages resolve `@nodeboot/context`/`core` from local workspace sources while `@nodeboot/node-test` depends on published npm versions. Because `ApplicationContext` is a singleton per module instance, return hooks resolve against `@nodeboot/node-test`'s internal copy instead of the test app. In monorepo package tests only, resolve beans directly via `ApplicationContext.getIocContainer()!.get(MyClass)` from `@nodeboot/context`.
 
 ## `useTimer()` can't fast-forward a timer scheduled during app boot
 

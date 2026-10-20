@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {JsonObject} from "@nodeboot/context";
 import {ExpressServer} from "../../src";
@@ -17,8 +15,6 @@ import "./SecureController";
 import "./ErrorsController";
 import "./RequestLogMiddleware";
 import "./TestErrorHandler";
-
-@EnableDI(Container)
 @EnableAuthorization(TestCurrentUserChecker, TestAuthorizationChecker)
 @NodeBootApplication()
 export class TestApp implements NodeBootApp {

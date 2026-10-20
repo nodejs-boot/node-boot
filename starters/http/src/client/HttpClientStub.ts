@@ -26,7 +26,7 @@ import {Axios} from "axios";
  * The decorated HTTP client can then be injected into a service using `@Service()`.
  *
  * ```typescript
- * import { Service } from "typedi";
+ * import { Service } from "@nodeboot/core";
  * import { Logger } from "@nodeboot/logger";
  * import { MicroserviceHttpClient } from "./MicroserviceHttpClient";
  *

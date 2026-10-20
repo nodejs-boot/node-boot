@@ -38,8 +38,7 @@
     "devDependencies": {
         "@nodeboot/di": "workspace:*",
         "@nodeboot/ghost-server": "workspace:*",
-        "reflect-metadata": "^0.2.1",
-        "typedi": "^0.10.0"
+        "reflect-metadata": "^0.2.1"
     },
     "files": [
         "dist",

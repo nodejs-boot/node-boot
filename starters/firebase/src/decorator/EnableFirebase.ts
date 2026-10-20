@@ -11,7 +11,6 @@ import {FirebaseAdminConfiguration} from "../configuration/FirebaseAdminConfigur
  * Apply `@EnableFirebase()` to the main application class to enable Firebase services.
  *
  * ```typescript
- * @EnableDI(Container)
  * @EnableFirebase()
  * @EnableComponentScan()
  * @NodeBootApplication()

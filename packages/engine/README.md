@@ -88,13 +88,9 @@ Applications usually use the engine indirectly through a server package. This is
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {ExpressServer} from "@nodeboot/express-server";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {

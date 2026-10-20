@@ -3,11 +3,11 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {InvalidUrlSqsListenerService} from "./fixtures/InvalidUrlSqsListenerService";
 import {SQSClient} from "@aws-sdk/client-sqs";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-aws - SQS listener with invalid URL", () => {
     useNodeBoot(AwsEnabledApp as any, ({useConfig}) => {
@@ -26,10 +26,10 @@ describe("@nodeboot/starter-aws - SQS listener with invalid URL", () => {
     });
 
     test("skips registering SQS listener when URL format does not match AWS SQS pattern", async () => {
-        const sqsClient = Container.get(SQSClient);
+        const sqsClient = ApplicationContext.getIocContainer()!.get(SQSClient);
         assert.ok(sqsClient);
 
-        const service = Container.get(InvalidUrlSqsListenerService);
+        const service = ApplicationContext.getIocContainer()!.get(InvalidUrlSqsListenerService);
         assert.ok(service);
     });
 });

@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {S3Client} from "@aws-sdk/client-s3";
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {SNSClient} from "@aws-sdk/client-sns";
@@ -37,11 +36,11 @@ describe("@nodeboot/starter-aws auto-configuration - all services enabled", () =
     });
 
     test("registers all 5 AWS clients in the IoC container and enables all feature flags", async () => {
-        const s3 = Container.get(S3Client);
-        const dynamo = Container.get(DynamoDBClient);
-        const sns = Container.get(SNSClient);
-        const sqs = Container.get(SQSClient);
-        const secrets = Container.get(SecretsManagerClient);
+        const s3 = ApplicationContext.getIocContainer()!.get(S3Client);
+        const dynamo = ApplicationContext.getIocContainer()!.get(DynamoDBClient);
+        const sns = ApplicationContext.getIocContainer()!.get(SNSClient);
+        const sqs = ApplicationContext.getIocContainer()!.get(SQSClient);
+        const secrets = ApplicationContext.getIocContainer()!.get(SecretsManagerClient);
 
         assert.ok(s3 instanceof S3Client);
         assert.ok(dynamo instanceof DynamoDBClient);

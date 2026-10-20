@@ -1,6 +1,6 @@
 import {CreateUserDto, UpdateUserDto} from "../models";
 import {Logger} from "winston";
-import {Service} from "@nodeboot/core";
+import {Service, PostConstruct} from "@nodeboot/core";
 import {User, UserRepository} from "../persistence";
 import {runOnTransactionCommit, runOnTransactionRollback, Transactional} from "@nodeboot/starter-persistence";
 import {HttpError, NotFoundError} from "@nodeboot/error";
@@ -15,8 +15,10 @@ export class UserService {
         private readonly configService: ConfigService,
         private readonly userRepository: UserRepository,
         private readonly httpClient: MicroserviceHttpClient,
-    ) {
-        // Workaround to load dummy users in the database
+    ) {}
+
+    @PostConstruct()
+    public async initUsers(): Promise<void> {
         this.userRepository.count({}).then(existingUsers => {
             if (!existingUsers) {
                 Users.forEach(user => this.userRepository.save(user));

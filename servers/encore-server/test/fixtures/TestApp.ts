@@ -1,9 +1,7 @@
 import "reflect-metadata";
 import {createServer, Server} from "node:http";
-import {Container} from "typedi";
 import {ApplicationContext, JsonObject} from "@nodeboot/context";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {EncoreServer} from "../../src";
 
@@ -32,8 +30,6 @@ export async function closeTestServer(): Promise<void> {
     await new Promise<void>(resolve => wrapperServer!.close(() => resolve()));
     wrapperServer = undefined;
 }
-
-@EnableDI(Container)
 @EnableAuthorization(TestCurrentUserChecker, TestAuthorizationChecker)
 @NodeBootApplication()
 export class TestApp implements NodeBootApp {

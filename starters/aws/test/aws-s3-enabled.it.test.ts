@@ -8,7 +8,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {S3Client} from "@aws-sdk/client-s3";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -29,9 +28,8 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.s3 configu
     test("registers a real S3Client configured with the region from app-config", async () => {
         // `@nodeboot/node-test`'s own `useService()` resolves against a different (published)
         // `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the client into.
-        const client = Container.get(S3Client);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const client = ApplicationContext.getIocContainer()!.get(S3Client);
 
         assert.ok(client instanceof S3Client);
         // AWS SDK v3 clients store `region` as an async provider function, not a plain string.

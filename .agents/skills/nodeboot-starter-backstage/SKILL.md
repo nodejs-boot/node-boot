@@ -10,7 +10,6 @@ Use this starter when a Node-Boot service needs to query the Backstage software 
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableBackstage()
 @EnableComponentScan()
 @NodeBootApplication()

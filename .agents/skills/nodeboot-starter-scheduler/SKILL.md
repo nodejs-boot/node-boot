@@ -44,6 +44,6 @@ For automated proof that `@EnableScheduling()` actually autowires, see
 `useNodeBoot()`-booted apps (on `@nodeboot/ghost-server` - scheduling needs no HTTP transport),
 identical except one applies `@EnableScheduling()`. Only the enabled one ticks a `node-cron` job
 that increments a counter on a `@Service` (standard apps use `useService()`; monorepo tests resolve
-via `Container.get()` from `typedi` due to workspace dependencies). See
+via `ApplicationContext.getIocContainer()!.get(X)` (from `@nodeboot/context`) due to workspace dependencies). See
 `nodeboot-extending-nodeboot`'s "Testing a starter package" section before writing this style of
 test for a different starter.

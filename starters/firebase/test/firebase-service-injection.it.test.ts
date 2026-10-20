@@ -4,11 +4,11 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {FirebaseEnabledApp} from "./fixtures/FirebaseEnabledApp";
 import {testServiceAccountPath} from "./fixtures/testServiceAccountFile";
 import {SampleFirebaseService} from "./fixtures/SampleFirebaseService";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-firebase - Service Injection Integration", () => {
     useNodeBoot(FirebaseEnabledApp as any, ({useConfig}) => {
@@ -27,7 +27,7 @@ describe("@nodeboot/starter-firebase - Service Injection Integration", () => {
     });
 
     test("injects all 8 Firebase Admin beans into a @Service class", async () => {
-        const service = Container.get(SampleFirebaseService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleFirebaseService);
 
         assert.ok(service, "SampleFirebaseService should be resolvable from container");
         assert.ok(service.authClient, "authClient should be injected");
@@ -41,7 +41,7 @@ describe("@nodeboot/starter-firebase - Service Injection Integration", () => {
     });
 
     test("performs operations through injected service methods", async () => {
-        const service = Container.get(SampleFirebaseService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleFirebaseService);
 
         // 1. Auth custom token generation
         const token = await service.createCustomToken("user-42", {role: "editor"});

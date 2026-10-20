@@ -40,14 +40,10 @@ If you also want the Swagger UI, add `@EnableSwaggerUI()`.
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableOpenApi, EnableSwaggerUI} from "@nodeboot/starter-openapi";
-
-@EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @EnableComponentScan()

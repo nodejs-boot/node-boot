@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SecretsManagerClient} from "@aws-sdk/client-secrets-manager";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -19,7 +18,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.secrets co
     });
 
     test("registers a real SecretsManagerClient configured with the region from app-config", async () => {
-        const client = Container.get(SecretsManagerClient);
+        const client = ApplicationContext.getIocContainer()!.get(SecretsManagerClient);
 
         assert.ok(client instanceof SecretsManagerClient);
         assert.equal(await client.config.region(), "ap-southeast-1");

@@ -25,14 +25,10 @@ npm install @nodeboot/starter-http
 To use HTTP clients in a NodeBoot application, enable the feature using `@EnableHttpClients()`:
 
 ```typescript
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/scan";
 import {EnableHttpClients} from "@nodeboot/starter-http";
-
-@EnableDI(Container)
 @EnableHttpClients()
 @EnableComponentScan()
 @NodeBootApplication()

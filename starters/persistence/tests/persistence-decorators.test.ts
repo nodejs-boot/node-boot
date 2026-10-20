@@ -11,7 +11,6 @@
 import {describe, it, beforeEach, afterEach} from "node:test";
 import assert from "node:assert/strict";
 import "reflect-metadata";
-import {Container} from "typedi";
 import {
     DefaultNamingStrategy,
     EntitySubscriberInterface,
@@ -33,6 +32,7 @@ import {PersistenceCache} from "../src/decorator/PersistenceCache";
 import {PersistenceNamingStrategy} from "../src/decorator/PersistenceNamingStrategy";
 import {Transactional} from "../src/decorator/Transactional";
 import {RepositoryType} from "../src/types";
+import {createDefaultDiOptions} from "@nodeboot/di";
 
 class Widget {}
 
@@ -152,7 +152,7 @@ describe("persistence decorators (annotation-level, no live database)", () => {
         it("applies DI decoration so the class becomes injectable", () => {
             PersistenceCache()(CustomCache);
 
-            const instance = Container.get(CustomCache);
+            const instance = createDefaultDiOptions().iocContainer.get(CustomCache);
             assert.ok(instance instanceof CustomCache);
         });
     });

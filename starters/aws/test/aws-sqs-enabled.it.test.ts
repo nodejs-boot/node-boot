@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SQSClient} from "@aws-sdk/client-sqs";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -19,7 +18,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.sqs config
     });
 
     test("registers a real SQSClient configured with the region from app-config", async () => {
-        const client = Container.get(SQSClient);
+        const client = ApplicationContext.getIocContainer()!.get(SQSClient);
 
         assert.ok(client instanceof SQSClient);
         assert.equal(await client.config.region(), "sa-east-1");

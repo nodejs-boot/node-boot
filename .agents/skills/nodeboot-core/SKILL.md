@@ -17,7 +17,6 @@ not covered by the minimal skeleton below.
 ## Minimal app skeleton
 
 ```ts
-@EnableDI(Container) // from @nodeboot/di — required for constructor injection
 @EnableComponentScan() // auto-discovers @Controller/@Service/@Component/@Configuration classes
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
@@ -28,7 +27,7 @@ export class MyApp implements NodeBootApp {
 
 @Controller("/users", "v1")
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(@Inject(UserService) private readonly userService: UserService) {}
 
     @Get("/:id")
     getUser(@Param("id") id: string, @QueryParam("expand") expand?: string) {
@@ -74,9 +73,9 @@ export class UserService {
     (a string token — typically used when the DI token can't be a class, e.g. a third-party client
     or an interface with multiple implementations), every consumer must inject it the same way:
     `@Inject("SomeName") private readonly x: SomeType`. If it instead does
-    `iocContainer.set(SomeClass, instance)`, inject by concrete type — either a plain constructor
-    parameter typed with the class (`private readonly x: SomeClass`, resolved via reflection, no
-    decorator needed) or `@Inject() private readonly x: SomeClass`. Never mix the two: a bare
+    `iocContainer.set(SomeClass, instance)`, inject by concrete type — either `@Inject(SomeClass)` on a
+    constructor parameter (or a plain parameter typed with the class if you run the
+    `nodeboot-compile` AOT step) or `@Inject() private readonly x: SomeClass` on a property. Never mix the two: a bare
     `@Inject()` against a name-registered bean (or vice versa) fails to resolve. Once a name is used,
     the declared TS type on the injection site is irrelevant to resolution (just needs to be
     structurally compatible) — resolution is keyed purely off the string.

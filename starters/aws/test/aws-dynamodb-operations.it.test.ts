@@ -3,7 +3,6 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {createAwsMockServer} from "./fixtures/awsMockServer";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
@@ -14,6 +13,7 @@ import {
     ListTablesCommand,
     PutItemCommand,
 } from "@aws-sdk/client-dynamodb";
+import {ApplicationContext} from "@nodeboot/context";
 
 const MOCK_PORT = 34972;
 process.env["AWS_ENDPOINT_URL"] = `http://127.0.0.1:${MOCK_PORT}`;
@@ -50,7 +50,7 @@ describe("@nodeboot/starter-aws - DynamoDB operations integration", () => {
     });
 
     test("lists DynamoDB tables using injected DynamoDBClient", async () => {
-        const client = Container.get(DynamoDBClient);
+        const client = ApplicationContext.getIocContainer()!.get(DynamoDBClient);
         const response = await client.send(new ListTablesCommand({}));
 
         assert.ok(response.TableNames);
@@ -58,7 +58,7 @@ describe("@nodeboot/starter-aws - DynamoDB operations integration", () => {
     });
 
     test("creates table, puts item, and gets item using injected DynamoDBClient", async () => {
-        const client = Container.get(DynamoDBClient);
+        const client = ApplicationContext.getIocContainer()!.get(DynamoDBClient);
         const tableName = "users";
 
         const createRes = await client.send(

@@ -53,7 +53,7 @@ rather than raw `Error`s, so the status code carries through.
 
 ## Dependency injection
 
-Always pair `@EnableDI(Container)` (from `@nodeboot/di`, backed by `typedi`) with
+DI (Nonna, from `@nodeboot/di`) is always on — no setup. Pair it with
 `@EnableComponentScan()` unless you have an explicit reason to use `@Controllers`/`@Configurations`
 lists (tests, serverless bundles). Import `"reflect-metadata"` as the very first import in the
 application entry point — DI decorators rely on it being loaded before any decorated class.

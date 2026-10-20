@@ -46,7 +46,7 @@ matching feature set across the whole family:
 -   **`apps/nodeboot-*`** — the same routes/behaviour, built by following the real Node-Boot
     conventions from the `nodeboot-core` and `nodeboot-starter-persistence-sql` skills (mirroring
     `samples/sample-express`'s persistence layer): `@Controller`/`@Get`/`@Post` decorators, the
-    matching `@nodeboot/*-server` adapter, `@EnableDI` + `@EnableRepositories()`, a real
+    matching `@nodeboot/*-server` adapter, `@EnableRepositories()`, a real
     `@DataRepository` + TypeORM entity, and `app-config.yaml`-driven configuration — **not** a
     hand-rolled shortcut.
 
@@ -87,7 +87,7 @@ than mixing in a different ORM's overhead. Structure follows each ecosystem's ow
 Each `apps/nodeboot-*` app follows the exact same shape as `samples/sample-express`'s persistence
 layer: a `Todo` TypeORM entity, a `TodoRepository` via `@DataRepository(Todo)`, a `TodoService`
 that seeds 1,000 rows on boot if the table is empty, and `HelloController`/`TodoController` classes
-using `@Controller`/`@Get`/`@Post`. `app.ts` uses `@EnableDI(Container)` + `@EnableRepositories()`
+using `@Controller`/`@Get`/`@Post`. `app.ts` uses `@EnableRepositories()`
 plus explicit side-effect imports of the repository (no `@nodeboot/aot`/`@EnableComponentScan()`,
 since these are small single-file-per-concern apps — see `samples/sample-cloudflare` for the same
 explicit-import pattern). Only the persistence starter is enabled, keeping the comparison to

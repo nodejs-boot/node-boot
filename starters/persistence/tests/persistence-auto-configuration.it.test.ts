@@ -18,10 +18,10 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {PersistenceEnabledApp} from "./fixtures/PersistenceEnabledApp";
 import {CounterRepository} from "./fixtures/CounterRepository";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-persistence auto-configuration - @EnableRepositories() applied", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -48,9 +48,8 @@ describe("@nodeboot/starter-persistence auto-configuration - @EnableRepositories
         //
         // `@nodeboot/node-test`'s own `useRepository()`/`useService()` resolve against a different
         // (published) `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the repository into.
-        const repository = Container.get(CounterRepository);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const repository = ApplicationContext.getIocContainer()!.get(CounterRepository);
 
         const saved = await repository.save(repository.create({label: "widgets", value: 3}));
         assert.ok(saved.id);

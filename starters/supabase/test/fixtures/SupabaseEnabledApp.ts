@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableSupabase} from "../../src";
@@ -17,7 +15,6 @@ import {EnableSupabase} from "../../src";
  * itself - so there's no clean "disabled" `useNodeBoot()` counterpart here (`@EnableRepositories()`
  * has the same trait; see `nodeboot-extending-nodeboot`'s "Testing a starter package" section).
  */
-@EnableDI(Container)
 @EnableSupabase()
 @NodeBootApplication()
 export class SupabaseEnabledApp implements NodeBootApp {

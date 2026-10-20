@@ -25,7 +25,7 @@ model: decorators, DI, configuration beans, middleware, authorization, and valid
 ## 🚀 Installation
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/context @nodeboot/http-server @nodeboot/aot @nodeboot/di typedi reflect-metadata
+pnpm add @nodeboot/core @nodeboot/context @nodeboot/http-server @nodeboot/aot @nodeboot/di reflect-metadata
 ```
 
 Unlike the other server adapters, there are no web-framework peer dependencies to install — `find-my-way` and
@@ -37,13 +37,9 @@ Unlike the other server adapters, there are no web-framework peer dependencies t
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {HttpServer} from "@nodeboot/http-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {

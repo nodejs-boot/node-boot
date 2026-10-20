@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -19,7 +18,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.dynamodb c
     });
 
     test("registers a real DynamoDBClient configured with the region from app-config", async () => {
-        const client = Container.get(DynamoDBClient);
+        const client = ApplicationContext.getIocContainer()!.get(DynamoDBClient);
 
         assert.ok(client instanceof DynamoDBClient);
         assert.equal(await client.config.region(), "us-east-2");

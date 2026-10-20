@@ -35,7 +35,7 @@ pnpm add @nodeboot/core @nodeboot/engine @nodeboot/fastify-server fastify
 Most Node-Boot applications also use dependency injection and metadata decorators:
 
 ```sh
-pnpm add @nodeboot/di @nodeboot/aot typedi reflect-metadata
+pnpm add @nodeboot/di @nodeboot/aot reflect-metadata
 ```
 
 ### Optional Fastify plugins
@@ -58,13 +58,9 @@ This is the real startup pattern used in `samples/sample-fastify`:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {FastifyServer} from "@nodeboot/fastify-server";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {

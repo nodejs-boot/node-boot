@@ -1,50 +1,59 @@
-import {DiOptions} from "./types";
+import {Injectable as NonnaInjectable, Scope as NonnaScope, Token as NonnaToken} from "@nonnajs/di";
 import {allowedProfiles} from "@nodeboot/context";
+import {registerNonnaAlias} from "./defaultContainer";
+import {recordPluginDecoration} from "./plugin";
+import {DiOptions} from "./types";
 
 /**
- * Apply dependency injection decorator if dependency injection framework is available
- * */
-export function decorateDi<TFunction>(target: TFunction, options?: DiOptions): boolean {
-    // Check if the target class is allowed to be decorated based on active profiles
-    if (allowedProfiles(target)) {
-        // Try to apply TypeDI decorator first, if it fails, fallback to Inversify
-        // This allows for flexibility in using either framework based on availability
-        // and ensures that the decorator is applied correctly.
-        return decorateTypeDi(target, options) || decorateInversify(target);
+ * Registers `target` with Nonna's global decorator registry, unless its `@Profile` excludes it
+ * from the active profiles. Returns whether the class was registered.
+ *
+ * The class is also recorded for the DI plugin selected with `@EnableDI(container)`, if any (see `plugin.ts`).
+ */
+export function decorateDi<TFunction extends Function>(target: TFunction, options?: DiOptions): boolean {
+    if (!allowedProfiles(target)) {
+        return false;
     }
-    return false;
+    decorateNonna(target, options);
+    recordPluginDecoration({kind: "class", target, options});
+    return true;
 }
 
 /**
- * Apply @Service decorator if TypeDI framework is available
- * */
-function decorateTypeDi<TFunction>(target: TFunction, options?: DiOptions): boolean {
-    let decorated: boolean;
-    try {
-        const {Service} = require("typedi");
-        Service(options)(target);
-        decorated = true;
-    } catch (error) {
-        // TypeDi is not available
-        console.warn("@Service decorator is only applied if 'TypeDi' dependency is available!");
-        decorated = false;
+ * Registers `target` into Nonna's global decorator registry (the same registry `@Injectable()`/
+ * `@Service()` from `@nonnajs/di` write to) so `Injector.refresh()` picks it up under Node-Boot's
+ * default container. A string/symbol id given via `options` is recorded as an alias (see
+ * `registerNonnaAlias`) rather than the primary token.
+ */
+function decorateNonna<TFunction extends Function>(target: TFunction, options?: DiOptions): void {
+    const {scope, eager, alias} = nonnaOptionsFrom(options);
+    NonnaInjectable({scope, eager})(target as unknown as Function);
+    if (alias !== undefined) {
+        registerNonnaAlias(alias, target);
     }
-    return decorated;
 }
 
-/**
- * Apply @injectable decorator if Inversify framework is available
- * */
-function decorateInversify<TFunction>(target: TFunction): boolean {
-    let decorated: boolean;
-    try {
-        const {injectable} = require("inversify");
-        injectable()(target);
-        decorated = true;
-    } catch (error) {
-        // Inversify is not available
-        console.warn("'Inversify' dependency is not available! Please install it first");
-        decorated = false;
+function nonnaOptionsFrom(options?: DiOptions): {scope: NonnaScope; eager: boolean; alias?: NonnaToken} {
+    if (options === undefined) {
+        return {scope: "singleton", eager: false};
     }
-    return decorated;
+    if (typeof options === "string") {
+        return {scope: "singleton", eager: false, alias: options};
+    }
+    if (typeof options === "object" && options !== null && isComponentOptionsShape(options)) {
+        const scope: NonnaScope = options.transient ? "transient" : "singleton";
+        const eager = options.eager ?? false;
+        const alias = typeof options.id === "string" || typeof options.id === "symbol" ? options.id : undefined;
+        return {scope, eager, alias};
+    }
+    // Unrecognized options: register the class under itself only.
+    return {scope: "singleton", eager: false};
+}
+
+function isComponentOptionsShape(options: object): options is {
+    id?: unknown;
+    transient?: boolean;
+    eager?: boolean;
+} {
+    return ["id", "transient", "eager", "global", "multiple", "factory", "value", "type"].some(key => key in options);
 }

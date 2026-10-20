@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {SNSClient} from "@aws-sdk/client-sns";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ApplicationContext} from "@nodeboot/context";
@@ -19,7 +18,7 @@ describe("@nodeboot/starter-aws auto-configuration - integrations.aws.sns config
     });
 
     test("registers a real SNSClient configured with the region from app-config", async () => {
-        const client = Container.get(SNSClient);
+        const client = ApplicationContext.getIocContainer()!.get(SNSClient);
 
         assert.ok(client instanceof SNSClient);
         assert.equal(await client.config.region(), "ca-central-1");

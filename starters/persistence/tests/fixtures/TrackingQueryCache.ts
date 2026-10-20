@@ -1,3 +1,4 @@
+import {Inject} from "@nodeboot/di";
 import {DataSource} from "typeorm";
 import {QueryResultCache} from "typeorm/cache/QueryResultCache";
 import {QueryResultCacheOptions} from "typeorm/cache/QueryResultCacheOptions";
@@ -14,7 +15,7 @@ export const cacheEvents: string[] = [];
 export class TrackingQueryCache implements QueryResultCache {
     private readonly store = new Map<string, QueryResultCacheOptions>();
 
-    constructor(private readonly connection: DataSource) {
+    constructor(@Inject(DataSource) private readonly connection: DataSource) {
         void this.connection;
     }
 

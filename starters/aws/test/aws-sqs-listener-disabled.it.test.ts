@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {SampleSqsListenerService} from "./fixtures/SampleSqsListenerService";
@@ -21,7 +20,7 @@ describe("@nodeboot/starter-aws - SQS listener with SQS disabled", () => {
         // App starts without error even with @SqsListener registered
         assert.equal((ApplicationContext.get().applicationFeatures as any)[AWS_SQS_FEATURE], undefined);
 
-        const service = Container.get(SampleSqsListenerService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleSqsListenerService);
         assert.ok(service);
         assert.equal(service.receivedMessages.length, 0);
     });

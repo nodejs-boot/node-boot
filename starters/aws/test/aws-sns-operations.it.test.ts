@@ -3,11 +3,11 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {createAwsMockServer} from "./fixtures/awsMockServer";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
 import {CreateTopicCommand, ListTopicsCommand, PublishCommand, SNSClient} from "@aws-sdk/client-sns";
+import {ApplicationContext} from "@nodeboot/context";
 
 const MOCK_PORT = 34973;
 process.env["AWS_ENDPOINT_URL"] = `http://127.0.0.1:${MOCK_PORT}`;
@@ -44,7 +44,7 @@ describe("@nodeboot/starter-aws - SNS operations integration", () => {
     });
 
     test("creates topic and lists topics using injected SNSClient", async () => {
-        const client = Container.get(SNSClient);
+        const client = ApplicationContext.getIocContainer()!.get(SNSClient);
         const createRes = await client.send(
             new CreateTopicCommand({
                 Name: "test-topic",
@@ -60,7 +60,7 @@ describe("@nodeboot/starter-aws - SNS operations integration", () => {
     });
 
     test("publishes message to SNS topic using injected SNSClient", async () => {
-        const client = Container.get(SNSClient);
+        const client = ApplicationContext.getIocContainer()!.get(SNSClient);
         const topicArn = "arn:aws:sns:eu-central-1:123456789012:test-topic";
         const message = JSON.stringify({event: "ORDER_CREATED", orderId: "12345"});
 

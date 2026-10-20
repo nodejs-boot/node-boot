@@ -3,6 +3,7 @@ import {LifecycleType} from "../types";
 import {ApplicationContext} from "../ApplicationContext";
 import {Logger} from "winston";
 import {Config} from "./Config";
+import {LifecycleOptions} from "../options";
 
 /**
  * ApplicationLifecycleBridge manages the sequential execution of application lifecycle events
@@ -434,6 +435,14 @@ export class ApplicationLifecycleBridge {
         });
     }
 
+    private isFailFastEnabled(): boolean {
+        return this.config.getOptional<LifecycleOptions>("app.lifecycle")?.failFast === true;
+    }
+
+    protected exitProcess(code: number): void {
+        process.exit(code);
+    }
+
     /**
      * Apply (bind) all feature adapters for a specific lifecycle event.
      *
@@ -457,6 +466,10 @@ export class ApplicationLifecycleBridge {
      * If an adapter fails to bind, the error is logged but execution continues with
      * remaining adapters. This prevents one failing adapter from blocking the entire
      * application startup.
+     *
+     * Opt in to fail-fast behavior with `app.lifecycle.failFast: true` in `app-config.yaml`:
+     * the first adapter failure (e.g. a throwing `@PostConstruct`) then logs the error and
+     * terminates the process with exit code 1. Do not enable this on serverless runtimes.
      *
      * ## Why This Runs Sequentially:
      *
@@ -495,6 +508,14 @@ export class ApplicationLifecycleBridge {
                 } catch (e) {
                     this.logger.error(`Error binding feature adapter for lifecycle ${lifecycle}: ${e}`);
                     failedCount++;
+
+                    if (this.isFailFastEnabled()) {
+                        this.logger.error(
+                            `app.lifecycle.failFast is enabled: aborting startup because a "${lifecycle}" feature adapter failed to bind.`,
+                        );
+                        this.exitProcess(1);
+                        return;
+                    }
                 }
             }
 

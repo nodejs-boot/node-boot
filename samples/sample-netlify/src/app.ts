@@ -1,9 +1,8 @@
 import "reflect-metadata";
-import {Container} from "typedi";
+import "./__generated__/nonna-dependencies.generated";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {EnableValidations} from "@nodeboot/starter-validation";
-import {EnableDI} from "@nodeboot/di";
 import {NetlifyServer} from "@nodeboot/netlify-server";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
@@ -29,7 +28,6 @@ import {appConfig} from "./app-config";
  * `NetlifyServer` exposes a handler function that Netlify invokes for every incoming request.
  * See `netlify/functions/api.ts`.
  */
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableValidations()
 @NodeBootApplication()

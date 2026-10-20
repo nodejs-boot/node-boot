@@ -3,7 +3,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {S3Client} from "@aws-sdk/client-s3";
 import {DynamoDBClient} from "@aws-sdk/client-dynamodb";
 import {SNSClient} from "@aws-sdk/client-sns";
@@ -11,6 +10,7 @@ import {SQSClient} from "@aws-sdk/client-sqs";
 import {SecretsManagerClient} from "@aws-sdk/client-secrets-manager";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-aws auto-configuration - explicit credentials configured", () => {
     const accessKeyId = "AKIAIOSFODNN7EXAMPLE";
@@ -36,11 +36,11 @@ describe("@nodeboot/starter-aws auto-configuration - explicit credentials config
     });
 
     test("wires explicit credentials into all configured AWS clients", async () => {
-        const s3 = Container.get(S3Client);
-        const dynamo = Container.get(DynamoDBClient);
-        const sns = Container.get(SNSClient);
-        const sqs = Container.get(SQSClient);
-        const secrets = Container.get(SecretsManagerClient);
+        const s3 = ApplicationContext.getIocContainer()!.get(S3Client);
+        const dynamo = ApplicationContext.getIocContainer()!.get(DynamoDBClient);
+        const sns = ApplicationContext.getIocContainer()!.get(SNSClient);
+        const sqs = ApplicationContext.getIocContainer()!.get(SQSClient);
+        const secrets = ApplicationContext.getIocContainer()!.get(SecretsManagerClient);
 
         const s3Creds = await s3.config.credentials();
         assert.equal(s3Creds.accessKeyId, accessKeyId);

@@ -6,6 +6,7 @@
     "license": "MIT",
     "keywords": [
         "di",
+        "nonna",
         "typedi",
         "inversify"
     ],
@@ -18,6 +19,9 @@
     },
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "bin": {
+        "nodeboot-compile": "dist/compiler/nodeboot-compile.js"
+    },
     "scripts": {
         "build": "tsc -p tsconfig.build.json",
         "clean:build": "rimraf ./dist",
@@ -31,16 +35,22 @@
         "tsc": "tsc"
     },
     "dependencies": {
-        "@nodeboot/context": "workspace:*"
+        "@nodeboot/context": "workspace:*",
+        "@nonnajs/di": "^2.0.0",
+        "@nonnajs/compiler": "^2.0.0"
     },
     "optionalDependencies": {
         "typedi": "^0.10.0",
         "inversify": "^6.0.1"
     },
+    "devDependencies": {
+        "reflect-metadata": "^0.2.1"
+    },
     "files": [
         "dist",
         "package.json",
         "README.md",
-        "config.d.ts"
+        "config.d.ts",
+        ".nonna.json"
     ]
 }

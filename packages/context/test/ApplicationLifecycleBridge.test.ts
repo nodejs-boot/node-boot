@@ -319,6 +319,34 @@ describe("ApplicationLifecycleBridge", () => {
             assert.deepEqual(callOrder, ["first:fail", "second"]);
         });
 
+        it("exits the process with code 1 and stops binding when app.lifecycle.failFast is enabled", async () => {
+            const context = ApplicationContext.get();
+            const callOrder: string[] = [];
+            context.diOptions = {iocContainer: {} as any};
+            context.applicationFeatureAdapters = [
+                makeAdapter(callOrder, "first", true),
+                makeAdapter(callOrder, "second"),
+            ];
+            context.applicationFeatures = {persistence: true};
+
+            const failFastConfig = {
+                ...mockConfig,
+                getOptional: (key?: string) => (key === "app.lifecycle" ? {failFast: true} : undefined),
+            } as any as Config;
+            const exitCodes: number[] = [];
+            class TestBridge extends ApplicationLifecycleBridge {
+                protected override exitProcess(code: number) {
+                    exitCodes.push(code);
+                }
+            }
+            const bridge = new TestBridge(mockLogger, failFastConfig, new EventEmitter());
+
+            await bridge.applyLifecycle("application.initialized");
+
+            assert.deepEqual(exitCodes, [1]);
+            assert.deepEqual(callOrder, ["first:fail"]);
+        });
+
         it("does nothing when the IoC container is not available", async () => {
             const context = ApplicationContext.get();
             context.diOptions = undefined;

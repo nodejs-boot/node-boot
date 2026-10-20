@@ -14,13 +14,13 @@
 import {before, describe, test} from "node:test";
 import assert from "node:assert/strict";
 import "reflect-metadata";
-import {Container} from "typedi";
 import type {Action, ActionMetadata, AuthorizationChecker, ParamMetadata} from "@nodeboot/context";
 import {BadRequestError} from "@nodeboot/error";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {GhostDriver, GhostServerRequest, GhostServerResponse} from "../src";
 import {TestApp} from "./fixtures/TestApp";
 import {UserService} from "./fixtures/UserService";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("Ghost Server Adapter", () => {
     describe("application boot (pure IoC, no HTTP)", () => {
@@ -32,12 +32,11 @@ describe("Ghost Server Adapter", () => {
         });
 
         test("resolves a @Service with an injected dependency and an injected @Bean value", () => {
-            // Resolved straight from `typedi`'s own `Container` (the same one `TestApp` was booted
-            // with via `@EnableDI(Container)`) instead of `useService()`: that hook checks
+            // Resolved straight from the running app's IoC container instead of `useService()`: that hook checks
             // `ApplicationContext.getIocContainer()` off `@nodeboot/node-test`'s own (published)
             // `@nodeboot/context` dependency, which is a different singleton instance than the
             // workspace one this app actually boots against.
-            const userService = Container.get(UserService);
+            const userService = ApplicationContext.getIocContainer()!.get(UserService);
             assert.equal(userService.welcome("Ada"), "Hello, Ada! Welcome to ghost-server-test.");
         });
     });

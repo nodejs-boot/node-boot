@@ -10,7 +10,7 @@ which sample to use and which package/file to look for; this doc only covers the
 
 Scaffold by copying the matching `samples/sample-*` project wholesale instead of hand-writing the
 entry point, DI wiring, and config from scratch — the sample already has a working, tested
-combination of `@EnableDI`, `@EnableComponentScan`, the relevant `NodeBoot.run(...)`/handler or
+combination of `@EnableComponentScan`, the relevant `NodeBoot.run(...)`/handler or
 feature setup, and an `app-config.yaml` shape that matches it.
 
 ```sh

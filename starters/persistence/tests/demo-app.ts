@@ -13,13 +13,12 @@
  * Tests can then access the initialized DataSource from the DI container.
  */
 import "reflect-metadata";
-import {Container} from "typedi";
 import {DataSource} from "typeorm";
-import {EnableDI} from "@nodeboot/di";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
 import {NodeBootApplication, NodeBootApp, NodeBootAppView} from "@nodeboot/core";
 import {User} from "./postgres/entities/User.entity";
 import {Counter} from "./postgres/entities/Counter.entity";
+import {ApplicationContext} from "@nodeboot/context";
 
 /**
  * Demo app with persistence enabled
@@ -32,7 +31,6 @@ import {Counter} from "./postgres/entities/Counter.entity";
  *
  * Tests should wait for DataSource.isInitialized to be true before using it.
  */
-@EnableDI(Container)
 @EnableRepositories()
 @NodeBootApplication()
 export class PersistenceDemoApp implements NodeBootApp {
@@ -49,7 +47,7 @@ export class PersistenceDemoApp implements NodeBootApp {
 
     async stop(): Promise<void> {
         try {
-            const dataSource = Container.get(DataSource);
+            const dataSource = ApplicationContext.getIocContainer()!.get(DataSource);
             if (dataSource?.isInitialized) {
                 await dataSource.destroy();
             }

@@ -238,7 +238,6 @@ Users then enable it with a single decorator on their application class:
 
 ```ts
 @EnableOpenAI()
-@EnableDI(Container)
 @NodeBootApplication()
 export class MyApp implements NodeBootApp {
     start() {

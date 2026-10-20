@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableFirebase} from "../../src";
@@ -12,7 +10,6 @@ import {EnableFirebase} from "../../src";
  * and the per-service beans it exposes (`admin.auth()`, `admin.firestore()`, ...) never make a
  * network call by themselves - only actually calling a method on them would.
  */
-@EnableDI(Container)
 @EnableFirebase()
 @NodeBootApplication()
 export class FirebaseEnabledApp implements NodeBootApp {

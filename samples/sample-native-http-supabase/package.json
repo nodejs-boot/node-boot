@@ -29,6 +29,8 @@
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "compile-deps": "nonna-compile",
+        "prebuild": "npm run compile-deps",
         "build": "tsc -p tsconfig.build.json",
         "postbuild": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot.js",
         "clean:build": "rimraf ./dist",
@@ -58,11 +60,11 @@
         "reflect-metadata": "^0.2.1",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
-        "typedi": "^0.10.0",
         "winston": "^3.10.0",
         "@supabase/supabase-js": "^2.43.0"
     },
     "devDependencies": {
-        "@types/node": "^22.13.4"
+        "@types/node": "^22.13.4",
+        "@nonnajs/compiler": "^2.0.0"
     }
 }

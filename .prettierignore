@@ -3,3 +3,5 @@
 pnpm-lock.yaml
 node_modules
 dist
+# Moved to standalone monorepo
+/ai

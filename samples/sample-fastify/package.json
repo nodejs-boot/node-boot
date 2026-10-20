@@ -23,6 +23,8 @@
         "start:prod": "pnpm run build && NODE_ENV=production node dist/server.js",
         "dev": "NODE_ENV=development nodemon",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "compile-deps": "nonna-compile",
+        "prebuild": "npm run compile-deps",
         "build": "tsc -p tsconfig.build.json",
         "postbuild": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot.js",
         "clean:build": "rimraf ./dist",
@@ -33,6 +35,7 @@
         "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
         "pretest:coverage": "mkdir -p coverage",
         "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
+        "pretsc": "npm run compile-deps",
         "tsc": "tsc",
         "rebuild:sqlite": "npm rebuild better-sqlite3",
         "create:migration": "typeorm migration:create ./src/persistence/migrations/migration"
@@ -66,11 +69,11 @@
         "better-sqlite3": "^12.10.0",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
-        "typedi": "^0.10.0",
         "winston": "^3.10.0"
     },
     "devDependencies": {
         "@types/node": "^22.13.4",
-        "@types/supertest": "^2.0.12"
+        "@types/supertest": "^2.0.12",
+        "@nonnajs/compiler": "^2.0.0"
     }
 }

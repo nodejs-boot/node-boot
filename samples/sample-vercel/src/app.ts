@@ -1,9 +1,8 @@
 import "reflect-metadata";
-import {Container} from "typedi";
+import "./__generated__/nonna-dependencies.generated";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {EnableValidations} from "@nodeboot/starter-validation";
-import {EnableDI} from "@nodeboot/di";
 import {VercelServer} from "@nodeboot/vercel-server";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
@@ -30,7 +29,6 @@ import {appConfig} from "./app-config";
  * `VercelServer` exposes a handler function that Vercel invokes for every incoming request.
  * See `api/[...path].ts`.
  */
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableValidations()
 @NodeBootApplication()

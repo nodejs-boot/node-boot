@@ -6,7 +6,7 @@ package.
 
 It demonstrates:
 
--   Dependency Injection (`@EnableDI`)
+-   Dependency Injection (Nonna)
 -   AOT Component Scanning for fast cold starts (`@EnableComponentScan`)
 -   Request validation with `class-validator` (`@EnableValidations`)
 -   Authorization (`@EnableAuthorization`, `@Authorized()`)

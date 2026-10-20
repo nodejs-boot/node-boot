@@ -1,11 +1,12 @@
 import {Service} from "@nodeboot/core";
+import {Inject} from "@nodeboot/di";
 import {Transactional} from "../../src";
 import {ProductRepository} from "./ProductRepository";
 import {Product} from "./Product.entity";
 
 @Service()
 export class ProductService {
-    constructor(private readonly productRepository: ProductRepository) {}
+    constructor(@Inject(ProductRepository) private readonly productRepository: ProductRepository) {}
 
     @Transactional()
     async createProduct(name: string): Promise<Product> {

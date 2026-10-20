@@ -1,3 +1,4 @@
+import {registerLateBoundToken} from "@nodeboot/di";
 import {PersistenceContext} from "../PersistenceContext";
 import {RepositoryType} from "../types";
 
@@ -56,6 +57,7 @@ export const DataRepository = (entity: Function): ClassDecorator => {
 
         Reflect.defineMetadata("custom:repotype", repoType, target.prototype);
         Reflect.defineMetadata("__isRepository", true, target);
+        registerLateBoundToken(target);
 
         PersistenceContext.get().addRepository({
             target,

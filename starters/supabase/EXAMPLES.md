@@ -30,11 +30,8 @@ integrations:
 ```typescript
 import {EnableSupabase} from "@nodeboot/starter-supabase";
 import {NodeBootApplication, NodeBootApp, NodeBoot} from "@nodeboot/core";
-import {EnableDI, EnableComponentScan} from "@nodeboot/core";
+import {EnableComponentScan} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {Container} from "typedi";
-
-@EnableDI(Container)
 @EnableSupabase()
 @EnableComponentScan()
 @NodeBootApplication()

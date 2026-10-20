@@ -50,9 +50,7 @@ export class DefaultActuatorAdapter implements ActuatorAdapter {
     bind(options: ActuatorOptions, server: any, router: any): void {
         const iocContainer = ApplicationContext.get().diOptions?.iocContainer;
         if (!iocContainer) {
-            throw new Error(
-                `IOC Container is required for Actuator module. Please @EnableDI(Container) in your Application class.`,
-            );
+            throw new Error(`IOC Container is required for Actuator module.`);
         }
 
         const allowedServers = ["express", "koa", "fastify", "native-http", "hono"];

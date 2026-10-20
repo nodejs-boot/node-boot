@@ -10,7 +10,6 @@ Use this starter when existing controllers and DTOs should produce an OpenAPI 3 
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @EnableComponentScan()

@@ -7,11 +7,11 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {CatalogClient} from "@backstage/catalog-client";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {BackstageEnabledApp} from "./fixtures/BackstageEnabledApp";
 import {BackstageIntegrationConfig, PluginDiscoveryService} from "../src";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-backstage auto-configuration - integrations.backstage not configured", () => {
     useNodeBoot(BackstageEnabledApp as any, ({useConfig}) => {
@@ -19,8 +19,8 @@ describe("@nodeboot/starter-backstage auto-configuration - integrations.backstag
     });
 
     test("never registers a CatalogClient, PluginDiscoveryService, or BackstageIntegrationConfig in the IoC container", () => {
-        assert.equal(Container.has(CatalogClient), false);
-        assert.equal(Container.has(PluginDiscoveryService), false);
-        assert.equal(Container.has(BackstageIntegrationConfig), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(CatalogClient), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(PluginDiscoveryService), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(BackstageIntegrationConfig), false);
     });
 });

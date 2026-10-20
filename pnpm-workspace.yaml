@@ -1,22 +1,38 @@
 packages:
-    - packages/*
-    - servers/*
-    - serverless/*
-    - starters/*
-    - ai/*
-    - ai/models/*
-    - ai/vector-stores/*
-    - samples/*
-    - tests/*
-    - benchmarking
-    - benchmarking/apps/*
-    - benchmarking/tools/*
+  - packages/*
+  - servers/*
+  - serverless/*
+  - starters/*
+  - samples/*
+  - tests/*
+  - benchmarking
+  - benchmarking/apps/*
+  - benchmarking/tools/*
 
-ignoredBuiltDependencies:
-    - protobufjs
+# Our own packages are exempt from the minimum release age so fresh releases can be consumed immediately.
+minimumReleaseAgeExclude:
+  - "@nodeboot/*"
+  # TEMPORARY (published 2026-10-16): remove after 2026-10-17 once past the 1-day minimum release age
+  - turbo
+  - "@turbo/*"
+  - eslint
+  - set-cookie-parser
+  - '@nonnajs/compiler@2.0.0'
+  - '@nonnajs/di@2.0.0'
 
-onlyBuiltDependencies:
-    - "@firebase/util"
-    - "@scarf/scarf"
-    - better-sqlite3
-    - unrs-resolver
+allowBuilds:
+  '@firebase/util': true
+  '@scarf/scarf': true
+  '@swc/core': false
+  aws-sdk: false
+  better-sqlite3: true
+  cpu-features: false
+  es5-ext: false
+  esbuild: true
+  memwatch-next: false
+  mongodb-memory-server: false
+  protobufjs: false
+  serverless: false
+  ssh2: false
+  unrs-resolver: true
+  workerd: false

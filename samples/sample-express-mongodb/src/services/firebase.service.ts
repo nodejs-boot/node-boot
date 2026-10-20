@@ -1,7 +1,7 @@
 import {Logger} from "winston";
 import {Service} from "@nodeboot/core";
 import {remoteConfig} from "firebase-admin";
-import {Inject} from "typedi";
+import {Inject} from "@nodeboot/di";
 import {FIREBASE_REMOTE_CONFIG_BEAN} from "@nodeboot/starter-firebase";
 
 @Service()

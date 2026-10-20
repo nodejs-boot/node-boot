@@ -12,7 +12,6 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {DataSource} from "typeorm";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {ComprehensivePersistenceApp} from "./fixtures/ComprehensivePersistenceApp";
@@ -20,6 +19,7 @@ import {ProductRepository} from "./fixtures/ProductRepository";
 import {ProductService} from "./fixtures/ProductService";
 import {subscriberEvents} from "./fixtures/ProductSubscriber";
 import {cacheEvents} from "./fixtures/TrackingQueryCache";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-persistence auto-configuration - decorators against a real app", () => {
     // `@nodeboot/node-test` resolves `NodeBootApp` against its own (published) `@nodeboot/core`
@@ -45,9 +45,8 @@ describe("@nodeboot/starter-persistence auto-configuration - decorators against 
         //
         // `@nodeboot/node-test`'s own `useRepository()`/`useService()` resolve against a different
         // (published) `ApplicationContext` singleton than this workspace's real running app - see
-        // `nodeboot-test-framework`. Retrieve straight from `typedi`'s Container, the one
-        // `@EnableDI(Container)` actually wired the repository into.
-        const repository = Container.get(ProductRepository);
+        // `nodeboot-test-framework`. Retrieve straight from the running app's IoC container.
+        const repository = ApplicationContext.getIocContainer()!.get(ProductRepository);
 
         const saved = await repository.save(repository.create({name: "Widget", version: 1}));
         assert.ok(saved.id);
@@ -62,7 +61,7 @@ describe("@nodeboot/starter-persistence auto-configuration - decorators against 
     });
 
     test("@PersistenceNamingStrategy renames the real sqlite table to 'nb_product'", async () => {
-        const dataSource = Container.get(DataSource);
+        const dataSource = ApplicationContext.getIocContainer()!.get(DataSource);
 
         const tables: Array<{name: string}> = await dataSource.query(
             "SELECT name FROM sqlite_master WHERE type = 'table'",
@@ -79,7 +78,7 @@ describe("@nodeboot/starter-persistence auto-configuration - decorators against 
         // is using, not its own default database-table cache.
         assert.ok(cacheEvents.includes("connect"));
 
-        const repository = Container.get(ProductRepository);
+        const repository = ApplicationContext.getIocContainer()!.get(ProductRepository);
         const cacheId = "product-cache-key";
 
         await repository.createQueryBuilder("product").cache(cacheId, 60_000).getMany();
@@ -90,8 +89,8 @@ describe("@nodeboot/starter-persistence auto-configuration - decorators against 
     });
 
     test("@Transactional commits every write performed inside a successful method call", async () => {
-        const productService = Container.get(ProductService);
-        const repository = Container.get(ProductRepository);
+        const productService = ApplicationContext.getIocContainer()!.get(ProductService);
+        const repository = ApplicationContext.getIocContainer()!.get(ProductRepository);
 
         await productService.createProduct("Committed Widget");
 
@@ -100,8 +99,8 @@ describe("@nodeboot/starter-persistence auto-configuration - decorators against 
     });
 
     test("@Transactional rolls back every write when the method throws", async () => {
-        const productService = Container.get(ProductService);
-        const repository = Container.get(ProductRepository);
+        const productService = ApplicationContext.getIocContainer()!.get(ProductService);
+        const repository = ApplicationContext.getIocContainer()!.get(ProductRepository);
 
         await assert.rejects(
             () => productService.createTwoProductsThenFail("Rollback A", "Rollback B"),

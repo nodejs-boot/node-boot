@@ -8,7 +8,6 @@ export class AccessDeniedError extends ForbiddenError {
 
     constructor(method: string, url: string) {
         super();
-        Object.setPrototypeOf(this, AccessDeniedError.prototype);
         const uri = `${method} ${url}`;
         this.message = `Access is denied for request on ${uri}`;
     }

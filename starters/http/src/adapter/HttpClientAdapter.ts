@@ -33,13 +33,10 @@ import axiosRateLimit from "axios-rate-limit";
  * @example
  * ```typescript
  * import { EnableHttpClients } from "@nodeboot/starter-http";
- * import { EnableDI } from "@nodeboot/di";
  * import { EnableComponentScan } from "@nodeboot/scan";
  * import { NodeBootApplication, NodeBoot, NodeBootApp, NodeBootAppView } from "@nodeboot/core";
  * import { ExpressServer } from "@nodeboot/express-server";
- * import { Container } from "typedi";
  *
- * @EnableDI(Container)
  * @EnableHttpClients()
  * @EnableComponentScan()
  * @NodeBootApplication()

@@ -24,6 +24,8 @@
         "dev": "pnpm run build && NODE_ENV=development serverless offline --reloadHandler",
         "invoke:local": "ts-node src/local-invoke.ts",
         "nodeboot:update": "pnpm update @nodeboot/*@latest",
+        "compile-deps": "nonna-compile",
+        "prebuild": "npm run compile-deps",
         "build": "tsc -p tsconfig.build.json",
         "postbuild": "node ./node_modules/@nodeboot/aot/dist/scripts/node-boot-aot.js",
         "package": "bash scripts/build-zip.sh",
@@ -47,6 +49,7 @@
         "test": "node --test --test-reporter node-test-reporter --require ts-node/register test/**/*.{test,it.test}.ts",
         "pretest:coverage": "mkdir -p coverage",
         "test:coverage": "node --experimental-test-coverage --test-coverage-include='src/**/*.ts' --test-coverage-exclude='src/**/*.test.ts' --test-coverage-exclude='src/**/*.spec.ts' --test --test-reporter node-test-reporter --test-reporter-destination stdout --test-reporter lcov --test-reporter-destination coverage/lcov.info --require ts-node/register test/**/*.{test,it.test}.ts",
+        "pretsc": "npm run compile-deps",
         "tsc": "tsc"
     },
     "dependencies": {
@@ -62,13 +65,13 @@
         "reflect-metadata": "^0.2.1",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
-        "typedi": "^0.10.0",
         "winston": "^3.17.0"
     },
     "devDependencies": {
         "@types/aws-lambda": "^8.10.155",
         "@types/node": "^22.13.4",
         "serverless": "^3.40.0",
-        "serverless-offline": "^13.9.0"
+        "serverless-offline": "^13.9.0",
+        "@nonnajs/compiler": "^2.0.0"
     }
 }

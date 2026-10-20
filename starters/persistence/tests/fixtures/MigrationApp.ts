@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {EnableRepositories} from "../../src";
@@ -22,8 +20,6 @@ import {PersistenceContext} from "../../src";
 PersistenceContext.reset();
 require("./AuditLogRepository");
 require("./CreateAuditLogTable1735600000000.migration");
-
-@EnableDI(Container)
 @EnableRepositories()
 @NodeBootApplication()
 export class MigrationApp implements NodeBootApp {

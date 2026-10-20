@@ -33,7 +33,7 @@ interceptors and middlewares — with zero manual route wiring.
 
 -   Node.js 18+
 -   A Node-Boot application using one of the supported servers: Express, Fastify, Koa, or native HTTP
--   `@EnableDI(Container)` on your application class — the actuator resolves core services (`ConfigService`,
+-   The actuator resolves core services (`ConfigService`,
     `CoreInfoService`, `HealthService`, `Logger`) from the DI container and **throws at bootstrap** if it's missing
 
 ### Install the Starter
@@ -57,14 +57,10 @@ yarn add @nodeboot/starter-actuator
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {ExpressServer} from "@nodeboot/express-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableActuator} from "@nodeboot/starter-actuator";
-
-@EnableDI(Container)
 @EnableActuator()
 @EnableComponentScan()
 @NodeBootApplication()

@@ -25,7 +25,6 @@ import {BeansConfigurationAdapter} from "../adapters";
  *
  * Example usage:
  * ```ts
- * @EnableDI(Container)
  * @EnableOpenApi()
  * @EnableSwaggerUI()
  * @EnableActuator()
@@ -43,6 +42,8 @@ import {BeansConfigurationAdapter} from "../adapters";
  * ```
  *
  * Notes:
+ * - Dependency injection uses Node-Boot's default Nonna container. Add `@EnableDI(container)` (from
+ *   `@nodeboot/di`) to plug in another one, e.g. TypeDI's `Container`.
  * - The decorator automatically integrates the application's `@Configuration` and `@Bean` definitions.
  * - It sets up the IoC container and application context for dependency injection.
  * - This is typically used on the root application class.

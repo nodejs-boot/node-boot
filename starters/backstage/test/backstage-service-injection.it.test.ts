@@ -4,12 +4,12 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {CatalogClient} from "@backstage/catalog-client";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {BackstageEnabledApp} from "./fixtures/BackstageEnabledApp";
 import {SampleBackstageService} from "./fixtures/SampleBackstageService";
 import {BackstageIntegrationConfig, PluginDiscoveryService} from "../src";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-backstage - Service Injection Integration", () => {
     useNodeBoot(BackstageEnabledApp as any, ({useConfig}) => {
@@ -25,7 +25,7 @@ describe("@nodeboot/starter-backstage - Service Injection Integration", () => {
     });
 
     test("injects CatalogClient, PluginDiscoveryService, and BackstageIntegrationConfig into a @Service class", async () => {
-        const service = Container.get(SampleBackstageService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleBackstageService);
 
         assert.ok(service, "SampleBackstageService should be resolvable from container");
         assert.ok(service.catalogClient, "catalogClient should be injected");
@@ -37,11 +37,11 @@ describe("@nodeboot/starter-backstage - Service Injection Integration", () => {
         assert.equal(typeof service.config, "object");
         assert.equal(service.config.apiKey, "service-injection-api-key");
         assert.equal(service.config.apiUrl, "https://backstage.company.internal/api");
-        assert.ok(Container.has(BackstageIntegrationConfig));
+        assert.ok(ApplicationContext.getIocContainer()!.has(BackstageIntegrationConfig));
     });
 
     test("performs operations and accesses configuration through injected service methods", async () => {
-        const service = Container.get(SampleBackstageService);
+        const service = ApplicationContext.getIocContainer()!.get(SampleBackstageService);
 
         assert.equal(service.getConfiguredApiUrl(), "https://backstage.company.internal/api");
         assert.equal(service.getConfiguredApiKey(), "service-injection-api-key");

@@ -1,5 +1,5 @@
 import {Service} from "@nodeboot/core";
-import {Inject} from "typedi";
+import {Inject} from "@nodeboot/di";
 import {appCheck, auth, database, firestore, machineLearning, messaging, remoteConfig, storage} from "firebase-admin";
 import {
     FIREBASE_APP_CHECK_BEAN,

@@ -10,7 +10,6 @@ Use this starter when a Node-Boot app should initialize Firebase Admin once and 
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableFirebase()
 @EnableComponentScan()
 @NodeBootApplication()

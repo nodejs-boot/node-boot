@@ -3,7 +3,6 @@
  */
 import {after, before, describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {createAwsMockServer} from "./fixtures/awsMockServer";
 import {AwsEnabledApp} from "./fixtures/AwsEnabledApp";
@@ -13,6 +12,7 @@ import {
     ListSecretsCommand,
     SecretsManagerClient,
 } from "@aws-sdk/client-secrets-manager";
+import {ApplicationContext} from "@nodeboot/context";
 
 const MOCK_PORT = 34974;
 process.env["AWS_ENDPOINT_URL"] = `http://127.0.0.1:${MOCK_PORT}`;
@@ -49,7 +49,7 @@ describe("@nodeboot/starter-aws - Secrets Manager operations integration", () =>
     });
 
     test("gets secret value using injected SecretsManagerClient", async () => {
-        const client = Container.get(SecretsManagerClient);
+        const client = ApplicationContext.getIocContainer()!.get(SecretsManagerClient);
         const secretRes = await client.send(
             new GetSecretValueCommand({
                 SecretId: "test-secret",
@@ -62,7 +62,7 @@ describe("@nodeboot/starter-aws - Secrets Manager operations integration", () =>
     });
 
     test("creates secret and lists secrets using injected SecretsManagerClient", async () => {
-        const client = Container.get(SecretsManagerClient);
+        const client = ApplicationContext.getIocContainer()!.get(SecretsManagerClient);
         const secretName = "db-password";
         const secretValue = "p@ssw0rd123";
 

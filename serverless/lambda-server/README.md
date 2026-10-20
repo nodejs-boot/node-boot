@@ -25,8 +25,6 @@ npm install @nodeboot/lambda-server
 ```typescript
 import {LambdaServer} from "@nodeboot/lambda-server";
 import {NodeBootApplication} from "@nodeboot/core";
-
-@EnableDI(Container)
 @EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()

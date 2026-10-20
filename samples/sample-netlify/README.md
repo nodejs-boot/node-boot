@@ -6,7 +6,7 @@ the [`@nodeboot/netlify-server`](../../serverless/netlify-server) package.
 
 It demonstrates:
 
--   Dependency Injection (`@EnableDI`) using explicit injection tokens
+-   Dependency Injection (Nonna) using explicit injection tokens
 -   Request validation with `class-validator` (`@EnableValidations`)
 -   Authorization (`@EnableAuthorization`, `@Authorized()`)
 -   Controllers, services, middleware and a custom error handler

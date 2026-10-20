@@ -34,7 +34,7 @@ Hono is built directly on Web Standards (`Request`/`Response`/`Headers`), so thi
 Install the Hono server package together with Node-Boot core and the Hono peer dependencies used by this adapter:
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/hono-server @nodeboot/di @nodeboot/aot reflect-metadata typedi hono @hono/node-server
+pnpm add @nodeboot/core @nodeboot/hono-server @nodeboot/di @nodeboot/aot reflect-metadata hono @hono/node-server
 ```
 
 `hono-sessions` is only required if you enable session support:
@@ -61,13 +61,9 @@ A real example from `samples/sample-hono` looks like this:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {HonoServer} from "@nodeboot/hono-server";
-import {EnableDI} from "@nodeboot/di";
 import {EnableComponentScan} from "@nodeboot/aot";
-
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class SampleApp implements NodeBootApp {

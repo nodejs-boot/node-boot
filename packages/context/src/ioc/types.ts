@@ -67,4 +67,12 @@ export interface IocContainer<TContainer = unknown> {
     has(id: string): boolean;
 
     reset(): void;
+
+    /**
+     * Optional post-registration lifecycle hook, called once by `BaseServer` late in bootstrap
+     * (after all `@Configuration`/`@Bean` and `@ConfigurationProperties` registration has run),
+     * for containers that need a validation/eager-instantiation pass over everything registered
+     * so far - e.g. Node-Boot's Nonna-backed container.
+     */
+    initialize?(): Promise<void>;
 }

@@ -26,8 +26,6 @@ npm install @nodeboot/vercel-server
 ```typescript
 import {VercelServer} from "@nodeboot/vercel-server";
 import {NodeBootApplication} from "@nodeboot/core";
-
-@EnableDI(Container)
 @EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()

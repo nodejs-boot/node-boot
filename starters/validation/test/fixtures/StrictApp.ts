@@ -1,7 +1,5 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {JsonObject} from "@nodeboot/context";
 import {HttpServer} from "@nodeboot/http-server";
 import {EnableValidations} from "../../src";
@@ -15,7 +13,6 @@ import "./UsersController";
  * via `useConfig()` is actually picked up and turned into `class-validator` options for every
  * request - this is the one thing that only happens because the starter is enabled.
  */
-@EnableDI(Container)
 @EnableValidations()
 @NodeBootApplication()
 export class StrictApp implements NodeBootApp {

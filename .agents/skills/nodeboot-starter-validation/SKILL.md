@@ -10,7 +10,6 @@ Use this starter when request DTOs should be rejected automatically instead of m
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()

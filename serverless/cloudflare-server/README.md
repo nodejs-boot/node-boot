@@ -29,9 +29,6 @@ npm install @nodeboot/cloudflare-server
 ```typescript
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {CloudflareServer} from "@nodeboot/cloudflare-server";
-import {EnableDI} from "@nodeboot/di";
-import {Container} from "typedi";
-
 // A plain object, not a YAML file - see the note below.
 const appConfig = {
     app: {name: "my-app", platform: "node-boot"},
@@ -46,7 +43,6 @@ const appConfig = {
  * and its `CloudflareServer` exposes a `fetch` handler function that the Cloudflare
  * runtime invokes for every incoming request.
  */
-@EnableDI(Container)
 @NodeBootApplication()
 export class CloudflareSampleApp implements NodeBootApp {
     start(): Promise<NodeBootAppView> {
@@ -139,10 +135,10 @@ export class LoggingMiddleware implements MiddlewareInterface {
 ```
 
 > **Note:** Wrangler bundles your Worker with esbuild, which does not emit TypeScript decorator
-> metadata. Always use explicit injection tokens (`@Inject("logger")`, `@Inject(() =>
-SomeService)`) rather than bare `@Inject()`, and prefer **property injection** over constructor
-> injection - without decorator metadata, TypeDI can't determine constructor arity and will
-> silently fail to inject constructor parameters.
+> metadata. Always use explicit injection tokens (`@Inject("logger")`, `@Inject(SomeService)`)
+> rather than bare `@Inject()`. Nonna never reads `design:paramtypes` for implicit constructor
+> parameters, so every constructor parameter needs an explicit `@Inject(Token)` (or a graph generated
+> by the `nodeboot-compile` AOT step).
 
 ## Error Handling
 

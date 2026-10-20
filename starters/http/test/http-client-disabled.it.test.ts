@@ -10,20 +10,20 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {HttpClientDisabledApp} from "./fixtures/HttpClientDisabledApp";
 import {DisabledHttpClient} from "./fixtures/DisabledHttpClient";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-http auto-configuration - no @EnableHttpClients() applied", () => {
     useNodeBoot(HttpClientDisabledApp as any, ({useConfig}) => {
         useConfig({app: {name: "starter-http-disabled-test"}});
     });
 
-    test("never registers a client for the @HttpClient-decorated class in the IoC container", () => {
-        // `typedi`'s own `.has()` reports registration without ever attempting to construct
-        // anything, so this stays meaningful regardless of whether an unregistered `Axios`
-        // subclass happens to be auto-constructible.
-        assert.equal(Container.has(DisabledHttpClient), false);
+    test("never binds a client for the @HttpClient-decorated class in the IoC container", () => {
+        // `@HttpClient` registers its class as a late-bound token (so classes injecting it pass
+        // graph validation), which makes `.has()` true even when nothing ever binds a real
+        // client. With the feature disabled, the placeholder must stay unresolved.
+        assert.throws(() => ApplicationContext.getIocContainer()!.get(DisabledHttpClient), /not available yet/);
     });
 });

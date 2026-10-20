@@ -19,7 +19,6 @@ Read [`../_shared/fresh-vs-existing.md`](../_shared/fresh-vs-existing.md) first,
 From [`samples/sample-hono/src/app.ts`](https://github.com/nodejs-boot/node-boot/blob/main/samples/sample-hono/src/app.ts):
 
 ```ts
-@EnableDI(Container)
 @EnableComponentScan()
 @NodeBootApplication()
 export class FactsServiceApp implements NodeBootApp {

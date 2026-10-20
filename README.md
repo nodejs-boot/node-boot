@@ -31,7 +31,7 @@
 
 If you've used **Spring Boot**, Node-Boot will feel like home. If you haven't, here's the pitch:
 
--   🧩 **Decorator-driven** — define controllers, beans, configuration, and cross-cutting concerns declaratively (`@Controller`, `@Get`, `@Configuration`, `@Bean`, `@EnableDI`, ...).
+-   🧩 **Decorator-driven** — define controllers, beans, configuration, and cross-cutting concerns declaratively (`@Controller`, `@Get`, `@Configuration`, `@Bean`, ...).
 -   ⚙️ **Auto-configuration** — enable a feature with a single `@Enable...()` decorator on your app entry point; Node-Boot wires the rest.
 -   🔌 **Server-agnostic** — the same application code runs on Express, Fastify, Koa, Hono, native HTTP, or "ghost" (no HTTP) mode — just swap the server adapter.
 -   ☁️ **Serverless-ready** — deploy the exact same app to AWS Lambda, Cloudflare Workers, Vercel, Netlify, or Google Cloud Functions.
@@ -39,7 +39,6 @@ If you've used **Spring Boot**, Node-Boot will feel like home. If you haven't, h
 -   🛡️ **Strict TypeScript** end to end, with fast builds (Turborepo + SWC) and a monorepo you can actually navigate.
 
 ```ts
-@EnableDI(Container)
 @EnableOpenApi()
 @EnableSwaggerUI()
 @EnableActuator()
@@ -145,13 +144,52 @@ Node-Boot is a **pnpm + Turborepo monorepo** organized into five layers:
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | [`@nodeboot/core`](packages/core/README.md)                   | The heart of Node-Boot — `@NodeBootApplication()`, `NodeBoot.run(...)`, `BaseServer`, controller/config decorators, lifecycle & logging |
 | [`@nodeboot/context`](packages/context/README.md)             | Shared runtime contracts — `ApplicationContext`, IoC abstractions, metadata models, middleware/interceptor contracts                    |
-| [`@nodeboot/di`](packages/di/README.md)                       | Dependency injection integration (`@EnableDI`) for controllers, services, listeners, and resolvers                                      |
+| [`@nodeboot/di`](packages/di/README.md)                       | Dependency injection — [Nonna](https://github.com/nodejs-boot/node-boot/tree/main/di), always on (zero config)                          |
 | [`@nodeboot/config`](packages/config/README.md)               | Typed configuration via `ConfigService` and `@ConfigurationProperties()`, backed by `app-config.yaml`                                   |
 | [`@nodeboot/engine`](packages/engine/README.md)               | The driver engine that connects Node-Boot's decorator model to concrete server adapters                                                 |
 | [`@nodeboot/authorization`](packages/authorization/README.md) | `@EnableAuthorization`, `@Authorized`, and `@CurrentUser` for pluggable authz/authn hooks                                               |
 | [`@nodeboot/aot`](packages/aot/README.md)                     | Ahead-of-time compilation — generates beans and OpenAPI schemas at build time                                                           |
 | [`@nodeboot/error`](packages/error/README.md)                 | Shared base errors/exceptions used across the framework                                                                                 |
 | [`@nodeboot/tools`](packages/tools/README.md)                 | CI/CD and automation helpers used across the monorepo                                                                                   |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 🧩 Dependency Injection
+
+Node-Boot is DI-first **out of the box** — no setup required. By default, every app is backed by
+[**Nonna**](https://github.com/nodejs-boot/node-boot/tree/main/di), a zero-reflection,
+runtime-agnostic IoC container built for Node-Boot. `@Component`, `@Service`, `@Controller`,
+`@Middleware`, `@Interceptor`, and `@Inject` all work immediately, with no setup and no
+container to install:
+
+```ts
+@Service()
+export class GreetingService {
+    greet(name: string) {
+        return `Hello, ${name}!`;
+    }
+}
+
+@Controller("/hello")
+export class HelloController {
+    constructor(@Inject(GreetingService) private readonly greetingService: GreetingService) {}
+
+    @Get("/:name")
+    sayHello(@Param("name") name: string) {
+        return {message: this.greetingService.greet(name)};
+    }
+}
+```
+
+One thing worth knowing up front: because Nonna never reads reflection metadata, a plain
+`constructor(private readonly fooService: FooService)` with **no** `@Inject(...)` only auto-wires
+under Nonna if you run the `nodeboot-compile` build step (an ahead-of-time TypeScript compiler
+that infers the dependency graph statically); otherwise, annotate constructor params explicitly
+with `@Inject(...)`.
+
+📖 **Full documentation:** [`@nodeboot/di` README](packages/di/README.md) — covers the Nonna
+default in depth, the `nodeboot-compile` CLI, property injection, and
+named/token-based injection.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

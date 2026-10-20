@@ -1,8 +1,6 @@
 import "reflect-metadata";
-import {Container} from "typedi";
 import {ApplicationContext, JsonObject} from "@nodeboot/context";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
-import {EnableDI} from "@nodeboot/di";
 import {GhostServer} from "@nodeboot/ghost-server";
 import {SCHEDULING_FEATURE} from "../../src/types";
 
@@ -14,7 +12,6 @@ import "./DisabledCounterService";
  * Deliberately does NOT apply `@EnableScheduling()`. Contrasted against `SchedulingEnabledApp`,
  * which is identical except for that one decorator.
  */
-@EnableDI(Container)
 @NodeBootApplication()
 export class SchedulingDisabledApp implements NodeBootApp {
     start(additionalConfig?: JsonObject): Promise<NodeBootAppView> {

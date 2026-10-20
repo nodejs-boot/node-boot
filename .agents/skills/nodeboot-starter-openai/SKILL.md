@@ -10,7 +10,6 @@ Use this starter for one default OpenAI-compatible client loaded from config. If
 ## Enable
 
 ```ts
-@EnableDI(Container)
 @EnableOpenAI()
 @EnableComponentScan()
 @NodeBootApplication()

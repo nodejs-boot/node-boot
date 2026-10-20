@@ -16,7 +16,7 @@ Unlike the Express, Fastify, Koa, or native HTTP samples, this one has **no `src
 ## ✨ What This Sample Demonstrates
 
 -   [x] Booting a Node-Boot app with [`@nodeboot/ghost-server`](../../servers/ghost-server/README.md)
--   [x] Using DI with `@EnableDI(Container)` and `@EnableComponentScan()`
+-   [x] Using DI with `@EnableComponentScan()`
 -   [x] Using TypeORM repositories, migrations, subscribers, and transactions via [`@nodeboot/starter-persistence`](../../starters/persistence/README.md)
 -   [x] Running cron-based scheduled tasks via [`@nodeboot/starter-scheduler`](../../starters/scheduler/README.md)
 -   [x] Defining outbound HTTP clients with [`@nodeboot/starter-http`](../../starters/http/README.md)
@@ -95,7 +95,6 @@ That is intentional. This sample is about using Node-Boot as an application runt
 Key files and folders:
 
 -   `src/app.ts` enables:
-    -   `@EnableDI(Container)`
     -   `@EnableRepositories()`
     -   `@EnableScheduling()`
     -   `@EnableHttpClients()`

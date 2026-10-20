@@ -27,8 +27,6 @@ npm install @nodeboot/google-cloud-functions-server @google-cloud/functions-fram
 ```typescript
 import {GoogleCloudFunctionsServer} from "@nodeboot/google-cloud-functions-server";
 import {NodeBootApplication} from "@nodeboot/core";
-
-@EnableDI(Container)
 @EnableValidations()
 @EnableComponentScan()
 @NodeBootApplication()

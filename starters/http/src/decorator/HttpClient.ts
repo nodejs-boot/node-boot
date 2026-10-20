@@ -1,5 +1,6 @@
 import {HttpClientConfig, PluginConfigs} from "../client";
 import {ApplicationContext} from "@nodeboot/context";
+import {registerLateBoundToken} from "@nodeboot/di";
 import {HttpClientAdapter} from "../adapter";
 
 /**
@@ -39,6 +40,9 @@ import {HttpClientAdapter} from "../adapter";
  */
 export function HttpClient(config: HttpClientConfig | string, plugins?: PluginConfigs): ClassDecorator {
     return function (target: any) {
+        // The client instance is only bound (`iocContainer.set`) after the container is initialized,
+        // so classes injecting it must not be rejected as having a missing provider.
+        registerLateBoundToken(target);
         const schedulerAdapter = new HttpClientAdapter(target, config, plugins);
         ApplicationContext.get().applicationFeatureAdapters.push(schedulerAdapter);
     };

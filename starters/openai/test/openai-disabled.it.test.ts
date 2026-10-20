@@ -7,10 +7,10 @@
  */
 import {describe, test} from "node:test";
 import assert from "node:assert/strict";
-import {Container} from "typedi";
 import OpenAI from "openai";
 import {useNodeBoot} from "@nodeboot/node-test";
 import {OpenAiEnabledApp} from "./fixtures/OpenAiEnabledApp";
+import {ApplicationContext} from "@nodeboot/context";
 
 describe("@nodeboot/starter-openai auto-configuration - integrations.openai not configured", () => {
     useNodeBoot(OpenAiEnabledApp as any, ({useConfig}) => {
@@ -18,6 +18,6 @@ describe("@nodeboot/starter-openai auto-configuration - integrations.openai not 
     });
 
     test("never registers an OpenAI client in the IoC container", () => {
-        assert.equal(Container.has(OpenAI), false);
+        assert.equal(ApplicationContext.getIocContainer()!.has(OpenAI), false);
     });
 });

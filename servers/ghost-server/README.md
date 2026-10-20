@@ -21,7 +21,7 @@ auto-configuration/integration tests.
 ## 🚀 Installation
 
 ```sh
-pnpm add @nodeboot/core @nodeboot/context @nodeboot/ghost-server @nodeboot/aot @nodeboot/di typedi reflect-metadata
+pnpm add @nodeboot/core @nodeboot/context @nodeboot/ghost-server @nodeboot/aot @nodeboot/di reflect-metadata
 ```
 
 No web framework peer dependencies are required — this is the point of the Ghost server.
@@ -35,16 +35,12 @@ without any actual HTTP server:
 
 ```typescript
 import "reflect-metadata";
-import {Container} from "typedi";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableRepositories} from "@nodeboot/starter-persistence";
-import {EnableDI} from "@nodeboot/di";
 import {EnableScheduling} from "@nodeboot/starter-scheduler";
 import {EnableComponentScan} from "@nodeboot/aot";
 import {EnableHttpClients} from "@nodeboot/starter-http";
 import {GhostServer} from "@nodeboot/ghost-server";
-
-@EnableDI(Container)
 @EnableRepositories()
 @EnableScheduling()
 @EnableHttpClients()

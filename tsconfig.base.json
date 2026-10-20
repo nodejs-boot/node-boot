@@ -1,9 +1,10 @@
 {
     "extends": "@tsconfig/node-lts-strictest/tsconfig.json",
-    "include": ["**/*.ts"],
+    "include": ["**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules", "dist"],
     "compilerOptions": {
         "lib": ["esnext", "dom"],
+        "jsx": "react-jsx",
         /* Basic Options */
         "incremental": true,
         "declaration": true,
