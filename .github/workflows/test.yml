@@ -1,11 +1,10 @@
 name: Test
 on:
     workflow_dispatch:
-
-    # FIXME - enable this after tests are setup
-    #push:
-    #    branches:
-    #        - main
+    workflow_call:
+    push:
+      branches:
+        - main
 
     pull_request_target:
         types:
@@ -25,9 +24,12 @@ on:
         branches:
             - main
 
+permissions:
+  contents: read
+
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
     test:
@@ -60,17 +62,17 @@ jobs:
             NODE_OPTIONS: --max-old-space-size=4096
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
-            - uses: pnpm/action-setup@v4
+            - uses: pnpm/action-setup@v6
               name: Install pnpm
               with:
                   run_install: false
 
             - name: Use node.js
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v7
               with:
-                  node-version: 22.x
+                  node-version-file: .nvmrc
                   cache: "pnpm"
 
             - name: Install dependencies
