@@ -14,9 +14,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-    test:
-      uses: ./.github/workflows/test.yml
-
     publish:
         runs-on: ubuntu-latest
 
