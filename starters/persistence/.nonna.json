@@ -1,0 +1,3 @@
+{
+    "injectableDecorators": ["@nodeboot/starter-persistence#PersistenceCache"]
+}

@@ -59,8 +59,8 @@
     "devDependencies": {
         "@changesets/cli": "^2.28.1",
         "@nodeboot/tools": "^1.2.0",
-        "@nodeboot/test": "^3.0.0",
-        "@nodeboot/node-test": "^3.0.0",
+        "@nodeboot/test": "^3.1.0",
+        "@nodeboot/node-test": "^3.1.0",
         "@tsconfig/node-lts-strictest": "^18.12.1",
         "@types/memwatch-next": "^0.3.6",
         "@types/node": "^22.14.1",
