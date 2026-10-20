@@ -1,5 +1,18 @@
 # @nodeboot/engine
 
+## 1.9.1
+
+### Patch Changes
+
+-   33e53cc: Fixed two bugs affecting controllers and custom errors.
+
+    -   Controller methods now receive their parameters in the right positions. Previously, an absent optional parameter or a falsy value (`undefined`, `null`, `0`, `false`, `""`) was dropped, so every parameter after it shifted one position left and received the wrong value.
+    -   Custom classes that extend `HttpError` (or any built-in HTTP error) now pass `instanceof` checks for their own class without having to reset the prototype by hand.
+
+-   Updated dependencies
+    -   @nodeboot/context@2.6.0
+    -   @nodeboot/error@1.4.2
+
 ## 1.9.0
 
 ### Minor Changes

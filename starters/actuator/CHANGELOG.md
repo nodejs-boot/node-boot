@@ -1,5 +1,15 @@
 # @nodeboot/starter-actuator
 
+## 1.9.1
+
+### Patch Changes
+
+-   33e53cc: The error thrown when the actuator cannot find an IoC container no longer tells you to add `@EnableDI(Container)`, since a default container is always available.
+-   Updated dependencies
+    -   @nodeboot/context@2.6.0
+    -   @nodeboot/engine@1.9.1
+    -   @nodeboot/config@1.4.2
+
 ## 1.9.0
 
 ### Minor Changes

@@ -1,5 +1,17 @@
 # @nodeboot-benchmark/nodeboot-fastify
 
+## 0.2.2
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.6.0
+    -   @nodeboot/core@2.0.0
+    -   @nodeboot/di@2.0.0
+    -   @nodeboot/fastify-server@1.11.1
+    -   @nodeboot/starter-persistence@1.15.2
+    -   @nodeboot/config@1.4.2
+
 ## 0.2.1
 
 ### Patch Changes

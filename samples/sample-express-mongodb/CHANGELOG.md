@@ -1,5 +1,25 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.3.2
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-actuator@1.9.1
+    -   @nodeboot/context@2.6.0
+    -   @nodeboot/error@1.4.2
+    -   @nodeboot/core@2.0.0
+    -   @nodeboot/di@2.0.0
+    -   @nodeboot/starter-http@3.6.2
+    -   @nodeboot/authorization@1.4.2
+    -   @nodeboot/express-server@1.13.1
+    -   @nodeboot/starter-firebase@1.3.2
+    -   @nodeboot/starter-openapi@2.6.1
+    -   @nodeboot/starter-scheduler@1.7.2
+    -   @nodeboot/starter-validation@1.3.2
+    -   @nodeboot/starter-persistence@1.15.2
+    -   @nodeboot/config@1.4.2
+
 ## 2.3.1
 
 ### Patch Changes

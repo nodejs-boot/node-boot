@@ -1,5 +1,18 @@
 # @nodeboot/authorization
 
+## 1.4.2
+
+### Patch Changes
+
+-   33e53cc: Documentation and examples now reflect that Nonna is Node-Boot's default dependency injection container.
+
+    -   Examples no longer decorate the application class with `@EnableDI(Container)` or depend on `typedi`; `@EnableDI(container)` remains available for plugging in another container.
+    -   The unused `typedi` dev dependency was removed. There is no runtime change.
+
+-   Updated dependencies
+    -   @nodeboot/context@2.6.0
+    -   @nodeboot/engine@1.9.1
+
 ## 1.4.1
 
 ### Patch Changes

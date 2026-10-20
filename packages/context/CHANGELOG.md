@@ -1,5 +1,12 @@
 # @nodeboot/context
 
+## 2.6.0
+
+### Minor Changes
+
+-   33e53cc: `IocContainer` has a new optional `initialize()` hook. Node-Boot calls it once, late in startup, after all `@Configuration`, `@Bean` and `@ConfigurationProperties` registration has run, so containers that validate their dependency graph or eagerly create singletons (such as the default Nonna container) can do so. Containers that don't implement it are unaffected.
+-   33e53cc: Added an opt-in `app.lifecycle.failFast` setting. When set to `true` in `app-config.yaml`, the application logs the error and exits with code 1 as soon as a startup feature fails to initialize (for example a `@PostConstruct` method that throws), instead of continuing to start with a half-initialized bean. The default is unchanged: the failure is logged and startup continues. Do not enable this on serverless platforms.
+
 ## 2.5.1
 
 ### Patch Changes

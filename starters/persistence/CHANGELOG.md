@@ -1,5 +1,16 @@
 # @nodeboot/starter-persistence
 
+## 1.15.2
+
+### Patch Changes
+
+-   33e53cc: `@DataRepository(...)` classes are now registered as late-bound tokens with the dependency injection container. Repositories are only created after the database connects, so a service injecting one no longer fails the container's startup validation with "Missing required provider(s)". The package now depends on `@nodeboot/di` at runtime for this, and the unused `typedi` dev dependency was removed.
+-   Updated dependencies
+    -   @nodeboot/context@2.6.0
+    -   @nodeboot/core@2.0.0
+    -   @nodeboot/di@2.0.0
+    -   @nodeboot/config@1.4.2
+
 ## 1.15.1
 
 ### Patch Changes

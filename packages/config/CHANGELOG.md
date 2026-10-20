@@ -1,5 +1,12 @@
 # @nodeboot/config
 
+## 1.4.2
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/context@2.6.0
+
 ## 1.4.1
 
 ### Patch Changes
