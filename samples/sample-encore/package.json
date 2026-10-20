@@ -23,7 +23,7 @@
         "lint:fix": "pnpm lint --fix",
         "format": "prettier --check .",
         "format:fix": "prettier --write .",
-        "test": "encore test"
+        "test:watch": "encore test"
     },
     "dependencies": {
         "@nodeboot/authorization": "workspace:*",
@@ -38,11 +38,11 @@
         "class-validator": "^0.14.0",
         "encore.dev": "^1.57.13",
         "reflect-metadata": "^0.2.1",
-        "typedi": "^0.10.0",
         "winston": "^3.17.0"
     },
     "devDependencies": {
         "@types/node": "^20.5.7",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "@nonnajs/compiler": "^2.0.0"
     }
 }

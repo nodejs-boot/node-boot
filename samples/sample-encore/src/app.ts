@@ -1,9 +1,8 @@
 import "reflect-metadata";
-import {Container} from "typedi";
+import "./__generated__/nonna-dependencies.generated";
 import {NodeBoot, NodeBootApp, NodeBootApplication, NodeBootAppView} from "@nodeboot/core";
 import {EnableAuthorization} from "@nodeboot/authorization";
 import {EnableValidations} from "@nodeboot/starter-validation";
-import {EnableDI} from "@nodeboot/di";
 import {EncoreServer} from "@nodeboot/encore-server";
 import {LoggedInUserResolver} from "./auth/LoggedInUserResolver";
 import {DefaultAuthorizationResolver} from "./auth/DefaultAuthorizationResolver";
@@ -28,7 +27,6 @@ import {appConfig} from "./app-config";
  * authorization, validation) against an internal router and exposes a handler function that is
  * wired up as a single Encore.ts raw endpoint. See `api/index.ts`.
  */
-@EnableDI(Container)
 @EnableAuthorization(LoggedInUserResolver, DefaultAuthorizationResolver)
 @EnableValidations()
 @NodeBootApplication()

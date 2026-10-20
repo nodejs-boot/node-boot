@@ -8,7 +8,7 @@ import {UserModel} from "../models/UserModel";
 @Controller("/users")
 export class UserController {
     // Encore.ts bundles with esbuild, which doesn't emit `design:paramtypes` metadata for
-    // `emitDecoratorMetadata`. Without that metadata, typedi cannot determine constructor arity
+    // `emitDecoratorMetadata`. Without that metadata, constructor arity cannot be determined
     // and constructor injection silently breaks (it ends up passing the DI container itself as
     // the argument instead of the resolved dependency). Property injection doesn't rely on that
     // metadata, so it's used here instead.

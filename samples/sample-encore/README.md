@@ -16,7 +16,7 @@ receives plain Node.js `IncomingMessage`/`ServerResponse` objects - just like `n
     forwards every request into `EncoreServer`'s handler, which routes it through Node-Boot's own
     controllers.
 -   [`src/app.ts`](./src/app.ts) is the actual Node-Boot application: `@NodeBootApplication`,
-    dependency injection (`@EnableDI`), validation (`@EnableValidations`), and authorization
+    dependency injection, validation (`@EnableValidations`), and authorization
     (`@EnableAuthorization`) wired up exactly like any other Node-Boot server adapter.
 -   [`src/controllers`](./src/controllers), [`src/services`](./src/services),
     [`src/middlewares`](./src/middlewares), and [`src/auth`](./src/auth) contain the same kind of
