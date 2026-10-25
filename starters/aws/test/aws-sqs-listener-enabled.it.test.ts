@@ -71,4 +71,18 @@ describe("@nodeboot/starter-aws - SQS listener message consumption", () => {
         assert.equal(received?.messageId, "msg-789");
         assert.deepEqual(received?.message, payload);
     });
+
+    test("hands a raw SQS message (not sent through SNS) to the handler as it is", async () => {
+        const service = ApplicationContext.getIocContainer()!.get(SampleSqsListenerService);
+        const before = service.receivedMessages.length;
+        mockServer.pushSqsMessage(JSON.stringify({orderId: "order-raw"}));
+
+        const start = Date.now();
+        while (service.receivedMessages.length === before && Date.now() - start < 3000) {
+            await new Promise(r => setTimeout(r, 100));
+        }
+        const received = service.receivedMessages[before];
+        assert.deepEqual(received?.message, {orderId: "order-raw"});
+        assert.match(received?.messageId ?? "", /^msg-/);
+    });
 });

@@ -1,2 +1,2 @@
-export {SqsListenerAdapter} from "./SqsListenerAdapter";
+export {SqsListenerAdapter, stopSqsListeners} from "./SqsListenerAdapter";
 export * from "./types";
