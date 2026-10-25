@@ -25,7 +25,15 @@ export class SqsClientConfiguration {
                 );
             }
 
-            const client = new SQSClient({region, credentials, logger, useQueueUrlAsEndpoint: false});
+            // A local emulator (LocalStack, ElasticMQ); unset for AWS.
+            const endpoint = config.getOptionalString("integrations.aws.sqs.endpoint");
+            const client = new SQSClient({
+                region,
+                credentials,
+                logger,
+                useQueueUrlAsEndpoint: false,
+                ...(endpoint ? {endpoint} : {}),
+            });
             iocContainer.set(SQSClient, client);
 
             // Enable AWS SQS feature in the application context

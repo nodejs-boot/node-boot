@@ -305,17 +305,25 @@ com:
 
 #### The `MessageEnvelop` Payload
 
-Every `@SqsListener` handler receives a `MessageEnvelop<M>` — a parsed wrapper around the raw SQS message body,
-rather than the raw `sqs-consumer` `Message` object:
+Every `@SqsListener` handler receives a `MessageEnvelop<M>` rather than the raw `sqs-consumer` `Message`:
 
 ```typescript
 type MessageEnvelop<M = JsonObject> = {
-    messageId: string; // AWS-assigned message ID
-    timestamp: string; // SNS/SQS delivery timestamp
-    signature: string; // SNS signature, when the message originated from an SNS->SQS subscription
-    message: M; // The actual, JSON-parsed message payload
+    messageId: string; // the SNS notification's id, or the SQS message id
+    timestamp: string; // the SNS notification's Timestamp, or the SQS SentTimestamp (ISO 8601)
+    signature: string; // the SNS signature; empty for a message sent straight to SQS
+    message: M; // the JSON-parsed payload (the string itself when it is not JSON)
+    raw: Message; // the SQS message as received
 };
 ```
+
+Both kinds of queue messages are supported:
+
+-   **Sent straight to the queue** (`SendMessage`): `message` is the parsed body.
+-   **Delivered by an SNS topic subscription** (raw message delivery off): the notification is unwrapped and
+    `message` is its parsed `Message`.
+
+A body that is not JSON is passed as a string; parsing never fails the message.
 
 ```typescript
 @SqsListener("${com.example.aws.sqs.queue-url}")
@@ -324,11 +332,45 @@ async onMessage(envelop: MessageEnvelop<{orderId: string}>): Promise<void> {
 }
 ```
 
+#### Listener options
+
+The second argument configures the consumer (see sqs-consumer's
+[ConsumerOptions](https://bbc.github.io/sqs-consumer/interfaces/ConsumerOptions.html)):
+
+```typescript
+@SqsListener("${com.example.aws.sqs.queue-url}", {
+    batchSize: 10, // messages per receive, handled concurrently (default 1)
+    waitTimeSeconds: 20, // long polling (default 20)
+    visibilityTimeout: 60, // seconds (default: the queue's)
+    handleMessageTimeout: 30_000, // ms; a slower handler fails its message
+})
+async onMessage(envelop: MessageEnvelop): Promise<void> {}
+```
+
+#### Queue URLs, FIFO queues and local emulators
+
+The queue URL must have the path `/<12-digit account id>/<queue name>` on any `http(s)` host: AWS URLs
+(`https://sqs.<region>.amazonaws.com/...`), FIFO queues (`.../orders.fifo`) and local emulators. For LocalStack or
+ElasticMQ, point the client at the emulator:
+
+```yaml
+integrations:
+    aws:
+        sqs:
+            region: "us-east-1"
+            endpoint: "http://localhost:4566"
+```
+
+#### Shutdown
+
+Every listener stops polling on application shutdown (SIGINT/SIGTERM), before other shutdown hooks run; a message
+being handled finishes. `stopSqsListeners()` stops them on demand.
+
 #### SQS Message Handling
 
 -   The queue is polled continuously for messages using [long polling](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html).
 -   Throwing an error (or returning a rejected promise) from the handler function will cause the message to be left on the queue. An [SQS redrive policy](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/SQSDeadLetterQueue.html) can be used to move messages that cannot be processed to a dead letter queue.
--   By default messages are processed one at a time – a new message won't be received until the first one has been processed. To process messages in parallel, use the batchSize option [detailed here](https://bbc.github.io/sqs-consumer/interfaces/ConsumerOptions.html#batchSize).
+-   By default messages are processed one at a time – a new message won't be received until the first one has been processed. To process messages in parallel, pass `{batchSize}` in the listener options (above).
     -   It's also important to await any processing that you are doing to ensure that messages are processed one at a time.
 -   By default, messages that are sent to the handleMessage and handleMessageBatch functions will be considered as processed if they return without an error.
     -   To acknowledge individual messages, please return the message that you want to acknowledge if you are using handleMessage or the messages for handleMessageBatch.

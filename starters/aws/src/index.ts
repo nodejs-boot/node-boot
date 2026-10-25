@@ -1,2 +1,2 @@
 export * from "./decorator";
-export {MessageEnvelop} from "./adapter";
+export {MessageEnvelop, SqsListenerOptions, SqsListenerAdapter, stopSqsListeners} from "./adapter";
