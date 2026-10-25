@@ -1,5 +1,12 @@
 # @nodeboot/fastify-sample
 
+## 1.4.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.15.3
+
 ## 1.4.2
 
 ### Patch Changes

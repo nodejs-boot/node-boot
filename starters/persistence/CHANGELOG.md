@@ -1,5 +1,11 @@
 # @nodeboot/starter-persistence
 
+## 1.15.3
+
+### Patch Changes
+
+-   14157de: `@nodeboot/starter-persistence` now ships a `.nonna.json`, so `nonna-compile` treats classes decorated with `@PersistenceCache()` as injectable and infers their constructor dependencies. Without it, a `@PersistenceCache()` class with constructor parameters failed with "unresolved constructor dependencies" unless every parameter had an explicit `@Inject(...)`.
+
 ## 1.15.2
 
 ### Patch Changes

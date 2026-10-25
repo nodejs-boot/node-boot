@@ -1,5 +1,12 @@
 # @nodeboot/express-sample-mongodb
 
+## 2.3.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-persistence@1.15.3
+
 ## 2.3.2
 
 ### Patch Changes
