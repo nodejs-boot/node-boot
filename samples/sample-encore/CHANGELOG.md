@@ -1,5 +1,15 @@
 # @nodeboot/encore-sample
 
+## 1.1.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/encore-server@1.3.2
+    -   @nodeboot/starter-validation@1.3.3
+    -   @nodeboot/authorization@1.4.3
+    -   @nodeboot/core@2.0.1
+
 ## 1.1.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @nodeboot-benchmark/nodeboot-http
 
+## 0.2.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/http-server@1.7.2
+    -   @nodeboot/core@2.0.1
+    -   @nodeboot/starter-persistence@1.15.4
+
 ## 0.2.3
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @nodeboot-benchmark/nodeboot-express
 
+## 0.2.4
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/express-server@1.13.2
+    -   @nodeboot/core@2.0.1
+    -   @nodeboot/starter-persistence@1.15.4
+
 ## 0.2.3
 
 ### Patch Changes

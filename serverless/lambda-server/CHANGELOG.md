@@ -1,5 +1,13 @@
 # @nodeboot/lambda-server
 
+## 1.4.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.9.2
+    -   @nodeboot/core@2.0.1
+
 ## 1.4.2
 
 ### Patch Changes

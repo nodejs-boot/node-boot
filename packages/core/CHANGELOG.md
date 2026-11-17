@@ -1,5 +1,12 @@
 # @nodeboot/core
 
+## 2.0.1
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.9.2
+
 ## 2.0.0
 
 ### Major Changes

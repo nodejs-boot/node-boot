@@ -1,5 +1,12 @@
 # @nodeboot/authorization
 
+## 1.4.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.9.2
+
 ## 1.4.2
 
 ### Patch Changes

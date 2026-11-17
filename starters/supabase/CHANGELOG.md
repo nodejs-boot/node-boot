@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/engine@1.9.2
+    -   @nodeboot/core@2.0.1
+
 ## 1.2.2
 
 ### Patch Changes

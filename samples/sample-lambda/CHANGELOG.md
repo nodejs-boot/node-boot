@@ -1,5 +1,15 @@
 # @nodeboot/lambda-sample
 
+## 1.1.3
+
+### Patch Changes
+
+-   Updated dependencies
+    -   @nodeboot/starter-validation@1.3.3
+    -   @nodeboot/authorization@1.4.3
+    -   @nodeboot/core@2.0.1
+    -   @nodeboot/lambda-server@1.4.3
+
 ## 1.1.2
 
 ### Patch Changes
