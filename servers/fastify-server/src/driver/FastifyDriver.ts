@@ -345,6 +345,11 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
     }
 
     async handleError(error: any, action: Action<FastifyRequest, FastifyReply>, actionMetadata?: ActionMetadata) {
+        // a handler that owned the response (`@Res()`) already answered: a second reply would be rejected
+        if (this.isResponseHandled(action)) {
+            this.app.log.error(error);
+            return;
+        }
         // Handle error using Fastify's reply
         if (actionMetadata) {
             Object.keys(actionMetadata.headers).forEach(name => {
@@ -372,6 +377,10 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
         // Handle success using Fastify's reply
         // if the actionMetadata returned the response object itself, short-circuits
         if (result && result === action.response) {
+            return;
+        }
+        // a handler that owned the response through `@Res()` (sent, hijacked or streamed it) returns nothing to send
+        if (this.isResponseHandled(action)) {
             return;
         }
 
@@ -406,6 +415,12 @@ export class FastifyDriver extends NodeBootDriver<FastifyInstance, Action<Fastif
             // send regular result
             action.response.send(result);
         }
+    }
+
+    /** Whether the reply was already sent, hijacked or its raw response written (Fastify's `reply.sent` covers the first two). */
+    private isResponseHandled(action: Action<FastifyRequest, FastifyReply>): boolean {
+        const reply = action.response;
+        return reply.sent || reply.raw.headersSent || reply.raw.writableEnded;
     }
 
     private applyUndefined(actionMetadata: ActionMetadata, action: Action<FastifyRequest, FastifyReply>) {

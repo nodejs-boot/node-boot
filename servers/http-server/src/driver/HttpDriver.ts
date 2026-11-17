@@ -286,6 +286,11 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
         action: Action<IncomingMessage, ServerResponse<IncomingMessage>, Function>,
         actionMetadata?: ActionMetadata,
     ) {
+        // the response was already sent (a `@Res()` handler failed after answering): it can only be logged
+        if (action.response.headersSent || action.response.writableEnded) {
+            this.logger.error(error);
+            return;
+        }
         if (actionMetadata) {
             Object.keys(actionMetadata.headers).forEach(name => {
                 action.response.setHeader(name, actionMetadata.headers[name]);
@@ -311,6 +316,10 @@ export class HttpDriver extends NodeBootDriver<http.Server, Action<IncomingMessa
         actionMetadata: ActionMetadata,
     ) {
         const res = action.response;
+        // a handler that owned the response (`@Res()`) and sent it itself returns nothing more to send
+        if (res.headersSent || res.writableEnded) {
+            return;
+        }
 
         // Set status code from metadata or default 200
         res.statusCode = actionMetadata.successHttpCode || 200;

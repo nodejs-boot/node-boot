@@ -94,11 +94,19 @@ export class NodeBootEngine<TServer, TDriver extends NodeBootDriver<TServer>> {
      */
     protected async executeAction(actionMetadata: ActionMetadata, action: Action, interceptorFns: Function[]) {
         // compute all parameters (actionMetadata.params is pre-sorted once at boot in ActionMetadata.build())
-        const paramsPromises = actionMetadata.params.map(param => this.parameterHandler.handle(action, param));
+        // raw request/response/context objects are left out of the promises: some are thenables (Fastify's reply)
+        const paramsPromises = actionMetadata.params.map(param =>
+            this.parameterHandler.isRaw(param) ? undefined : this.parameterHandler.handle(action, param),
+        );
 
         // after all parameters are computed
         try {
             const params = await Promise.all(paramsPromises);
+            actionMetadata.params.forEach((param, i) => {
+                if (this.parameterHandler.isRaw(param)) {
+                    params[i] = this.parameterHandler.raw(action, param);
+                }
+            });
             return await this.handleCallMethodResult(params, action, actionMetadata, interceptorFns);
         } catch (error) {
             // otherwise simply handle error without action execution

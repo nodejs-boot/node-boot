@@ -262,6 +262,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
         }
 
         // transform result if needed
+        // a handler that owned the response (`@Res()`) and sent it itself returns nothing more to send
+        if (action.response.headersSent || action.response.writableEnded) {
+            action.next?.();
+            return;
+        }
         result = this.resultTransformer.transformResult(result, actionMetadata);
 
         // set http status code
@@ -343,6 +348,11 @@ export class ExpressDriver extends NodeBootDriver<Application> {
      */
     async handleError(error: any, action: Action<Request, Response>, actionMetadata?: ActionMetadata) {
         const response = action.response;
+        // the response was already sent (a `@Res()` handler failed after answering): it can only be logged
+        if (response.headersSent || response.writableEnded) {
+            this.logger.error(error);
+            return;
+        }
 
         // apply http headers
         if (actionMetadata) {

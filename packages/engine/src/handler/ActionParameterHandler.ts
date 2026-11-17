@@ -19,12 +19,28 @@ export class ActionParameterHandler<TServer, TDriver extends NodeBootDriver<TSer
     constructor(private readonly driver: TDriver) {}
 
     /**
-     * Handles action parameter.
+     * Whether the parameter is the framework's own request, response or context object, injected as is.
      */
-    async handle(action: Action, param: ParamMetadata): Promise<any> {
+    isRaw(param: ParamMetadata): boolean {
+        return param.type === "request" || param.type === "response" || param.type === "context";
+    }
+
+    /**
+     * The framework object of a raw parameter ({@link isRaw}). Synchronous on purpose: some of these objects are
+     * thenables (Fastify's reply resolves once the response is sent), so returning them from an async function or
+     * through `Promise.all` would make the action wait on them and receive their resolved value instead.
+     */
+    raw(action: Action, param: ParamMetadata): any {
         if (param.type === "request") return action.request;
         if (param.type === "response") return action.response;
-        if (param.type === "context") return action.context;
+        return action.context;
+    }
+
+    /**
+     * Handles action parameter. Raw parameters must be read with {@link raw} instead (see there why).
+     */
+    async handle(action: Action, param: ParamMetadata): Promise<any> {
+        if (this.isRaw(param)) return this.raw(action, param);
 
         // get parameter value from request and normalize it
         const value = await this.normalizeParamValue(this.driver.getParamFromRequest(action, param), param);

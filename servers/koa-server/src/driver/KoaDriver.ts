@@ -296,6 +296,10 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
         if (result && (result === action.response || result === action.context)) {
             return;
         }
+        // an action that answered through `@Res()` (set the body, or took over the raw response) keeps its answer
+        if (result === undefined && this.isResponseHandled(action)) {
+            return;
+        }
 
         // transform result if needed
         result = this.resultTransformer.transformResult(result, actionMetadata);
@@ -340,6 +344,12 @@ export class KoaDriver extends NodeBootDriver<Koa, Action<Request, Response>> {
     /**
      * Handles result of failed executed controller actionMetadata.
      */
+    /** Whether the action set the response body itself or took over the raw response (`ctx.respond = false`). */
+    private isResponseHandled(action: Action<Request, Response>): boolean {
+        const response = action.response as any;
+        return response.body !== undefined || response.ctx?.respond === false || response.headerSent === true;
+    }
+
     async handleError(error: any, action: Action<Request, Response>, actionMetadata?: ActionMetadata) {
         try {
             // apply http headers

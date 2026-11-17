@@ -62,4 +62,32 @@ describe("NodeBootEngine.executeAction", () => {
 
         assert.deepEqual(received, [0, false, "", "present"]);
     });
+
+    it("injects a thenable response object (Fastify's reply) as is, without waiting on it", async () => {
+        // Regression test: Fastify's reply has a `then()` that settles only once the response is sent. Resolving
+        // `@Res()` through a promise adopted it, so the action waited on its own reply and received `undefined`.
+        const driver = createFakeDriver({getParamFromRequest: mock.fn(() => "42")});
+        const engine = new NodeBootEngine(driver, {});
+        const reply = {then: () => undefined, sent: false};
+        const request = {method: "GET", url: "/raw"};
+
+        const received: any[] = [];
+        const actionMetadata: any = {
+            params: [{type: "response"}, {type: "param", name: "id"}, {type: "request"}],
+            callMethod: async (params: any[]) => {
+                received.push(...params);
+                return "ok";
+            },
+        };
+
+        const result = await Promise.race([
+            (engine as any).executeAction(actionMetadata, {request, response: reply}, []),
+            new Promise(resolve => setTimeout(() => resolve("timed out"), 500)),
+        ]);
+
+        assert.equal(result, "ok");
+        assert.equal(received[0], reply);
+        assert.equal(received[1], "42");
+        assert.equal(received[2], request);
+    });
 });

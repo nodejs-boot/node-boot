@@ -168,4 +168,25 @@ describe("Encore Server Adapter", () => {
             assert.equal(response.data.message, "boom");
         });
     });
+
+    describe("@Res() owning the response", () => {
+        test("keeps the response a handler sent itself (no 404 for its undefined result)", async () => {
+            const response = await http.get("/raw/send");
+            assert.equal(response.status, 202);
+            assert.deepEqual(response.data, {sentBy: "handler"});
+        });
+
+        test("streams Server-Sent Events written by the handler", async () => {
+            const response = await http.get("/raw/sse", {responseType: "text"});
+            assert.equal(response.status, 200);
+            assert.match(String(response.headers["content-type"]), /text\/event-stream/);
+            assert.equal(response.data, "data: 1\n\ndata: 2\n\ndata: 3\n\n");
+        });
+
+        test("the server keeps answering after a handler owned the response", async () => {
+            await http.get("/raw/send");
+            const response = await http.get("/hello/");
+            assert.equal(response.status, 200);
+        });
+    });
 });

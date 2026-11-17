@@ -361,6 +361,10 @@ export class HonoDriver extends NodeBootDriver<Hono, HonoAction> {
             // FIXME: not supported by Hono yet, similarly to the Koa adapter
             throw new Error("'renderedTemplate' is not supported for Hono yet");
         } else if (result === undefined) {
+            // an action that answered through `@Res()` by setting `c.res` (e.g. a streaming Response) keeps its answer
+            if (c.finalized) {
+                return c.res;
+            }
             // throw NotFoundError on undefined response
             throw new NotFoundError();
         } else if (result === null) {

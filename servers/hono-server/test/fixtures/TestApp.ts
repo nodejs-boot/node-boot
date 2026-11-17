@@ -13,6 +13,7 @@ import "./HelloController";
 import "./ItemsController";
 import "./SecureController";
 import "./ErrorsController";
+import "./RawResponseController";
 import "./RequestLogMiddleware";
 import "./TestErrorHandler";
 @EnableAuthorization(TestCurrentUserChecker, TestAuthorizationChecker)
